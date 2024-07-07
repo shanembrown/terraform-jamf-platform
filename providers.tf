@@ -12,16 +12,16 @@ terraform {
 }
 
 provider "jamfpro" {
-  jamf_instance_fqdn          = var.jamfpro_instance_url
-  auth_method =               "oauth2" // basic
-  client_id                   = var.jamfpro_client_id
-  client_secret               = var.jamfpro_client_secret
-  log_level                   = "debug" # or "debug", "info", "none" depending on the desired verbosity of the http client
-  log_output_format           = "console" # or "JSON" for JSON format
-  export_logs                 = false
+  jamfpro_instance_fqdn          = var.jamfpro_instance_url
+  auth_method =               "basic" // oauth2
+  basic_auth_username = var.jamfpro_username
+  basic_auth_password = var.jamfpro_password
+  #client_id                   = var.jamfpro_client_id
+  #client_secret               = var.jamfpro_client_secret
+  enable_client_sdk_logs                 = false
   hide_sensitive_data         = true # Hides sensitive data in logs
   token_refresh_buffer_period_seconds = 5 # minutes
-  jamf_load_balancer_lock     = true
+  jamfpro_load_balancer_lock     = true
   mandatory_request_delay_milliseconds = 100
 }
 

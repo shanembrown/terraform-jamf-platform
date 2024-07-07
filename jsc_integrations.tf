@@ -1,3 +1,4 @@
+/*
 resource "jsc_oktaidp" "tje_okta_config" {
   name = "TJE ${var.wizard_suffix} ${random_string.random.result}"
   orgdomain = var.tje_okta_orgdomain
@@ -10,3 +11,4 @@ resource "jsc_uemc" "my_uemc_config" {
   clientid     = data.jamfpro_api_integration.jamfpro_api_client_idandsecret.client_id
   clientsecret = data.jamfpro_api_integration.jamfpro_api_client_idandsecret.client_secret
 }
+*/
