@@ -1,4 +1,4 @@
-## Define Jamf Pro provider variables
+## Define Jamf Pro provider variables (populated by .tfvars file)
 variable "jamfpro_instance_url" {
   description = "Jamf Pro Instance name."
   default     = ""
@@ -27,7 +27,7 @@ variable "jamfpro_password" {
 }
 
 
-## Define JSC provider variables
+## Define JSC provider variables (populated by .tfvars file)
 variable "radar_user" {
   type = string
   default = ""
@@ -37,4 +37,21 @@ variable "radar_pass" {
   type = string
   sensitive = true
   default = ""
+}
+
+## Define Okta-related variables
+variable "tje_okta_clientid" {
+  type = string
+  default = "0oa1qa4x0qj2Jzeco1d8"
+}
+
+variable "tje_okta_orgdomain" {
+  type = string
+  default = "jamf-harbor.okta.com"
+}
+
+## Define miscellaneous variables
+variable "wizard_suffix" {
+  type    = string
+  default = " - TJE Provided"
 }

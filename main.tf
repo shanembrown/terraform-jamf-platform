@@ -30,7 +30,7 @@ provider "jamfpro" {
 
 ## Initialize Jamf Pro child modules
 module "jamfpro_settings" {
-  source = "./modules/jamfpro_config/settings/"
+  source = "./modules/jamfpro_config/"
 }
 
 
@@ -45,4 +45,9 @@ provider "jsc" {
 ## Initialiaze JSC child modules
 module "jsc_config" {
   source = "./modules/jsc_config/"
+  jamfpro_instance_url = var.jamfpro_instance_url
+  radar_user = var.radar_user
+  tje_okta_clientid = var.tje_okta_clientid
+  tje_okta_orgdomain = var.tje_okta_orgdomain
+  wizard_suffix = var.wizard_suffix
 }

@@ -1,15 +1,9 @@
-resource "random_string" "random" {
-  length           = 2
-  special          = false
-  override_special = "/@£$"
-}
+variable "jamfpro_instance_url" {}
 
-variable "tje_okta_clientid" {
-  type = string
-  default = "0oa1qa4x0qj2Jzeco1d8"
-}
+variable "radar_user" {}
 
-variable "tje_okta_orgdomain" {
-  type = string
-  default = "jamf-harbor.okta.com"
-}
+variable "tje_okta_clientid" {}
+
+variable "tje_okta_orgdomain" {}
+
+variable "wizard_suffix" {}
