@@ -31,6 +31,7 @@ provider "jamfpro" {
 ## Initialize Jamf Pro child modules
 module "jamfpro_settings" {
   source = "./modules/jamfpro_config/"
+  include_jamfpro_departments = var.include_jamfpro_departments
 }
 
 

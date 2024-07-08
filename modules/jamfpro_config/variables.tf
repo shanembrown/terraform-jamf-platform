@@ -1,0 +1,1 @@
+variable "include_jamfpro_departments" {}

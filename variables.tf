@@ -39,6 +39,12 @@ variable "radar_pass" {
   default = ""
 }
 
+## Define Jamf Pro config knobs
+variable "include_jamfpro_departments" {
+  type = string
+  default = "false"
+}
+
 ## Define Okta-related variables
 variable "tje_okta_clientid" {
   type = string
