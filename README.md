@@ -9,9 +9,6 @@ Provider versions used in this release:
 
 This project utlizes the unoffical Terraform providers for [Jamf Pro](https://registry.terraform.io/providers/deploymenttheory/jamfpro/latest) and [Jamf Security Cloud](https://registry.terraform.io/providers/danjamf/jsctfprovider/latest)
 
-## Modules
-May contain modules that can be used for individual TJE vignettes.
-
 ## Prerequisites
 While this project is private, you'll need to authenticate against GitHub to clone this repository. We advise you generate a Personal Access Token (PAT) in GitHub settings. Once done, you can follow the commands below.
 
@@ -57,3 +54,6 @@ terraform apply
 ```
 
 N.b. check the optional run-list for manual configuration and clean-up that may be required
+
+## Modules
+May contain modules that can be used for individual TJE vignettes. (Work in Progress)
