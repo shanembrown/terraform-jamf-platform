@@ -17,13 +17,13 @@ While this project is private, you'll need to authenticate against GitHub to clo
 
 ## Project Initialization
 Open a Terminal window and enter the following commands. Replace the following placeholders:
- - <BRANCH-NAME>: The name of the branch to clone (main, danwork, vincent-work, etc)
- - <PAT>: Your Personal Access Token (you may receive additional SSO login prompts upon first use)
- - <FIRST.LAST>: Your local user directory
+ - [BRANCH-NAME]: The name of the branch to clone (main, danwork, vincent-work, etc)
+ - [PAT]: Your Personal Access Token (you may receive additional SSO login prompts upon first use)
+ - [FIRST.LAST]: Your local user directory
 
 ```
-git clone -b <BRANCH-NAME> https://<PAT>@github.com/jamf/TJE-Terraform.git /Users/<FIRST.LAST>/TJE-terraform/
-cd /Users/<FIRST.LAST>/TJE-terraform
+git clone -b [BRANCH-NAME] https://[PAT]@github.com/jamf/TJE-Terraform.git /Users/[FIRST.LAST]/TJE-terraform/
+cd /Users/[FIRST.LAST]/TJE-terraform
 terraform init
 ```
 
@@ -31,14 +31,14 @@ terraform init
 This Terraform project requires Jamf API credentials and other context-specific variables that you'll need to define locally in a terraform.tfvars file.
 
 ```
-cd /Users/<FIRST.LAST>/TJE-terraform
+cd /Users/[FIRST.LAST]/TJE-terraform
 nano terraform.tfvars
 ```
 
 Copy and paste the following data then customize it with your own credentials
 
 ```
-jamfpro_instance_url = "https://<MY_SERVER>.jamfcloud.com"
+jamfpro_instance_url = "https://[MY_SERVER].jamfcloud.com"
 jamfpro_client_id = ""
 jamfpro_client_secret = ""
 jamfpro_username = ""
@@ -50,7 +50,7 @@ radar_pass = ""
 Save and exit.
 
 ## Usage
-Ensure that you are in the correct project folder when performing Terraform commands (e.g.: /Users/<FIRST.LAST>/TJE-terraform/)
+Ensure that you are in the correct project folder when performing Terraform commands (e.g.: /Users/[FIRST.LAST]/TJE-terraform/)
 
 ```
 terraform apply
