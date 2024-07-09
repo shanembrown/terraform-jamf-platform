@@ -28,11 +28,6 @@ resource "jamfpro_category" "category_design_marketing" {
   priority = 9
 }
 
-resource "jamfpro_category" "category_" {
-  name     = ""
-  priority = 9
-}
-
 resource "jamfpro_category" "category_developer_tools" {
   name     = "Developer Tools"
   priority = 9
