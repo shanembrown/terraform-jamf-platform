@@ -1,8 +1,6 @@
 # TJE-Terraform
 Terraform configuration for The Jamf Experience (TJE) environment.
 
-Project version 0.0.2 - 8 July 2024
-
 Provider versions used in this release:
  - deploymenttheory/jamfpro v0.1.5
  - danjamf/jsctfprovider v0.0.5
@@ -49,11 +47,17 @@ Save and exit.
 ## Usage
 Ensure that you are in the correct project folder when performing Terraform commands (e.g.: /Users/[FIRST.LAST]/TJE-terraform/)
 
+Enter the following command to apply full Terraform config:
+
 ```
 terraform apply
 ```
 
-N.b. check the optional run-list for manual configuration and clean-up that may be required
+Enter this command to only apply specific modules:
+
+```
+terraform apply -target "module.[MODULE_NAME]"
+```
 
 ## Modules
 May contain modules that can be used for individual TJE vignettes. (Work in Progress)

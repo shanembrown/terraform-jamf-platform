@@ -1,7 +1,34 @@
+/*
+This terraform blueprint will build the Aftermath vignette from Experience Jamf.
+It will do the following:
+ - Create a category
+ - Create 2 computer extension attributes
+ - Create 2 smart computer groups
+ - Upload 1 package
+ - Import 2 scripts
+ - Create 3 policies
+*/
+
+## Call Terraform provider
+terraform {
+  required_providers {
+    jamfpro = {
+      source  = "deploymenttheory/jamfpro"
+      version = "~> 0.1.5"
+    }
+  }
+}
+
+## Create category
+resource "jamfpro_category" "category_threat_response" {
+  name     = "Threat and Incident Response"
+  priority = 9
+}
+
 ## Create extension attributes
 resource "jamfpro_computer_extension_attribute" "ea_aftermath_analyze_trigger" {
     name = "Aftermath Analyze Trigger"
-    input_type = "Script"
+    input_type = "script"
     enabled = true
     data_type = "string"
     inventory_display = "Extension Attributes"
@@ -10,7 +37,7 @@ resource "jamfpro_computer_extension_attribute" "ea_aftermath_analyze_trigger" {
 
 resource "jamfpro_computer_extension_attribute" "ea_aftermath_trigger" {
     name = "Aftermath Trigger"
-    input_type = "Script"
+    input_type = "script"
     enabled = true
     data_type = "string"
     inventory_display = "Extension Attributes"
@@ -40,7 +67,7 @@ resource "jamfpro_smart_computer_group" "group_aftermath_collection_trigger" {
 resource "jamfpro_package" "package_aftermath" {
     package_name = "Aftermath.pkg"
     info = "Version 2.2.1 - March 8 2024"
-    category_id = jamfpro_category.category_security_compliance.id
+    category_id = jamfpro_category.category_threat_response.id
     package_file_source = "https://github.com/jamf/aftermath/releases/download/v2.2.1/Aftermath.pkg"
     os_install = false
     fill_user_template = false
@@ -57,7 +84,7 @@ resource "jamfpro_script" "script_aftermath_analyze" {
     name = "Vignette.Behavioral.IR-Aftermath-Analyze.sh"
     priority = "AFTER"
     script_contents = file("support_files/computer_scripts/aftermath_analyze.sh")
-    category_id = jamfpro_category.category_security_compliance.id
+    category_id = jamfpro_category.category_threat_response.id
     info = "This script will run Aftermath on a system, analyze the output, and open the storyline.csv file after analysis is complete. Messages are presented throughout the process to communicate what is happening."
 }
 
@@ -65,10 +92,11 @@ resource "jamfpro_script" "script_aftermath_collection" {
     name = "Vignette.Behavioral.IR-Aftermath-Collection.sh"
     priority = "AFTER"
     script_contents = file("support_files/computer_scripts/aftermath_collection.sh")
-    category_id = jamfpro_category.category_security_compliance.id
+    category_id = jamfpro_category.category_threat_response.id
 }
 
 ## Create policies
+/*
 resource "jamfpro_policy" "policy_install_aftermath" {
   name                          = "Install Aftermath.pkg"
   enabled                       = true
@@ -79,7 +107,7 @@ resource "jamfpro_policy" "policy_install_aftermath" {
   retry_attempts                = 3
   notify_on_each_failed_retry   = false
   target_drive                  = "/"
-  category_id                   = jamfpro_category.category_security_compliance.id
+  category_id                   = jamfpro_category.category_threat_response.id
 
   scope {
     all_computers = true
@@ -100,14 +128,15 @@ resource "jamfpro_policy" "policy_install_aftermath" {
     }
   }
 }
+*/
 
 resource "jamfpro_policy" "policy_aftermath_analysis" {
   name                          = "Vignette.Behavioral.IR-Aftermath-Analysis"
   enabled                       = true
-  trigger_other                 = "@aftermathAnalysis" // "USER_INITIATED" for self service trigger , "EVENT" for an event trigger
+  trigger_other                 = "@aftermathAnalysis"
   frequency                     = "Ongoing"
   target_drive                  = "/"
-  category_id                   = jamfpro_category.category_security_compliance.id
+  category_id                   = jamfpro_category.category_threat_response.id
 
   scope {
     all_computers = false
@@ -133,10 +162,10 @@ resource "jamfpro_policy" "policy_aftermath_analysis" {
 resource "jamfpro_policy" "policy_aftermath_collection" {
   name                          = "Vignette.Behavioral.IR-Aftermath-Collection"
   enabled                       = true
-  trigger_other                 = "@aftermathCollection" // "USER_INITIATED" for self service trigger , "EVENT" for an event trigger
+  trigger_other                 = "@aftermathCollection"
   frequency                     = "Ongoing"
   target_drive                  = "/"
-  category_id                   = jamfpro_category.category_security_compliance.id
+  category_id                   = jamfpro_category.category_threat_response.id
 
   scope {
     all_computers = false

@@ -18,11 +18,6 @@ resource "jamfpro_category" "category_communication" {
   priority = 9
 }
 
-resource "jamfpro_category" "category_dlp" {
-  name     = "Data Loss Prevention"
-  priority = 9
-}
-
 resource "jamfpro_category" "category_design_marketing" {
   name     = "Design & Marketing"
   priority = 9
@@ -33,33 +28,13 @@ resource "jamfpro_category" "category_developer_tools" {
   priority = 9
 }
 
-resource "jamfpro_category" "category_end_tje" {
-  name     = "End Jamf Experience"
-  priority = 9
-}
-
 resource "jamfpro_category" "category_enrollment" {
   name     = "Enrollment"
   priority = 9
 }
 
-resource "jamfpro_category" "category_experience_jamf" {
-  name     = "Experience Jamf"
-  priority = 1
-}
-
 resource "jamfpro_category" "category_idp_sso" {
   name     = "IdP & SSO"
-  priority = 9
-}
-
-resource "jamfpro_category" "category_cis1_mobile" {
-  name     = "iOS17_cis_lvl1_enterprise"
-  priority = 9
-}
-
-resource "jamfpro_category" "category_cis2_mobile" {
-  name     = "iOS17_cis_lvl2_enterprise"
   priority = 9
 }
 
@@ -103,11 +78,6 @@ resource "jamfpro_category" "category_security_compliance" {
   priority = 9
 }
 
-resource "jamfpro_category" "category_cis1_sonoma" {
-  name     = "Sonoma_cis_lvl1"
-  priority = 9
-}
-
 resource "jamfpro_category" "category_travel" {
   name     = "Travel"
   priority = 9
@@ -118,18 +88,7 @@ resource "jamfpro_category" "category_uninstallers" {
   priority = 9
 }
 
-resource "jamfpro_category" "category_utilities" {
-  name     = "Utilities"
-  priority = 9
-}
-
 resource "jamfpro_category" "category_utilities_helpers" {
   name     = "Utilities and Helpers"
   priority = 9
 }
-
-resource "jamfpro_category" "category_cis1_ventura" {
-  name     = "Ventura_cis_lvl1"
-  priority = 9
-}
-
