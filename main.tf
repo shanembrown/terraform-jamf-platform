@@ -30,7 +30,6 @@ provider "jamfpro" {
 ## Initialize Jamf Pro child modules
 module "jamfpro_demo_config" {
   source = "./modules/jamfpro_demo_config/"
-  include_jamfpro_departments = var.include_jamfpro_departments
 }
 
 ## Initialize Experience Jamf vignette modules
