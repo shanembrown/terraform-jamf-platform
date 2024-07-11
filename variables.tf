@@ -5,10 +5,15 @@ variable "jamfpro_instance_url" {
   default     = ""
 }
 
+variable "jamfpro_auth_method" {
+  description = "Jamf Pro Auth Method."
+  type = string
+  default     = "oauth2" #basic or oauth2
+}
+
 variable "jamfpro_client_id" {
   description = "Jamf Pro Client ID for authentication."
   type = string
-  sensitive = true
   default     = ""
 }
 
@@ -22,7 +27,6 @@ variable "jamfpro_client_secret" {
 variable "jamfpro_username" {
   description = "Jamf Pro username used for authentication."
   type = string
-  sensitive = true
   default     = ""
 }
 
@@ -63,3 +67,46 @@ variable "wizard_suffix" {
   type    = string
   default = " - TJE Provided"
 }
+
+## Define vingnette variables
+
+variable "include_jamfpro_demo_config" {
+  type    = bool
+  default = true
+}
+variable "include_ej_incident_response" {
+  type    = bool
+  default = true
+}
+
+variable "include_ej_base" {
+  type    = bool
+  default = true
+}
+
+variable "include_ej_mac_cis_benchmark" {
+  type    = bool
+  default = true
+}
+
+variable "include_ej_mobile_cis_benchmark" {
+  type    = bool
+  default = true
+}
+
+variable "include_ej_secure_remote_access" {
+  type    = bool
+  default = true
+}
+
+variable "include_sandbox" {
+  type    = bool
+  default = true
+}
+
+variable "include_jsc_demo_config" {
+  type    = bool
+  default = true
+}
+
+
