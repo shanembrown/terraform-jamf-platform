@@ -1,5 +1,5 @@
-# TJE-Terraform
-Terraform configuration for The Jamf Experience (TJE) environment.
+# EJ-Terraform
+Terraform configuration for the "Experience Jamf (EJ)" environment.
 
 Provider versions used in this release:
  - deploymenttheory/jamfpro v0.1.5
@@ -60,4 +60,16 @@ terraform apply -target "module.[MODULE_NAME]"
 ```
 
 ## Modules
-May contain modules that can be used for individual TJE vignettes. (Work in Progress)
+Each module can be applied individually to test EJ vignettes:
+ - module.ej_base
+ - module.ej_incident_response
+ - module.ej_mac_cis_benchmark
+ - module.ej_mobile_cis_benchmark
+ - module.ej_secure_remote_access
+
+Other modules are also available for more general purpose:
+ - module.jamfpro_demo_config
+ - module.jsc_demo_config
+
+Want to experiment with your own config? Use this module:
+ - module.sandbox
