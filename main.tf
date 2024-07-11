@@ -15,7 +15,7 @@ terraform {
 ## Jamf Pro provider root configuration
 provider "jamfpro" {
   jamfpro_instance_fqdn          = var.jamfpro_instance_url
-  auth_method =               "basic" // oauth2
+  auth_method =               var.jamfpro_auth_method
   basic_auth_username = var.jamfpro_username
   basic_auth_password = var.jamfpro_password
   client_id                   = var.jamfpro_client_id
@@ -29,32 +29,39 @@ provider "jamfpro" {
 
 ## Initialize Jamf Pro child modules
 module "jamfpro_demo_config" {
+  count = var.include_jamfpro_demo_config == true ? 1 : 0
   source = "./modules/jamfpro_demo_config/"
 }
 
 ## Initialize Experience Jamf vignette modules
 module "ej_base" {
+  count = var.include_ej_base == true ? 1 : 0
   source = "./modules/experience_jamf_vignettes/ej_base"
 }
 
 module "ej_incident_response" {
+  count = var.include_ej_incident_response == true ? 1 : 0
   source = "./modules/experience_jamf_vignettes/ej_incident_response"
 }
 
 module "ej_mac_cis_benchmark" {
+  count = var.include_ej_mac_cis_benchmark == true ? 1 : 0
   source = "./modules/experience_jamf_vignettes/ej_mac_cis_benchmark"
 }
 
 module "ej_mobile_cis_benchmark" {
+  count = var.include_ej_mobile_cis_benchmark == true ? 1 : 0
   source = "./modules/experience_jamf_vignettes/ej_mobile_cis_benchmark"
 }
 
 module "ej_secure_remote_access" {
+  count = var.include_ej_secure_remote_access == true ? 1 : 0
   source = "./modules/experience_jamf_vignettes/ej_secure_remote_access"
 }
 
 ## Initialize sandbox module
 module "sandbox" {
+  count = var.include_sandbox == true ? 1 : 0
   source = "./modules/sandbox"
 }
 
@@ -67,6 +74,7 @@ provider "jsc" {
 
 ## Initialiaze JSC child modules
 module "jsc_demo_config" {
+  count = var.include_jsc_demo_config == true ? 1 : 0
   source = "./modules/jsc_demo_config/"
   jamfpro_instance_url = var.jamfpro_instance_url
   radar_user = var.radar_user
