@@ -1,3 +1,6 @@
 *.tfstate
+*.tfstate.backup
 .terraform*
 *.tfvars
+catalog-info.yaml
+.DS_Store

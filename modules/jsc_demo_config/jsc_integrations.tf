@@ -1,3 +1,17 @@
+## IDP integration
+resource "random_string" "random" {
+  length           = 2
+  special          = false
+  override_special = "/@£$"
+}
+
+resource "jsc_oktaidp" "tje_okta_config" {
+  name = "TJE ${var.wizard_suffix} ${random_string.random.result}"
+  orgdomain = var.tje_okta_orgdomain
+  clientid = var.tje_okta_clientid
+}
+
+## UEM Connect integration
 resource "jamfpro_api_role" "jamfpro_api_role_sync" {
   display_name = "JSC API Role Device Sync ${var.wizard_suffix}"
   privileges   = ["Read Mac Applications", "Read Mobile Devices", "Read Mobile Device Applications", "Read Smart Mobile Device Groups", "Read Static Mobile Device Groups", "Read Computers", "Read Smart Computer Groups", "Read Static Computer Groups"]
@@ -22,4 +36,11 @@ resource "jamfpro_api_integration" "jamfpro_api_integration_jsc" {
 
 data "jamfpro_api_integration" "jamfpro_api_client_idandsecret" {
     id = jamfpro_api_integration.jamfpro_api_integration_jsc.id
-} 
+}
+
+resource "jsc_uemc" "my_uemc_config" {
+  count = var.radar_user != "" ? 1 : 0
+  domain       = var.jamfpro_instance_url
+  clientid     = data.jamfpro_api_integration.jamfpro_api_client_idandsecret.client_id
+  clientsecret = data.jamfpro_api_integration.jamfpro_api_client_idandsecret.client_secret
+}

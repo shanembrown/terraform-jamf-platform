@@ -1,0 +1,11 @@
+### About Aftermath Incident Response Log Collection
+In addition to the capabilities that are highlighted in **Malware Detection & Incident Response**, to detect and remediate security incidents, Jamf also has the ability to collect extensive system logs when a threat occurs that enables security admins, researchers, or consultants to forensically investigate security incidents.
+
+### About Aftermath
+Aftermath is an open source incident response framework built by Jamf. Paired with a [Security Orchestration, Automation, and Response (SOAR) playbook](https://github.com/jamf/jamfprotect/tree/main/soar_playbooks/aftermath_collection) these logs can be sent to a cloud storage service such as an AWS S3 bucket for analysis by internal or consulting security teams.
+
+
+### Learn More
+[Aftermath - Github](https://github.com/jamf/aftermath)
+[Meet Aftermath - Free Open-Source Incident Response Framework from Jamf](https://www.jamf.com/blog/aftermath-open-source-incident-response-tool/)
+[What Happened?: Swiftly Investigating macOS Security Incidents with Aftermath](https://www.youtube.com/watch?v=lvfQMnkOZDM)
