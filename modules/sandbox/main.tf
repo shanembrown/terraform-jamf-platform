@@ -9,15 +9,16 @@ terraform {
 }
 
 ## Deploy demo policy
-resource "jamfpro_policy" "policy_demo" {
-  name                          = "demo policy"
+resource "jamfpro_policy" "test_policy" {
+  name                          = "Test policy"
   enabled                       = true
   trigger_enrollment_complete   = true
   frequency                     = "Once per computer"
   target_drive                  = "/"
 
   scope {
-    all_computers = true
+    all_computers = false
+    computer_group_ids = [1]
   }
 
   payloads {

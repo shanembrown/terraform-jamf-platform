@@ -67,7 +67,6 @@ resource "jamfpro_smart_computer_group" "group_aftermath_collection_trigger" {
 resource "jamfpro_package" "package_aftermath" {
     package_name = "Aftermath.pkg"
     info = "Version 2.2.1 - March 8 2024"
-    category_id = jamfpro_category.category_threat_response.id
     package_file_source = "https://github.com/jamf/aftermath/releases/download/v2.2.1/Aftermath.pkg"
     os_install = false
     fill_user_template = false
@@ -96,21 +95,21 @@ resource "jamfpro_script" "script_aftermath_collection" {
 }
 
 ## Create policies
-/*
 resource "jamfpro_policy" "policy_install_aftermath" {
   name                          = "Install Aftermath.pkg"
   enabled                       = true
   trigger_enrollment_complete   = true
-  trigger_other                 = "EVENT" // "USER_INITIATED" for self service trigger , "EVENT" for an event trigger
+  trigger_other                 = "@installAftermath" // "USER_INITIATED" for self service trigger , "EVENT" for an event trigger
   frequency                     = "Once per computer"
   retry_event                   = "check-in"
   retry_attempts                = 3
   notify_on_each_failed_retry   = false
   target_drive                  = "/"
-  category_id                   = jamfpro_category.category_threat_response.id
+
 
   scope {
-    all_computers = true
+    all_computers = false
+    computer_group_ids = [1]
   }
 
   payloads {
@@ -128,7 +127,6 @@ resource "jamfpro_policy" "policy_install_aftermath" {
     }
   }
 }
-*/
 
 resource "jamfpro_policy" "policy_aftermath_analysis" {
   name                          = "Vignette.Behavioral.IR-Aftermath-Analysis"
