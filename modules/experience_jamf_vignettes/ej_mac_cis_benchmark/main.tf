@@ -46,7 +46,7 @@ resource "jamfpro_script" "script_cis_remove" {
 }
 
 resource "jamfpro_script" "script_sonoma_cis_lvl1_compliance" {
-    name = "${var.wizard_prefix}Sonoma CIS Level1 Compliantce"
+    name = "${var.wizard_prefix}Sonoma CIS Level 1 Compliance"
     priority = "AFTER"
     script_contents = file("support_files/computer_scripts/sonoma_cis_lvl1_compliance.sh")
     category_id = jamfpro_category.category_cis_benchmarks.id
@@ -139,7 +139,7 @@ resource "jamfpro_smart_computer_group" "group_sonoma_cis_lvl1_non_compliant" {
     priority = 0
   }
     criteria {
-    name          = "Compliance - Failed Results Count"
+    name          = jamfpro_computer_extension_attribute.ea_cis_failed_count.name
     search_type   = "more than"
     value         = "0"
     and_or = "and"
