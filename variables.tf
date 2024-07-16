@@ -65,10 +65,20 @@ variable "tje_okta_orgdomain" {
 ## Define miscellaneous variables
 variable "wizard_suffix" {
   type    = string
-  default = " - TJE Provided"
+  default = " - EJ Provided"
+}
+
+## Define miscellaneous variables
+variable "wizard_prefix" {
+  type    = string
+  default = "EJ - "
 }
 
 ## Define vingnette variables
+variable "include_jamfpro_prerequisites" {
+  type    = bool
+  default = true
+}
 
 variable "include_jamfpro_demo_config" {
   type    = bool

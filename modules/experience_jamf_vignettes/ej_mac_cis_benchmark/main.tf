@@ -1,8 +1,15 @@
 /*
 This terraform blueprint will build the macOS CIS Benchmark vignette from Experience Jamf.
 It will do the following:
- - Create categories
- - Create configuration profiles
+ - Create 1 category
+ - Create 3 scripts
+ - Create 3 extension attributes
+ - Create 5 smart computer groups
+ - Create 4 policies
+ - Create 8 configuration profiles
+
+ Prerequisites:
+  - the Dialog tool must be installed
 */
 
 ## Call Terraform provider
@@ -16,20 +23,258 @@ terraform {
 }
 
 ## Create categories
-resource "jamfpro_category" "category_cis1_ventura" {
-  name     = "Ventura_cis_lvl1"
+resource "jamfpro_category" "category_cis_benchmarks" {
+  name     = "${var.wizard_prefix}Mac CIS Benchmarks"
   priority = 9
 }
 
-resource "jamfpro_category" "category_cis1_sonoma" {
-  name     = "Sonoma_cis_lvl1"
-  priority = 9
+## Create scripts
+resource "jamfpro_script" "script_cis_apply" {
+    name = "${var.wizard_prefix}Apply CIS"
+    priority = "AFTER"
+    script_contents = file("support_files/computer_scripts/cis_apply.sh")
+    category_id = jamfpro_category.category_cis_benchmarks.id
+    info = "This script will create a witness file on computers to trigger a CIS Benchmark deployment"
+}
+
+resource "jamfpro_script" "script_cis_remove" {
+    name = "${var.wizard_prefix}Remove CIS"
+    priority = "AFTER"
+    script_contents = file("support_files/computer_scripts/cis_remove.sh")
+    category_id = jamfpro_category.category_cis_benchmarks.id
+    info = "This script will create a witness file on computers to trigger a CIS Benchmark removal"
+}
+
+resource "jamfpro_script" "script_sonoma_cis_lvl1_compliance" {
+    name = "${var.wizard_prefix}Sonoma CIS Level1 Compliantce"
+    priority = "AFTER"
+    script_contents = file("support_files/computer_scripts/sonoma_cis_lvl1_compliance.sh")
+    category_id = jamfpro_category.category_cis_benchmarks.id
+    info = "This script will apply a set of rules related to the CIS Level 1 benchmark for macOS Sonoma"
+}
+
+## Create computer extension attributes
+resource "jamfpro_computer_extension_attribute" "ea_sonoma_cis_apply" {
+    name = "${var.wizard_prefix}Apply CIS Flag"
+    input_type = "script"
+    enabled = true
+    data_type = "string"
+    inventory_display = "Extension Attributes"
+    input_script = file("support_files/computer_extension_attributes/sonoma_cis_apply.sh")
+}
+
+resource "jamfpro_computer_extension_attribute" "ea_sonoma_cis_remove" {
+    name = "${var.wizard_prefix}Remove CIS Flag"
+    input_type = "script"
+    enabled = true
+    data_type = "string"
+    inventory_display = "Extension Attributes"
+    input_script = file("support_files/computer_extension_attributes/sonoma_cis_remove.sh")
+}
+
+resource "jamfpro_computer_extension_attribute" "ea_cis_failed_count" {
+    name = "${var.wizard_prefix}CIS - Compliance Failed Results Count"
+    input_type = "script"
+    enabled = true
+    data_type = "integer"
+    inventory_display = "Extension Attributes"
+    input_script = file("support_files/computer_extension_attributes/cis_compliance_failed_count.sh")
+}
+
+## Create Smart Computer Groups
+resource "jamfpro_smart_computer_group" "group_sonoma_computers" {
+  name = "${var.wizard_prefix}CIS - Sonoma Computers"
+  criteria {
+    name          = "Operating System Version"
+    search_type   = "like"
+    value         = "14."
+    and_or = "and"
+    priority = 0
+  }
+}
+
+resource "jamfpro_smart_computer_group" "group_sonoma_cis_lvl1_apply" {
+  name = "${var.wizard_prefix}CIS Level 1 - Sonoma - Apply"
+  criteria {
+    name          = "Operating System Version"
+    search_type   = "like"
+    value         = "14."
+    and_or = "and"
+    priority = 0
+  }
+    criteria {
+    name          = jamfpro_computer_extension_attribute.ea_sonoma_cis_apply.name
+    search_type   = "like"
+    value         = "apply_cis"
+    and_or = "and"
+    priority = 1
+  }
+}
+
+resource "jamfpro_smart_computer_group" "group_sonoma_cis_lvl1_remove" {
+  name = "${var.wizard_prefix}CIS Level 1 - Sonoma - Remove"
+  criteria {
+    name          = "Operating System Version"
+    search_type   = "like"
+    value         = "14."
+    and_or = "and"
+    priority = 0
+  }
+    criteria {
+    name          = jamfpro_computer_extension_attribute.ea_sonoma_cis_remove.name
+    search_type   = "like"
+    value         = "remove_cis"
+    and_or = "and"
+    priority = 1
+  }
+}
+
+resource "jamfpro_smart_computer_group" "group_sonoma_cis_lvl1_non_compliant" {
+  name = "${var.wizard_prefix}CIS Level 1 - Sonoma - Non Compliant Computers"
+  criteria {
+    name          = "Operating System Version"
+    search_type   = "like"
+    value         = "14."
+    and_or = "and"
+    priority = 0
+  }
+    criteria {
+    name          = "Compliance - Failed Results Count"
+    search_type   = "more than"
+    value         = "0"
+    and_or = "and"
+    priority = 1
+  }
+}
+
+resource "jamfpro_smart_computer_group" "group_sonoma_cis_lvl1_profiles_present" {
+  name = "${var.wizard_prefix}CIS Level 1 - Sonoma - Profiles Present"
+    criteria {
+    name          = "Profile Name"
+    search_type   = "has"
+    value         = "Sonoma_cis"
+    and_or = "and"
+    priority = 0
+  }
+}
+
+## Create policies
+resource "jamfpro_policy" "policy_cis_apply" {
+  name                          = "${var.wizard_prefix}CIS Level 1 - Apply (Sonoma)"
+  enabled                       = true
+  trigger_other                 = "sonomacis"
+  frequency                     = "Ongoing"
+  category_id                   = jamfpro_category.category_cis_benchmarks.id
+
+  scope {
+    all_computers = false
+    computer_group_ids = [jamfpro_smart_computer_group.group_sonoma_computers.id]
+  }
+
+  self_service {
+    use_for_self_service            = true
+    self_service_display_name       = "CIS Level 1 - Apply (Sonoma)"
+    install_button_text             = "Apply"
+    self_service_description        = file("support_files/computer_policies/sonoma_cis_lvl1_apply_self_service_desc.txt")
+    force_users_to_view_description = false
+    feature_on_main_page = false
+  }
+
+  payloads {
+    scripts {
+        id = jamfpro_script.script_cis_apply.id
+    }
+  }
+}
+
+resource "jamfpro_policy" "policy_cis_remove" {
+  name                          = "${var.wizard_prefix}CIS Level 1 - Remove (Sonoma)"
+  enabled                       = true
+  trigger_other                 = "sonomacisremove"
+  frequency                     = "Ongoing"
+  category_id                   = jamfpro_category.category_cis_benchmarks.id
+
+  scope {
+    all_computers = false
+    computer_group_ids = [jamfpro_smart_computer_group.group_sonoma_cis_lvl1_profiles_present.id]
+  }
+
+  self_service {
+    use_for_self_service            = true
+    self_service_display_name       = "CIS Level 1 - Remove (Sonoma)"
+    install_button_text             = "Remove"
+    self_service_description        = file("support_files/computer_policies/sonoma_cis_lvl1_remove_self_service_desc.txt")
+    force_users_to_view_description = false
+    feature_on_main_page = false
+  }
+
+  payloads {
+    scripts {
+        id = jamfpro_script.script_cis_remove.id
+    }
+  }
+}
+
+resource "jamfpro_policy" "policy_sonoma_cis_lvl1_audit" {
+  name                          = "${var.wizard_prefix}CIS Level 1 - Audit (Sonoma)"
+  enabled                       = true
+  trigger_other                 = "@CIS_audit"
+  frequency                     = "Ongoing"
+  category_id                   = jamfpro_category.category_cis_benchmarks.id
+
+  scope {
+    all_computers = false
+    computer_group_ids = []
+  }
+
+  self_service {
+    use_for_self_service            = false
+  }
+
+  payloads {
+    scripts {
+        id = jamfpro_script.script_sonoma_cis_lvl1_compliance.id
+        parameter4 = "--check"
+    }
+
+    maintenance {
+      recon = true
+    }
+  }
+}
+
+resource "jamfpro_policy" "policy_sonoma_cis_lvl1_remediation" {
+  name                          = "${var.wizard_prefix}CIS Level 1 - Remediation (Sonoma)"
+  enabled                       = true
+  trigger_checkin = true
+  frequency                     = "Ongoing"
+  category_id                   = jamfpro_category.category_cis_benchmarks.id
+
+  scope {
+    all_computers = false
+    computer_group_ids = []
+  }
+
+  self_service {
+    use_for_self_service            = false
+  }
+
+  payloads {
+    scripts {
+        id = jamfpro_script.script_sonoma_cis_lvl1_compliance.id
+        parameter4 = "--check"
+        parameter5 = "--fix"
+        parameter6 = "--check"
+    }
+
+    maintenance {
+      recon = true
+    }
+  }
 }
 
 ## Define configuration profile details
 locals {
-  profile_plist_regex     = "(<plist.+?>\\s)([\\s\\S]+?)(\\s<\\/plist>)"
-
   cis_lvl1_macos_14_dict = {
     "Application Access"    = "support_files/computer_config_profiles/sonoma_cis_lvl1-applicationaccess.mobileconfig"
     "Login Window"          = "support_files/computer_config_profiles/sonoma_cis_lvl1-loginwindow.mobileconfig"
@@ -45,15 +290,18 @@ locals {
 ## Create configuration profiles
 resource "jamfpro_macos_configuration_profile_plist" "sonoma_cis_lvl1" {
   for_each    = local.cis_lvl1_macos_14_dict
-  name        = "Sonoma_cis_lvl1 - ${each.key}"
+  name        = "${var.wizard_prefix}Sonoma_cis_lvl1 - ${each.key}"
   distribution_method = "Install Automatically"
   redeploy_on_update = "Newly Assigned"
-  category_id = jamfpro_category.category_cis1_sonoma.id
+  category_id = jamfpro_category.category_cis_benchmarks.id
   level = "System"
 
   payloads = file("${each.value}")
 
   scope {
-    all_computers = true
+    all_computers = false
+    computer_group_ids = [
+      jamfpro_smart_computer_group.group_sonoma_cis_lvl1_apply.id
+    ]
   }
 }

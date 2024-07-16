@@ -27,3 +27,8 @@ resource "jamfpro_policy" "test_policy" {
     }
   }
 }
+
+resource "jamfpro_category" "test_category" {
+  name     = "Test Category"
+  priority = 9
+}

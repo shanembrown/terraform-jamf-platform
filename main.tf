@@ -28,6 +28,11 @@ provider "jamfpro" {
 }
 
 ## Initialize Jamf Pro child modules
+module "jamfpro_prerequisites" {
+  count = var.include_jamfpro_prerequisites == true ? 1 : 0
+  source = "./modules/jamfpro_prerequisites/"
+}
+
 module "jamfpro_demo_config" {
   count = var.include_jamfpro_demo_config == true ? 1 : 0
   source = "./modules/jamfpro_demo_config/"
@@ -47,6 +52,7 @@ module "ej_incident_response" {
 module "ej_mac_cis_benchmark" {
   count = var.include_ej_mac_cis_benchmark == true ? 1 : 0
   source = "./modules/experience_jamf_vignettes/ej_mac_cis_benchmark"
+  wizard_prefix = var.wizard_prefix
 }
 
 module "ej_mobile_cis_benchmark" {
