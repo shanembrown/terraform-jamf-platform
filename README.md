@@ -47,6 +47,17 @@ jamfpro_username = ""
 jamfpro_password = ""
 radar_user = ""
 radar_pass = ""
+
+## Knobs
+include_jamfpro_prerequisites = true
+include_ej_base = true
+include_ej_incident_response = true
+include_ej_mobile_cis_benchmark = true
+include_ej_mac_cis_benchmark = true
+include_ej_secure_remote_access = true
+include_jamfpro_demo_config = true
+include_jsc_demo_config = true
+include_sandbox = false
 ```
 
 Save and exit.
