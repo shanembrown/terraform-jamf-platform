@@ -45,27 +45,15 @@ module "ej_base" {
 }
 
 module "ej_incident_response" {
-  #count  = var.include_ej_incident_response == true ? 1 : 0
+  count  = var.include_ej_incident_response == true ? 1 : 0
   source = "./modules/experience_jamf_vignettes/ej_incident_response"
-  jamfpro_instance_url = var.jamfpro_instance_url
-  jamfpro_auth_method = var.jamfpro_auth_method
-  jamfpro_client_id = var.jamfpro_client_id
-  jamfpro_client_secret = var.jamfpro_client_secret
-  jamfpro_username = var.jamfpro_username
-  jamfpro_password = var.jamfpro_password
   wizard_prefix = var.wizard_prefix
   support_files_path_prefix = "modules/experience_jamf_vignettes/ej_incident_response/"
 }
 
 module "ej_mac_cis_benchmark" {
-  #count         = var.include_ej_mac_cis_benchmark == true ? 1 : 0
+  count         = var.include_ej_mac_cis_benchmark == true ? 1 : 0
   source        = "./modules/experience_jamf_vignettes/ej_mac_cis_benchmark"
-  jamfpro_instance_url = var.jamfpro_instance_url
-  jamfpro_auth_method = var.jamfpro_auth_method
-  jamfpro_client_id = var.jamfpro_client_id
-  jamfpro_client_secret = var.jamfpro_client_secret
-  jamfpro_username = var.jamfpro_username
-  jamfpro_password = var.jamfpro_password
   wizard_prefix = var.wizard_prefix
   support_files_path_prefix = "modules/experience_jamf_vignettes/ej_mac_cis_benchmark/"
 }

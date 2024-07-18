@@ -13,7 +13,13 @@ The Dialog tool must be already deployed on computers to display some dialogs re
 
 ## Deploy this module
 
-Create a terraform.tfvars in the vignette folder first. Then apply the following commands:
+Create a terraform.tfvars in the root folder and set the following knob to true:
+
+```
+include_ej_mobile_cis_benchmark = true
+```
+
+Then run the following commands:
 
 ```
 terraform init

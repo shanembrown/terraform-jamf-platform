@@ -13,7 +13,13 @@ No prerequisites required
 
 ## Deploy this module
 
-Create a terraform.tfvars in the vignette folder first. Then apply the following commands:
+Create a terraform.tfvars in the root folder and set the following knob to true:
+
+```
+include_ej_incident_response = true
+```
+
+Then run the following commands:
 
 ```
 terraform init
