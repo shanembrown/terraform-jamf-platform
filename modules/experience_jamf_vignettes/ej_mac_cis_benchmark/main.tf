@@ -22,6 +22,21 @@ terraform {
   }
 }
 
+## Jamf Pro provider root configuration
+provider "jamfpro" {
+  jamfpro_instance_fqdn          = var.jamfpro_instance_url
+  auth_method =               var.jamfpro_auth_method
+  basic_auth_username = var.jamfpro_username
+  basic_auth_password = var.jamfpro_password
+  client_id                   = var.jamfpro_client_id
+  client_secret               = var.jamfpro_client_secret
+  enable_client_sdk_logs                 = false
+  hide_sensitive_data         = true # Hides sensitive data in logs
+  token_refresh_buffer_period_seconds = 5 # minutes
+  jamfpro_load_balancer_lock     = true
+  mandatory_request_delay_milliseconds = 100
+}
+
 ## Create categories
 resource "jamfpro_category" "category_cis_benchmarks" {
   name     = "${var.wizard_prefix}Mac CIS Benchmarks"
@@ -32,7 +47,7 @@ resource "jamfpro_category" "category_cis_benchmarks" {
 resource "jamfpro_script" "script_cis_apply" {
     name = "${var.wizard_prefix}Apply CIS"
     priority = "AFTER"
-    script_contents = file("support_files/computer_scripts/cis_apply.sh")
+    script_contents = file("${var.support_files_path_prefix}support_files/computer_scripts/cis_apply.sh")
     category_id = jamfpro_category.category_cis_benchmarks.id
     info = "This script will create a witness file on computers to trigger a CIS Benchmark deployment"
 }
@@ -40,7 +55,7 @@ resource "jamfpro_script" "script_cis_apply" {
 resource "jamfpro_script" "script_cis_remove" {
     name = "${var.wizard_prefix}Remove CIS"
     priority = "AFTER"
-    script_contents = file("support_files/computer_scripts/cis_remove.sh")
+    script_contents = file("${var.support_files_path_prefix}support_files/computer_scripts/cis_remove.sh")
     category_id = jamfpro_category.category_cis_benchmarks.id
     info = "This script will create a witness file on computers to trigger a CIS Benchmark removal"
 }
@@ -48,7 +63,7 @@ resource "jamfpro_script" "script_cis_remove" {
 resource "jamfpro_script" "script_sonoma_cis_lvl1_compliance" {
     name = "${var.wizard_prefix}Sonoma CIS Level 1 Compliance"
     priority = "AFTER"
-    script_contents = file("support_files/computer_scripts/sonoma_cis_lvl1_compliance.sh")
+    script_contents = file("${var.support_files_path_prefix}support_files/computer_scripts/sonoma_cis_lvl1_compliance.sh")
     category_id = jamfpro_category.category_cis_benchmarks.id
     info = "This script will apply a set of rules related to the CIS Level 1 benchmark for macOS Sonoma"
 }
@@ -60,7 +75,7 @@ resource "jamfpro_computer_extension_attribute" "ea_sonoma_cis_apply" {
     enabled = true
     data_type = "string"
     inventory_display = "Extension Attributes"
-    input_script = file("support_files/computer_extension_attributes/sonoma_cis_apply.sh")
+    input_script = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/sonoma_cis_apply.sh")
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_sonoma_cis_remove" {
@@ -69,7 +84,7 @@ resource "jamfpro_computer_extension_attribute" "ea_sonoma_cis_remove" {
     enabled = true
     data_type = "string"
     inventory_display = "Extension Attributes"
-    input_script = file("support_files/computer_extension_attributes/sonoma_cis_remove.sh")
+    input_script = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/sonoma_cis_remove.sh")
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_cis_failed_count" {
@@ -78,7 +93,7 @@ resource "jamfpro_computer_extension_attribute" "ea_cis_failed_count" {
     enabled = true
     data_type = "integer"
     inventory_display = "Extension Attributes"
-    input_script = file("support_files/computer_extension_attributes/cis_compliance_failed_count.sh")
+    input_script = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/cis_compliance_failed_count.sh")
 }
 
 ## Create Smart Computer Groups
@@ -175,7 +190,7 @@ resource "jamfpro_policy" "policy_cis_apply" {
     use_for_self_service            = true
     self_service_display_name       = "CIS Level 1 - Apply (Sonoma)"
     install_button_text             = "Apply"
-    self_service_description        = file("support_files/computer_policies/sonoma_cis_lvl1_apply_self_service_desc.txt")
+    self_service_description        = file("${var.support_files_path_prefix}support_files/computer_policies/sonoma_cis_lvl1_apply_self_service_desc.txt")
     force_users_to_view_description = false
     feature_on_main_page = false
   }
@@ -203,7 +218,7 @@ resource "jamfpro_policy" "policy_cis_remove" {
     use_for_self_service            = true
     self_service_display_name       = "CIS Level 1 - Remove (Sonoma)"
     install_button_text             = "Remove"
-    self_service_description        = file("support_files/computer_policies/sonoma_cis_lvl1_remove_self_service_desc.txt")
+    self_service_description        = file("${var.support_files_path_prefix}support_files/computer_policies/sonoma_cis_lvl1_remove_self_service_desc.txt")
     force_users_to_view_description = false
     feature_on_main_page = false
   }
@@ -276,14 +291,14 @@ resource "jamfpro_policy" "policy_sonoma_cis_lvl1_remediation" {
 ## Define configuration profile details
 locals {
   cis_lvl1_macos_14_dict = {
-    "Application Access"    = "support_files/computer_config_profiles/sonoma_cis_lvl1-applicationaccess.mobileconfig"
-    "Login Window"          = "support_files/computer_config_profiles/sonoma_cis_lvl1-loginwindow.mobileconfig"
-    "Managed Client"        = "support_files/computer_config_profiles/sonoma_cis_lvl1-timed.mobileconfig"
-    "MCX"                   = "support_files/computer_config_profiles/sonoma_cis_lvl1-mcx.mobileconfig"
-    "Safari"                = "support_files/computer_config_profiles/sonoma_cis_lvl1-safari.mobileconfig"
-    "Screen Saver"          = "support_files/computer_config_profiles/sonoma_cis_lvl1-screensaver.mobileconfig"
-    "System Policy Control" = "support_files/computer_config_profiles/sonoma_cis_lvl1-systempolicy.control.mobileconfig"
-    "Terminal"              = "support_files/computer_config_profiles/sonoma_cis_lvl1-terminal.mobileconfig"
+    "Application Access"    = "${var.support_files_path_prefix}support_files/computer_config_profiles/sonoma_cis_lvl1-applicationaccess.mobileconfig"
+    "Login Window"          = "${var.support_files_path_prefix}support_files/computer_config_profiles/sonoma_cis_lvl1-loginwindow.mobileconfig"
+    "Managed Client"        = "${var.support_files_path_prefix}support_files/computer_config_profiles/sonoma_cis_lvl1-timed.mobileconfig"
+    "MCX"                   = "${var.support_files_path_prefix}support_files/computer_config_profiles/sonoma_cis_lvl1-mcx.mobileconfig"
+    "Safari"                = "${var.support_files_path_prefix}support_files/computer_config_profiles/sonoma_cis_lvl1-safari.mobileconfig"
+    "Screen Saver"          = "${var.support_files_path_prefix}support_files/computer_config_profiles/sonoma_cis_lvl1-screensaver.mobileconfig"
+    "System Policy Control" = "${var.support_files_path_prefix}support_files/computer_config_profiles/sonoma_cis_lvl1-systempolicy.control.mobileconfig"
+    "Terminal"              = "${var.support_files_path_prefix}support_files/computer_config_profiles/sonoma_cis_lvl1-terminal.mobileconfig"
   }
 }
 
