@@ -22,9 +22,9 @@ provider "jamfpro" {
   client_secret                        = var.jamfpro_client_secret
   enable_client_sdk_logs               = false
   hide_sensitive_data                  = true # Hides sensitive data in logs
-  token_refresh_buffer_period_seconds  = 5    # minutes
+  token_refresh_buffer_period_seconds  = 60
   jamfpro_load_balancer_lock           = true
-  mandatory_request_delay_milliseconds = 100
+  mandatory_request_delay_milliseconds = 200
 }
 
 ## Initialize Jamf Pro child modules
