@@ -165,6 +165,7 @@ resource "jamfpro_policy" "policy_cis_apply" {
   trigger_other                 = "sonomacis"
   frequency                     = "Ongoing"
   category_id                   = jamfpro_category.category_cis_benchmarks.id
+  depends_on = [ jamfpro_smart_computer_group.group_sonoma_computers ]
 
   scope {
     all_computers = false
@@ -184,6 +185,16 @@ resource "jamfpro_policy" "policy_cis_apply" {
     scripts {
         id = jamfpro_script.script_cis_apply.id
     }
+
+    reboot {
+      file_vault_2_reboot            = false
+      message                        = "This computer will restart in 5 minutes. Please save anything you are working on and log out by choosing Log Out from the bottom of the Apple menu."
+      minutes_until_reboot           = 5
+      no_user_logged_in              = "Do not restart"
+      start_reboot_timer_immediately = false
+      startup_disk                   = "Current Startup Disk"
+      user_logged_in                 = "Do not restart"
+    }
   }
 }
 
@@ -193,6 +204,7 @@ resource "jamfpro_policy" "policy_cis_remove" {
   trigger_other                 = "sonomacisremove"
   frequency                     = "Ongoing"
   category_id                   = jamfpro_category.category_cis_benchmarks.id
+  depends_on = [ jamfpro_smart_computer_group.group_sonoma_cis_lvl1_profiles_present ]
 
   scope {
     all_computers = false
@@ -211,6 +223,16 @@ resource "jamfpro_policy" "policy_cis_remove" {
   payloads {
     scripts {
         id = jamfpro_script.script_cis_remove.id
+    }
+
+    reboot {
+      file_vault_2_reboot            = false
+      message                        = "This computer will restart in 5 minutes. Please save anything you are working on and log out by choosing Log Out from the bottom of the Apple menu."
+      minutes_until_reboot           = 5
+      no_user_logged_in              = "Do not restart"
+      start_reboot_timer_immediately = false
+      startup_disk                   = "Current Startup Disk"
+      user_logged_in                 = "Do not restart"
     }
   }
 }
@@ -239,6 +261,16 @@ resource "jamfpro_policy" "policy_sonoma_cis_lvl1_audit" {
 
     maintenance {
       recon = true
+    }
+
+    reboot {
+      file_vault_2_reboot            = false
+      message                        = "This computer will restart in 5 minutes. Please save anything you are working on and log out by choosing Log Out from the bottom of the Apple menu."
+      minutes_until_reboot           = 5
+      no_user_logged_in              = "Do not restart"
+      start_reboot_timer_immediately = false
+      startup_disk                   = "Current Startup Disk"
+      user_logged_in                 = "Do not restart"
     }
   }
 }
@@ -270,6 +302,16 @@ resource "jamfpro_policy" "policy_sonoma_cis_lvl1_remediation" {
     maintenance {
       recon = true
     }
+
+    reboot {
+      file_vault_2_reboot            = false
+      message                        = "This computer will restart in 5 minutes. Please save anything you are working on and log out by choosing Log Out from the bottom of the Apple menu."
+      minutes_until_reboot           = 5
+      no_user_logged_in              = "Do not restart"
+      start_reboot_timer_immediately = false
+      startup_disk                   = "Current Startup Disk"
+      user_logged_in                 = "Do not restart"
+    }
   }
 }
 
@@ -300,8 +342,8 @@ resource "jamfpro_macos_configuration_profile_plist" "sonoma_cis_lvl1" {
 
   scope {
     all_computers = false
-    computer_group_ids = [
-      jamfpro_smart_computer_group.group_sonoma_cis_lvl1_apply.id
-    ]
+    computer_group_ids = [jamfpro_smart_computer_group.group_sonoma_cis_lvl1_apply.id]
   }
+
+  depends_on = [ jamfpro_smart_computer_group.group_sonoma_cis_lvl1_apply ]
 }
