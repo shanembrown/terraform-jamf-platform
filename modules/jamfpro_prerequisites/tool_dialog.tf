@@ -7,7 +7,7 @@ It will do the following:
 
 ## Upload packages
 resource "jamfpro_package" "package_dialog" {
-    package_name = "${var.prereq_prefix}Dialog.pkg"
+    package_name = "${var.prefix}Dialog.pkg"
     info = "Version 2.5.0 - June 11 2024"
     category_id = jamfpro_category.category_prerequisites.id
     package_file_source = "https://github.com/swiftDialog/swiftDialog/releases/download/v2.5.0/dialog-2.5.0-4768.pkg"
@@ -23,7 +23,7 @@ resource "jamfpro_package" "package_dialog" {
 
 ## Create policies
 resource "jamfpro_policy" "policy_install_dialog" {
-  name                          = "${var.prereq_prefix}Install Dialog Tool"
+  name                          = "${var.prefix}Install Dialog Tool"
   category_id = jamfpro_category.category_prerequisites.id
   enabled                       = true
   trigger_enrollment_complete   = true

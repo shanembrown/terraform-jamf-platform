@@ -1,5 +1,5 @@
 ## Define miscellaneous variables
-variable "wizard_prefix" {
+variable "prefix" {
   type    = string
   default = "EJ - "
 }

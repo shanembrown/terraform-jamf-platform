@@ -62,66 +62,60 @@ variable "tje_okta_orgdomain" {
   default = "jamf-harbor.okta.com"
 }
 
-## Define miscellaneous variables
-variable "wizard_suffix" {
-  type    = string
-  default = " - EJ Provided"
-}
-
-variable "wizard_prefix" {
-  type    = string
-  default = "EJ - "
-}
-
 ## Define vingnette variables
 variable "include_jamfpro_prerequisites" {
   type    = bool
-  default = true
+  default = false
+}
+
+variable "include_onboarder_wizard" {
+  type    = bool
+  default = false
 }
 
 variable "include_jamfpro_demo_config" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "include_ej_base" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "include_ej_saas_tenancy" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "include_ej_incident_response" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "include_ej_mac_cis_benchmark" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "include_ej_mobile_cis_benchmark" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "include_ej_secure_remote_access" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "include_sandbox" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "include_jsc_demo_config" {
   type    = bool
-  default = true
+  default = false
 }
 
 
