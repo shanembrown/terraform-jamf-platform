@@ -8,13 +8,19 @@ terraform {
   }
 }
 
+## Create category
+resource "jamfpro_category" "test_category" {
+  name     = "Sandbox"
+  priority = 9
+}
+
 ## Deploy demo policy
 resource "jamfpro_policy" "test_policy" {
   name                          = "Test policy"
   enabled                       = true
   trigger_enrollment_complete   = true
   frequency                     = "Once per computer"
-  target_drive                  = "/"
+  category_id = jamfpro_category.test_category.id
 
   scope {
     all_computers = false
@@ -25,10 +31,15 @@ resource "jamfpro_policy" "test_policy" {
     maintenance {
       recon = true
     }
-  }
-}
 
-resource "jamfpro_category" "test_category" {
-  name     = "Test Category"
-  priority = 9
+    reboot {
+      file_vault_2_reboot            = false
+      message                        = "This computer will restart in 5 minutes. Please save anything you are working on and log out by choosing Log Out from the bottom of the Apple menu."
+      minutes_until_reboot           = 5
+      no_user_logged_in              = "Do not restart"
+      start_reboot_timer_immediately = false
+      startup_disk                   = "Current Startup Disk"
+      user_logged_in                 = "Do not restart"
+    }
+  }
 }

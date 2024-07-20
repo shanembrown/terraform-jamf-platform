@@ -27,6 +27,16 @@ cd /Users/[FIRST.LAST]/TJE-terraform
 terraform init
 ```
 
+## Parallelism and API delay
+
+This project running a big amount of API commands to create a full Jamf Pro configuration, some testings indicate that lowering Terraform parallelism from 10 to 1 reduces the chances of API call errors. Run this command before applying your configuration
+
+```
+export TF_CLI_ARGS_apply="-parallelism=1"
+```
+
+We also recommend setting the `mandatory_request_delay_milliseconds`provider key to 100.
+
 ## Variables definition
 
 This Terraform project requires Jamf API credentials and other context-specific variables that you'll need to define locally in a terraform.tfvars file.
@@ -51,6 +61,7 @@ radar_pass = ""
 ## Knobs
 include_jamfpro_prerequisites = true
 include_ej_base = true
+include_ej_saas_tenancy = true
 include_ej_incident_response = true
 include_ej_mobile_cis_benchmark = true
 include_ej_mac_cis_benchmark = true
@@ -78,7 +89,7 @@ Enter this command to only apply specific modules:
 terraform apply -target "module.[MODULE_NAME]"
 ```
 
-N.b. by default all modules will be applied. You can unselect individual modules by modifing your vars e.g.
+N.b. by default all modules will be applied. You can unselect individual modules by modifing the module knobs in your tfvars file e.g.
 
 ```
 include_ej_mac_cis_benchmark = false

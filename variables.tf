@@ -83,12 +83,18 @@ variable "include_jamfpro_demo_config" {
   type    = bool
   default = true
 }
-variable "include_ej_incident_response" {
+
+variable "include_ej_base" {
   type    = bool
   default = true
 }
 
-variable "include_ej_base" {
+variable "include_ej_saas_tenancy" {
+  type    = bool
+  default = true
+}
+
+variable "include_ej_incident_response" {
   type    = bool
   default = true
 }

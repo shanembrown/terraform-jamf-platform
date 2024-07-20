@@ -50,8 +50,19 @@ resource "jamfpro_policy" "policy_install_dialog" {
         fill_existing_user_template = false     // Whether to fill existing user templates
       }
     }
+
     maintenance {
       recon = true
+    }
+
+    reboot {
+      file_vault_2_reboot            = false
+      message                        = "This computer will restart in 5 minutes. Please save anything you are working on and log out by choosing Log Out from the bottom of the Apple menu."
+      minutes_until_reboot           = 5
+      no_user_logged_in              = "Do not restart"
+      start_reboot_timer_immediately = false
+      startup_disk                   = "Current Startup Disk"
+      user_logged_in                 = "Do not restart"
     }
   }
 }
