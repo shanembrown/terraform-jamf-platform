@@ -27,20 +27,46 @@ provider "jamfpro" {
   mandatory_request_delay_milliseconds = 100
 }
 
-## Initialize Jamf Pro child modules
+## JSC provider root configuration
+provider "jsc" {
+  username = var.radar_user
+  password = var.radar_pass
+  #customerid = var.radar_customerid
+}
+
+## Initialize common modules
 module "jamfpro_prerequisites" {
   count  = var.include_jamfpro_prerequisites == true ? 1 : 0
   source = "./modules/jamfpro_prerequisites/"
 }
 
-module "onboarder_wizard" {
-  count  = var.include_onboarder_wizard == true ? 1 : 0
-  source = "./modules/onboarder_wizard/"
-}
-
 module "jamfpro_demo_config" {
   count  = var.include_jamfpro_demo_config == true ? 1 : 0
   source = "./modules/jamfpro_demo_config/"
+}
+
+module "jsc_demo_config" {
+  count                = var.include_jsc_demo_config == true ? 1 : 0
+  source               = "./modules/jsc_demo_config/"
+  jamfpro_instance_url = var.jamfpro_instance_url
+  radar_user           = var.radar_user
+  tje_okta_clientid    = var.tje_okta_clientid
+  tje_okta_orgdomain   = var.tje_okta_orgdomain
+}
+
+## Initialize Onboarding Wizard modules
+module "ow_browsers" {
+  count  = var.include_onboarder_wizard == true ? 1 : 0
+  source = "./modules/onboarder_wizard/ow_browsers"
+  support_files_path_prefix = "modules/onboarder_wizard//ow_browsers/"
+  install_chrome = var.install_chrome
+  install_firefox = var.install_firefox
+}
+
+module "ow_profiles" {
+  count  = var.include_onboarder_wizard == true ? 1 : 0
+  source = "./modules/onboarder_wizard/ow_profiles"
+  support_files_path_prefix = "modules/onboarder_wizard//ow_profiles/"
 }
 
 ## Initialize Experience Jamf vignette modules
@@ -81,21 +107,4 @@ module "ej_secure_remote_access" {
 module "sandbox" {
   count  = var.include_sandbox == true ? 1 : 0
   source = "./modules/sandbox"
-}
-
-## JSC provider root configuration
-provider "jsc" {
-  username = var.radar_user
-  password = var.radar_pass
-  #customerid = var.radar_customerid
-}
-
-## Initialiaze JSC child modules
-module "jsc_demo_config" {
-  count                = var.include_jsc_demo_config == true ? 1 : 0
-  source               = "./modules/jsc_demo_config/"
-  jamfpro_instance_url = var.jamfpro_instance_url
-  radar_user           = var.radar_user
-  tje_okta_clientid    = var.tje_okta_clientid
-  tje_okta_orgdomain   = var.tje_okta_orgdomain
 }

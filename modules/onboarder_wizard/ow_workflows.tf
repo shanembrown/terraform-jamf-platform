@@ -1,3 +1,0 @@
-/*
-The resources in this file will install any workflow selected browser during onboarding processes.
-*/

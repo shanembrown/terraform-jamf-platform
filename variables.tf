@@ -62,18 +62,24 @@ variable "tje_okta_orgdomain" {
   default = "jamf-harbor.okta.com"
 }
 
-## Define vingnette variables
-variable "include_jamfpro_prerequisites" {
-  type    = bool
-  default = false
-}
-
+## Define onboarder wizard variables
 variable "include_onboarder_wizard" {
   type    = bool
   default = false
 }
 
-variable "include_jamfpro_demo_config" {
+variable "install_chrome" {
+  type = bool
+  default = false
+}
+
+variable "install_firefox" {
+  type = bool
+  default = false
+}
+
+## Define vingnette variables
+variable "include_jamfpro_prerequisites" {
   type    = bool
   default = false
 }
@@ -108,14 +114,18 @@ variable "include_ej_secure_remote_access" {
   default = false
 }
 
-variable "include_sandbox" {
-  type    = bool
-  default = false
-}
-
+## Define demo config variables
 variable "include_jsc_demo_config" {
   type    = bool
   default = false
 }
 
+variable "include_sandbox" {
+  type    = bool
+  default = false
+}
 
+variable "include_jamfpro_demo_config" {
+  type    = bool
+  default = false
+}

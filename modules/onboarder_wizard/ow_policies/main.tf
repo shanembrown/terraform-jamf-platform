@@ -1,0 +1,3 @@
+/*
+The resources in this file will install any workflow selected policies during onboarding processes.
+*/
