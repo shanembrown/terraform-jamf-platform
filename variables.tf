@@ -104,6 +104,9 @@ variable "include_sandbox" {
   default = true
 }
 
+
+
+## JSC Variables
 variable "include_jsc_demo_config" {
   type    = bool
   default = true
@@ -130,6 +133,16 @@ variable "include_ej_jsc_all_services" {
 }
 
 variable "include_ej_jsc_base" {
+  type    = bool
+  default = true
+}
+
+variable "include_ej_jsc_okta" {
+  type    = bool
+  default = true
+}
+
+variable "include_ej_jsc_ztna_apps" {
   type    = bool
   default = true
 }

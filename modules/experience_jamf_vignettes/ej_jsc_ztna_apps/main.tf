@@ -12,10 +12,8 @@ terraform {
   }
 }
 
-resource "jsc_ap" "content_filtering_only" {
-    name             = "Content Filtering"
-    oktaconnectionid = "66a2a39905cb1b0b09292956"
-    privateaccess    = false
-    threatdefence    = false
-    datapolicy       = true
+resource "jsc_ztna" "jsc_dropbox" {
+  name = "Dropbox"
+  routeid = "a7d2"
+  hostnames = ["*dropbox.com", "*.dropbox.com"]
 }

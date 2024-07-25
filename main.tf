@@ -59,30 +59,46 @@ module "ej_secure_remote_access" {
   source = "./modules/experience_jamf_vignettes/ej_secure_remote_access"
 }
 
+
+## Begin Jamf Security Cloud Configuration
+
+## Create UEMC and Okta integrations
+module "ej_jsc_base" {
+  count  = var.include_ej_jsc_base == true ? 1 : 0
+  source = "./modules/experience_jamf_vignettes/ej_jsc_base"
+}
+
+## Create Jamf Security Cloud Activation Profile containing ONLY Connect ZTNA
 module "ej_jsc_ztna_only" {
   count  = var.include_ej_jsc_ztna_only == true ? 1 : 0
   source = "./modules/experience_jamf_vignettes/ej_jsc_ztna_only"
 }
 
+## Create Jamf Security Cloud Activation Profile containing ONLY Category Based Content Filtering
 module "ej_jsc_dp_only" {
   count  = var.include_ej_jsc_dp_only == true ? 1 : 0
   source = "./modules/experience_jamf_vignettes/ej_jsc_dp_only"
 }
 
+## Create Jamf Security Cloud Activation Profile containing ONLY Threat Response (MTD) 
 module "ej_jsc_mtd_only" {
   count  = var.include_ej_jsc_mtd_only == true ? 1 : 0
   source = "./modules/experience_jamf_vignettes/ej_jsc_mtd_only"
 }
 
+## Create Jamf Security Cloud Activation Profile containing ALL JSC Services
 module "ej_jsc_all_services" {
   count  = var.include_ej_jsc_all_services == true ? 1 : 0
   source = "./modules/experience_jamf_vignettes/ej_jsc_all_services"
 }
 
-module "ej_jsc_base" {
-  count  = var.include_ej_jsc_base == true ? 1 : 0
-  source = "./modules/experience_jamf_vignettes/ej_jsc_base"
+## Create a few ZTNA Apps for Testing
+module "ej_jsc_ztna_apps" {
+  count = var.include_ej_jsc_ztna_apps == true ? 1 : 0
+  source = "./modules/experience_jamf_vignettes/ej_jsc_ztna_apps"
 }
+
+
 
 ## Initialize sandbox module
 module "sandbox" {
