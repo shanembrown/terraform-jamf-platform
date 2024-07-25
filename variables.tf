@@ -109,7 +109,22 @@ variable "include_jsc_demo_config" {
   default = true
 }
 
-variable "include_ej_jsc_base" {
+variable "include_ej_jsc_ztna_only" {
+  type    = bool
+  default = true
+}
+
+variable "include_ej_jsc_dp_only" {
+  type    = bool
+  default = true
+}
+
+variable "include_ej_jsc_mtd_only" {
+  type    = bool
+  default = true
+}
+
+variable "include_ej_jsc_all_services" {
   type    = bool
   default = true
 }

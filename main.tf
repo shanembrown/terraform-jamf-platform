@@ -59,9 +59,24 @@ module "ej_secure_remote_access" {
   source = "./modules/experience_jamf_vignettes/ej_secure_remote_access"
 }
 
-module "ej_jsc_base" {
-  count = var.include_ej_jsc_base == true ? 1 : 0
-  source = "./modules/experience_jamf_vignettes/ej_jsc_base"
+module "ej_jsc_ztna_only" {
+  count = var.include_ej_jsc_ztna_only == true ? 1 : 0
+  source = "./modules/experience_jamf_vignettes/ej_jsc_ztna_only"
+}
+
+module "include_ej_jsc_dp_only" {
+  count = var.include_ej_jsc_dp_only == true ? 1 : 0
+  source = "./modules/experience_jamf_vignettes/ej_jsc_dp_only"
+}
+
+module "include_ej_jsc_mtd_only" {
+  count = var.include_ej_jsc_mtd_only == true ? 1 : 0
+  source = "./modules/experience_jamf_vignettes/ej_jsc_mtd_only"
+}
+
+module "include_ej_jsc_all_services" {
+  count = var.include_ej_jsc_all_services == true ? 1 : 0
+  source = "./modules/experience_jamf_vignettes/ej_jsc_all_services"
 }
 
 ## Initialize sandbox module
