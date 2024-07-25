@@ -128,3 +128,8 @@ variable "include_ej_jsc_all_services" {
   type    = bool
   default = true
 }
+
+variable "include_ej_jsc_base" {
+  type    = bool
+  default = true
+}
