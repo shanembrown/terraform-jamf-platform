@@ -138,12 +138,7 @@ variable "include_ej_jsc_all_services" {
   default = true
 }
 
-variable "include_ej_jsc_uemc" {
-  type    = bool
-  default = true
-}
-
-variable "include_ej_jsc_idp_okta" {
+variable "include_ej_jsc_base" {
   type    = bool
   default = true
 }
