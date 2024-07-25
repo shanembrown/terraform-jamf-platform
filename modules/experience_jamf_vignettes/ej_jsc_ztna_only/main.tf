@@ -13,9 +13,9 @@ terraform {
 }
 
 resource "jsc_ap" "ztna_only" {
-    name             = "Jamf Connect ZTNA"
+    name = "Connect ZTNA"
     oktaconnectionid = "66a2b81cd3698b6cb78d21af"
-    privateaccess    = false
-    threatdefence    = true
+    privateaccess    = true
     datapolicy       = false
+    threatdefence    = false  
 }
