@@ -14,7 +14,7 @@ terraform {
 
 resource "jsc_ap" "content_filtering_only" {
     name             = "Content Filtering"
-    oktaconnectionid = ""
+    oktaconnectionid = "0oa71hsl3q3umwKZz5d7"
     privateaccess    = false
     threatdefence    = false
     datapolicy       = true
