@@ -14,7 +14,7 @@ terraform {
 
 resource "jsc_uemc" "jsc_uemc_initial" {
   domain = "https://rlegg.jamfcloud.com"
-  clientid = "5522111b-53bf-447b-ac95-69404fc641d4"
-  clientsecret = "uDc3h2WST7p65jnlrUcCHMI6m1oPy6qt_3G_G0n4Y-YuvTjyo9gSaKyFP0w3ixKg"
+  clientid = "5ee0c8f7-b519-44d4-ae5a-a764ac6ef784"
+  clientsecret = "e899lyH7QU7Gq1HWB3FObV74IZUlgxJ-87ZpTZWNMC_zU0eMx0qn45kdDlKomOlr"
 }
 
