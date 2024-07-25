@@ -142,3 +142,8 @@ variable "include_ej_jsc_ztna_apps" {
   type    = bool
   default = true
 }
+
+variable "include_ej_jsc_base" {
+  type    = bool
+  default = "true"
+}
