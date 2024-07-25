@@ -68,12 +68,6 @@ module "ej_jsc_base" {
   source = "./modules/experience_jamf_vignettes/ej_jsc_base"
 }
 
-## Create Jamf Security Cloud Activation Profile containing ONLY Connect ZTNA
-module "ej_jsc_ztna_only" {
-  count  = var.include_ej_jsc_ztna_only == true ? 1 : 0
-  source = "./modules/experience_jamf_vignettes/ej_jsc_ztna_only"
-}
-
 ## Create Jamf Security Cloud Activation Profile containing ONLY Category Based Content Filtering
 module "ej_jsc_dp_only" {
   count  = var.include_ej_jsc_dp_only == true ? 1 : 0

@@ -12,15 +12,9 @@ terraform {
   }
 }
 
-variable "okta_id" {
-  type = number
-  sensitive = true
-  default = var.jsc_provided_idp_client
-}
-
 resource "jsc_ap" "ztna_only" {
     name             = "Jamf Connect ZTNA"
-    oktaconnectionid = var.okta_id
+    oktaconnectionid = "66a2b81cd3698b6cb78d21af"
     privateaccess    = false
     threatdefence    = true
     datapolicy       = false
