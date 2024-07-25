@@ -12,7 +12,7 @@ terraform {
   }
 }
 
-resource "jsc_ap" "ZTNA Only" {
+resource "jsc_ap" "ztna_only" {
     name             = "Jamf Conenct ZTNA"
     oktaconnectionid = ""
     privateaccess    = true
