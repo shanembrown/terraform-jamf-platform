@@ -18,8 +18,3 @@ resource "jsc_oktaidp" "okta" {
   orgdomain = "jamf-harbor.okta.com"
 }
 
-resource "jsc_uemc" "pro_uemc" {
-  domain       = var.jamfpro_instance_url
-  clientid     = var.jamfpro_client_id
-  clientsecret = var.jamfpro_client_secret
-}
