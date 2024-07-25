@@ -12,9 +12,9 @@ terraform {
   }
 }
 
-resource "jsc_oktaidp" "okta" {
-  clientid  = "0oa1qa4x0qj2Jzeco1d8"
-  name      = "Okta IdP"
-  orgdomain = "jamf-harbor.okta.com"
+resource "jsc_uemc" "jsc_uemc_initial" {
+    clientid     = var.jamfpro_client_id
+    clientsecret = var.jamfpro_client_secret
+    domain       = var.jamfpro_instance_url
 }
 
