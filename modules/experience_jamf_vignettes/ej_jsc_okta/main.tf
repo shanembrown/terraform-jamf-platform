@@ -14,6 +14,6 @@ terraform {
 
 resource "jsc_oktaidp" "okta_idp" {
   clientid  = "0oa71hsl3q3umwKZz5d7"
-  name      = "okta idp"
+  name      = "Okta IDP Integration"
   orgdomain = "https://dev-13925600.okta.com"
 }
