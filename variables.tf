@@ -143,7 +143,7 @@ variable "include_ej_jsc_uemc" {
   default = true
 }
 
-variable "include_ej_jsc_okta" {
+variable "include_ej_jsc_idp_okta" {
   type    = bool
   default = true
 }
