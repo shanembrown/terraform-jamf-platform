@@ -54,7 +54,13 @@ variable "radar_pass" {
 variable "okta_jsc_id" {
   type      = string
   sensitive = true
-  default   = "66a2acb005cb1b0b0929295b"
+  default   = ""
+}
+
+variable "jsc_provided_idp_client" {
+  type      = number
+  sensitive = true
+  default   = "66a2b81cd3698b6cb78d21af"
 }
 
 ## Define Okta-related variables
