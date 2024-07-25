@@ -51,6 +51,12 @@ variable "radar_pass" {
   default   = ""
 }
 
+variable "okta_jsc_id" {
+  type      = string
+  sensitive = true
+  default   = "66a2acb005cb1b0b0929295b"
+}
+
 ## Define Okta-related variables
 variable "tje_okta_clientid" {
   type    = string
@@ -132,7 +138,7 @@ variable "include_ej_jsc_all_services" {
   default = true
 }
 
-variable "include_ej_jsc_base" {
+variable "include_ej_jsc_uemc" {
   type    = bool
   default = true
 }

@@ -63,9 +63,9 @@ module "ej_secure_remote_access" {
 ## Begin Jamf Security Cloud Configuration
 
 ## Create UEMC and Okta integrations
-module "ej_jsc_base" {
-  count  = var.include_ej_jsc_base == true ? 1 : 0
-  source = "./modules/experience_jamf_vignettes/ej_jsc_base"
+module "ej_jsc_uemc" {
+  count  = var.include_ej_jsc_uemc == true ? 1 : 0
+  source = "./modules/experience_jamf_vignettes/ej_jsc_uemc"
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Connect ZTNA

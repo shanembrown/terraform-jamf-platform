@@ -14,7 +14,7 @@ terraform {
 
 resource "jsc_ap" "mtd_only" {
     name             = "Mobile Threat Defense"
-    oktaconnectionid = "66a2a39905cb1b0b09292956"
+    oktaconnectionid = "66a2acb005cb1b0b0929295b"
     privateaccess    = false
     threatdefence    = true
     datapolicy       = false

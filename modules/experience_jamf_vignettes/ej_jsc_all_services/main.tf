@@ -14,7 +14,7 @@ terraform {
 
 resource "jsc_ap" "all_services" {
     name             = "Jamf Connect ZTNA and Protect"
-    oktaconnectionid = "66a2a39905cb1b0b09292956"
+    oktaconnectionid = "66a2acb005cb1b0b0929295b"
     privateaccess    = true
     threatdefence    = true
     datapolicy       = true
