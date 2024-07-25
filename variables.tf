@@ -109,4 +109,7 @@ variable "include_jsc_demo_config" {
   default = true
 }
 
-
+variable "include_ej_jsc_base" {
+  type    = bool
+  default = true
+}

@@ -14,16 +14,16 @@ terraform {
 
 ## Jamf Pro provider root configuration
 provider "jamfpro" {
-  jamfpro_instance_fqdn          = var.jamfpro_instance_url
-  auth_method =               var.jamfpro_auth_method
-  basic_auth_username = var.jamfpro_username
-  basic_auth_password = var.jamfpro_password
-  client_id                   = var.jamfpro_client_id
-  client_secret               = var.jamfpro_client_secret
-  enable_client_sdk_logs                 = false
-  hide_sensitive_data         = true # Hides sensitive data in logs
-  token_refresh_buffer_period_seconds = 5 # minutes
-  jamfpro_load_balancer_lock     = true
+  jamfpro_instance_fqdn                = var.jamfpro_instance_url
+  auth_method                          = var.jamfpro_auth_method
+  basic_auth_username                  = var.jamfpro_username
+  basic_auth_password                  = var.jamfpro_password
+  client_id                            = var.jamfpro_client_id
+  client_secret                        = var.jamfpro_client_secret
+  enable_client_sdk_logs               = false
+  hide_sensitive_data                  = true # Hides sensitive data in logs
+  token_refresh_buffer_period_seconds  = 5 # minutes
+  jamfpro_load_balancer_lock           = true
   mandatory_request_delay_milliseconds = 100
 }
 
@@ -57,6 +57,11 @@ module "ej_mobile_cis_benchmark" {
 module "ej_secure_remote_access" {
   count = var.include_ej_secure_remote_access == true ? 1 : 0
   source = "./modules/experience_jamf_vignettes/ej_secure_remote_access"
+}
+
+module "ej_jsc_base" {
+  count = var.include_ej_jsc_base == true ? 1 : 0
+  source = "./modules/experience_jamf_vignettes/ej_jsc_base"
 }
 
 ## Initialize sandbox module
