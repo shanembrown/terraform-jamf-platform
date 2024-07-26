@@ -96,12 +96,6 @@ module "ej_jsc_all_services" {
   jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
-## Create a few ZTNA Apps for Testing
-module "ej_jsc_ztna_apps" {
-  count = var.include_ej_jsc_ztna_apps == true ? 1 : 0
-  source = "./modules/experience_jamf_vignettes/ej_jsc_ztna_apps"
-}
-
 
 
 ## Initialize sandbox module
