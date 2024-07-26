@@ -78,6 +78,16 @@ variable "install_firefox" {
   default = false
 }
 
+variable "block_beta_updates" {
+  type = bool
+  default = false
+}
+
+variable "enforce_firewall_and_gatekeeper" {
+  type = bool
+  default = false
+}
+
 ## Define vingnette variables
 variable "include_jamfpro_prerequisites" {
   type    = bool

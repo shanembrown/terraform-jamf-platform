@@ -67,6 +67,8 @@ module "ow_profiles" {
   count  = var.include_onboarder_wizard == true ? 1 : 0
   source = "./modules/onboarder_wizard/ow_profiles"
   support_files_path_prefix = "modules/onboarder_wizard//ow_profiles/"
+  block_beta_updates = var.block_beta_updates
+  enforce_firewall_and_gatekeeper = var.enforce_firewall_and_gatekeeper
 }
 
 ## Initialize Experience Jamf vignette modules
