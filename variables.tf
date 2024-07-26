@@ -124,11 +124,6 @@ variable "include_jsc_demo_config" {
   default = true
 }
 
-variable "include_ej_jsc_ztna_only" {
-  type    = bool
-  default = true
-}
-
 variable "include_ej_jsc_dp_only" {
   type    = bool
   default = true
@@ -151,5 +146,10 @@ variable "include_ej_jsc_ztna_apps" {
 
 variable "include_ej_jsc_base" {
   type    = bool
-  default = "true"
+  default = true
+}
+
+variable "include_ej_jsc_ztna" {
+  type = bool
+  default = true
 }

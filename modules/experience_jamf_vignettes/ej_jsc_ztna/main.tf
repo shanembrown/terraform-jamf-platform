@@ -12,10 +12,10 @@ terraform {
   }
 }
 
-resource "jsc_ap" "ztna_only" {
-  name             = "Connect ZTNA"
-  oktaconnectionid = var.jsc_provided_idp_client_child
-  privateaccess    = true
-  threatdefence    = false
-  datapolicy       = false
+resource "jsc_ap" "ztna" {
+    name = "Connect ZTNA"
+    oktaconnectionid = var.jsc_provided_idp_client_child
+    privateaccess = true
+    threatdefence = false
+    datapolicy = false
 }

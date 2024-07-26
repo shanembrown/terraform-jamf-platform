@@ -83,9 +83,9 @@ module "ej_jsc_mtd_only" {
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Connect ZTNA
-module "ej_jsc_ztna_only" {
-  count = var.include_ej_jsc_ztna_only == true ? 1 : 0
-  source = "./modules/experience_jamf_vignettes/ej_jsc_ztna_only"
+module "ej_jsc_ztna" {
+  count = var.include_ej_jsc_ztna == true ? 1 : 0
+  source = "./modules/experience_jamf_vignettes/ej_jsc_ztna"
   jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
