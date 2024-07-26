@@ -117,34 +117,46 @@ variable "include_sandbox" {
 }
 
 
+## JSC EJ Template Variables
+variable "include_ej_jsc_config" {
+  type = bool
+  default = true
+}
 
-## JSC Variables
+
+
+## JSC Staging Variables
 variable "include_jsc_demo_config" {
   type    = bool
   default = true
 }
 
-variable "include_ej_jsc_dp_only" {
+variable "include_jsc_dp_only" {
   type    = bool
   default = true
 }
 
-variable "include_ej_jsc_mtd_only" {
+variable "include_jsc_mtd_only" {
   type    = bool
   default = true
 }
 
-variable "include_ej_jsc_all_services" {
+variable "include_jsc_all_services" {
   type    = bool
   default = true
 }
 
-variable "include_ej_jsc_base" {
+variable "include_jsc_base" {
   type    = bool
   default = true
 }
 
-variable "include_ej_jsc_ztna" {
+variable "include_jsc_ztna" {
+  type = bool
+  default = true
+}
+
+variable "include_jsc_block_pages" {
   type = bool
   default = true
 }

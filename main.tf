@@ -63,40 +63,49 @@ module "ej_secure_remote_access" {
 ## Begin Jamf Security Cloud Configuration
 
 ## Create UEMC and Okta integrations
-module "ej_jsc_base" {
-  count = var.include_ej_jsc_base == true ? 1 : 0
-  source = "./modules/experience_jamf_vignettes/ej_jsc_base"
+module "jsc_base" {
+  count = var.include_jsc_base == true ? 1 : 0
+  source = "./modules/staging_templates/jsc_base"
+}
+
+module "jsc_block_pages" {
+  count = var.include_jsc_block_pages == true ? 1 : 0
+  source = "./modules/staging_templates/jsc_block_pages"
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Category Based Content Filtering
-module "ej_jsc_dp_only" {
-  count  = var.include_ej_jsc_dp_only == true ? 1 : 0
-  source = "./modules/experience_jamf_vignettes/ej_jsc_dp_only"
+module "jsc_dp_only" {
+  count  = var.include_jsc_dp_only == true ? 1 : 0
+  source = "./modules/staging_templates/jsc_dp_only"
   jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Threat Response (MTD) 
-module "ej_jsc_mtd_only" {
-  count  = var.include_ej_jsc_mtd_only == true ? 1 : 0
-  source = "./modules/experience_jamf_vignettes/ej_jsc_mtd_only"
+module "jsc_mtd_only" {
+  count  = var.include_jsc_mtd_only == true ? 1 : 0
+  source = "./modules/staging_templates/jsc_mtd_only"
   jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Connect ZTNA
-module "ej_jsc_ztna" {
-  count = var.include_ej_jsc_ztna == true ? 1 : 0
-  source = "./modules/experience_jamf_vignettes/ej_jsc_ztna"
+module "jsc_ztna" {
+  count = var.include_jsc_ztna == true ? 1 : 0
+  source = "./modules/staging_templates/jsc_ztna"
   jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ALL JSC Services
-module "ej_jsc_all_services" {
-  count  = var.include_ej_jsc_all_services == true ? 1 : 0
-  source = "./modules/experience_jamf_vignettes/ej_jsc_all_services"
+module "jsc_all_services" {
+  count  = var.include_jsc_all_services == true ? 1 : 0
+  source = "./modules/staging_templates/jsc_all_services"
   jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
-
+## Create Jamf Security Cloud Config for Experience Jamf
+module "ej_jsc_config" {
+  count = var.include_ej_jsc_config == true ? 1 : 0
+  source = "./modules/experience_jamf_vignettes/ej_jsc_config"
+}
 
 ## Initialize sandbox module
 module "sandbox" {
