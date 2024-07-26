@@ -7,15 +7,15 @@ terraform {
     }
     jsc = {
       source = "danjamf/jsctfprovider"
-      version = "0.0.5"
+      version = "0.0.6"
     }
   }
 }
 
 resource "jsc_ap" "ztna_only" {
-    name = "Connect ZTNA"
-    oktaconnectionid = var.jsc_provided_idp_client
-    privateaccess    = true
-    datapolicy       = false
-    threatdefence    = false  
+  name             = "Connect ZTNA"
+  oktaconnectionid = var.jsc_provided_idp_client_child
+  privateaccess    = true
+  threatdefence    = false
+  datapolicy       = false
 }

@@ -7,7 +7,7 @@ terraform {
     }
     jsc = {
       source  = "danjamf/jsctfprovider"
-      version = "0.0.5"
+      version = "0.0.6"
     }
   }
 }
@@ -72,18 +72,28 @@ module "ej_jsc_base" {
 module "ej_jsc_dp_only" {
   count  = var.include_ej_jsc_dp_only == true ? 1 : 0
   source = "./modules/experience_jamf_vignettes/ej_jsc_dp_only"
+  jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Threat Response (MTD) 
 module "ej_jsc_mtd_only" {
   count  = var.include_ej_jsc_mtd_only == true ? 1 : 0
   source = "./modules/experience_jamf_vignettes/ej_jsc_mtd_only"
+  jsc_provided_idp_client_child = var.jsc_provided_idp_client
+}
+
+## Create Jamf Security Cloud Activation Profile containing ONLY Connect ZTNA
+module "ej_jsc_ztna_only" {
+  count = var.include_ej_jsc_ztna_only == true ? 1 : 0
+  source = "./modules/experience_jamf_vignettes/ej_jsc_ztna_only"
+  jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ALL JSC Services
 module "ej_jsc_all_services" {
   count  = var.include_ej_jsc_all_services == true ? 1 : 0
   source = "./modules/experience_jamf_vignettes/ej_jsc_all_services"
+  jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
 ## Create a few ZTNA Apps for Testing
