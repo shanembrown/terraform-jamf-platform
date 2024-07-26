@@ -1,12 +1,12 @@
 #!/bin/bash
 
 ## Define variables
-path="support_files/computer_config_profiles/"
-prefix="sonoma_cis_lvl1-"
+path=""
+prefix="converted"
 file=$1
 
 ## Unsign mobile config
-openssl smime -inform DER -verify -in "${path}${file}.mobileconfig" -noverify -out "${path}${prefix}${file}_unformatted.mobileconfig"
+openssl smime -inform DER -verify -in "${path}${file}" -noverify -out "${path}${prefix}${file}_unformatted.mobileconfig"
 
 ## Convert to XML
 plutil -convert xml1 "${path}${prefix}${file}_unformatted.mobileconfig"

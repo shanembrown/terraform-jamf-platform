@@ -27,7 +27,14 @@ provider "jamfpro" {
   mandatory_request_delay_milliseconds = 100
 }
 
-## Initialize Jamf Pro child modules
+## JSC provider root configuration
+provider "jsc" {
+  username = var.radar_user
+  password = var.radar_pass
+  #customerid = var.radar_customerid
+}
+
+## Initialize common modules
 module "jamfpro_prerequisites" {
   count  = var.include_jamfpro_prerequisites == true ? 1 : 0
   source = "./modules/jamfpro_prerequisites/"
@@ -36,6 +43,32 @@ module "jamfpro_prerequisites" {
 module "jamfpro_demo_config" {
   count  = var.include_jamfpro_demo_config == true ? 1 : 0
   source = "./modules/jamfpro_demo_config/"
+}
+
+module "jsc_demo_config" {
+  count                = var.include_jsc_demo_config == true ? 1 : 0
+  source               = "./modules/jsc_demo_config/"
+  jamfpro_instance_url = var.jamfpro_instance_url
+  radar_user           = var.radar_user
+  tje_okta_clientid    = var.tje_okta_clientid
+  tje_okta_orgdomain   = var.tje_okta_orgdomain
+}
+
+## Initialize Onboarding Wizard modules
+module "ow_browsers" {
+  count  = var.include_onboarder_wizard == true ? 1 : 0
+  source = "./modules/onboarder_wizard/ow_browsers"
+  support_files_path_prefix = "modules/onboarder_wizard//ow_browsers/"
+  install_chrome = var.install_chrome
+  install_firefox = var.install_firefox
+}
+
+module "ow_profiles" {
+  count  = var.include_onboarder_wizard == true ? 1 : 0
+  source = "./modules/onboarder_wizard/ow_profiles"
+  support_files_path_prefix = "modules/onboarder_wizard//ow_profiles/"
+  block_beta_updates = var.block_beta_updates
+  enforce_firewall_and_gatekeeper = var.enforce_firewall_and_gatekeeper
 }
 
 ## Initialize Experience Jamf vignette modules
@@ -47,21 +80,18 @@ module "ej_base" {
 module "ej_saas_tenancy" {
   count                     = var.include_ej_saas_tenancy == true ? 1 : 0
   source                    = "./modules/experience_jamf_vignettes/ej_saas_tenancy"
-  wizard_prefix             = var.wizard_prefix
   support_files_path_prefix = "modules/experience_jamf_vignettes/ej_saas_tenancy/"
 }
 
 module "ej_incident_response" {
   count                     = var.include_ej_incident_response == true ? 1 : 0
   source                    = "./modules/experience_jamf_vignettes/ej_incident_response"
-  wizard_prefix             = var.wizard_prefix
   support_files_path_prefix = "modules/experience_jamf_vignettes/ej_incident_response/"
 }
 
 module "ej_mac_cis_benchmark" {
   count                     = var.include_ej_mac_cis_benchmark == true ? 1 : 0
   source                    = "./modules/experience_jamf_vignettes/ej_mac_cis_benchmark"
-  wizard_prefix             = var.wizard_prefix
   support_files_path_prefix = "modules/experience_jamf_vignettes/ej_mac_cis_benchmark/"
 }
 
@@ -79,22 +109,4 @@ module "ej_secure_remote_access" {
 module "sandbox" {
   count  = var.include_sandbox == true ? 1 : 0
   source = "./modules/sandbox"
-}
-
-## JSC provider root configuration
-provider "jsc" {
-  username = var.radar_user
-  password = var.radar_pass
-  #customerid = var.radar_customerid
-}
-
-## Initialiaze JSC child modules
-module "jsc_demo_config" {
-  count                = var.include_jsc_demo_config == true ? 1 : 0
-  source               = "./modules/jsc_demo_config/"
-  jamfpro_instance_url = var.jamfpro_instance_url
-  radar_user           = var.radar_user
-  tje_okta_clientid    = var.tje_okta_clientid
-  tje_okta_orgdomain   = var.tje_okta_orgdomain
-  wizard_suffix        = var.wizard_suffix
 }

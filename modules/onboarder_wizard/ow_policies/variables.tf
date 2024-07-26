@@ -1,7 +1,6 @@
-## Define miscellaneous variables
 variable "prefix" {
   type    = string
-  default = "EJ - "
+  default = "Onboarding - "
 }
 
 variable "support_files_path_prefix" {

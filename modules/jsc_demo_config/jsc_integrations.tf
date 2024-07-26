@@ -6,24 +6,24 @@ resource "random_string" "random" {
 }
 
 resource "jsc_oktaidp" "tje_okta_config" {
-  name = "TJE ${var.wizard_suffix} ${random_string.random.result}"
+  name = "${var.prefix}Demo Tenant - ${random_string.random.result}"
   orgdomain = var.tje_okta_orgdomain
   clientid = var.tje_okta_clientid
 }
 
 ## UEM Connect integration
 resource "jamfpro_api_role" "jamfpro_api_role_sync" {
-  display_name = "JSC API Role Device Sync ${var.wizard_suffix}"
+  display_name = "${var.prefix}JSC API Role Device Sync"
   privileges   = ["Read Mac Applications", "Read Mobile Devices", "Read Mobile Device Applications", "Read Smart Mobile Device Groups", "Read Static Mobile Device Groups", "Read Computers", "Read Smart Computer Groups", "Read Static Computer Groups"]
 }
 
 resource "jamfpro_api_role" "jamfpro_api_role_signalling" {
-  display_name = "JSC API Role Signalling ${var.wizard_suffix}"
+  display_name = "${var.prefix}JSC API Role Signalling"
   privileges   = ["Update Computer Extension Attributes", "Read Computer Extension Attributes", "Delete Computer Extension Attributes", "Create Computer Extension Attributes", "Read Mobile Device Extension Attributes", "Delete Mobile Device Extension Attributes", "Create Mobile Device Extension Attributes", "Update Mobile Devices", "Update Mobile Device Extension Attributes", "Update Computers", "Update User"]
 }
 
 resource "jamfpro_api_role" "jamfpro_api_role_deploy" {
-  display_name = "JSC API Role Deploy ${var.wizard_suffix}"
+  display_name = "${var.prefix}JSC API Role Deploy"
   privileges   = ["Create iOS Configuration Profiles", "Create macOS Configuration Profiles"]
 }
 

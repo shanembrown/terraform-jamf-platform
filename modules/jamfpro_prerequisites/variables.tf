@@ -1,4 +1,4 @@
-variable "prereq_prefix" {
+variable "prefix" {
   type    = string
   default = "Prerequisites - "
 }

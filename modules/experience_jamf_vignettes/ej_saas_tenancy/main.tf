@@ -19,6 +19,6 @@ terraform {
 
 ## Create categories
 resource "jamfpro_category" "category_cis_benchmarks" {
-  name     = "${var.wizard_prefix}SaaS Tenancy Control"
+  name     = "${var.prefix}SaaS Tenancy Control"
   priority = 9
 }

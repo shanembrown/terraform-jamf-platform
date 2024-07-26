@@ -24,13 +24,13 @@ terraform {
 
 ## Create categories
 resource "jamfpro_category" "category_cis_benchmarks" {
-  name     = "${var.wizard_prefix}Mac CIS Benchmarks"
+  name     = "${var.prefix}Mac CIS Benchmarks"
   priority = 9
 }
 
 ## Create scripts
 resource "jamfpro_script" "script_cis_apply" {
-    name = "${var.wizard_prefix}Apply CIS"
+    name = "${var.prefix}Apply CIS"
     priority = "AFTER"
     script_contents = file("${var.support_files_path_prefix}support_files/computer_scripts/cis_apply.sh")
     category_id = jamfpro_category.category_cis_benchmarks.id
@@ -38,7 +38,7 @@ resource "jamfpro_script" "script_cis_apply" {
 }
 
 resource "jamfpro_script" "script_cis_remove" {
-    name = "${var.wizard_prefix}Remove CIS"
+    name = "${var.prefix}Remove CIS"
     priority = "AFTER"
     script_contents = file("${var.support_files_path_prefix}support_files/computer_scripts/cis_remove.sh")
     category_id = jamfpro_category.category_cis_benchmarks.id
@@ -46,7 +46,7 @@ resource "jamfpro_script" "script_cis_remove" {
 }
 
 resource "jamfpro_script" "script_sonoma_cis_lvl1_compliance" {
-    name = "${var.wizard_prefix}Sonoma CIS Level 1 Compliance"
+    name = "${var.prefix}Sonoma CIS Level 1 Compliance"
     priority = "AFTER"
     script_contents = file("${var.support_files_path_prefix}support_files/computer_scripts/sonoma_cis_lvl1_compliance.sh")
     category_id = jamfpro_category.category_cis_benchmarks.id
@@ -55,7 +55,7 @@ resource "jamfpro_script" "script_sonoma_cis_lvl1_compliance" {
 
 ## Create computer extension attributes
 resource "jamfpro_computer_extension_attribute" "ea_sonoma_cis_apply" {
-    name = "${var.wizard_prefix}Apply CIS Flag"
+    name = "${var.prefix}Apply CIS Flag"
     input_type = "script"
     enabled = true
     data_type = "string"
@@ -64,7 +64,7 @@ resource "jamfpro_computer_extension_attribute" "ea_sonoma_cis_apply" {
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_sonoma_cis_remove" {
-    name = "${var.wizard_prefix}Remove CIS Flag"
+    name = "${var.prefix}Remove CIS Flag"
     input_type = "script"
     enabled = true
     data_type = "string"
@@ -73,7 +73,7 @@ resource "jamfpro_computer_extension_attribute" "ea_sonoma_cis_remove" {
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_cis_failed_count" {
-    name = "${var.wizard_prefix}CIS - Compliance Failed Results Count"
+    name = "${var.prefix}CIS - Compliance Failed Results Count"
     input_type = "script"
     enabled = true
     data_type = "integer"
@@ -83,7 +83,7 @@ resource "jamfpro_computer_extension_attribute" "ea_cis_failed_count" {
 
 ## Create Smart Computer Groups
 resource "jamfpro_smart_computer_group" "group_sonoma_computers" {
-  name = "${var.wizard_prefix}CIS - Sonoma Computers"
+  name = "${var.prefix}CIS - Sonoma Computers"
   criteria {
     name          = "Operating System Version"
     search_type   = "like"
@@ -94,7 +94,7 @@ resource "jamfpro_smart_computer_group" "group_sonoma_computers" {
 }
 
 resource "jamfpro_smart_computer_group" "group_sonoma_cis_lvl1_apply" {
-  name = "${var.wizard_prefix}CIS Level 1 - Sonoma - Apply"
+  name = "${var.prefix}CIS Level 1 - Sonoma - Apply"
   criteria {
     name          = "Operating System Version"
     search_type   = "like"
@@ -112,7 +112,7 @@ resource "jamfpro_smart_computer_group" "group_sonoma_cis_lvl1_apply" {
 }
 
 resource "jamfpro_smart_computer_group" "group_sonoma_cis_lvl1_remove" {
-  name = "${var.wizard_prefix}CIS Level 1 - Sonoma - Remove"
+  name = "${var.prefix}CIS Level 1 - Sonoma - Remove"
   criteria {
     name          = "Operating System Version"
     search_type   = "like"
@@ -130,7 +130,7 @@ resource "jamfpro_smart_computer_group" "group_sonoma_cis_lvl1_remove" {
 }
 
 resource "jamfpro_smart_computer_group" "group_sonoma_cis_lvl1_non_compliant" {
-  name = "${var.wizard_prefix}CIS Level 1 - Sonoma - Non Compliant Computers"
+  name = "${var.prefix}CIS Level 1 - Sonoma - Non Compliant Computers"
   criteria {
     name          = "Operating System Version"
     search_type   = "like"
@@ -148,7 +148,7 @@ resource "jamfpro_smart_computer_group" "group_sonoma_cis_lvl1_non_compliant" {
 }
 
 resource "jamfpro_smart_computer_group" "group_sonoma_cis_lvl1_profiles_present" {
-  name = "${var.wizard_prefix}CIS Level 1 - Sonoma - Profiles Present"
+  name = "${var.prefix}CIS Level 1 - Sonoma - Profiles Present"
     criteria {
     name          = "Profile Name"
     search_type   = "has"
@@ -160,7 +160,7 @@ resource "jamfpro_smart_computer_group" "group_sonoma_cis_lvl1_profiles_present"
 
 ## Create policies
 resource "jamfpro_policy" "policy_cis_apply" {
-  name                          = "${var.wizard_prefix}CIS Level 1 - Apply (Sonoma)"
+  name                          = "${var.prefix}CIS Level 1 - Apply (Sonoma)"
   enabled                       = true
   trigger_other                 = "sonomacis"
   frequency                     = "Ongoing"
@@ -199,7 +199,7 @@ resource "jamfpro_policy" "policy_cis_apply" {
 }
 
 resource "jamfpro_policy" "policy_cis_remove" {
-  name                          = "${var.wizard_prefix}CIS Level 1 - Remove (Sonoma)"
+  name                          = "${var.prefix}CIS Level 1 - Remove (Sonoma)"
   enabled                       = true
   trigger_other                 = "sonomacisremove"
   frequency                     = "Ongoing"
@@ -238,7 +238,7 @@ resource "jamfpro_policy" "policy_cis_remove" {
 }
 
 resource "jamfpro_policy" "policy_sonoma_cis_lvl1_audit" {
-  name                          = "${var.wizard_prefix}CIS Level 1 - Audit (Sonoma)"
+  name                          = "${var.prefix}CIS Level 1 - Audit (Sonoma)"
   enabled                       = true
   trigger_other                 = "@CIS_audit"
   frequency                     = "Ongoing"
@@ -276,7 +276,7 @@ resource "jamfpro_policy" "policy_sonoma_cis_lvl1_audit" {
 }
 
 resource "jamfpro_policy" "policy_sonoma_cis_lvl1_remediation" {
-  name                          = "${var.wizard_prefix}CIS Level 1 - Remediation (Sonoma)"
+  name                          = "${var.prefix}CIS Level 1 - Remediation (Sonoma)"
   enabled                       = true
   trigger_checkin = true
   frequency                     = "Ongoing"
@@ -332,7 +332,7 @@ locals {
 ## Create configuration profiles
 resource "jamfpro_macos_configuration_profile_plist" "sonoma_cis_lvl1" {
   for_each    = local.cis_lvl1_macos_14_dict
-  name        = "${var.wizard_prefix}Sonoma_cis_lvl1 - ${each.key}"
+  name        = "${var.prefix}Sonoma_cis_lvl1 - ${each.key}"
   distribution_method = "Install Automatically"
   redeploy_on_update = "Newly Assigned"
   category_id = jamfpro_category.category_cis_benchmarks.id

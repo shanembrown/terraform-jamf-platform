@@ -6,4 +6,7 @@ variable "tje_okta_clientid" {}
 
 variable "tje_okta_orgdomain" {}
 
-variable "wizard_suffix" {}
+variable "prefix" {
+  type    = string
+  default = "EJ - "
+}
