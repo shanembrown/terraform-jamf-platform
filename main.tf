@@ -149,10 +149,11 @@ module "sandbox" {
 
 ## Initialiaze JSC child modules
 module "ej_jsc_config" {
-  count                = var.include_jsc_demo_config == true ? 1 : 0
-  source               = "./modules/jsc_demo_config/"
+  count                = var.include_ej_jsc_config == true ? 1 : 0
+  source               = "./modules/experience_jamf_vignettes/ej_jsc_config"
+  jamfpro_client_id    = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
   jamfpro_instance_url = var.jamfpro_instance_url
-  radar_user           = var.radar_user
   tje_okta_clientid    = var.tje_okta_clientid
   tje_okta_orgdomain   = var.tje_okta_orgdomain
   /* wizard_suffix        = var.wizard_suffix */ ## Cannot resolve error here

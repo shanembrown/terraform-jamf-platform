@@ -14,14 +14,15 @@ terraform {
 
 resource "jsc_uemc" "jsc_uemc_initial" {
    domain       = var.jamfpro_instance_url
-   clientid     = var.clientid
-   clientsecret = var.clientsecret
+   clientid     = var.jamfpro_client_id
+   clientsecret = var.jamfpro_client_secret
 }
 
 resource "jsc_oktaidp" "okta_idp_base" {
   clientid  = var.tje_okta_clientid
   name      = "Okta IDP Integration"
   orgdomain = var.tje_okta_orgdomain
+  depends_on = [ jsc_uemc.jsc_uemc_initial ]
 }
 
 resource "jsc_ap" "all_services" {
@@ -30,6 +31,7 @@ resource "jsc_ap" "all_services" {
     privateaccess    = true
     threatdefence    = true
     datapolicy       = true
+    depends_on = [ jsc_oktaidp.okta_idp_base ]
 }
 
 resource "jsc_blockpage" "data_block" {
@@ -38,6 +40,7 @@ resource "jsc_blockpage" "data_block" {
     type = "block"
     show_requesturl = true
     show_classification = true
+    depends_on = [ jsc_ap.all_services ]
 }
 
 resource "jsc_blockpage" "secure_block" {
