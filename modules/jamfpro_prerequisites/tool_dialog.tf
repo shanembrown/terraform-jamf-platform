@@ -7,36 +7,36 @@ It will do the following:
 
 ## Upload packages
 resource "jamfpro_package" "package_dialog" {
-    package_name = "${var.prefix}Dialog.pkg"
-    info = "Version 2.5.0 - June 11 2024"
-    category_id = jamfpro_category.category_prerequisites.id
-    package_file_source = "https://github.com/swiftDialog/swiftDialog/releases/download/v2.5.0/dialog-2.5.0-4768.pkg"
-    os_install = false
-    fill_user_template = false
-    priority = 10
-    reboot_required = false
-    suppress_eula = false
-    suppress_from_dock = false
-    suppress_registration = false
-    suppress_updates = false
+  package_name          = "${var.prefix}Dialog.pkg"
+  info                  = "Version 2.5.0 - June 11 2024"
+  category_id           = jamfpro_category.category_prerequisites.id
+  package_file_source   = "https://github.com/swiftDialog/swiftDialog/releases/download/v2.5.0/dialog-2.5.0-4768.pkg"
+  os_install            = false
+  fill_user_template    = false
+  priority              = 10
+  reboot_required       = false
+  suppress_eula         = false
+  suppress_from_dock    = false
+  suppress_registration = false
+  suppress_updates      = false
 }
 
 ## Create policies
 resource "jamfpro_policy" "policy_install_dialog" {
-  name                          = "${var.prefix}Install Dialog Tool"
-  category_id = jamfpro_category.category_prerequisites.id
-  enabled                       = true
-  trigger_enrollment_complete   = true
-  trigger_checkin = true
-  trigger_other                 = "@installDialog" // "USER_INITIATED" for self service trigger , "EVENT" for an event trigger
-  frequency                     = "Once per computer"
-  retry_event                   = "check-in"
-  retry_attempts                = 3
-  notify_on_each_failed_retry   = false
+  name                        = "${var.prefix}Install Dialog Tool"
+  category_id                 = jamfpro_category.category_prerequisites.id
+  enabled                     = true
+  trigger_enrollment_complete = true
+  trigger_checkin             = true
+  trigger_other               = "@installDialog" // "USER_INITIATED" for self service trigger , "EVENT" for an event trigger
+  frequency                   = "Once per computer"
+  retry_event                 = "check-in"
+  retry_attempts              = 3
+  notify_on_each_failed_retry = false
 
 
   scope {
-    all_computers = false
+    all_computers      = false
     computer_group_ids = [1]
   }
 

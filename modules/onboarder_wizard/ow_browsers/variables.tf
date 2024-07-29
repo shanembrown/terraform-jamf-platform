@@ -9,11 +9,11 @@ variable "support_files_path_prefix" {
 }
 
 variable "install_chrome" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "install_firefox" {
-  type = bool
+  type    = bool
   default = false
 }

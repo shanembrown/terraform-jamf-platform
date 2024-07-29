@@ -1,11 +1,11 @@
 resource "jamfpro_site" "site_production" {
-    name = "Production"
+  name = "Production"
 }
 
 resource "jamfpro_site" "site_staging" {
-    name = "Staging"
+  name = "Staging"
 }
 
 resource "jamfpro_site" "site_sandbox" {
-    name = "Sandbox"
+  name = "Sandbox"
 }

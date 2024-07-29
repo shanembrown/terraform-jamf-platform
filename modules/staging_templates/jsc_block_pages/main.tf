@@ -6,54 +6,54 @@ terraform {
       version = "~> 0.1.5"
     }
     jsc = {
-      source = "danjamf/jsctfprovider"
+      source  = "danjamf/jsctfprovider"
       version = "0.0.11"
     }
   }
 }
 
 resource "jsc_blockpage" "data_block" {
-    title = "Content Blocked"
-    description = "Your Text Here"
-    type = "block"
-    show_requesturl = true
-    show_classification = true
-    
+  title               = "Content Blocked"
+  description         = "Your Text Here"
+  type                = "block"
+  show_requesturl     = true
+  show_classification = true
+
 }
 
 resource "jsc_blockpage" "secure_block" {
-  title = "Security Risk"
-  description = "Your Text Here"
-  type = "secureBlock"
-  show_requesturl = false
+  title               = "Security Risk"
+  description         = "Your Text Here"
+  type                = "secureBlock"
+  show_requesturl     = false
   show_classification = true
-  depends_on = [ jsc_blockpage.data_block ]
+  depends_on          = [jsc_blockpage.data_block]
 }
 
 resource "jsc_blockpage" "cap" {
-  title = "Data Limit Reached"
-  description = "Your Text Here"
-  type = "cap"
-  show_requesturl = true
+  title               = "Data Limit Reached"
+  description         = "Your Text Here"
+  type                = "cap"
+  show_requesturl     = true
   show_classification = true
-  depends_on = [ jsc_blockpage.secure_block ]
+  depends_on          = [jsc_blockpage.secure_block]
 }
 
 resource "jsc_blockpage" "device_risk" {
-  title = "Access Blocked Due to Device Risk"
-  description = "Your Text Here"
-  type = "deviceRisk"
-  show_requesturl = true
+  title               = "Access Blocked Due to Device Risk"
+  description         = "Your Text Here"
+  type                = "deviceRisk"
+  show_requesturl     = true
   show_classification = true
-  depends_on = [ jsc_blockpage.cap ]
+  depends_on          = [jsc_blockpage.cap]
 }
 
 resource "jsc_blockpage" "mangement_block" {
-  title = "Un-Managed Device - Access Restricted"
-  description = "Your Text Here"
-  type = "deviceManagement"
-  show_requesturl = true
+  title               = "Un-Managed Device - Access Restricted"
+  description         = "Your Text Here"
+  type                = "deviceManagement"
+  show_requesturl     = true
   show_classification = true
-  depends_on = [ jsc_blockpage.device_risk ]
+  depends_on          = [jsc_blockpage.device_risk]
 }
 
