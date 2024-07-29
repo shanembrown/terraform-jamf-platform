@@ -26,6 +26,7 @@ resource "jsc_blockpage" "secure_block" {
   type = "secureBlock"
   show_requesturl = false
   show_classification = true
+  depends_on = [ jsc_blockpage.data_block ]
 }
 
 resource "jsc_blockpage" "cap" {
@@ -34,6 +35,7 @@ resource "jsc_blockpage" "cap" {
   type = "cap"
   show_requesturl = true
   show_classification = true
+  depends_on = [ jsc_blockpage.secure_block ]
 }
 
 resource "jsc_blockpage" "device_risk" {
@@ -42,6 +44,7 @@ resource "jsc_blockpage" "device_risk" {
   type = "deviceRisk"
   show_requesturl = true
   show_classification = true
+  depends_on = [ jsc_blockpage.cap ]
 }
 
 resource "jsc_blockpage" "mangement_block" {
@@ -50,5 +53,6 @@ resource "jsc_blockpage" "mangement_block" {
   type = "deviceManagement"
   show_requesturl = true
   show_classification = true
+  depends_on = [ jsc_blockpage.device_risk ]
 }
 

@@ -99,8 +99,13 @@ module "ej_secure_remote_access" {
 
 ## Create UEMC and Okta integrations
 module "jsc_base" {
-  count  = var.include_jsc_base == true ? 1 : 0
-  source = "./modules/staging_templates/jsc_base"
+  count                = var.include_jsc_base == true ? 1 : 0
+  source               = "./modules/staging_templates/jsc_base"
+  tje_okta_clientid    = var.tje_okta_clientid
+  tje_okta_orgdomain   = var.tje_okta_orgdomain
+  jamfpro_instance_url = var.jamfpro_instance_url
+  clientid             = var.jamfpro_client_id
+  clientsecret         = var.jamfpro_client_secret
 }
 
 module "jsc_block_pages" {
@@ -143,7 +148,7 @@ module "sandbox" {
 }
 
 ## Initialiaze JSC child modules
-module "jsc_config" {
+module "ej_jsc_config" {
   count                = var.include_jsc_demo_config == true ? 1 : 0
   source               = "./modules/jsc_demo_config/"
   jamfpro_instance_url = var.jamfpro_instance_url

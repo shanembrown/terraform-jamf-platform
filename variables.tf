@@ -181,6 +181,6 @@ variable "jsc_provided_idp_client" {
 }
 
 variable "wizard_suffix" {
-  type = string
+  type    = string
   default = ""
 }
