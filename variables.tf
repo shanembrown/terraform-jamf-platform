@@ -46,9 +46,9 @@ variable "radar_user" {
 }
 
 variable "radar_pass" {
-  type = string
+  type      = string
   sensitive = true
-  default = ""
+  default   = ""
 }
 
 ## Define Okta-related variables
@@ -69,22 +69,22 @@ variable "include_onboarder_wizard" {
 }
 
 variable "install_chrome" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "install_firefox" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "block_beta_updates" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "enforce_firewall_and_gatekeeper" {
-  type = bool
+  type    = bool
   default = false
 }
 
@@ -135,9 +135,52 @@ variable "include_sandbox" {
   default = false
 }
 
-variable "include_jsc_demo_config" {
+variable "include_jamfpro_demo_config" {
   type    = bool
   default = false
 }
 
+variable "include_jsc_dp_only" {
+  type    = bool
+  default = false
+}
 
+variable "include_jsc_mtd_only" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_all_services" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_base" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ztna" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_block_pages" {
+  type    = bool
+  default = false
+}
+
+variable "include_ej_jsc_config" {
+  type    = bool
+  default = false
+}
+
+variable "jsc_provided_idp_client" {
+  type    = string
+  default = ""
+}
+
+variable "wizard_suffix" {
+  type = string
+  default = ""
+}
