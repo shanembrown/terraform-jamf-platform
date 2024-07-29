@@ -7,7 +7,7 @@ terraform {
     }
     jsc = {
       source = "danjamf/jsctfprovider"
-      version = "0.0.9"
+      version = "0.0.11"
     }
   }
 }
