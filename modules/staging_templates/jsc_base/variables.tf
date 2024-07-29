@@ -1,65 +1,65 @@
 variable "jamfpro_instance_url" {
-  type = string
+  type      = string
   sensitive = true
-  default = ""
+  default   = ""
 }
 
 variable "radar_user" {
-  type = string
+  type      = string
   sensitive = true
-  default = ""
+  default   = ""
 }
 
 variable "tje_okta_clientid" {
-  type = string
+  type      = string
   sensitive = true
-  default = ""
+  default   = ""
 }
 
 variable "tje_okta_orgdomain" {
-  type = string
+  type      = string
   sensitive = true
-  default = ""
+  default   = ""
 }
 
 variable "wizard_suffix" {
-  type = string
+  type      = string
   sensitive = true
-  default = ""
+  default   = ""
 }
 
 variable "clientid" {
-  type = string
+  type      = string
   sensitive = true
-  default = ""
+  default   = ""
 }
 
 variable "clientsecret" {
-  type = string
+  type      = string
   sensitive = true
-  default = ""
+  default   = ""
 }
 
 variable "jamfpro_instance_fqdn" {
-  type = string
+  type      = string
   sensitive = true
-  default = ""
+  default   = ""
 }
 
 variable "auth_method" {
-  type = string
+  type      = string
   sensitive = true
-  default = ""
+  default   = ""
 }
 
 variable "basic_auth_password" {
-  type = string
+  type      = string
   sensitive = true
-  default = ""
+  default   = ""
 }
 
 variable "basic_auth_username" {
-  type = string
+  type      = string
   sensitive = true
-  default = ""
+  default   = ""
 }

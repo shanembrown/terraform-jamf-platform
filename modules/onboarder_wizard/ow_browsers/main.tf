@@ -14,8 +14,8 @@ terraform {
 
 ## Create dict based on selected items only
 locals {
-  chrome_dict  = var.install_chrome ? { "Google Chrome" = "https://dl.google.com/dl/chrome/mac/universal/stable/gcem/GoogleChrome.pkg" } : {}
-  firefox_dict = var.install_firefox ? { "Mozilla Firefox" = "https://download.mozilla.org/?product=firefox-pkg-latest-ssl&os=osx" } : {}
+  chrome_dict           = var.install_chrome ? { "Google Chrome" = "https://dl.google.com/dl/chrome/mac/universal/stable/gcem/GoogleChrome.pkg" } : {}
+  firefox_dict          = var.install_firefox ? { "Mozilla Firefox" = "https://download.mozilla.org/?product=firefox-pkg-latest-ssl&os=osx" } : {}
   browser_packages_dict = merge(local.chrome_dict, local.firefox_dict)
 
   any_browser_selected = var.install_chrome || var.install_firefox
@@ -23,44 +23,44 @@ locals {
 
 ## Create category
 resource "jamfpro_category" "category_browsers" {
-  count = local.any_browser_selected ? 1 : 0
+  count    = local.any_browser_selected ? 1 : 0
   name     = "Browsers"
   priority = 9
 }
 
 ## Upload packages
 resource "jamfpro_package" "browser_apps" {
-    for_each = local.browser_packages_dict
-    package_name = "${var.prefix}${each.key}"
-    info = ""
-    category_id = jamfpro_category.category_browsers[0].id
-    package_file_source = each.value
-    os_install = false
-    fill_user_template = false
-    priority = 10
-    reboot_required = false
-    suppress_eula = false
-    suppress_from_dock = false
-    suppress_registration = false
-    suppress_updates = false
+  for_each              = local.browser_packages_dict
+  package_name          = "${var.prefix}${each.key}"
+  info                  = ""
+  category_id           = jamfpro_category.category_browsers[0].id
+  package_file_source   = each.value
+  os_install            = false
+  fill_user_template    = false
+  priority              = 10
+  reboot_required       = false
+  suppress_eula         = false
+  suppress_from_dock    = false
+  suppress_registration = false
+  suppress_updates      = false
 }
 
 ## Create policies
 resource "jamfpro_policy" "browser_installs" {
-  for_each = local.browser_packages_dict
-  name                          = "${var.prefix}${each.key}"
-  category_id = jamfpro_category.category_browsers[0].id
-  enabled                       = true
-  trigger_checkin = true
-  trigger_other                 = "" // "USER_INITIATED" for self service trigger , "EVENT" for an event trigger
-  frequency                     = "Once per computer"
-  retry_event                   = "check-in"
-  retry_attempts                = 3
-  notify_on_each_failed_retry   = false
+  for_each                    = local.browser_packages_dict
+  name                        = "${var.prefix}${each.key}"
+  category_id                 = jamfpro_category.category_browsers[0].id
+  enabled                     = true
+  trigger_checkin             = true
+  trigger_other               = "" // "USER_INITIATED" for self service trigger , "EVENT" for an event trigger
+  frequency                   = "Once per computer"
+  retry_event                 = "check-in"
+  retry_attempts              = 3
+  notify_on_each_failed_retry = false
 
 
   scope {
-    all_computers = false
+    all_computers      = false
     computer_group_ids = [1]
   }
 

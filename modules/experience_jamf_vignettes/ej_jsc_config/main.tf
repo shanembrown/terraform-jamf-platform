@@ -6,7 +6,7 @@ terraform {
       version = "~> 0.1.5"
     }
     jsc = {
-      source = "danjamf/jsctfprovider"
+      source  = "danjamf/jsctfprovider"
       version = "0.0.11"
     }
   }
@@ -50,30 +50,30 @@ resource "jsc_uemc" "initial_uemc" {
   domain       = var.jamfpro_instance_url
   clientid     = data.jamfpro_api_integration.jamf_pro_api_integration_001_data.client_id
   clientsecret = data.jamfpro_api_integration.jamf_pro_api_integration_001_data.client_secret
-  depends_on = [ jamfpro_api_integration.jamfpro_api_integration_jsc ]
+  depends_on   = [jamfpro_api_integration.jamfpro_api_integration_jsc]
 }
 
 resource "jsc_oktaidp" "okta_idp_base" {
-  clientid    = var.tje_okta_clientid
-  name        = "Okta IDP Integration"
-  orgdomain   = var.tje_okta_orgdomain
+  clientid  = var.tje_okta_clientid
+  name      = "Okta IDP Integration"
+  orgdomain = var.tje_okta_orgdomain
 }
 
 resource "jsc_ap" "all_services" {
-    name             = "Jamf Connect ZTNA and Protect"
-    oktaconnectionid = jsc_oktaidp.okta_idp_base.id
-    privateaccess    = true
-    threatdefence    = true
-    datapolicy       = true
+  name             = "Jamf Connect ZTNA and Protect"
+  oktaconnectionid = jsc_oktaidp.okta_idp_base.id
+  privateaccess    = true
+  threatdefence    = true
+  datapolicy       = true
 }
 
 resource "jsc_blockpage" "data_block" {
-    title                 = "Content Blocked"
-    description           = "This site is blocked by an administrator-defined Internet content policy. You are able to customize this policy – and even this message – in your organization's Jamf Security Cloud console."
-    logo                  = var.block_page_logo
-    type                  = "block"
-    show_requesturl       = true
-    show_classification   = true
+  title               = "Content Blocked"
+  description         = "This site is blocked by an administrator-defined Internet content policy. You are able to customize this policy – and even this message – in your organization's Jamf Security Cloud console."
+  logo                = var.block_page_logo
+  type                = "block"
+  show_requesturl     = true
+  show_classification = true
 }
 
 resource "jsc_blockpage" "secure_block" {
@@ -83,7 +83,7 @@ resource "jsc_blockpage" "secure_block" {
   type                = "secureBlock"
   show_requesturl     = false
   show_classification = true
-  depends_on          = [ jsc_blockpage.data_block ]
+  depends_on          = [jsc_blockpage.data_block]
 }
 
 resource "jsc_blockpage" "cap" {
@@ -93,7 +93,7 @@ resource "jsc_blockpage" "cap" {
   type                = "cap"
   show_requesturl     = true
   show_classification = true
-  depends_on          = [ jsc_blockpage.secure_block ]
+  depends_on          = [jsc_blockpage.secure_block]
 }
 
 resource "jsc_blockpage" "device_risk" {
@@ -103,7 +103,7 @@ resource "jsc_blockpage" "device_risk" {
   type                = "deviceRisk"
   show_requesturl     = true
   show_classification = true
-  depends_on          = [ jsc_blockpage.cap ]
+  depends_on          = [jsc_blockpage.cap]
 }
 
 resource "jsc_blockpage" "mangement_block" {
@@ -113,6 +113,6 @@ resource "jsc_blockpage" "mangement_block" {
   type                = "deviceManagement"
   show_requesturl     = true
   show_classification = true
-  depends_on          = [ jsc_blockpage.device_risk ]
+  depends_on          = [jsc_blockpage.device_risk]
 }
 

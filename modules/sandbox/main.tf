@@ -16,14 +16,14 @@ resource "jamfpro_category" "test_category" {
 
 ## Deploy demo policy
 resource "jamfpro_policy" "test_policy" {
-  name                          = "Test policy"
-  enabled                       = true
-  trigger_enrollment_complete   = true
-  frequency                     = "Once per computer"
-  category_id = jamfpro_category.test_category.id
+  name                        = "Test policy"
+  enabled                     = true
+  trigger_enrollment_complete = true
+  frequency                   = "Once per computer"
+  category_id                 = jamfpro_category.test_category.id
 
   scope {
-    all_computers = false
+    all_computers      = false
     computer_group_ids = [1]
   }
 

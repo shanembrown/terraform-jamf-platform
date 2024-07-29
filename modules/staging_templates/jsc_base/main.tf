@@ -6,7 +6,7 @@ terraform {
       version = "~> 0.1.5"
     }
     jsc = {
-      source = "danjamf/jsctfprovider"
+      source  = "danjamf/jsctfprovider"
       version = "0.0.11"
     }
   }
@@ -50,7 +50,7 @@ resource "jsc_uemc" "initial_uemc" {
   domain       = var.jamfpro_instance_url
   clientid     = data.jamfpro_api_integration.jamf_pro_api_integration_001_data.client_id
   clientsecret = data.jamfpro_api_integration.jamf_pro_api_integration_001_data.client_secret
-  depends_on = [ jamfpro_api_integration.jamfpro_api_integration_jsc ]
+  depends_on   = [jamfpro_api_integration.jamfpro_api_integration_jsc]
 }
 
 resource "jsc_oktaidp" "okta_idp_base" {

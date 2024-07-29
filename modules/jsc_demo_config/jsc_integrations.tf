@@ -6,9 +6,9 @@ resource "random_string" "random" {
 }
 
 resource "jsc_oktaidp" "tje_okta_config" {
-  name = "${var.prefix}Demo Tenant - ${random_string.random.result}"
+  name      = "${var.prefix}Demo Tenant - ${random_string.random.result}"
   orgdomain = var.tje_okta_orgdomain
-  clientid = var.tje_okta_clientid
+  clientid  = var.tje_okta_clientid
 }
 
 ## UEM Connect integration
@@ -35,11 +35,11 @@ resource "jamfpro_api_integration" "jamfpro_api_integration_jsc" {
 }
 
 data "jamfpro_api_integration" "jamfpro_api_client_idandsecret" {
-    id = jamfpro_api_integration.jamfpro_api_integration_jsc.id
+  id = jamfpro_api_integration.jamfpro_api_integration_jsc.id
 }
 
 resource "jsc_uemc" "my_uemc_config" {
-  count = var.radar_user != "" ? 1 : 0
+  count        = var.radar_user != "" ? 1 : 0
   domain       = var.jamfpro_instance_url
   clientid     = data.jamfpro_api_integration.jamfpro_api_client_idandsecret.client_id
   clientsecret = data.jamfpro_api_integration.jamfpro_api_client_idandsecret.client_secret

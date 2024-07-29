@@ -9,11 +9,11 @@ variable "support_files_path_prefix" {
 }
 
 variable "block_beta_updates" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "enforce_firewall_and_gatekeeper" {
-  type = bool
+  type    = bool
   default = false
 }
