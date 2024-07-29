@@ -5,7 +5,7 @@ Terraform vignette for the "Experience Jamf (EJ)" environment. This vignette dep
 Provider versions used in this release:
 
 - deploymenttheory/jamfpro v0.1.5
-- danjamf/jsctfprovider v0.0.5
+- danjamf/jsctfprovider v0.0.11
 
 ## Prerequisites
 

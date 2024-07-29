@@ -7,7 +7,7 @@ terraform {
     }
     jsc = {
       source  = "danjamf/jsctfprovider"
-      version = "0.0.5"
+      version = "0.0.11"
     }
   }
 }
@@ -22,8 +22,8 @@ provider "jamfpro" {
   client_secret                        = var.jamfpro_client_secret
   enable_client_sdk_logs               = false
   hide_sensitive_data                  = true # Hides sensitive data in logs
-  token_refresh_buffer_period_seconds  = 300
-  jamfpro_load_balancer_lock           = false
+  token_refresh_buffer_period_seconds  = 5    # minutes
+  jamfpro_load_balancer_lock           = true
   mandatory_request_delay_milliseconds = 100
 }
 
@@ -45,29 +45,20 @@ module "jamfpro_demo_config" {
   source = "./modules/jamfpro_demo_config/"
 }
 
-module "jsc_demo_config" {
-  count                = var.include_jsc_demo_config == true ? 1 : 0
-  source               = "./modules/jsc_demo_config/"
-  jamfpro_instance_url = var.jamfpro_instance_url
-  radar_user           = var.radar_user
-  tje_okta_clientid    = var.tje_okta_clientid
-  tje_okta_orgdomain   = var.tje_okta_orgdomain
-}
-
 ## Initialize Onboarding Wizard modules
 module "ow_browsers" {
-  count  = var.include_onboarder_wizard == true ? 1 : 0
-  source = "./modules/onboarder_wizard/ow_browsers"
+  count                     = var.include_onboarder_wizard == true ? 1 : 0
+  source                    = "./modules/onboarder_wizard/ow_browsers"
   support_files_path_prefix = "modules/onboarder_wizard//ow_browsers/"
-  install_chrome = var.install_chrome
-  install_firefox = var.install_firefox
+  install_chrome            = var.install_chrome
+  install_firefox           = var.install_firefox
 }
 
 module "ow_profiles" {
-  count  = var.include_onboarder_wizard == true ? 1 : 0
-  source = "./modules/onboarder_wizard/ow_profiles"
-  support_files_path_prefix = "modules/onboarder_wizard//ow_profiles/"
-  block_beta_updates = var.block_beta_updates
+  count                           = var.include_onboarder_wizard == true ? 1 : 0
+  source                          = "./modules/onboarder_wizard/ow_profiles"
+  support_files_path_prefix       = "modules/onboarder_wizard//ow_profiles/"
+  block_beta_updates              = var.block_beta_updates
   enforce_firewall_and_gatekeeper = var.enforce_firewall_and_gatekeeper
 }
 
@@ -84,15 +75,13 @@ module "ej_saas_tenancy" {
 }
 
 module "ej_incident_response" {
-  count                     = var.include_ej_incident_response == true ? 1 : 0
-  source                    = "./modules/experience_jamf_vignettes/ej_incident_response"
-  support_files_path_prefix = "modules/experience_jamf_vignettes/ej_incident_response/"
+  count  = var.include_ej_incident_response == true ? 1 : 0
+  source = "./modules/experience_jamf_vignettes/ej_incident_response"
 }
 
 module "ej_mac_cis_benchmark" {
-  count                     = var.include_ej_mac_cis_benchmark == true ? 1 : 0
-  source                    = "./modules/experience_jamf_vignettes/ej_mac_cis_benchmark"
-  support_files_path_prefix = "modules/experience_jamf_vignettes/ej_mac_cis_benchmark/"
+  count  = var.include_ej_mac_cis_benchmark == true ? 1 : 0
+  source = "./modules/experience_jamf_vignettes/ej_mac_cis_benchmark"
 }
 
 module "ej_mobile_cis_benchmark" {
@@ -105,8 +94,68 @@ module "ej_secure_remote_access" {
   source = "./modules/experience_jamf_vignettes/ej_secure_remote_access"
 }
 
+
+## Begin Jamf Security Cloud Configuration
+
+## Create UEMC and Okta integrations
+module "jsc_base" {
+  count                = var.include_jsc_base == true ? 1 : 0
+  source               = "./modules/staging_templates/jsc_base"
+  tje_okta_clientid    = var.tje_okta_clientid
+  tje_okta_orgdomain   = var.tje_okta_orgdomain
+  jamfpro_instance_url = var.jamfpro_instance_url
+  clientid             = var.jamfpro_client_id
+  clientsecret         = var.jamfpro_client_secret
+}
+
+module "jsc_block_pages" {
+  count           = var.include_jsc_block_pages == true ? 1 : 0
+  source          = "./modules/staging_templates/jsc_block_pages"
+  block_page_logo = var.block_page_logo
+}
+
+## Create Jamf Security Cloud Activation Profile containing ONLY Category Based Content Filtering
+module "jsc_dp_only" {
+  count                         = var.include_jsc_dp_only == true ? 1 : 0
+  source                        = "./modules/staging_templates/jsc_dp_only"
+  jsc_provided_idp_client_child = var.jsc_provided_idp_client
+}
+
+## Create Jamf Security Cloud Activation Profile containing ONLY Threat Response (MTD) 
+module "jsc_mtd_only" {
+  count                         = var.include_jsc_mtd_only == true ? 1 : 0
+  source                        = "./modules/staging_templates/jsc_mtd_only"
+  jsc_provided_idp_client_child = var.jsc_provided_idp_client
+}
+
+## Create Jamf Security Cloud Activation Profile containing ONLY Connect ZTNA
+module "jsc_ztna" {
+  count                         = var.include_jsc_ztna == true ? 1 : 0
+  source                        = "./modules/staging_templates/jsc_ztna"
+  jsc_provided_idp_client_child = var.jsc_provided_idp_client
+}
+
+## Create Jamf Security Cloud Activation Profile containing ALL JSC Services
+module "jsc_all_services" {
+  count                         = var.include_jsc_all_services == true ? 1 : 0
+  source                        = "./modules/staging_templates/jsc_all_services"
+  jsc_provided_idp_client_child = var.jsc_provided_idp_client
+}
+
 ## Initialize sandbox module
 module "sandbox" {
   count  = var.include_sandbox == true ? 1 : 0
   source = "./modules/sandbox"
 }
+
+## Initialiaze JSC child modules
+module "ej_jsc_config" {
+  count                 = var.include_ej_jsc_config == true ? 1 : 0
+  source                = "./modules/experience_jamf_vignettes/ej_jsc_config"
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  tje_okta_clientid     = var.tje_okta_clientid
+  tje_okta_orgdomain    = var.tje_okta_orgdomain
+  block_page_logo       = var.block_page_logo
+  /* wizard_suffix         = var.wizard_suffix */
+}
+
