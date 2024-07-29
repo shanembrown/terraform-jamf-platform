@@ -46,21 +46,9 @@ variable "radar_user" {
 }
 
 variable "radar_pass" {
-  type      = string
+  type = string
   sensitive = true
-  default   = ""
-}
-
-variable "okta_jsc_id" {
-  type      = string
-  sensitive = true
-  default   = ""
-}
-
-variable "jsc_provided_idp_client" {
-    type = string
-    sensitive = true
-    default = ""
+  default = ""
 }
 
 ## Define Okta-related variables
@@ -74,89 +62,82 @@ variable "tje_okta_orgdomain" {
   default = "jamf-harbor.okta.com"
 }
 
-## Define miscellaneous variables
-variable "wizard_suffix" {
-  type    = string
-  default = " - TJE Provided"
+## Define onboarder wizard variables
+variable "include_onboarder_wizard" {
+  type    = bool
+  default = false
+}
+
+variable "install_chrome" {
+  type = bool
+  default = false
+}
+
+variable "install_firefox" {
+  type = bool
+  default = false
+}
+
+variable "block_beta_updates" {
+  type = bool
+  default = false
+}
+
+variable "enforce_firewall_and_gatekeeper" {
+  type = bool
+  default = false
 }
 
 ## Define vingnette variables
-
-variable "include_jamfpro_demo_config" {
+variable "include_jamfpro_prerequisites" {
   type    = bool
-  default = true
-}
-variable "include_ej_incident_response" {
-  type    = bool
-  default = true
+  default = false
 }
 
 variable "include_ej_base" {
   type    = bool
-  default = true
+  default = false
+}
+
+variable "include_ej_saas_tenancy" {
+  type    = bool
+  default = false
+}
+
+variable "include_ej_incident_response" {
+  type    = bool
+  default = false
 }
 
 variable "include_ej_mac_cis_benchmark" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "include_ej_mobile_cis_benchmark" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "include_ej_secure_remote_access" {
   type    = bool
-  default = true
+  default = false
+}
+
+## Define demo config variables
+variable "include_jsc_demo_config" {
+  type    = bool
+  default = false
 }
 
 variable "include_sandbox" {
   type    = bool
-  default = true
+  default = false
 }
 
-
-## JSC EJ Template Variables
-variable "include_ej_jsc_config" {
-  type = bool
-  default = true
-}
-
-
-
-## JSC Staging Variables
 variable "include_jsc_demo_config" {
   type    = bool
-  default = true
+  default = false
 }
 
-variable "include_jsc_dp_only" {
-  type    = bool
-  default = true
-}
 
-variable "include_jsc_mtd_only" {
-  type    = bool
-  default = true
-}
-
-variable "include_jsc_all_services" {
-  type    = bool
-  default = true
-}
-
-variable "include_jsc_base" {
-  type    = bool
-  default = true
-}
-
-variable "include_jsc_ztna" {
-  type = bool
-  default = true
-}
-
-variable "include_jsc_block_pages" {
-  type = bool
-  default = true
-}

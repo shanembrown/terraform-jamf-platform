@@ -1,7 +1,7 @@
 /*
 This terraform blueprint will build the Aftermath vignette from Experience Jamf.
 It will do the following:
- - Create a category
+ - Create 1 category
  - Create 2 computer extension attributes
  - Create 2 smart computer groups
  - Upload 1 package
@@ -21,43 +21,43 @@ terraform {
 
 ## Create category
 resource "jamfpro_category" "category_threat_response" {
-  name     = "Threat and Incident Response"
+  name     = "${var.prefix}Threat and Incident Response"
   priority = 9
 }
 
 ## Create extension attributes
 resource "jamfpro_computer_extension_attribute" "ea_aftermath_analyze_trigger" {
-    name = "Aftermath Analyze Trigger"
+    name = "${var.prefix}Aftermath Analyze Trigger"
     input_type = "script"
     enabled = true
     data_type = "string"
     inventory_display = "Extension Attributes"
-    input_script = file("support_files/computer_extension_attributes/aftermath_analyze_trigger.sh")
+    input_script = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/aftermath_analyze_trigger.sh")
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_aftermath_trigger" {
-    name = "Aftermath Trigger"
+    name = "${var.prefix}Aftermath Trigger"
     input_type = "script"
     enabled = true
     data_type = "string"
     inventory_display = "Extension Attributes"
-    input_script = file("support_files/computer_extension_attributes/aftermath_trigger.sh")
+    input_script = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/aftermath_trigger.sh")
 }
 
 ## Create smart groups
 resource "jamfpro_smart_computer_group" "group_aftermath_analyze_trigger" {
-  name = "Aftermath Analyze Trigger"
+  name = "${var.prefix}Aftermath Analyze Trigger"
   criteria {
-    name          = "Aftermath Analyze Trigger"
+    name          = jamfpro_computer_extension_attribute.ea_aftermath_analyze_trigger.name
     search_type   = "is"
     value         = "analyze"
   }
 }
 
 resource "jamfpro_smart_computer_group" "group_aftermath_collection_trigger" {
-  name = "Aftermath Collection Trigger"
+  name = "${var.prefix}Aftermath Collection Trigger"
   criteria {
-    name          = "Aftermath Trigger"
+    name          = jamfpro_computer_extension_attribute.ea_aftermath_trigger.name
     search_type   = "is"
     value         = "aftermath"
   }
@@ -80,17 +80,17 @@ resource "jamfpro_package" "package_aftermath" {
 
 ## Import scripts
 resource "jamfpro_script" "script_aftermath_analyze" {
-    name = "Vignette.Behavioral.IR-Aftermath-Analyze.sh"
+    name = "${var.prefix}Vignette.Behavioral.IR-Aftermath-Analyze.sh"
     priority = "AFTER"
-    script_contents = file("support_files/computer_scripts/aftermath_analyze.sh")
+    script_contents = file("${var.support_files_path_prefix}support_files/computer_scripts/aftermath_analyze.sh")
     category_id = jamfpro_category.category_threat_response.id
     info = "This script will run Aftermath on a system, analyze the output, and open the storyline.csv file after analysis is complete. Messages are presented throughout the process to communicate what is happening."
 }
 
 resource "jamfpro_script" "script_aftermath_collection" {
-    name = "Vignette.Behavioral.IR-Aftermath-Collection.sh"
+    name = "${var.prefix}Vignette.Behavioral.IR-Aftermath-Collection.sh"
     priority = "AFTER"
-    script_contents = file("support_files/computer_scripts/aftermath_collection.sh")
+    script_contents = file("${var.support_files_path_prefix}support_files/computer_scripts/aftermath_collection.sh")
     category_id = jamfpro_category.category_threat_response.id
 }
 
@@ -129,7 +129,7 @@ resource "jamfpro_policy" "policy_install_aftermath" {
 }
 
 resource "jamfpro_policy" "policy_aftermath_analysis" {
-  name                          = "Vignette.Behavioral.IR-Aftermath-Analysis"
+  name                          = "${var.prefix}Vignette.Behavioral.IR-Aftermath-Analysis"
   enabled                       = true
   trigger_other                 = "@aftermathAnalysis"
   frequency                     = "Ongoing"
@@ -145,7 +145,7 @@ resource "jamfpro_policy" "policy_aftermath_analysis" {
     use_for_self_service            = true
     self_service_display_name       = "Aftermath Analysis"
     install_button_text             = "Analyze"
-    self_service_description        = file("support_files/computer_policies/aftermath_analyze_self_service_desc.txt")
+    self_service_description        = file("${var.support_files_path_prefix}support_files/computer_policies/aftermath_analyze_self_service_desc.txt")
     force_users_to_view_description = false
     feature_on_main_page = false
   }
@@ -158,7 +158,7 @@ resource "jamfpro_policy" "policy_aftermath_analysis" {
 }
 
 resource "jamfpro_policy" "policy_aftermath_collection" {
-  name                          = "Vignette.Behavioral.IR-Aftermath-Collection"
+  name                          = "${var.prefix}Vignette.Behavioral.IR-Aftermath-Collection"
   enabled                       = true
   trigger_other                 = "@aftermathCollection"
   frequency                     = "Ongoing"
@@ -174,7 +174,7 @@ resource "jamfpro_policy" "policy_aftermath_collection" {
     use_for_self_service            = true
     self_service_display_name       = "Aftermath Incident Response Log Collection"
     install_button_text             = "Collect"
-    self_service_description        = file("support_files/computer_policies/aftermath_collection_self_service_desc.txt")
+    self_service_description        = file("${var.support_files_path_prefix}support_files/computer_policies/aftermath_collection_self_service_desc.txt")
     force_users_to_view_description = false
     feature_on_main_page = false
   }
