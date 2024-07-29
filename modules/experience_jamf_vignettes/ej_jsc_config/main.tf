@@ -77,42 +77,42 @@ resource "jsc_blockpage" "data_block" {
 }
 
 resource "jsc_blockpage" "secure_block" {
-  title = "Security Risk"
-  description = "This site is blocked by an administrator-defined security policy. You are able to customize this policy – and even this message – in your organization's Jamf Security Cloud console."
-  logo = var.block_page_logo
-  type = "secureBlock"
-  show_requesturl = false
+  title               = "Security Risk"
+  description         = "This site is blocked by an administrator-defined security policy. You are able to customize this policy – and even this message – in your organization's Jamf Security Cloud console."
+  logo                = var.block_page_logo
+  type                = "secureBlock"
+  show_requesturl     = false
   show_classification = true
-  depends_on = [ jsc_blockpage.data_block ]
+  depends_on          = [ jsc_blockpage.data_block ]
 }
 
 resource "jsc_blockpage" "cap" {
-  title = "Data Limit Reached"
-  description = "You have reached the data limit set by your organization. You'll still be allowed use work related applications on your cellular connection but all other use will need to be on Wi-Fi."
-  logo = var.block_page_logo
-  type = "cap"
-  show_requesturl = true
+  title               = "Data Limit Reached"
+  description         = "You have reached the data limit set by your organization. You'll still be allowed use work related applications on your cellular connection but all other use will need to be on Wi-Fi."
+  logo                = var.block_page_logo
+  type                = "cap"
+  show_requesturl     = true
   show_classification = true
-  depends_on = [ jsc_blockpage.secure_block ]
+  depends_on          = [ jsc_blockpage.secure_block ]
 }
 
 resource "jsc_blockpage" "device_risk" {
-  title = "Access Blocked Due to Device Risk"
-  description = "You cannot access this site because the risk level of your device is too high. Please open the Jamf Trust app on your device to learn more."
-  logo = var.block_page_logo
-  type = "deviceRisk"
-  show_requesturl = true
+  title               = "Access Blocked Due to Device Risk"
+  description         = "You cannot access this site because the risk level of your device is too high. Please open the Jamf Trust app on your device to learn more."
+  logo                = var.block_page_logo
+  type                = "deviceRisk"
+  show_requesturl     = true
   show_classification = true
-  depends_on = [ jsc_blockpage.cap ]
+  depends_on          = [ jsc_blockpage.cap ]
 }
 
 resource "jsc_blockpage" "mangement_block" {
-  title = "Un-Managed Device - Access Restricted"
-  description = "You cannot access this site because your device is not managed. If you are using an un-managed device, please switch to an organizationally managed device to access this resource."
-  logo = var.block_page_logo
-  type = "deviceManagement"
-  show_requesturl = true
+  title               = "Un-Managed Device - Access Restricted"
+  description         = "You cannot access this site because your device is not managed. If you are using an un-managed device, please switch to an organizationally managed device to access this resource."
+  logo                = var.block_page_logo
+  type                = "deviceManagement"
+  show_requesturl     = true
   show_classification = true
-  depends_on = [ jsc_blockpage.device_risk ]
+  depends_on          = [ jsc_blockpage.device_risk ]
 }
 
