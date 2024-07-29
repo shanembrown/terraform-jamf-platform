@@ -18,6 +18,7 @@ resource "jsc_blockpage" "data_block" {
     type = "block"
     show_requesturl = true
     show_classification = true
+    
 }
 
 resource "jsc_blockpage" "secure_block" {

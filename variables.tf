@@ -184,3 +184,10 @@ variable "wizard_suffix" {
   type    = string
   default = ""
 }
+
+variable "block_page_logo" {
+  type    = string
+  sensitive = true
+  default = ""
+}
+
