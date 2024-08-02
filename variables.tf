@@ -175,6 +175,21 @@ variable "include_ej_jsc_config" {
   default = false
 }
 
+variable "include_jsc_mtd_dp_only" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ztna_dp_only" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ztna_mtd_only" {
+  type    = bool
+  default = false
+}
+
 variable "jsc_provided_idp_client" {
   type    = string
   default = ""
