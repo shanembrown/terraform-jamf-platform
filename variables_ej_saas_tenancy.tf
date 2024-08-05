@@ -32,3 +32,10 @@ variable "CertificatePrivateKey" {
   default     = ""
   description = "Provided Cert PrivateKey for TLS inspection. If not provided, self-signed will be generated"
 }
+
+variable "aws_region" {
+  type        = string
+  sensitive   = false
+  default     = "us-west-2"
+  description = "AWS region for SaaS tenancy instance"
+}
