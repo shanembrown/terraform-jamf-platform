@@ -51,11 +51,8 @@ variable "jsc_password" {
   default   = ""
 }
 
-variable "aws_region" {
-  type      = string
-  sensitive = false
-  default   = "us-west-2"
-}
+
+
 
 ## Define Okta-related variables
 variable "tje_okta_clientid" {
