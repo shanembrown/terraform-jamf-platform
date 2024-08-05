@@ -55,8 +55,8 @@ jamfpro_client_id = ""
 jamfpro_client_secret = ""
 jamfpro_username = ""
 jamfpro_password = ""
-radar_user = ""
-radar_pass = ""
+jsc_username = ""
+jsc_password = ""
 
 ## Knobs
 include_jamfpro_prerequisites = true

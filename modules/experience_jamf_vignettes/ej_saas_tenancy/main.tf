@@ -17,21 +17,15 @@ terraform {
   }
 }
 
-provider "aws" {
-  region = var.aws_region
-}
 
-provider "jsc" {
-  username = var.jscusername
-  password = var.jscpassword
-}
 
-variable "jscusername" {
+
+variable "jsc_username" {
   description = "JSC username (email)"
   type        = string
 }
 
-variable "jscpassword" {
+variable "jsc_password" {
   description = "JSC password"
   type        = string
   sensitive   = true
