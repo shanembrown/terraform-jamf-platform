@@ -78,6 +78,13 @@ module "ej_saas_tenancy" {
   count                     = var.include_ej_saas_tenancy == true ? 1 : 0
   source                    = "./modules/experience_jamf_vignettes/ej_saas_tenancy"
   support_files_path_prefix = "modules/experience_jamf_vignettes/ej_saas_tenancy/"
+  KeyName                   = var.KeyName
+  jsc_password              = var.jsc_password
+  jsc_username              = var.jsc_username
+  VPCId                     = var.VPCId
+  SubnetId                  = var.SubnetId
+  CertificatePrivateKey     = var.CertificatePrivateKey
+  CertificateBody           = var.CertificateBody
 }
 
 module "ej_incident_response" {
