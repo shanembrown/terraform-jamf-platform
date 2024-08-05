@@ -39,16 +39,22 @@ variable "jamfpro_password" {
 
 
 ## Define JSC provider variables (populated by .tfvars file)
-variable "radar_user" {
+variable "jsc_username" {
+  type      = string
+  sensitive = false
+  default   = ""
+}
+
+variable "jsc_password" {
   type      = string
   sensitive = true
   default   = ""
 }
 
-variable "radar_pass" {
+variable "aws_region" {
   type      = string
-  sensitive = true
-  default   = ""
+  sensitive = false
+  default   = "us-west-2"
 }
 
 ## Define Okta-related variables

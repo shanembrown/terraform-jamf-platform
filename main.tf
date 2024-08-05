@@ -7,7 +7,7 @@ terraform {
     }
     jsc = {
       source  = "danjamf/jsctfprovider"
-      version = "0.0.11"
+      version = "0.0.14"
     }
   }
 }
@@ -21,7 +21,7 @@ provider "jamfpro" {
   client_id                            = var.jamfpro_client_id
   client_secret                        = var.jamfpro_client_secret
   enable_client_sdk_logs               = false
-  hide_sensitive_data                  = true # Hides sensitive data in logs
+  hide_sensitive_data                  = true # Hides sensititve data in logs
   token_refresh_buffer_period_seconds  = 5    # minutes
   jamfpro_load_balancer_lock           = true
   mandatory_request_delay_milliseconds = 100
@@ -29,10 +29,16 @@ provider "jamfpro" {
 
 ## JSC provider root configuration
 provider "jsc" {
-  username = var.radar_user
-  password = var.radar_pass
+  username = var.jsc_username
+  password = var.jsc_password
   #customerid = var.radar_customerid
 }
+
+
+provider "aws" {
+  region = var.aws_region
+}
+
 
 ## Initialize common modules
 module "jamfpro_prerequisites" {

@@ -4,7 +4,7 @@ variable "jamfpro_instance_url" {
   default   = ""
 }
 
-variable "radar_user" {
+variable "jsc_username" {
   type      = string
   sensitive = true
   default   = ""
