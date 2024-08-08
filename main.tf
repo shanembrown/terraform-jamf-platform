@@ -24,7 +24,7 @@ provider "jamfpro" {
   hide_sensitive_data                  = true # Hides sensititve data in logs
   token_refresh_buffer_period_seconds  = 5    # minutes
   jamfpro_load_balancer_lock           = true
-  mandatory_request_delay_milliseconds = 100
+  mandatory_request_delay_milliseconds = 1000
 }
 
 ## JSC provider root configuration
@@ -82,13 +82,15 @@ module "ej_saas_tenancy" {
 }
 
 module "ej_incident_response" {
-  count  = var.include_ej_incident_response == true ? 1 : 0
-  source = "./modules/experience_jamf_vignettes/ej_incident_response"
+  count                     = var.include_ej_incident_response == true ? 1 : 0
+  source                    = "./modules/experience_jamf_vignettes/ej_incident_response"
+  support_files_path_prefix = "modules/experience_jamf_vignettes/ej_incident_response/"
 }
 
 module "ej_mac_cis_benchmark" {
-  count  = var.include_ej_mac_cis_benchmark == true ? 1 : 0
-  source = "./modules/experience_jamf_vignettes/ej_mac_cis_benchmark"
+  count                     = var.include_ej_mac_cis_benchmark == true ? 1 : 0
+  source                    = "./modules/experience_jamf_vignettes/ej_mac_cis_benchmark"
+  support_files_path_prefix = "modules/experience_jamf_vignettes/ej_mac_cis_benchmark/"
 }
 
 module "ej_mobile_cis_benchmark" {
