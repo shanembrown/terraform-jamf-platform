@@ -34,12 +34,6 @@ provider "jsc" {
 }
 
 
-provider "aws" {
-  region  = var.aws_region
-  profile = var.aws_profile
-}
-
-
 ## Initialize common modules
 module "jamfpro_prerequisites" {
   count  = var.include_jamfpro_prerequisites == true ? 1 : 0

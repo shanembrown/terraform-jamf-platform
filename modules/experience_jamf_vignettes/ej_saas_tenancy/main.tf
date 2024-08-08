@@ -14,6 +14,8 @@ terraform {
       source  = "danjamf/jsctfprovider"
       version = "0.0.14"
     }
+    aws = {
+    }
   }
 }
 
