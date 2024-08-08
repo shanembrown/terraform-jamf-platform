@@ -31,12 +31,12 @@ provider "jamfpro" {
 provider "jsc" {
   username = var.jsc_username
   password = var.jsc_password
-  #customerid = var.radar_customerid
 }
 
 
 provider "aws" {
-  region = var.aws_region
+  region  = var.aws_region
+  profile = var.aws_profile
 }
 
 
