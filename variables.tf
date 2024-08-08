@@ -51,6 +51,14 @@ variable "jsc_password" {
   default   = ""
 }
 
+variable "aws_profile" {
+  type        = string
+  sensitive   = true
+  default     = ""
+  description = "AWS profile"
+}
+
+
 
 
 

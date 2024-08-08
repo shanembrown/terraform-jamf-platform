@@ -3,6 +3,7 @@ The resources in this file will install any workflow selected profiles during on
 */
 
 ## Call Terraform provider
+
 terraform {
   required_providers {
     jamfpro = {
@@ -11,6 +12,9 @@ terraform {
     }
   }
 }
+
+
+
 
 ## Create dict based on selected items only
 locals {
