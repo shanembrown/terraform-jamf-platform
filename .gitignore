@@ -4,3 +4,5 @@
 *.tfvars
 catalog-info.yaml
 .DS_Store
+plan.json
+plan.out
