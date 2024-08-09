@@ -24,7 +24,7 @@ provider "jamfpro" {
   hide_sensitive_data                  = true # Hides sensititve data in logs
   token_refresh_buffer_period_seconds  = 5    # minutes
   jamfpro_load_balancer_lock           = true
-  mandatory_request_delay_milliseconds = 1000
+  mandatory_request_delay_milliseconds = 100
 }
 
 ## JSC provider root configuration
@@ -43,6 +43,21 @@ module "jamfpro_prerequisites" {
 module "jamfpro_demo_config" {
   count  = var.include_jamfpro_demo_config == true ? 1 : 0
   source = "./modules/jamfpro_demo_config/"
+}
+
+## Initialize Protect (for macOS) module
+
+module "jamfprotectformaco_config" {
+  count                       = var.include_jamfprotectformacos_config == true ? 1 : 0
+  source                      = "./modules/jamf_protect_for_macOS/"
+  jamfpro_instance_url        = var.jamfpro_instance_url
+  jamfpro_client_id           = var.jamfpro_client_id
+  jamfpro_client_secret       = var.jamfpro_client_secret
+  jamfprotect_url             = var.jamfprotect_url
+  jamfprotect_clientID        = var.jamfprotect_clientID
+  jamfprotect_client_password = var.jamfprotect_client_password
+
+
 }
 
 ## Initialize Onboarding Wizard modules
@@ -79,6 +94,7 @@ module "ej_saas_tenancy" {
   SubnetId                  = var.SubnetId
   CertificatePrivateKey     = var.CertificatePrivateKey
   CertificateBody           = var.CertificateBody
+  aws_region                = var.aws_region
 }
 
 module "ej_incident_response" {
