@@ -16,7 +16,7 @@ access_token=$(echo "$response" | plutil -extract access_token raw -)
 
 echo $access_token
 
-response=$(curl --silent --location --request DELETE "${jamfpro_instance_url}/api/v1/jamf-protect/register" \
+response=$(curl --silent --location --request DELETE "${jamfpro_instance_url}/api/v1/jamf-protect" \
 	 --header "Authorization: Bearer $access_token" \
      --header "accept: application/json" \
      --header "content-type: application/json")
