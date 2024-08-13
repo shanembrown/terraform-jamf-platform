@@ -4,7 +4,7 @@ Terraform configuration for the "Experience Jamf (EJ)" environment.
 
 Provider versions used in this release:
 
-- deploymenttheory/jamfpro v0.1.5
+- deploymenttheory/jamfpro v0.1.9
 - danjamf/jsctfprovider v0.0.14
 - hasicorp/aws v55.62.0 (optional with SaaS tenancy control)
 
@@ -53,6 +53,8 @@ Copy and paste the following data then customize it with your own credentials
 jamfpro_instance_url  = "https://<myserver>.jamfcloud.com"
 jamfpro_client_id     = ""
 jamfpro_client_secret = ""
+jsc_username          = ""
+jsc_password          = ""
 include_ej_base       = false
 include_ej_jsc_config = false
 
