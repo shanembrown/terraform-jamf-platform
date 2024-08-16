@@ -51,9 +51,35 @@ variable "jsc_password" {
   default   = ""
 }
 
+variable "VPCId" {
+  type      = string
+  sensitive = true
+  default   = ""
+}
 
+variable "SubnetId" {
+  type      = string
+  sensitive = true
+  default   = ""
+}
 
+variable "CertificatePrivateKey" {
+  type      = string
+  sensitive = true
+  default   = ""
+}
 
+variable "CertificateBody" {
+  type      = string
+  sensitive = true
+  default   = ""
+}
+
+variable "aws_region" {
+  type      = string
+  sensitive = true
+  default   = ""
+}
 
 
 ## Define Okta-related variables
