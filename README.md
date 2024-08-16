@@ -4,8 +4,9 @@ Terraform configuration for the "Experience Jamf (EJ)" environment.
 
 Provider versions used in this release:
 
-- deploymenttheory/jamfpro v0.1.5
-- danjamf/jsctfprovider v0.0.11
+- deploymenttheory/jamfpro v0.1.9
+- danjamf/jsctfprovider v0.0.14
+- hasicorp/aws v55.62.0 (optional with SaaS tenancy control)
 
 This project utlizes the unoffical Terraform providers for [Jamf Pro](https://registry.terraform.io/providers/deploymenttheory/jamfpro/latest) and [Jamf Security Cloud](https://registry.terraform.io/providers/danjamf/jsctfprovider/latest)
 
@@ -22,8 +23,8 @@ Open a Terminal window and enter the following commands. Replace the following p
 - [FIRST.LAST]: Your local user directory
 
 ```
-git clone -b [BRANCH-NAME] https://[PAT]@github.com/jamf/TJE-Terraform.git /Users/[FIRST.LAST]/TJE-terraform/
-cd /Users/[FIRST.LAST]/TJE-terraform
+git clone -b [BRANCH-NAME] https://[PAT]@github.com/jamf/ExperienceJamf-Terraform.git /Users/[FIRST.LAST]/ExperienceJamf-Terraform/
+cd /Users/[FIRST.LAST]/ExperienceJamf-Terraform
 terraform init
 ```
 
@@ -42,40 +43,53 @@ We also recommend setting the `mandatory_request_delay_milliseconds`provider key
 This Terraform project requires Jamf API credentials and other context-specific variables that you'll need to define locally in a terraform.tfvars file.
 
 ```
-cd /Users/[FIRST.LAST]/TJE-terraform
+cd /Users/[FIRST.LAST]/ExperienceJamf-Terraform
 nano terraform.tfvars
 ```
 
 Copy and paste the following data then customize it with your own credentials
 
 ```
-jamfpro_instance_url = "https://[MY_SERVER].jamfcloud.com"
-jamfpro_auth_method = "" #oauth2 or basic
-jamfpro_client_id = ""
+jamfpro_instance_url  = "https://<myserver>.jamfcloud.com"
+jamfpro_client_id     = ""
 jamfpro_client_secret = ""
-jamfpro_username = ""
-jamfpro_password = ""
-radar_user = ""
-radar_pass = ""
+jsc_username          = ""
+jsc_password          = ""
+include_ej_base       = false
+include_ej_jsc_config = false
 
-## Knobs
-include_jamfpro_prerequisites = true
-include_ej_base = true
-include_ej_saas_tenancy = true
-include_ej_incident_response = true
-include_ej_mobile_cis_benchmark = true
-include_ej_mac_cis_benchmark = true
-include_ej_secure_remote_access = true
-include_jamfpro_demo_config = true
-include_jsc_demo_config = true
-include_sandbox = false
+### onboarder options
+include_onboarder_wizard = false
+install_chrome           = false
+install_firefox          = false
+block_beta_updates       = false
+
+### other EJ flags
+include_ej_incident_response  = false
+include_ej_mac_cis_benchmark  = false
+include_jamfpro_prerequisites = false
+include_jamfpro_demo_config   = false
+
+### SaaS Tenancy
+include_ej_saas_tenancy = false
+VPCId                   = ""
+KeyName                 = ""
+SubnetId                = ""
+aws_region              = ""
+
+### Jamf Protect for macOS integration
+include_jamfprotectformacos_config = false
+jamfprotect_url                    = "https://<myserver>.protect.jamfcloud.com"
+jamfprotect_clientID               = ""
+jamfprotect_client_password        = ""
+
 ```
 
 Save and exit.
 
 ## Usage
 
-Ensure that you are in the correct project folder when performing Terraform commands (e.g.: /Users/[FIRST.LAST]/TJE-terraform/)
+Ensure that you are in the correct project folder when performing Terraform commands (e.g.: /Users/[FIRST.LAST]/ExperienceJamf-Terraform/)
 
 Enter the following command to apply full Terraform config:
 

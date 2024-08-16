@@ -1,6 +1,6 @@
 variable "jamfpro_instance_url" {}
 
-variable "radar_user" {}
+variable "jsc_username" {}
 
 variable "tje_okta_clientid" {}
 

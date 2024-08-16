@@ -3,11 +3,11 @@ terraform {
   required_providers {
     jamfpro = {
       source  = "deploymenttheory/jamfpro"
-      version = "~> 0.1.5"
+      version = "~> 0.1.9"
     }
     jsc = {
       source  = "danjamf/jsctfprovider"
-      version = "0.0.11"
+      version = "0.0.14"
     }
   }
 }
@@ -21,7 +21,7 @@ provider "jamfpro" {
   client_id                            = var.jamfpro_client_id
   client_secret                        = var.jamfpro_client_secret
   enable_client_sdk_logs               = false
-  hide_sensitive_data                  = true # Hides sensitive data in logs
+  hide_sensitive_data                  = true # Hides sensititve data in logs
   token_refresh_buffer_period_seconds  = 5    # minutes
   jamfpro_load_balancer_lock           = true
   mandatory_request_delay_milliseconds = 100
@@ -29,10 +29,10 @@ provider "jamfpro" {
 
 ## JSC provider root configuration
 provider "jsc" {
-  username = var.radar_user
-  password = var.radar_pass
-  #customerid = var.radar_customerid
+  username = var.jsc_username
+  password = var.jsc_password
 }
+
 
 ## Initialize common modules
 module "jamfpro_prerequisites" {
@@ -43,6 +43,21 @@ module "jamfpro_prerequisites" {
 module "jamfpro_demo_config" {
   count  = var.include_jamfpro_demo_config == true ? 1 : 0
   source = "./modules/jamfpro_demo_config/"
+}
+
+## Initialize Protect (for macOS) module
+
+module "jamfprotectformaco_config" {
+  count                       = var.include_jamfprotectformacos_config == true ? 1 : 0
+  source                      = "./modules/jamf_protect_for_macOS/"
+  jamfpro_instance_url        = var.jamfpro_instance_url
+  jamfpro_client_id           = var.jamfpro_client_id
+  jamfpro_client_secret       = var.jamfpro_client_secret
+  jamfprotect_url             = var.jamfprotect_url
+  jamfprotect_clientID        = var.jamfprotect_clientID
+  jamfprotect_client_password = var.jamfprotect_client_password
+
+
 }
 
 ## Initialize Onboarding Wizard modules
@@ -72,16 +87,26 @@ module "ej_saas_tenancy" {
   count                     = var.include_ej_saas_tenancy == true ? 1 : 0
   source                    = "./modules/experience_jamf_vignettes/ej_saas_tenancy"
   support_files_path_prefix = "modules/experience_jamf_vignettes/ej_saas_tenancy/"
+  KeyName                   = var.KeyName
+  jsc_password              = var.jsc_password
+  jsc_username              = var.jsc_username
+  VPCId                     = var.VPCId
+  SubnetId                  = var.SubnetId
+  CertificatePrivateKey     = var.CertificatePrivateKey
+  CertificateBody           = var.CertificateBody
+  aws_region                = var.aws_region
 }
 
 module "ej_incident_response" {
-  count  = var.include_ej_incident_response == true ? 1 : 0
-  source = "./modules/experience_jamf_vignettes/ej_incident_response"
+  count                     = var.include_ej_incident_response == true ? 1 : 0
+  source                    = "./modules/experience_jamf_vignettes/ej_incident_response"
+  support_files_path_prefix = "modules/experience_jamf_vignettes/ej_incident_response/"
 }
 
 module "ej_mac_cis_benchmark" {
-  count  = var.include_ej_mac_cis_benchmark == true ? 1 : 0
-  source = "./modules/experience_jamf_vignettes/ej_mac_cis_benchmark"
+  count                     = var.include_ej_mac_cis_benchmark == true ? 1 : 0
+  source                    = "./modules/experience_jamf_vignettes/ej_mac_cis_benchmark"
+  support_files_path_prefix = "modules/experience_jamf_vignettes/ej_mac_cis_benchmark/"
 }
 
 module "ej_mobile_cis_benchmark" {

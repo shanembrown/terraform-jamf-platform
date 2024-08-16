@@ -39,17 +39,22 @@ variable "jamfpro_password" {
 
 
 ## Define JSC provider variables (populated by .tfvars file)
-variable "radar_user" {
+variable "jsc_username" {
+  type      = string
+  sensitive = false
+  default   = ""
+}
+
+variable "jsc_password" {
   type      = string
   sensitive = true
   default   = ""
 }
 
-variable "radar_pass" {
-  type      = string
-  sensitive = true
-  default   = ""
-}
+
+
+
+
 
 ## Define Okta-related variables
 variable "tje_okta_clientid" {
@@ -62,31 +67,10 @@ variable "tje_okta_orgdomain" {
   default = "jamf-harbor.okta.com"
 }
 
-## Define onboarder wizard variables
-variable "include_onboarder_wizard" {
-  type    = bool
-  default = false
-}
 
-variable "install_chrome" {
-  type    = bool
-  default = false
-}
 
-variable "install_firefox" {
-  type    = bool
-  default = false
-}
 
-variable "block_beta_updates" {
-  type    = bool
-  default = false
-}
 
-variable "enforce_firewall_and_gatekeeper" {
-  type    = bool
-  default = false
-}
 
 ## Define vingnette variables
 variable "include_jamfpro_prerequisites" {

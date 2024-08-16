@@ -1,24 +1,45 @@
 /*
 This terraform blueprint will build the SaaS Tenancy Control vignette from Experience Jamf.
-It will do the following:
- - 
+To do  -
+
+Jamf Pro import cert
 
  Prerequisites:
   - 
 */
 
-## Call Terraform provider
 terraform {
   required_providers {
+    jsc = {
+      source  = "danjamf/jsctfprovider"
+      version = "0.0.14"
+    }
     jamfpro = {
       source  = "deploymenttheory/jamfpro"
-      version = "~> 0.1.5"
+      version = "0.1.9"
+    }
+    aws = {
     }
   }
 }
 
-## Create categories
-resource "jamfpro_category" "category_cis_benchmarks" {
-  name     = "${var.prefix}SaaS Tenancy Control"
-  priority = 9
+
+
+
+variable "jsc_username" {
+  description = "JSC username (email)"
+  type        = string
+}
+
+variable "jsc_password" {
+  description = "JSC password"
+  type        = string
+  sensitive   = true
+}
+
+
+variable "aws_region" {
+  description = "AWS region"
+  type        = string
+  default     = "us-west-2"
 }

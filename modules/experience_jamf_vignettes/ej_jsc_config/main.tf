@@ -7,7 +7,7 @@ terraform {
     }
     jsc = {
       source  = "danjamf/jsctfprovider"
-      version = "0.0.11"
+      version = "0.0.14"
     }
   }
 }
@@ -38,6 +38,11 @@ data "jamfpro_api_integration" "jamf_pro_api_integration_001_data" {
   id = jamfpro_api_integration.jamfpro_api_integration_jsc.id
 }
 
+locals {
+  jamf_pro_client_id     = data.jamfpro_api_integration.jamf_pro_api_integration_001_data.client_id
+  jamf_pro_client_secret = data.jamfpro_api_integration.jamf_pro_api_integration_001_data.client_secret
+}
+
 output "jp_client_id" {
   value = data.jamfpro_api_integration.jamf_pro_api_integration_001_data.client_id
 }
@@ -48,8 +53,8 @@ output "jp_client_secret" {
 
 resource "jsc_uemc" "initial_uemc" {
   domain       = var.jamfpro_instance_url
-  clientid     = data.jamfpro_api_integration.jamf_pro_api_integration_001_data.client_id
-  clientsecret = data.jamfpro_api_integration.jamf_pro_api_integration_001_data.client_secret
+  clientid     = local.jamf_pro_client_id
+  clientsecret = local.jamf_pro_client_secret
   depends_on   = [jamfpro_api_integration.jamfpro_api_integration_jsc]
 }
 

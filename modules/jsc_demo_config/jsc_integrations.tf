@@ -39,7 +39,7 @@ data "jamfpro_api_integration" "jamfpro_api_client_idandsecret" {
 }
 
 resource "jsc_uemc" "my_uemc_config" {
-  count        = var.radar_user != "" ? 1 : 0
+  count        = var.jsc_username != "" ? 1 : 0
   domain       = var.jamfpro_instance_url
   clientid     = data.jamfpro_api_integration.jamfpro_api_client_idandsecret.client_id
   clientsecret = data.jamfpro_api_integration.jamfpro_api_client_idandsecret.client_secret
