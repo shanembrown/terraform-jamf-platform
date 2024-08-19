@@ -82,6 +82,11 @@ variable "block_page_logo" {
   default   = ""
 }
 
+variable "support_files_path_prefix" {
+  type    = string
+  default = ""
+}
+
 /* variable "wizard_suffix" {
   type = string
   sensitive = true

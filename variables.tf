@@ -51,6 +51,7 @@ variable "jsc_password" {
   default   = ""
 }
 
+/*
 variable "VPCId" {
   type      = string
   sensitive = true
@@ -80,7 +81,7 @@ variable "aws_region" {
   sensitive = true
   default   = ""
 }
-
+*/
 
 ## Define Okta-related variables
 variable "tje_okta_clientid" {
@@ -214,5 +215,10 @@ variable "block_page_logo" {
   type      = string
   sensitive = true
   default   = ""
+}
+
+variable "support_files_path_prefix" {
+  type    = string
+  default = "/Users/ryan.legg/TJE-terraform/"
 }
 

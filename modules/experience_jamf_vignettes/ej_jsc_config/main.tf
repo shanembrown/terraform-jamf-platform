@@ -65,11 +65,11 @@ resource "jsc_oktaidp" "okta_idp_base" {
 }
 
 resource "jsc_ap" "all_services" {
-  name             = "Jamf Connect ZTNA and Protect"
-  oktaconnectionid = jsc_oktaidp.okta_idp_base.id
-  privateaccess    = true
-  threatdefence    = true
-  datapolicy       = true
+  name                = "Jamf Connect ZTNA and Protect"
+  oktaconnectionid    = jsc_oktaidp.okta_idp_base.id
+  privateaccess       = true
+  threatdefence       = true
+  datapolicy          = true
 }
 
 resource "jsc_blockpage" "data_block" {
@@ -119,5 +119,47 @@ resource "jsc_blockpage" "mangement_block" {
   show_requesturl     = true
   show_classification = true
   depends_on          = [jsc_blockpage.device_risk]
+}
+
+## Create categories
+resource "jamfpro_category" "experience_jamf" {
+  name     = "Experience Jamf"
+  priority = 9
+}
+
+resource "jamfpro_smart_computer_group" "group_macOS_14" {
+  name = "Macs Running macOS 14"
+  criteria {
+    name = "Operating System Version"
+    search_type = "like"
+    value = "14."
+    and_or = "and"
+    priority = 0
+  }
+}
+
+locals {
+  ej_jsc_config_profile = {
+    "Experience Jamf Activation Profile"  = "${var.support_files_path_prefix}modules/experience_jamf_vignettes/ej_jsc_config/support_files/jamftrust.plist"
+  }
+}
+
+resource "jamfpro_macos_configuration_profile_plist" "ej_jsc_ap" {
+  for_each = local.ej_jsc_config_profile
+  name = "Experience Jamf Activation Profile"
+  distribution_method = "Install Automatically"
+  redeploy_on_update = "Newly Assigned"
+  category_id = jamfpro_category.experience_jamf.id
+  level = "System"
+
+  payloads = file("${each.value}")
+  payload_validate = false
+
+  scope {
+    all_computers = false
+    computer_group_ids = [jamfpro_smart_computer_group.group_macOS_14.id]
+  }
+
+  depends_on = [ jamfpro_smart_computer_group.group_macOS_14 ]
 }
 
