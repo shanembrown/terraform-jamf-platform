@@ -335,8 +335,8 @@ resource "jamfpro_macos_configuration_profile_plist" "sonoma_cis_lvl1" {
   name                = "${var.prefix}Sonoma_cis_lvl1 - ${each.key}"
   distribution_method = "Install Automatically"
   /*redeploy_on_update  = "Newly Assigned"*/
-  category_id         = jamfpro_category.category_cis_benchmarks.id
-  level               = "System"
+  category_id = jamfpro_category.category_cis_benchmarks.id
+  level       = "System"
 
   payloads = file("${each.value}")
 
