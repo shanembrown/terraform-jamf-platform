@@ -19,3 +19,4 @@ resource "jsc_ap" "content_filtering_only" {
   threatdefence    = false
   datapolicy       = true
 }
+
