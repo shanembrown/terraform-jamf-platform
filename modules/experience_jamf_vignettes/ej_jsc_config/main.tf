@@ -65,11 +65,11 @@ resource "jsc_oktaidp" "okta_idp_base" {
 }
 
 resource "jsc_ap" "all_services" {
-  name                = "Jamf Connect ZTNA and Protect"
-  oktaconnectionid    = jsc_oktaidp.okta_idp_base.id
-  privateaccess       = true
-  threatdefence       = true
-  datapolicy          = true
+  name             = "Jamf Connect ZTNA and Protect"
+  oktaconnectionid = jsc_oktaidp.okta_idp_base.id
+  privateaccess    = true
+  threatdefence    = true
+  datapolicy       = true
 }
 
 output "profile" {
@@ -134,35 +134,35 @@ resource "jamfpro_category" "experience_jamf" {
 resource "jamfpro_smart_computer_group" "group_macOS_14" {
   name = "Macs Running macOS 14"
   criteria {
-    name = "Operating System Version"
+    name        = "Operating System Version"
     search_type = "like"
-    value = "14."
-    and_or = "and"
-    priority = 0
+    value       = "14."
+    and_or      = "and"
+    priority    = 0
   }
 }
 
 locals {
   ej_jsc_config_profile = {
-    "Experience Jamf Activation Profile"  = "${var.support_files_path_prefix}modules/experience_jamf_vignettes/ej_jsc_config/support_files/jamftrust.plist"
+    "Experience Jamf Activation Profile" = "${var.support_files_path_prefix}modules/experience_jamf_vignettes/ej_jsc_config/support_files/jamftrust.plist"
   }
 }
 
 resource "jamfpro_macos_configuration_profile_plist" "ej_jsc_macos" {
-  for_each = local.ej_jsc_config_profile
-  name = "Experience Jamf Activation Profile - macOS"
+  for_each            = local.ej_jsc_config_profile
+  name                = "Experience Jamf Activation Profile - macOS"
   distribution_method = "Install Automatically"
   /*redeploy_on_update = "Newly Assigned"*/
   category_id = jamfpro_category.experience_jamf.id
-  level = "System"
+  level       = "System"
 
-  payloads = jsc_ap.all_services.macosplist
+  payloads         = jsc_ap.all_services.macosplist
   payload_validate = false
 
   scope {
-    all_computers = false
+    all_computers      = false
     computer_group_ids = [jamfpro_smart_computer_group.group_macOS_14.id]
   }
 
-  depends_on = [ jamfpro_smart_computer_group.group_macOS_14 ]
+  depends_on = [jamfpro_smart_computer_group.group_macOS_14]
 }
