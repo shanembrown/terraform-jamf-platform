@@ -37,7 +37,7 @@ resource "jamfpro_macos_configuration_profile_plist" "ow_profiles" {
   for_each            = local.profiles_dict
   name                = "${var.prefix}${each.key}"
   distribution_method = "Install Automatically"
-  redeploy_on_update  = "Newly Assigned"
+  /*redeploy_on_update  = "Newly Assigned"*/
   category_id         = jamfpro_category.category_profiles[0].id
   level               = "System"
 

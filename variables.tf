@@ -51,10 +51,37 @@ variable "jsc_password" {
   default   = ""
 }
 
+/*
+variable "VPCId" {
+  type      = string
+  sensitive = true
+  default   = ""
+}
 
+variable "SubnetId" {
+  type      = string
+  sensitive = true
+  default   = ""
+}
 
+variable "CertificatePrivateKey" {
+  type      = string
+  sensitive = true
+  default   = ""
+}
 
+variable "CertificateBody" {
+  type      = string
+  sensitive = true
+  default   = ""
+}
 
+variable "aws_region" {
+  type      = string
+  sensitive = true
+  default   = ""
+}
+*/
 
 ## Define Okta-related variables
 variable "tje_okta_clientid" {
@@ -159,6 +186,21 @@ variable "include_ej_jsc_config" {
   default = false
 }
 
+variable "include_jsc_mtd_dp_only" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ztna_dp_only" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ztna_mtd_only" {
+  type    = bool
+  default = false
+}
+
 variable "jsc_provided_idp_client" {
   type    = string
   default = ""
@@ -173,5 +215,10 @@ variable "block_page_logo" {
   type      = string
   sensitive = true
   default   = ""
+}
+
+variable "support_files_path_prefix" {
+  type    = string
+  default = ""
 }
 

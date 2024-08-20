@@ -7,15 +7,15 @@ terraform {
     }
     jsc = {
       source  = "danjamf/jsctfprovider"
-      version = "0.0.15"
+      version = "0.0.11"
     }
   }
 }
 
-resource "jsc_ap" "all_services" {
-  name             = "Jamf Connect ZTNA and Protect"
+resource "jsc_ap" "mtd_only" {
+  name             = "Mobile Threat Defense"
   oktaconnectionid = var.jsc_provided_idp_client_child
   privateaccess    = true
   threatdefence    = true
-  datapolicy       = true
+  datapolicy       = false
 }

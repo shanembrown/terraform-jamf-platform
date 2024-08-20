@@ -7,7 +7,7 @@ terraform {
     }
     jsc = {
       source  = "danjamf/jsctfprovider"
-      version = "0.0.14"
+      version = "0.0.15"
     }
   }
 }
@@ -83,6 +83,7 @@ module "ej_base" {
   source = "./modules/experience_jamf_vignettes/ej_base"
 }
 
+/*
 module "ej_saas_tenancy" {
   count                     = var.include_ej_saas_tenancy == true ? 1 : 0
   source                    = "./modules/experience_jamf_vignettes/ej_saas_tenancy"
@@ -96,6 +97,7 @@ module "ej_saas_tenancy" {
   CertificateBody           = var.CertificateBody
   aws_region                = var.aws_region
 }
+*/
 
 module "ej_incident_response" {
   count                     = var.include_ej_incident_response == true ? 1 : 0
@@ -175,12 +177,13 @@ module "sandbox" {
 
 ## Initialiaze JSC child modules
 module "ej_jsc_config" {
-  count                = var.include_ej_jsc_config == true ? 1 : 0
-  source               = "./modules/experience_jamf_vignettes/ej_jsc_config"
-  jamfpro_instance_url = var.jamfpro_instance_url
-  tje_okta_clientid    = var.tje_okta_clientid
-  tje_okta_orgdomain   = var.tje_okta_orgdomain
-  block_page_logo      = var.block_page_logo
+  count                      = var.include_ej_jsc_config == true ? 1 : 0
+  source                     = "./modules/experience_jamf_vignettes/ej_jsc_config"
+  jamfpro_instance_url       = var.jamfpro_instance_url
+  tje_okta_clientid          = var.tje_okta_clientid
+  tje_okta_orgdomain         = var.tje_okta_orgdomain
+  block_page_logo            = var.block_page_logo
+  support_files_path_prefix  = var.support_files_path_prefix
   /* wizard_suffix         = var.wizard_suffix */
 }
 
