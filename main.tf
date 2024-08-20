@@ -177,13 +177,13 @@ module "sandbox" {
 
 ## Initialiaze JSC child modules
 module "ej_jsc_config" {
-  count                      = var.include_ej_jsc_config == true ? 1 : 0
-  source                     = "./modules/experience_jamf_vignettes/ej_jsc_config"
-  jamfpro_instance_url       = var.jamfpro_instance_url
-  tje_okta_clientid          = var.tje_okta_clientid
-  tje_okta_orgdomain         = var.tje_okta_orgdomain
-  block_page_logo            = var.block_page_logo
-  support_files_path_prefix  = var.support_files_path_prefix
+  count                     = var.include_ej_jsc_config == true ? 1 : 0
+  source                    = "./modules/experience_jamf_vignettes/ej_jsc_config"
+  jamfpro_instance_url      = var.jamfpro_instance_url
+  tje_okta_clientid         = var.tje_okta_clientid
+  tje_okta_orgdomain        = var.tje_okta_orgdomain
+  block_page_logo           = var.block_page_logo
+  support_files_path_prefix = var.support_files_path_prefix
   /* wizard_suffix         = var.wizard_suffix */
 }
 
