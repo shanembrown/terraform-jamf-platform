@@ -7,7 +7,7 @@ terraform {
     }
     jsc = {
       source  = "danjamf/jsctfprovider"
-      version = "0.0.14"
+      version = "0.0.15"
     }
   }
 }
@@ -146,4 +146,23 @@ locals {
   ej_jsc_config_profile = {
     "Experience Jamf Activation Profile"  = "${var.support_files_path_prefix}modules/experience_jamf_vignettes/ej_jsc_config/support_files/jamftrust.plist"
   }
+}
+
+resource "jamfpro_macos_configuration_profile_plist" "ej_jsc_macos" {
+  for_each = local.ej_jsc_config_profile
+  name = "Experience Jamf Activation Profile - macOS"
+  distribution_method = "Install Automatically"
+  /*redeploy_on_update = "Newly Assigned"*/
+  category_id = jamfpro_category.experience_jamf.id
+  level = "System"
+
+  payloads = jsc_ap.all_services.macosplist
+  payload_validate = false
+
+  scope {
+    all_computers = false
+    computer_group_ids = [jamfpro_smart_computer_group.group_macOS_14.id]
+  }
+
+  depends_on = [ jamfpro_smart_computer_group.group_macOS_14 ]
 }

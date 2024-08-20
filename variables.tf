@@ -219,6 +219,6 @@ variable "block_page_logo" {
 
 variable "support_files_path_prefix" {
   type    = string
-  default = "/Users/ryan.legg/TJE-terraform/"
+  default = ""
 }
 
