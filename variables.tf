@@ -222,3 +222,7 @@ variable "support_files_path_prefix" {
   default = ""
 }
 
+variable "activation_profile_target" {
+  type    = string
+  default = ""
+}
