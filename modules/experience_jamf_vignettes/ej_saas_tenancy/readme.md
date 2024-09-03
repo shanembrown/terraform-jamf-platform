@@ -5,7 +5,7 @@ Terraform vignette for the "Experience Jamf (EJ)" environment. This vignette dep
 Provider versions used in this release:
 
 - hashicorp/aws v5.61.0
-- danjamf/jsctfprovider v0.0.15
+- danjamf/jsctfprovider v~> 0.0.15
 
 ## Prerequisites
 
