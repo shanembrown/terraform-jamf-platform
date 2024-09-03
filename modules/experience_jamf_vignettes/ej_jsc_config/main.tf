@@ -72,10 +72,6 @@ resource "jsc_ap" "all_services" {
   datapolicy       = true
 }
 
-output "profile" {
-  value = trimspace(jsc_ap.all_services.macosplist)
-}
-
 resource "jsc_blockpage" "data_block" {
   title               = "Content Blocked"
   description         = "This site is blocked by an administrator-defined Internet content policy. You are able to customize this policy – and even this message – in your organization's Jamf Security Cloud console."
@@ -142,14 +138,7 @@ resource "jamfpro_smart_computer_group" "group_macOS_14" {
   }
 }
 
-locals {
-  ej_jsc_config_profile = {
-    "Experience Jamf Activation Profile" = "${var.support_files_path_prefix}modules/experience_jamf_vignettes/ej_jsc_config/support_files/jamftrust.plist"
-  }
-}
-
 resource "jamfpro_macos_configuration_profile_plist" "ej_jsc_macos" {
-  for_each            = local.ej_jsc_config_profile
   name                = "Experience Jamf Activation Profile - macOS"
   distribution_method = "Install Automatically"
   /*redeploy_on_update = "Newly Assigned"*/
