@@ -184,7 +184,6 @@ module "ej_jsc_config" {
   tje_okta_orgdomain        = var.tje_okta_orgdomain
   block_page_logo           = var.block_page_logo
   support_files_path_prefix = var.support_files_path_prefix
-  activation_profile_target = var.activation_profile_target
   /* wizard_suffix         = var.wizard_suffix */
 }
 
