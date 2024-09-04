@@ -7,7 +7,7 @@ terraform {
     }
     jsc = {
       source  = "danjamf/jsctfprovider"
-      version = "0.0.15"
+      version = "~> 0.0.15"
     }
   }
 }
@@ -141,9 +141,9 @@ resource "jamfpro_smart_computer_group" "group_macOS_14" {
 resource "jamfpro_macos_configuration_profile_plist" "ej_jsc_macos" {
   name                = "Experience Jamf Activation Profile - macOS"
   distribution_method = "Install Automatically"
-  /*redeploy_on_update = "Newly Assigned"*/
-  category_id = jamfpro_category.experience_jamf.id
-  level       = "System"
+  redeploy_on_update  = "Newly Assigned"
+  category_id         = jamfpro_category.experience_jamf.id
+  level               = "System"
 
   payloads         = jsc_ap.all_services.macosplist
   payload_validate = false

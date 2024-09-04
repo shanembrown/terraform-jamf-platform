@@ -5,7 +5,7 @@ Terraform configuration for the "Experience Jamf (EJ)" environment.
 Provider versions used in this release:
 
 - deploymenttheory/jamfpro v0.1.9
-- danjamf/jsctfprovider v0.0.15
+- danjamf/jsctfprovider v~> 0.0.15
 - hasicorp/aws v55.62.0 (optional with SaaS tenancy control)
 
 This project utlizes the unoffical Terraform providers for [Jamf Pro](https://registry.terraform.io/providers/deploymenttheory/jamfpro/latest) and [Jamf Security Cloud](https://registry.terraform.io/providers/danjamf/jsctfprovider/latest)
