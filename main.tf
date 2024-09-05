@@ -3,11 +3,11 @@ terraform {
   required_providers {
     jamfpro = {
       source  = "deploymenttheory/jamfpro"
-      version = "~> 0.1.9"
+      version = ">= 0.2.0"
     }
     jsc = {
       source  = "danjamf/jsctfprovider"
-      version = "~> 0.0.15"
+      version = ">= 0.0.15"
     }
   }
 }
@@ -83,7 +83,7 @@ module "ej_base" {
   source = "./modules/experience_jamf_vignettes/ej_base"
 }
 
-/*
+
 module "ej_saas_tenancy" {
   count                     = var.include_ej_saas_tenancy == true ? 1 : 0
   source                    = "./modules/experience_jamf_vignettes/ej_saas_tenancy"
@@ -97,7 +97,7 @@ module "ej_saas_tenancy" {
   CertificateBody           = var.CertificateBody
   aws_region                = var.aws_region
 }
-*/
+
 
 module "ej_incident_response" {
   count                     = var.include_ej_incident_response == true ? 1 : 0

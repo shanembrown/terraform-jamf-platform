@@ -18,8 +18,8 @@ resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuratio
   distribution_method = "Install Automatically" // "Make Available in Self Service", "Install Automatically"
   payloads            = trimspace(data.http.profile.response_body)
   payload_validate    = false
-
-  user_removable = false
+  redeploy_on_update  = "Newly Assigned"
+  user_removable      = false
 
   scope {
     all_computers = true
