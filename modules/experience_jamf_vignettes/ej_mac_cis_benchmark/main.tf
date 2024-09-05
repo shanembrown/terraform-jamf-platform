@@ -17,7 +17,7 @@ terraform {
   required_providers {
     jamfpro = {
       source  = "deploymenttheory/jamfpro"
-      version = "~> 0.1.11"
+      version = ">= 0.1.11"
     }
   }
 }
@@ -334,9 +334,9 @@ resource "jamfpro_macos_configuration_profile_plist" "sonoma_cis_lvl1" {
   for_each            = local.cis_lvl1_macos_14_dict
   name                = "${var.prefix}Sonoma_cis_lvl1 - ${each.key}"
   distribution_method = "Install Automatically"
-  /*redeploy_on_update  = "Newly Assigned"*/
-  category_id = jamfpro_category.category_cis_benchmarks.id
-  level       = "System"
+  redeploy_on_update  = "Newly Assigned"
+  category_id         = jamfpro_category.category_cis_benchmarks.id
+  level               = "System"
 
   payloads = file("${each.value}")
 
