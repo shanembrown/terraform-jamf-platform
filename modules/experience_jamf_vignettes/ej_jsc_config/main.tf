@@ -65,9 +65,9 @@ resource "jsc_uemc" "initial_uemc" {
 }
 
 resource "jsc_oktaidp" "okta_idp_base" {
-  clientid  = var.tje_okta_clientid
-  name      = "Okta IDP Integration"
-  orgdomain = var.tje_okta_orgdomain
+  clientid   = var.tje_okta_clientid
+  name       = "Okta IDP Integration"
+  orgdomain  = var.tje_okta_orgdomain
   depends_on = [time_sleep.wait_60_seconds]
 }
 
