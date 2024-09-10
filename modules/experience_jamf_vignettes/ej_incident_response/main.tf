@@ -28,19 +28,19 @@ resource "jamfpro_category" "category_threat_response" {
 ## Create extension attributes
 resource "jamfpro_computer_extension_attribute" "ea_aftermath_analyze_trigger" {
   name              = "${var.prefix}Aftermath Analyze Trigger"
-  input_type        = "script"
+  input_type        = "SCRIPT"
   enabled           = true
-  data_type         = "string"
-  inventory_display_type = "Extension Attributes"
+  data_type         = "STRING"
+  inventory_display_type = "EXTENSION_ATTRIBUTES"
   script_contents      = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/aftermath_analyze_trigger.sh")
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_aftermath_trigger" {
   name              = "${var.prefix}Aftermath Trigger"
-  input_type        = "script"
+  input_type        = "SCRIPT"
   enabled           = true
-  data_type         = "string"
-  inventory_display_type = "Extension Attributes"
+  data_type         = "STRING"
+  inventory_display_type = "EXTENSION_ATTRIBUTES"
   script_contents      = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/aftermath_trigger.sh")
 }
 

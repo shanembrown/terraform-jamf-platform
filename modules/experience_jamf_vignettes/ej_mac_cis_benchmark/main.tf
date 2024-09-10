@@ -56,28 +56,28 @@ resource "jamfpro_script" "script_sonoma_cis_lvl1_compliance" {
 ## Create computer extension attributes
 resource "jamfpro_computer_extension_attribute" "ea_sonoma_cis_apply" {
   name              = "${var.prefix}Apply CIS Flag"
-  input_type        = "script"
+  input_type        = "SCRIPT"
   enabled           = true
-  data_type         = "string"
-  inventory_display_type = "Extension Attributes"
+  data_type         = "STRING"
+  inventory_display_type = "EXTENSION_ATTRIBUTES"
   script_contents      = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/sonoma_cis_apply.sh")
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_sonoma_cis_remove" {
   name              = "${var.prefix}Remove CIS Flag"
-  input_type        = "script"
+  input_type        = "SCRIPT"
   enabled           = true
-  data_type         = "string"
-  inventory_display_type = "Extension Attributes"
+  data_type         = "STRING"
+  inventory_display_type = "EXTENSION_ATTRIBUTES"
   script_contents      = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/sonoma_cis_remove.sh")
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_cis_failed_count" {
   name              = "${var.prefix}CIS - Compliance Failed Results Count"
-  input_type        = "script"
+  input_type        = "SCRIPT"
   enabled           = true
-  data_type         = "integer"
-  inventory_display_type = "Extension Attributes"
+  data_type         = "INTEGER"
+  inventory_display_type = "EXTENSION_ATTRIBUTES"
   script_contents      = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/cis_compliance_failed_count.sh")
 }
 
