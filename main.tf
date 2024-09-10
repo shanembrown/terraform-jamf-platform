@@ -3,11 +3,11 @@ terraform {
   required_providers {
     jamfpro = {
       source  = "deploymenttheory/jamfpro"
-      version = "~> 0.1.9"
+      version = ">= 0.2.0"
     }
     jsc = {
       source  = "danjamf/jsctfprovider"
-      version = "~> 0.0.15"
+      version = ">= 0.0.15"
     }
   }
 }
@@ -83,21 +83,9 @@ module "ej_base" {
   source = "./modules/experience_jamf_vignettes/ej_base"
 }
 
-/*
-module "ej_saas_tenancy" {
-  count                     = var.include_ej_saas_tenancy == true ? 1 : 0
-  source                    = "./modules/experience_jamf_vignettes/ej_saas_tenancy"
-  support_files_path_prefix = "modules/experience_jamf_vignettes/ej_saas_tenancy/"
-  KeyName                   = var.KeyName
-  jsc_password              = var.jsc_password
-  jsc_username              = var.jsc_username
-  VPCId                     = var.VPCId
-  SubnetId                  = var.SubnetId
-  CertificatePrivateKey     = var.CertificatePrivateKey
-  CertificateBody           = var.CertificateBody
-  aws_region                = var.aws_region
-}
-*/
+
+# SaaS tenancy moved to saastenconfig.tf.bak
+
 
 module "ej_incident_response" {
   count                     = var.include_ej_incident_response == true ? 1 : 0
