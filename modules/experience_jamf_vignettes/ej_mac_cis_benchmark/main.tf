@@ -59,8 +59,8 @@ resource "jamfpro_computer_extension_attribute" "ea_sonoma_cis_apply" {
   input_type        = "script"
   enabled           = true
   data_type         = "string"
-  inventory_display = "Extension Attributes"
-  input_script      = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/sonoma_cis_apply.sh")
+  inventory_display_type = "Extension Attributes"
+  script_contents      = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/sonoma_cis_apply.sh")
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_sonoma_cis_remove" {
@@ -68,8 +68,8 @@ resource "jamfpro_computer_extension_attribute" "ea_sonoma_cis_remove" {
   input_type        = "script"
   enabled           = true
   data_type         = "string"
-  inventory_display = "Extension Attributes"
-  input_script      = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/sonoma_cis_remove.sh")
+  inventory_display_type = "Extension Attributes"
+  script_contents      = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/sonoma_cis_remove.sh")
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_cis_failed_count" {
@@ -77,8 +77,8 @@ resource "jamfpro_computer_extension_attribute" "ea_cis_failed_count" {
   input_type        = "script"
   enabled           = true
   data_type         = "integer"
-  inventory_display = "Extension Attributes"
-  input_script      = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/cis_compliance_failed_count.sh")
+  inventory_display_type = "Extension Attributes"
+  script_contents      = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/cis_compliance_failed_count.sh")
 }
 
 ## Create Smart Computer Groups

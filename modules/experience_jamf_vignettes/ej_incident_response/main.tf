@@ -31,8 +31,8 @@ resource "jamfpro_computer_extension_attribute" "ea_aftermath_analyze_trigger" {
   input_type        = "script"
   enabled           = true
   data_type         = "string"
-  inventory_display = "Extension Attributes"
-  input_script      = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/aftermath_analyze_trigger.sh")
+  inventory_display_type = "Extension Attributes"
+  script_contents      = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/aftermath_analyze_trigger.sh")
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_aftermath_trigger" {
@@ -40,8 +40,8 @@ resource "jamfpro_computer_extension_attribute" "ea_aftermath_trigger" {
   input_type        = "script"
   enabled           = true
   data_type         = "string"
-  inventory_display = "Extension Attributes"
-  input_script      = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/aftermath_trigger.sh")
+  inventory_display_type = "Extension Attributes"
+  script_contents      = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/aftermath_trigger.sh")
 }
 
 ## Create smart groups
