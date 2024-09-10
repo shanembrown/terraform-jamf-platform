@@ -61,13 +61,14 @@ resource "jsc_uemc" "initial_uemc" {
   domain       = var.jamfpro_instance_url
   clientid     = local.jamf_pro_client_id
   clientsecret = local.jamf_pro_client_secret
-  depends_on   = [jamfpro_api_integration.jamfpro_api_integration_jsc]
+  depends_on   = [time_sleep.wait_60_seconds]
 }
 
 resource "jsc_oktaidp" "okta_idp_base" {
   clientid  = var.tje_okta_clientid
   name      = "Okta IDP Integration"
   orgdomain = var.tje_okta_orgdomain
+  depends_on = [time_sleep.wait_60_seconds]
 }
 
 resource "jsc_ap" "all_services" {
