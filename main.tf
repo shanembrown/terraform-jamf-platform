@@ -150,6 +150,13 @@ module "jsc_ztna" {
   jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
+## Create Jamf Security Cloud Activation Profile containing ONLY Connect Network Relay
+module "jsc_network_relay" {
+  count                         = var.include_jsc_network_relay == true ? 1 : 0
+  source                        = "./modules/staging_templates/jsc_network_relay"
+  jsc_provided_idp_client_child = var.jsc_provided_idp_client
+}
+
 ## Create Jamf Security Cloud Activation Profile containing ALL JSC Services
 module "jsc_all_services" {
   count                         = var.include_jsc_all_services == true ? 1 : 0
