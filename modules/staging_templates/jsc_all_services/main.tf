@@ -12,9 +12,15 @@ terraform {
   }
 }
 
+resource "jsc_oktaidp" "okta_idp_base" {
+  clientid   = var.tje_okta_clientid
+  name       = "Okta IDP Integration"
+  orgdomain  = var.tje_okta_orgdomain
+}
+
 resource "jsc_ap" "all_services" {
   name             = "Jamf Connect ZTNA and Protect"
-  oktaconnectionid = var.jsc_provided_idp_client_child
+  oktaconnectionid = jsc_oktaidp.okta_idp_base.id
   privateaccess    = true
   threatdefence    = true
   datapolicy       = true

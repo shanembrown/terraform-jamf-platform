@@ -12,9 +12,15 @@ terraform {
   }
 }
 
+resource "jsc_oktaidp" "okta_idp_base" {
+  clientid   = var.tje_okta_clientid
+  name       = "Okta IDP Integration"
+  orgdomain  = var.tje_okta_orgdomain
+}
+
 resource "jsc_ap" "content_filtering_only" {
   name             = "Content Filtering"
-  oktaconnectionid = var.jsc_provided_idp_client_child
+  oktaconnectionid = jsc_oktaidp.okta_idp_base.id
   privateaccess    = false
   threatdefence    = false
   datapolicy       = true
