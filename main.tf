@@ -133,8 +133,8 @@ module "jsc_block_pages" {
 module "jsc_dp_only" {
   count                         = var.include_jsc_dp_only == true ? 1 : 0
   source                        = "./modules/staging_templates/jsc_dp_only"
-  tje_okta_clientid         = var.tje_okta_clientid
-  tje_okta_orgdomain        = var.tje_okta_orgdomain
+  tje_okta_clientid             = var.tje_okta_clientid
+  tje_okta_orgdomain            = var.tje_okta_orgdomain
   jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
@@ -142,8 +142,8 @@ module "jsc_dp_only" {
 module "jsc_mtd_only" {
   count                         = var.include_jsc_mtd_only == true ? 1 : 0
   source                        = "./modules/staging_templates/jsc_mtd_only"
-  tje_okta_clientid         = var.tje_okta_clientid
-  tje_okta_orgdomain        = var.tje_okta_orgdomain
+  tje_okta_clientid             = var.tje_okta_clientid
+  tje_okta_orgdomain            = var.tje_okta_orgdomain
   jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
@@ -151,8 +151,8 @@ module "jsc_mtd_only" {
 module "jsc_mtd_dp_only" {
   count                         = var.include_jsc_mtd_dp_only == true ? 1 : 0
   source                        = "./modules/staging_templates/jsc_mtd_dp_only"
-  tje_okta_clientid         = var.tje_okta_clientid
-  tje_okta_orgdomain        = var.tje_okta_orgdomain
+  tje_okta_clientid             = var.tje_okta_clientid
+  tje_okta_orgdomain            = var.tje_okta_orgdomain
   jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
@@ -160,8 +160,8 @@ module "jsc_mtd_dp_only" {
 module "jsc_ztna" {
   count                         = var.include_jsc_ztna == true ? 1 : 0
   source                        = "./modules/staging_templates/jsc_ztna"
-  tje_okta_clientid         = var.tje_okta_clientid
-  tje_okta_orgdomain        = var.tje_okta_orgdomain
+  tje_okta_clientid             = var.tje_okta_clientid
+  tje_okta_orgdomain            = var.tje_okta_orgdomain
   jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
@@ -169,8 +169,8 @@ module "jsc_ztna" {
 module "jsc_ztna_dp_only" {
   count                         = var.include_jsc_ztna_dp_only == true ? 1 : 0
   source                        = "./modules/staging_templates/jsc_ztna_dp_only"
-  tje_okta_clientid         = var.tje_okta_clientid
-  tje_okta_orgdomain        = var.tje_okta_orgdomain
+  tje_okta_clientid             = var.tje_okta_clientid
+  tje_okta_orgdomain            = var.tje_okta_orgdomain
   jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
@@ -178,23 +178,26 @@ module "jsc_ztna_dp_only" {
 module "jsc_ztna_mtd_only" {
   count                         = var.include_jsc_ztna_mtd_only == true ? 1 : 0
   source                        = "./modules/staging_templates/jsc_ztna_mtd_only"
-  tje_okta_clientid         = var.tje_okta_clientid
-  tje_okta_orgdomain        = var.tje_okta_orgdomain
+  tje_okta_clientid             = var.tje_okta_clientid
+  tje_okta_orgdomain            = var.tje_okta_orgdomain
   jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Connect Network Relay
-/* module "jsc_network_relay" {
-  count                         = var.include_jsc_network_relay == true ? 1 : 0
+module "jsc_network_relay" {
+  /* count                         = var.include_jsc_network_relay == true ? 1 : 0 */
   source                        = "./modules/staging_templates/jsc_network_relay"
-} */
+  tje_okta_clientid             = var.tje_okta_clientid
+  tje_okta_orgdomain            = var.tje_okta_orgdomain
+  jsc_provided_idp_client_child = var.jsc_provided_idp_client
+}
 
 ## Create Jamf Security Cloud Activation Profile containing ALL JSC Services
 module "jsc_all_services" {
   count                         = var.include_jsc_all_services == true ? 1 : 0
   source                        = "./modules/staging_templates/jsc_all_services"
-  tje_okta_clientid         = var.tje_okta_clientid
-  tje_okta_orgdomain        = var.tje_okta_orgdomain
+  tje_okta_clientid             = var.tje_okta_clientid
+  tje_okta_orgdomain            = var.tje_okta_orgdomain
   jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
