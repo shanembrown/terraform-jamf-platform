@@ -18,10 +18,10 @@ resource "jsc_oktaidp" "okta_idp_base" {
   orgdomain = var.tje_okta_orgdomain
 }
 
-resource "jsc_ap" "mtd_only" {
-  name             = "Mobile Threat Defense"
+resource "jsc_ap" "ztna_dp_only" {
+  name             = "Jamf Connect ZTNA and Content Filtering"
   oktaconnectionid = jsc_oktaidp.okta_idp_base.id
-  privateaccess    = false
-  threatdefence    = true
-  datapolicy       = false
+  privateaccess    = true
+  threatdefence    = false
+  datapolicy       = true
 }

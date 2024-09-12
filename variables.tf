@@ -176,6 +176,11 @@ variable "include_jsc_ztna" {
   default = false
 }
 
+variable "include_jsc_network_relay" {
+  type    = bool
+  default = false
+}
+
 variable "include_jsc_block_pages" {
   type    = bool
   default = false

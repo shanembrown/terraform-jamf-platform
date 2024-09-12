@@ -9,7 +9,15 @@ terraform {
       source  = "danjamf/jsctfprovider"
       version = ">= 0.0.15"
     }
+    /* jsc = {
+      source = "jsctf"
+    } */
   }
+}
+
+provider "jsc" {
+  username = "ryan.legg+local@jamf.com"
+  password = "Tw1ster8923"
 }
 
 resource "jsc_oktaidp" "okta_idp_base" {
@@ -18,10 +26,11 @@ resource "jsc_oktaidp" "okta_idp_base" {
   orgdomain = var.tje_okta_orgdomain
 }
 
-resource "jsc_ap" "mtd_only" {
-  name             = "Mobile Threat Defense"
+resource "jsc_ap" "networkrelay" {
+  name             = "Network Relay"
   oktaconnectionid = jsc_oktaidp.okta_idp_base.id
+  networkrelay     = true
   privateaccess    = false
-  threatdefence    = true
+  threatdefence    = false
   datapolicy       = false
 }
