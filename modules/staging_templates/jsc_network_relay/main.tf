@@ -6,8 +6,12 @@ terraform {
       version = ">= 0.1.5"
     }
     jsc = {
-      source = "jsctf"
+      source  = "danjamf/jsctfprovider"
+      version = ">= 0.0.15"
     }
+    /* jsc = {
+      source = "jsctf"
+    } */
   }
 }
 
