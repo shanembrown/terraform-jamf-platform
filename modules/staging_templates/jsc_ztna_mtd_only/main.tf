@@ -19,7 +19,7 @@ resource "jsc_oktaidp" "okta_idp_base" {
 }
 
 resource "jsc_ap" "ztna_mtd_only" {
-  name             = "Jamf Connect ZTNA and Mobile Threat Defense"
+  name             = "Jamf Connect ZTNA and Network Threat Defense"
   idptype          = "OKTA"
   oktaconnectionid = jsc_oktaidp.okta_idp_base.id
   privateaccess    = true

@@ -12,12 +12,19 @@ terraform {
   }
 }
 
+resource "jsc_oktaidp" "okta_idp_base" {
+  clientid  = var.tje_okta_clientid
+  name      = "Okta IDP Integration"
+  orgdomain = var.tje_okta_orgdomain
+}
+
 resource "jsc_ap" "content_filtering_only" {
-  name          = "Content Filtering"
-  idptype       = "None"
-  privateaccess = false
-  threatdefence = false
-  datapolicy    = true
+  name             = "Content Filtering"
+  idptype          = "OKTA"
+  oktaconnectionid = jsc_oktaidp.okta_idp_base.id
+  privateaccess    = false
+  threatdefence    = false
+  datapolicy       = true
 }
 
 resource "jamfpro_macos_configuration_profile_plist" "dp" {
