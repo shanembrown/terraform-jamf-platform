@@ -12,15 +12,20 @@ terraform {
   }
 }
 
-resource "jsc_ap" "mtd_dp_only" {
-  name          = "Mobile Threat Defense and Content Filtering"
-  idptype       = "None"
-  privateaccess = false
-  threatdefence = true
-  datapolicy    = true
+resource "jsc_oktaidp" "okta_idp_base" {
+  clientid  = var.tje_okta_clientid
+  name      = "Okta IDP Integration"
+  orgdomain = var.tje_okta_orgdomain
 }
 
-
+resource "jsc_ap" "mtd_dp_only" {
+  name             = "Mobile Threat Defense and Content Filtering"
+  idptype          = "OKTA"
+  oktaconnectionid = jsc_oktaidp.okta_idp_base.id
+  privateaccess    = false
+  threatdefence    = true
+  datapolicy       = true
+}
 
 resource "jamfpro_macos_configuration_profile_plist" "mtd_dp" {
   name                = "Network Threat Defense and Content Filtering - macOS (Supervised)"

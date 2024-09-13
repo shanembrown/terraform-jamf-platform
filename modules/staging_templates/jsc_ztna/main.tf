@@ -19,7 +19,7 @@ resource "jsc_oktaidp" "okta_idp_base" {
 }
 
 resource "jsc_ap" "ztna" {
-  name             = "Connect ZTNA"
+  name             = "Jamf Connect ZTNA"
   idptype          = "OKTA"
   oktaconnectionid = jsc_oktaidp.okta_idp_base.id
   privateaccess    = true
