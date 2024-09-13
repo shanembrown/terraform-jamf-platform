@@ -13,11 +13,11 @@ terraform {
 }
 
 resource "jsc_ap" "content_filtering_only" {
-  name             = "Content Filtering"
-  idptype          = "None"
-  privateaccess    = false
-  threatdefence    = false
-  datapolicy       = true
+  name          = "Content Filtering"
+  idptype       = "None"
+  privateaccess = false
+  threatdefence = false
+  datapolicy    = true
 }
 
 resource "jamfpro_macos_configuration_profile_plist" "dp" {
@@ -30,7 +30,7 @@ resource "jamfpro_macos_configuration_profile_plist" "dp" {
   payload_validate = false
 
   scope {
-    all_computers      = false 
+    all_computers = false
   }
-  depends_on = [ jsc_ap.content_filtering_only ]
+  depends_on = [jsc_ap.content_filtering_only]
 }

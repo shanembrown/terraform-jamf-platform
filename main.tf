@@ -185,8 +185,8 @@ module "jsc_ztna_mtd_only" {
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Connect Network Relay
 module "jsc_network_relay" {
-  count                         = var.include_jsc_network_relay == true ? 1 : 0
-  source                        = "./modules/staging_templates/jsc_network_relay"
+  count  = var.include_jsc_network_relay == true ? 1 : 0
+  source = "./modules/staging_templates/jsc_network_relay"
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ALL JSC Services

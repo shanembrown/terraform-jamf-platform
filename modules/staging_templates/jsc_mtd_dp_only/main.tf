@@ -13,11 +13,11 @@ terraform {
 }
 
 resource "jsc_ap" "mtd_dp_only" {
-  name             = "Mobile Threat Defense and Content Filtering"
-  idptype          = "None"
-  privateaccess    = false
-  threatdefence    = true
-  datapolicy       = true
+  name          = "Mobile Threat Defense and Content Filtering"
+  idptype       = "None"
+  privateaccess = false
+  threatdefence = true
+  datapolicy    = true
 }
 
 
@@ -32,7 +32,7 @@ resource "jamfpro_macos_configuration_profile_plist" "mtd_dp" {
   payload_validate = false
 
   scope {
-    all_computers      = false    
+    all_computers = false
   }
-  depends_on = [ jsc_ap.mtd_dp_only ]
+  depends_on = [jsc_ap.mtd_dp_only]
 }

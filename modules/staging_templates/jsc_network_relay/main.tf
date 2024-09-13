@@ -13,8 +13,8 @@ terraform {
 }
 
 resource "jsc_ap" "networkrelay" {
-  name             = "Network Relay"
-  idptype          = "NetworkRelay"
+  name    = "Network Relay"
+  idptype = "NetworkRelay"
 }
 
 resource "jamfpro_macos_configuration_profile_plist" "network_relay_macos" {
@@ -27,7 +27,7 @@ resource "jamfpro_macos_configuration_profile_plist" "network_relay_macos" {
   payload_validate = false
 
   scope {
-    all_computers      = false
+    all_computers = false
   }
-  depends_on = [ jsc_ap.networkrelay ]
+  depends_on = [jsc_ap.networkrelay]
 }

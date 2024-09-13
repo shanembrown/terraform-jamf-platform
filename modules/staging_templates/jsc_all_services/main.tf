@@ -37,7 +37,7 @@ resource "jamfpro_macos_configuration_profile_plist" "dp" {
   payload_validate = false
 
   scope {
-    all_computers      = false 
+    all_computers = false
   }
-  depends_on = [ jsc_ap.all_services ]
+  depends_on = [jsc_ap.all_services]
 }
