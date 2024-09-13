@@ -20,8 +20,24 @@ resource "jsc_oktaidp" "okta_idp_base" {
 
 resource "jsc_ap" "ztna_dp_only" {
   name             = "Jamf Connect ZTNA and Content Filtering"
+  idptype          = "OKTA"
   oktaconnectionid = jsc_oktaidp.okta_idp_base.id
   privateaccess    = true
   threatdefence    = false
   datapolicy       = true
+}
+
+resource "jamfpro_macos_configuration_profile_plist" "ztna_dp" {
+  name                = "Jamf Connect ZTNA and Content Filtering - macOS (Supervised)"
+  distribution_method = "Install Automatically"
+  redeploy_on_update  = "Newly Assigned"
+  level               = "System"
+
+  payloads         = jsc_ap.ztna_dp_only.macosplist
+  payload_validate = false
+
+  scope {
+    all_computers = false
+  }
+  depends_on = [jsc_ap.ztna_dp_only]
 }

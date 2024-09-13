@@ -1,5 +1,5 @@
 ### Define Jamf Protect for macOS integration
-variable "include_jamfprotectformacos_config" {
+variable "include_jamf_protect_for_macOS" {
   type    = bool
   default = false
 }

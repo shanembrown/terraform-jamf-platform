@@ -20,8 +20,26 @@ resource "jsc_oktaidp" "okta_idp_base" {
 
 resource "jsc_ap" "ztna" {
   name             = "Connect ZTNA"
+  idptype          = "OKTA"
   oktaconnectionid = jsc_oktaidp.okta_idp_base.id
   privateaccess    = true
   threatdefence    = false
   datapolicy       = false
+}
+
+
+
+resource "jamfpro_macos_configuration_profile_plist" "ztna_macos" {
+  name                = "Jamf Connect ZTNA - macOS (Supervised)"
+  distribution_method = "Install Automatically"
+  redeploy_on_update  = "Newly Assigned"
+  level               = "System"
+
+  payloads         = jsc_ap.ztna.macosplist
+  payload_validate = false
+
+  scope {
+    all_computers = false
+  }
+  depends_on = [jsc_ap.ztna]
 }
