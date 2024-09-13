@@ -25,3 +25,22 @@ resource "jsc_ap" "mtd_dp_only" {
   threatdefence    = true
   datapolicy       = true
 }
+
+
+
+resource "jamfpro_macos_configuration_profile_plist" "mtd_dp" {
+  name                = "Network Threat Defense and Content Filtering - macOS"
+  distribution_method = "Install Automatically"
+  redeploy_on_update  = "Newly Assigned"
+  level               = "System"
+
+  payloads         = jsc_ap.networkrelay.macosplist
+  payload_validate = false
+
+  scope {
+    all_computers      = false
+    
+  }
+
+  depends_on = [jamfpro_smart_computer_group.group_macOS_14]
+}

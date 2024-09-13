@@ -5,13 +5,13 @@ terraform {
       source  = "deploymenttheory/jamfpro"
       version = ">= 0.1.5"
     }
-    jsc = {
+    /* jsc = {
       source  = "danjamf/jsctfprovider"
       version = ">= 0.0.15"
-    }
-    /* jsc = {
-      source = "jsctf"
     } */
+    jsc = {
+      source = "jsctf"
+    }
   }
 }
 
@@ -20,17 +20,27 @@ provider "jsc" {
   password = "Tw1ster8923"
 }
 
-resource "jsc_oktaidp" "okta_idp_base" {
-  clientid  = var.tje_okta_clientid
-  name      = "Okta IDP Integration"
-  orgdomain = var.tje_okta_orgdomain
-}
-
 resource "jsc_ap" "networkrelay" {
   name             = "Network Relay"
-  oktaconnectionid = jsc_oktaidp.okta_idp_base.id
-  networkrelay     = true
-  privateaccess    = false
-  threatdefence    = false
-  datapolicy       = false
+  idptype          = "NetworkRelay"
+  privateaccess    = true
+}
+
+
+
+resource "jamfpro_macos_configuration_profile_plist" "network_relay_macos" {
+  name                = "Network Relay - macOS"
+  distribution_method = "Install Automatically"
+  redeploy_on_update  = "Newly Assigned"
+  level               = "System"
+
+  payloads         = jsc_ap.networkrelay.macosplist
+  payload_validate = false
+
+  scope {
+    all_computers      = false
+    
+  }
+
+  depends_on = [jamfpro_smart_computer_group.group_macOS_14]
 }
