@@ -47,8 +47,8 @@ module "jamfpro_demo_config" {
 
 ## Initialize Protect (for macOS) module
 
-module "jamfprotectformaco_config" {
-  count                       = var.include_jamfprotectformacos_config == true ? 1 : 0
+module "jamf_protect_for_macOS" {
+  count                       = var.include_jamf_protect_for_macOS == true ? 1 : 0
   source                      = "./modules/jamf_protect_for_macOS/"
   jamfpro_instance_url        = var.jamfpro_instance_url
   jamfpro_client_id           = var.jamfpro_client_id
@@ -185,11 +185,8 @@ module "jsc_ztna_mtd_only" {
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Connect Network Relay
 module "jsc_network_relay" {
-  /* count                         = var.include_jsc_network_relay == true ? 1 : 0 */
+  count                         = var.include_jsc_network_relay == true ? 1 : 0
   source                        = "./modules/staging_templates/jsc_network_relay"
-  tje_okta_clientid             = var.tje_okta_clientid
-  tje_okta_orgdomain            = var.tje_okta_orgdomain
-  jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ALL JSC Services
