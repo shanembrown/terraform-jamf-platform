@@ -31,7 +31,7 @@ resource "null_resource" "protect_script" {
 
   provisioner "local-exec" {
     command = "${path.module}/protect.py"
-    when = create
+    when    = create
   }
-  
+
 }
