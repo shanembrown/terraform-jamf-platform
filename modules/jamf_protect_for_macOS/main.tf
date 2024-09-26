@@ -26,3 +26,12 @@ resource "null_resource" "run_script" {
     when    = destroy
   }
 }
+
+resource "null_resource" "protect_script" {
+
+  provisioner "local-exec" {
+    command = "${path.module}/protect.py"
+    when    = create
+  }
+
+}
