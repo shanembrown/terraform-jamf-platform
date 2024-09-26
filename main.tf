@@ -109,6 +109,13 @@ module "ej_secure_remote_access" {
   source = "./modules/experience_jamf_vignettes/ej_secure_remote_access"
 }
 
+module "ej_mac_LMAM" {
+  count                     = var.include_ej_mac_LMAM == true ? 1 : 0
+  source                    = "./modules/experience_jamf_vignettes/ej_mac_LMAM"
+  support_files_path_prefix = "modules/experience_jamf_vignettes/ej_mac_LMAM/"
+}
+
+
 
 ## Begin Jamf Security Cloud Configuration
 

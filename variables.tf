@@ -231,3 +231,8 @@ variable "activation_profile_target" {
   type    = string
   default = ""
 }
+
+variable "include_ej_mac_LMAM" {
+  type    = bool
+  default = false
+}
