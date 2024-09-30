@@ -78,6 +78,61 @@ module "slack" {
   source = "./modules/app_installers/slack"
 }
 
+module "swift_dialog" {
+  count  = var.include_swift_dialog == true ? 1 : 0
+  source = "./modules/app_installers/swift_dialog"
+}
+
+module "okta_verify" {
+  count  = var.include_swift_dialog == true ? 1 : 0
+  source = "./modules/app_installers/okta_verify"
+}
+
+module "dropbox" {
+  count  = var.include_dropbox == true ? 1 : 0
+  source = "./modules/app_installers/dropbox"
+}
+
+module "google_drive" {
+  count  = var.include_google_drive == true ? 1 : 0
+  source = "./modules/app_installers/google_drive"
+}
+
+module "jamf_composer" {
+  count  = var.include_jamf_composer == true ? 1 : 0
+  source = "./modules/app_installers/jamf_composer"
+}
+
+module "jamf_connect" {
+  count  = var.include_jamf_connect == true ? 1 : 0
+  source = "./modules/app_installers/dropbox"
+}
+
+module "pppc_utility" {
+  count  = var.include_pppc_utility == true ? 1 : 0
+  source = "./modules/app_installers/pppc_utility"
+}
+
+module "jamfcheck" {
+  count  = var.include_jamfcheck == true ? 1 : 0
+  source = "./modules/app_installers/jamfcheck"
+}
+
+module "nudge" {
+  count  = var.include_nudge == true ? 1 : 0
+  source = "./modules/app_installers/nudge"
+}
+
+module "utm" {
+  count  = var.include_utm == true ? 1 : 0
+  source = "./modules/app_installers/utm"
+}
+
+module "zoom" {
+  count  = var.include_zoom == true ? 1 : 0
+  source = "./modules/app_installers/zoom"
+}
+
 ## Initialize Experience Jamf vignette modules
 module "ej_base" {
   count  = var.include_ej_base == true ? 1 : 0
