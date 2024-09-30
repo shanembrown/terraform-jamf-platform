@@ -35,6 +35,27 @@ options:
     presence: optional
     content: Indicates whether to include the EJ JSC configuration.
 
+### App Installer Flags
+  - key: include_google_chrome
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the Google Chrome App Installer.  
+
+  - key: include_microsoft_teams
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the Microsoft Teams App Installer.
+
+  - key: include_mozilla_firefox
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the Mozilla Firefix App Installer.
+
+  - key: include_slack
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the Slack App Installer.
+
   ### onboarder options
   - key: include_onboarder_wizard
     type: <boolean>
