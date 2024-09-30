@@ -47,7 +47,7 @@ cd /Users/[FIRST.LAST]/ExperienceJamf-Terraform
 nano terraform.tfvars
 ```
 
-Copy and paste the following data then customize it with your own credentials
+Copy and paste the following data then customize it with your own credentials and set knobs to enable specific modules contained within this project. 
 
 ```
 ## Jamf Pro Account Details
