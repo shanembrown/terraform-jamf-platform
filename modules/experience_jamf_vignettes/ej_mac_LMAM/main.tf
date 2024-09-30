@@ -34,9 +34,9 @@ resource "jamfpro_category" "category_jamf_connect" {
 ## Define the dictionary of packages with their paths
 locals {
   lmam_packages_dict = {
-    "JamfConnect_2.38.0"         = "${var.support_files_path_prefix}support_files/computer_packages/JamfConnect_2.38.0.pkg"
-    "JamfConnectAssets_EJ_v2"    = "${var.support_files_path_prefix}support_files/computer_packages/JamfConnectAssets-EJ_v2_Ward-20240724.pkg"
-    "JamfConnectLaunchAgent"     = "${var.support_files_path_prefix}support_files/computer_packages/JamfConnectLaunchAgent.pkg"
+    "JamfConnect_2.38.0"      = "${var.support_files_path_prefix}support_files/computer_packages/JamfConnect_2.38.0.pkg"
+    "JamfConnectAssets_EJ_v2" = "${var.support_files_path_prefix}support_files/computer_packages/JamfConnectAssets-EJ_v2_Ward-20240724.pkg"
+    "JamfConnectLaunchAgent"  = "${var.support_files_path_prefix}support_files/computer_packages/JamfConnectLaunchAgent.pkg"
   }
 }
 
@@ -114,7 +114,7 @@ resource "jamfpro_policy" "install_JC_and_assets" {
   payloads {
     packages {
       distribution_point = "default" // Set the appropriate distribution point
-      
+
       package {
         id     = jamfpro_package.lmam_packages["JamfConnect_2.38.0"].id
         action = "Install"
