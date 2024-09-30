@@ -1,6 +1,8 @@
 name: "Terraform"
 
 on:
+  schedule:
+    - cron: "0 */12 * * *" # This runs every 12 hours
   push:
     branches: ["staging"]
   pull_request:
