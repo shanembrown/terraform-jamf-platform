@@ -66,7 +66,16 @@ module "google_chrome" {
 module "mozilla_firefox" {
   count  = var.include_mozilla_firefox == true ? 1 : 0
   source = "./modules/app_installers/mozilla_firefox/"
+}
 
+module "microsoft_teams" {
+  count = var.include_microsoft_teams == true ? 1 : 0
+  source = "./modules/app_installers/microsoft_teams"
+}
+
+module "slack" {
+  count = var.include_slack == true ? 1 : 0
+  source = "./modules/app_installers/slack"
 }
 
 ## Initialize Onboarding Wizard modules

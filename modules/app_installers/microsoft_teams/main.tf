@@ -8,8 +8,8 @@ terraform {
   }
 }
 
-resource "jamfpro_app_installer" "chrome" {
-  name            = "Google Chrome"
+resource "jamfpro_app_installer" "ms_teams" {
+  name            = "Microsoft Teams"
   enabled         = true
   deployment_type = "SELF_SERVICE"
   update_behavior = "AUTOMATIC"
@@ -21,7 +21,7 @@ resource "jamfpro_app_installer" "chrome" {
   trigger_admin_notifications        = true
 
   notification_settings {
-    notification_message  = "A new Google Chrome update is available"
+    notification_message  = "A new Microsoft Teams update is available"
     notification_interval = 1
     deadline_message      = "Update deadline approaching"
     deadline              = 1
@@ -35,6 +35,6 @@ resource "jamfpro_app_installer" "chrome" {
     include_in_featured_category   = true
     include_in_compliance_category = false
     force_view_description         = false
-    description                    = "Google Chrome is allowed in our organization as an alternate browser."
+    description                    = "Microsoft Teams is a primary communication tool for our organization."
   }
 }
