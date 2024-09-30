@@ -231,3 +231,13 @@ variable "activation_profile_target" {
   type    = string
   default = ""
 }
+
+variable "include_google_chrome" {
+  type    = string
+  default = ""
+}
+
+variable "include_mozilla_firefox" {
+  type    = string
+  default = ""
+}
