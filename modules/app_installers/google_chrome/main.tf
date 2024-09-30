@@ -10,7 +10,7 @@ terraform {
 
 resource "jamfpro_app_installer" "chrome" {
   name            = "Google Chrome"
-  enabled         = true
+  enabled         = false
   deployment_type = "SELF_SERVICE"
   update_behavior = "AUTOMATIC"
   category_id     = "-1"
