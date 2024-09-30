@@ -78,32 +78,13 @@ module "slack" {
   source = "./modules/app_installers/slack"
 }
 
-## Initialize Onboarding Wizard modules
-module "ow_browsers" {
-  count                     = var.include_onboarder_wizard == true ? 1 : 0
-  source                    = "./modules/onboarder_wizard/ow_browsers"
-  support_files_path_prefix = "modules/onboarder_wizard//ow_browsers/"
-  install_chrome            = var.install_chrome
-  install_firefox           = var.install_firefox
-}
-
-module "ow_profiles" {
-  count                           = var.include_onboarder_wizard == true ? 1 : 0
-  source                          = "./modules/onboarder_wizard/ow_profiles"
-  support_files_path_prefix       = "modules/onboarder_wizard//ow_profiles/"
-  block_beta_updates              = var.block_beta_updates
-  enforce_firewall_and_gatekeeper = var.enforce_firewall_and_gatekeeper
-}
-
 ## Initialize Experience Jamf vignette modules
 module "ej_base" {
   count  = var.include_ej_base == true ? 1 : 0
   source = "./modules/experience_jamf_vignettes/ej_base"
 }
 
-
 # SaaS tenancy moved to saastenconfig.tf.bak
-
 
 module "ej_incident_response" {
   count                     = var.include_ej_incident_response == true ? 1 : 0
@@ -214,12 +195,6 @@ module "jsc_all_services" {
   tje_okta_clientid             = var.tje_okta_clientid
   tje_okta_orgdomain            = var.tje_okta_orgdomain
   jsc_provided_idp_client_child = var.jsc_provided_idp_client
-}
-
-## Initialize sandbox module
-module "sandbox" {
-  count  = var.include_sandbox == true ? 1 : 0
-  source = "./modules/sandbox"
 }
 
 ## Initialiaze JSC child modules
