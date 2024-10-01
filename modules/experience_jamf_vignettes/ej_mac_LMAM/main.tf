@@ -75,12 +75,12 @@ resource "jamfpro_script" "script_LMAM_vignette_clean_up" {
 
 ## Create computer extension attributes
 resource "jamfpro_computer_extension_attribute" "ea_LMAM-marker" {
-  name              = "${var.prefix}LMAM-marker"
-  input_type        = "script"
-  enabled           = true
-  data_type         = "string"
-  inventory_display = "Extension Attributes"
-  input_script      = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/LMAM-marker.sh")
+  name                   = "${var.prefix}LMAM-marker"
+  input_type             = "script"
+  enabled                = true
+  data_type              = "string"
+  inventory_display_type = "EXTENSION_ATTRIBUTES"
+  script_contents        = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/LMAM-marker.sh")
 }
 
 ## Create Smart Computer Groups
