@@ -163,6 +163,13 @@ module "ej_secure_remote_access" {
   source = "./modules/experience_jamf_vignettes/ej_secure_remote_access"
 }
 
+module "ej_mac_LMAM" {
+  count                     = var.include_ej_mac_LMAM == true ? 1 : 0
+  source                    = "./modules/experience_jamf_vignettes/ej_mac_LMAM"
+  support_files_path_prefix = "modules/experience_jamf_vignettes/ej_mac_LMAM/"
+}
+
+
 
 ## Begin Jamf Security Cloud Configuration
 
@@ -251,6 +258,7 @@ module "jsc_all_services" {
   tje_okta_orgdomain            = var.tje_okta_orgdomain
   jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
+
 
 ## Initialiaze JSC child modules
 module "ej_jsc_config" {
