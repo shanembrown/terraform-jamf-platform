@@ -205,11 +205,6 @@ module "jsc_all_services" {
   jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
-## Initialize sandbox module
-module "sandbox" {
-  count  = var.include_sandbox == true ? 1 : 0
-  source = "./modules/sandbox"
-}
 
 ## Initialiaze JSC child modules
 module "ej_jsc_config" {

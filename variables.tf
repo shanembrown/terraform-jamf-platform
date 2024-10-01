@@ -95,10 +95,6 @@ variable "tje_okta_orgdomain" {
 }
 
 
-
-
-
-
 ## Define vingnette variables
 variable "include_jamfpro_prerequisites" {
   type    = bool
@@ -137,11 +133,6 @@ variable "include_ej_secure_remote_access" {
 
 ## Define demo config variables
 variable "include_jsc_demo_config" {
-  type    = bool
-  default = false
-}
-
-variable "include_sandbox" {
   type    = bool
   default = false
 }
@@ -232,3 +223,82 @@ variable "activation_profile_target" {
   default = ""
 }
 
+variable "include_google_chrome" {
+  type    = bool
+  default = false
+}
+
+variable "include_mozilla_firefox" {
+  type    = bool
+  default = false
+}
+
+variable "include_microsoft_teams" {
+  type    = bool
+  default = false
+}
+
+variable "include_slack" {
+  type    = bool
+  default = false
+}
+
+variable "include_okta_verify" {
+  type    = bool
+  default = false
+}
+
+variable "include_swift_dialog" {
+  type    = bool
+  default = false
+}
+
+variable "include_dropbox" {
+  type    = bool
+  default = false
+}
+
+variable "include_google_drive" {
+  type    = bool
+  default = false
+}
+
+variable "include_jamf_composer" {
+  type    = bool
+  default = false
+}
+
+variable "include_jamf_connect" {
+  type    = bool
+  default = false
+}
+
+variable "include_pppc_utility" {
+  type    = bool
+  default = false
+}
+
+variable "include_jamfcheck" {
+  type    = bool
+  default = false
+}
+
+variable "include_nudge" {
+  type    = bool
+  default = false
+}
+
+variable "include_utm" {
+  type    = bool
+  default = false
+}
+
+variable "include_zoom" {
+  type    = bool
+  default = false
+}
+
+variable "include_ej_mac_LMAM" {
+  type    = bool
+  default = false
+}
