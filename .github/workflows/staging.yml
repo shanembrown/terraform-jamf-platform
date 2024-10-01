@@ -3,8 +3,8 @@ name: "Terraform"
 on:
   schedule:
     - cron: "0 */12 * * *" # This runs every 12 hours
-  push:
-    branches: ["staging"]
+  #push: staging should only be PR'd into
+  #  branches: ["staging"]
   pull_request:
     branches: ["staging"]
 
