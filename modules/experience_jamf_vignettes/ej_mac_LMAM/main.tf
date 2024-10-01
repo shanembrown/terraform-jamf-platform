@@ -1,5 +1,6 @@
 /*
-This terraform blueprint will build the Local macOS Accoiunt Management (LMAM) vignette from Experience Jamf.
+This terraform blueprint will build the Local macOS Accoiunt Management (LMAM) vignette as exists in Experience Jamf.
+
 It will do the following:
  - Create 1 category
  - Create 2 scripts
