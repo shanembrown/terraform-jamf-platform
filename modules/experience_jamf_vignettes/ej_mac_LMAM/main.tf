@@ -76,9 +76,9 @@ resource "jamfpro_script" "script_LMAM_vignette_clean_up" {
 ## Create computer extension attributes
 resource "jamfpro_computer_extension_attribute" "ea_LMAM-marker" {
   name                   = "${var.prefix}LMAM-marker"
-  input_type             = "script"
+  input_type             = "SCRIPT"
   enabled                = true
-  data_type              = "string"
+  data_type              = "STRING"
   inventory_display_type = "EXTENSION_ATTRIBUTES"
   script_contents        = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/LMAM-marker.sh")
 }
