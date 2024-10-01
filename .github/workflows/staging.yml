@@ -3,7 +3,7 @@ name: "Terraform"
 on:
   schedule:
     - cron: "0 */12 * * *" # This runs every 12 hours
-  pull_request:
+  push:
     branches: ["staging"]
 
 concurrency:
