@@ -131,6 +131,12 @@ variable "include_ej_secure_remote_access" {
   default = false
 }
 
+variable "include_ej_mac_LMAM" {
+  type    = bool
+  default = false
+}
+
+
 ## Define demo config variables
 variable "include_jsc_demo_config" {
   type    = bool
@@ -294,11 +300,6 @@ variable "include_utm" {
 }
 
 variable "include_zoom" {
-  type    = bool
-  default = false
-}
-
-variable "include_ej_mac_LMAM" {
   type    = bool
   default = false
 }

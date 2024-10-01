@@ -56,25 +56,81 @@ module "jamf_protect_for_macOS" {
   jamfprotect_url             = var.jamfprotect_url
   jamfprotect_clientID        = var.jamfprotect_clientID
   jamfprotect_client_password = var.jamfprotect_client_password
-
-
 }
 
-## Initialize Onboarding Wizard modules
-module "ow_browsers" {
-  count                     = var.include_onboarder_wizard == true ? 1 : 0
-  source                    = "./modules/onboarder_wizard/ow_browsers"
-  support_files_path_prefix = "modules/onboarder_wizard//ow_browsers/"
-  install_chrome            = var.install_chrome
-  install_firefox           = var.install_firefox
+module "google_chrome" {
+  count  = var.include_google_chrome == true ? 1 : 0
+  source = "./modules/app_installers/google_chrome/"
 }
 
-module "ow_profiles" {
-  count                           = var.include_onboarder_wizard == true ? 1 : 0
-  source                          = "./modules/onboarder_wizard/ow_profiles"
-  support_files_path_prefix       = "modules/onboarder_wizard//ow_profiles/"
-  block_beta_updates              = var.block_beta_updates
-  enforce_firewall_and_gatekeeper = var.enforce_firewall_and_gatekeeper
+module "mozilla_firefox" {
+  count  = var.include_mozilla_firefox == true ? 1 : 0
+  source = "./modules/app_installers/mozilla_firefox/"
+}
+
+module "microsoft_teams" {
+  count  = var.include_microsoft_teams == true ? 1 : 0
+  source = "./modules/app_installers/microsoft_teams"
+}
+
+module "slack" {
+  count  = var.include_slack == true ? 1 : 0
+  source = "./modules/app_installers/slack"
+}
+
+module "swift_dialog" {
+  count  = var.include_swift_dialog == true ? 1 : 0
+  source = "./modules/app_installers/swift_dialog"
+}
+
+module "okta_verify" {
+  count  = var.include_swift_dialog == true ? 1 : 0
+  source = "./modules/app_installers/okta_verify"
+}
+
+module "dropbox" {
+  count  = var.include_dropbox == true ? 1 : 0
+  source = "./modules/app_installers/dropbox"
+}
+
+module "google_drive" {
+  count  = var.include_google_drive == true ? 1 : 0
+  source = "./modules/app_installers/google_drive"
+}
+
+module "jamf_composer" {
+  count  = var.include_jamf_composer == true ? 1 : 0
+  source = "./modules/app_installers/jamf_composer"
+}
+
+module "jamf_connect" {
+  count  = var.include_jamf_connect == true ? 1 : 0
+  source = "./modules/app_installers/dropbox"
+}
+
+module "pppc_utility" {
+  count  = var.include_pppc_utility == true ? 1 : 0
+  source = "./modules/app_installers/pppc_utility"
+}
+
+module "jamfcheck" {
+  count  = var.include_jamfcheck == true ? 1 : 0
+  source = "./modules/app_installers/jamfcheck"
+}
+
+module "nudge" {
+  count  = var.include_nudge == true ? 1 : 0
+  source = "./modules/app_installers/nudge"
+}
+
+module "utm" {
+  count  = var.include_utm == true ? 1 : 0
+  source = "./modules/app_installers/utm"
+}
+
+module "zoom" {
+  count  = var.include_zoom == true ? 1 : 0
+  source = "./modules/app_installers/zoom"
 }
 
 ## Initialize Experience Jamf vignette modules
@@ -83,9 +139,7 @@ module "ej_base" {
   source = "./modules/experience_jamf_vignettes/ej_base"
 }
 
-
 # SaaS tenancy moved to saastenconfig.tf.bak
-
 
 module "ej_incident_response" {
   count                     = var.include_ej_incident_response == true ? 1 : 0
