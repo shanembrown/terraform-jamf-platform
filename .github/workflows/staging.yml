@@ -1,4 +1,4 @@
-name: "Terraform"
+name: "Deploy staging branch to staging environment"
 
 on:
   schedule:
@@ -29,6 +29,7 @@ jobs:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
         uses: actions/checkout@v4
+        with: { ref: staging }
 
       # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
       - name: Setup Terraform
