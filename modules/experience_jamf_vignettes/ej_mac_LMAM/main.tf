@@ -92,14 +92,14 @@ resource "jamfpro_computer_extension_attribute" "ea_LMAM-marker" {
 ## Create Smart Computer Groups
 resource "jamfpro_smart_computer_group" "group_LMAM-vignette-enabled" {
   name = "${var.prefix}LMAM Run (Vignette Enabled)"
-  
+
   criteria {
     name        = jamfpro_computer_extension_attribute.ea_LMAM-marker.name
     search_type = "is"
     value       = "lmamRUN"
     priority    = 0
   }
-  
+
   depends_on = [
     jamfpro_computer_extension_attribute.ea_LMAM-marker
   ]
@@ -141,13 +141,14 @@ resource "jamfpro_policy" "install_JC_and_assets" {
   }
 }
 
+## Create policy for Vignette.LMAM-FirstRun
 resource "jamfpro_policy" "Vignette_LMAM_FirstRun" {
   name          = "${var.prefix}Vignette.LMAM-FirstRun"
   enabled       = true
   trigger_other = "@LMAM"
   frequency     = "Ongoing"
   category_id   = jamfpro_category.category_jamf_connect.id
-  
+
   depends_on = [
     jamfpro_category.category_jamf_connect
   ]
@@ -157,12 +158,18 @@ resource "jamfpro_policy" "Vignette_LMAM_FirstRun" {
   }
 
   self_service {
-    use_for_self_service     = true
-    self_service_display_name = "Local macOS Account Mgmt"
-    install_button_text      = "Run"
-    self_service_description = file("${var.support_files_path_prefix}support_files/computer_policies/LMAM_self_service_desc.txt")
+    use_for_self_service            = true
+    self_service_display_name       = "Local macOS Account Mgmt"
+    install_button_text             = "Run"
+    self_service_description        = file("${var.support_files_path_prefix}support_files/computer_policies/LMAM_self_service_desc.txt")
     force_users_to_view_description = true
     feature_on_main_page            = false
+
+    self_service_category {
+      display_in = true
+      feature_in = false
+      id         = jamfpro_category.category_jamf_connect.id
+    }
   }
 
   payloads {
@@ -230,10 +237,10 @@ resource "jamfpro_macos_configuration_profile_plist" "Experience_Jamf_Custom_Var
     jamfpro_category.category_experience_jamf
   ]
 
-  redeploy_on_update  = "Newly Assigned"
-  payloads            = file("${var.support_files_path_prefix}support_files/computer_config_profiles/EJ_Custom_Variables.mobileconfig")
-  payload_validate    = false
-  user_removable      = false
+  redeploy_on_update = "Newly Assigned"
+  payloads           = file("${var.support_files_path_prefix}support_files/computer_config_profiles/EJ_Custom_Variables.mobileconfig")
+  payload_validate   = false
+  user_removable     = false
 
   scope {
     all_computers = true
