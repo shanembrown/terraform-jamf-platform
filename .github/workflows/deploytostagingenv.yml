@@ -1,8 +1,8 @@
-name: "Deploy staging branch to staging environment"
+name: "Deploy current branch to staging environment"
 
 on:
   schedule:
-    - cron: "0 */12 * * *" # This runs every 12 hours
+    - cron: "0 */12 * * *" # This runs every 12 hours but only from main
   #push: staging should only be PR'd into
   #  branches: ["staging"]
   pull_request:
@@ -43,6 +43,7 @@ jobs:
 
       # Runs Terraform using envionrment variables
       - name: Terraform Apply
+        continue-on-error: true #even if apply fails, we want to try destroy to clean-up
         run: |
           terraform apply -var "jamfpro_instance_url=${{ secrets.jamfpro_instance_url }}" \
                           -var "jamfpro_client_id=${{ secrets.jamfpro_client_id }}" \
