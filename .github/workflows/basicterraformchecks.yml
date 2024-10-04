@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  terraform:
+  terraform-init-fmt:
     name: "Terraform"
     runs-on: ubuntu-latest
     environment: production
