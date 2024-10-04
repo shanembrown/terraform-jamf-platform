@@ -15,7 +15,6 @@ permissions:
 
 jobs:
   terraform-deploy-to-staging:
-    name: "Terraform"
     runs-on: ubuntu-latest
     environment: staging
 
