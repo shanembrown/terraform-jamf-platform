@@ -35,11 +35,11 @@ options:
     presence: optional
     content: Indicates whether to include the EJ JSC configuration.
 
-### App Installer Flags
+  ### App Installer Flags
   - key: include_google_chrome
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Google Chrome App Installer.  
+    content: Indicates whether to include the Google Chrome App Installer.
 
   - key: include_microsoft_teams
     type: <boolean>
@@ -99,38 +99,38 @@ options:
   - key: include_nudge
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Nudge App Installer.    
+    content: Indicates whether to include the Nudge App Installer.
 
   - key: include_utm
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the UTM App Installer.   
+    content: Indicates whether to include the UTM App Installer.
 
   - key: include_zoom
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Zoom App Installer. 
+    content: Indicates whether to include the Zoom App Installer.
 
-  ### onboarder options
-  - key: include_onboarder_wizard
+  ### Protect for macOS options
+  - key: include_jamfprotectformacos_config
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the onboarder wizard.
+    content: Indicates whether to configure Protect for macOS.
     subkeys:
-      - key: install_chrome
-        type: <boolean>
-        presence: optional
-        content: Indicates whether to install Chrome.
+      - key: jamfprotect_url
+        type: <string>
+        presence: required
+        content: Full URL of Protect for macOS tenant (including https://).
 
-      - key: install_firefox
-        type: <boolean>
-        presence: optional
-        content: Indicates whether to install Firefox.
+      - key: jamfprotect_clientID
+        type: <string>
+        presence: required
+        content: API ClientID from Protect for macOS portal.
 
-      - key: block_beta_updates
-        type: <boolean>
-        presence: optional
-        content: Indicates whether to block beta updates.
+      - key: jamfprotect_client_password
+        type: <string>
+        presence: required
+        content: API Passowrd from Protect for macOS portal.
 
   ### other EJ flags
 
@@ -153,3 +153,8 @@ options:
     type: <boolean>
     presence: optional
     content: Indicates whether to include Jamf Pro demo configuration.
+
+  - key: include_ej_mac_LMAM
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include Local macOS Account Management.
