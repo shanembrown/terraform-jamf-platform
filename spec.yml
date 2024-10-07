@@ -67,6 +67,9 @@ options:
     presence: optional
     content: Indicates whether to include the Okta Verify App Installer.
     category: Security Workflows
+    tags:
+      - Additional Apps
+      - SSO
 
   - key: include_swift_dialog
     type: <boolean>
@@ -102,13 +105,13 @@ options:
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Jamf PPPC Utility App Installer.
-    category: Security Workflows
+    category: Additional Apps
 
   - key: include_jamfcheck
     type: <boolean>
     presence: optional
     content: Indicates whether to include the JamfCheck App Installer.
-    category: Security Workflows
+    category: Additional Apps
 
   - key: include_nudge
     type: <boolean>
