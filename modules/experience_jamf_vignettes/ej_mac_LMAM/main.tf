@@ -218,7 +218,7 @@ resource "jamfpro_macos_configuration_profile_plist" "LMAM_IDP_config" {
 
   depends_on = [
     jamfpro_smart_computer_group.group_LMAM-vignette-enabled, jamfpro_category.category_jamf_connect
-]
+  ]
 
 
 
