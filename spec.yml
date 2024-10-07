@@ -35,11 +35,11 @@ options:
     presence: optional
     content: Indicates whether to include the EJ JSC configuration.
 
-### App Installer Flags
+  ### App Installer Flags
   - key: include_google_chrome
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Google Chrome App Installer.  
+    content: Indicates whether to include the Google Chrome App Installer.
 
   - key: include_microsoft_teams
     type: <boolean>
@@ -99,17 +99,17 @@ options:
   - key: include_nudge
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Nudge App Installer.    
+    content: Indicates whether to include the Nudge App Installer.
 
   - key: include_utm
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the UTM App Installer.   
+    content: Indicates whether to include the UTM App Installer.
 
   - key: include_zoom
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Zoom App Installer. 
+    content: Indicates whether to include the Zoom App Installer.
 
   ### other EJ flags
 
@@ -132,3 +132,8 @@ options:
     type: <boolean>
     presence: optional
     content: Indicates whether to include Jamf Pro demo configuration.
+
+  - key: include_ej_mac_LMAM
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include Local macOS Account Management.
