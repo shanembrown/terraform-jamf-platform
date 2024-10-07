@@ -95,7 +95,6 @@ include_ej_incident_response    = false
 include_ej_mac_cis_benchmark    = false
 include_ej_mobile_cis_benchmark = false
 include_ej_secure_remote_access = false
-include_ej_saas_tenancy         = false
 include_ej_jsc_config           = false
 include_ej_mac_LMAM             = false
 
