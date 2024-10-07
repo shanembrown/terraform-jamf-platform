@@ -35,6 +35,7 @@ provider "jsc" {
 
 
 ## Initialize common modules
+/* 
 module "jamfpro_prerequisites" {
   count  = var.include_jamfpro_prerequisites == true ? 1 : 0
   source = "./modules/jamfpro_prerequisites/"
@@ -44,6 +45,7 @@ module "jamfpro_demo_config" {
   count  = var.include_jamfpro_demo_config == true ? 1 : 0
   source = "./modules/jamfpro_demo_config/"
 }
+*/
 
 ## Initialize Protect (for macOS) module
 
@@ -156,11 +158,6 @@ module "ej_mac_cis_benchmark" {
 module "ej_mobile_cis_benchmark" {
   count  = var.include_ej_mobile_cis_benchmark == true ? 1 : 0
   source = "./modules/experience_jamf_vignettes/ej_mobile_cis_benchmark"
-}
-
-module "ej_secure_remote_access" {
-  count  = var.include_ej_secure_remote_access == true ? 1 : 0
-  source = "./modules/experience_jamf_vignettes/ej_secure_remote_access"
 }
 
 module "ej_mac_LMAM" {
