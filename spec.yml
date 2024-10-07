@@ -111,27 +111,6 @@ options:
     presence: optional
     content: Indicates whether to include the Zoom App Installer.
 
-  ### Protect for macOS options
-  - key: include_jamfprotectformacos_config
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to configure Protect for macOS.
-    subkeys:
-      - key: jamfprotect_url
-        type: <string>
-        presence: required
-        content: Full URL of Protect for macOS tenant (including https://).
-
-      - key: jamfprotect_clientID
-        type: <string>
-        presence: required
-        content: API ClientID from Protect for macOS portal.
-
-      - key: jamfprotect_client_password
-        type: <string>
-        presence: required
-        content: API Passowrd from Protect for macOS portal.
-
   ### other EJ flags
 
   - key: include_ej_incident_response
