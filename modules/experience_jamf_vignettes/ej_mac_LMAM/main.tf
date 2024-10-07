@@ -24,6 +24,16 @@ terraform {
   }
 }
 
+## Create computer extension attributes
+resource "jamfpro_computer_extension_attribute" "ea_LMAM-marker" {
+  name                   = "${var.prefix}LMAM-marker"
+  input_type             = "SCRIPT"
+  enabled                = true
+  data_type              = "STRING"
+  inventory_display_type = "EXTENSION_ATTRIBUTES"
+  script_contents        = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/LMAM-marker.sh")
+}
+
 ## Create categories
 resource "jamfpro_category" "category_jamf_connect" {
   name     = "${var.prefix}Jamf Connect"
@@ -77,16 +87,6 @@ resource "jamfpro_script" "script_LMAM_vignette_clean_up" {
   script_contents = file("${var.support_files_path_prefix}support_files/computer_scripts/LMAM_vignette_cleanup-run.zsh")
   category_id     = jamfpro_category.category_jamf_connect.id
   info            = "This script will remove all components of the LMAM vigneete.."
-}
-
-## Create computer extension attributes
-resource "jamfpro_computer_extension_attribute" "ea_LMAM-marker" {
-  name                   = "${var.prefix}LMAM-marker"
-  input_type             = "SCRIPT"
-  enabled                = true
-  data_type              = "STRING"
-  inventory_display_type = "EXTENSION_ATTRIBUTES"
-  script_contents        = file("${var.support_files_path_prefix}support_files/computer_extension_attributes/LMAM-marker.sh")
 }
 
 ## Create Smart Computer Groups
@@ -217,8 +217,11 @@ resource "jamfpro_macos_configuration_profile_plist" "LMAM_IDP_config" {
   user_removable      = false
 
   depends_on = [
-    jamfpro_smart_computer_group.group_LMAM-vignette-enabled
-  ]
+    jamfpro_smart_computer_group.group_LMAM-vignette-enabled, jamfpro_category.category_jamf_connect
+]
+
+
+
 
   scope {
     all_computers      = false
