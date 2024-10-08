@@ -95,13 +95,8 @@ include_ej_incident_response    = false
 include_ej_mac_cis_benchmark    = false
 include_ej_mobile_cis_benchmark = false
 include_ej_secure_remote_access = false
-include_ej_saas_tenancy         = false
 include_ej_jsc_config           = false
 include_ej_mac_LMAM             = false
-
-## Jamf Pro Knobs
-include_jamfpro_demo_config   = false
-include_jamfpro_prerequisites = false
 
 ## App Installer Knobs
 include_google_chrome   = false
@@ -119,9 +114,6 @@ include_jamfcheck       = false
 include_nudge           = false
 include_utm             = false
 include_zoom            = false
-
-## Jamf Protect Knobs
-include_jamf_protect_for_macOS = false
 
 ## Jamf Security Cloud Knobs
 include_jsc_demo_config   = false
