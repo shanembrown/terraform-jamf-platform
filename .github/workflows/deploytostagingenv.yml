@@ -106,7 +106,7 @@ jobs:
             git config --local user.name "GitHub Action"
             git add testing/test.tfvars
             git commit -m "Deleted test.tfvars"
-            git push
+            git push origin HEAD:${{ github.ref_name }}
           else
             echo "testing/test.tfvars didn't exist"
           fi
