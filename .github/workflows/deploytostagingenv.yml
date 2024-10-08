@@ -27,6 +27,8 @@ jobs:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
 
       # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
       - name: Setup Terraform
@@ -106,7 +108,7 @@ jobs:
             git config --local user.name "GitHub Action"
             git add testing/test.tfvars
             git commit -m "Deleted test.tfvars"
-            git push origin HEAD:${{ github.ref }}
+            git push
           else
             echo "testing/test.tfvars didn't exist"
           fi
