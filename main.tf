@@ -35,17 +35,7 @@ provider "jsc" {
 
 
 ## Initialize common modules
-/* 
-module "jamfpro_prerequisites" {
-  count  = var.include_jamfpro_prerequisites == true ? 1 : 0
-  source = "./modules/jamfpro_prerequisites/"
-}
-
-module "jamfpro_demo_config" {
-  count  = var.include_jamfpro_demo_config == true ? 1 : 0
-  source = "./modules/jamfpro_demo_config/"
-}
-
+/*
 
 ## Initialize Protect (for macOS) module
 
@@ -60,6 +50,12 @@ module "jamf_protect_for_macOS" {
   jamfprotect_client_password = var.jamfprotect_client_password
 }
 */
+
+
+module "jamf_pro_trial_kickstart" {
+  count  = var.include_jamf_pro_trial_kickstart == true ? 1 : 0
+  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart"
+}
 
 module "google_chrome" {
   count  = var.include_google_chrome == true ? 1 : 0
