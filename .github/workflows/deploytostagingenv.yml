@@ -42,6 +42,7 @@ jobs:
 
       # Runs Terraform using envionrment variables
       - name: Terraform Apply
+        id: terraformapply
         continue-on-error: true #even if apply fails, we want to try destroy to clean-up
         run: |
           terraform apply -var "jamfpro_instance_url=${{ secrets.jamfpro_instance_url }}" \
@@ -66,3 +67,7 @@ jobs:
                           -auto-approve \
                           -parallelism=1 \
                           -refresh=false
+      # Checks that Terraform Apply ran ok - if it didn't, we exit 1
+      - name: Check Apply finish ok
+        if: ${{ steps.terraformapply.outcome != 'success' }}
+        run: exit 1
