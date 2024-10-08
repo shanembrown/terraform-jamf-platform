@@ -64,5 +64,5 @@ jobs:
                           -var "include_ej_base=true" \
                           -var "include_ej_jsc_config=true" \
                           -auto-approve \
-                          -parallelism=1
+                          -parallelism=1 \
                           -refresh=false
