@@ -30,9 +30,6 @@ required:
     presence: required
     content: Indicates wheter to include the UEMC and IDP setup for Jamf Security Cloud
 
-### Add Buildings, Categories, Smart Groups, Static Groups
-### To support a high-level onboarder option akin to "Do you want to include some pre-configured organizational onjects for your Jamf Pro environment"
-
 options:
 ## Jamf Pro Onboarder Modules
   - key: include_jamf_pro_trial_kickstart
