@@ -27,8 +27,8 @@ jobs:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
+      #        with:
+      #          ref: ${{ github.event.pull_request.head.ref }}
 
       # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
       - name: Setup Terraform
@@ -99,19 +99,19 @@ jobs:
                           -parallelism=1 \
                           -refresh=false
           fi
-      - name: Clear testing/test.tfvars
-        run: |
-          if [ -f testing/test.tfvars ]; then
-            rm testing/test.tfvars
-            echo "Deleted testing/test.tfvars"
-            git config --local user.email "action@github.com"
-            git config --local user.name "GitHub Action"
-            git add testing/test.tfvars
-            git commit -m "Deleted test.tfvars"
-            git push
-          else
-            echo "testing/test.tfvars didn't exist"
-          fi
+      #      - name: Clear testing/test.tfvars
+      #        run: |
+      #         if [ -f testing/test.tfvars ]; then
+      #            rm testing/test.tfvars
+      #            echo "Deleted testing/test.tfvars"
+      #            git config --local user.email "action@github.com"
+      #            git config --local user.name "GitHub Action"
+      #            git add testing/test.tfvars
+      #            git commit -m "Deleted test.tfvars"
+      #            git push
+      #          else
+      ##           echo "testing/test.tfvars didn't exist"
+      #         fi
 
       # Checks that Terraform Apply ran ok - if it didn't, we exit 1
       - name: Exit code 1 if Terraform Apply failed
