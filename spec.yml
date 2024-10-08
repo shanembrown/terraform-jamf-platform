@@ -24,6 +24,18 @@ credentials:
     presence: required
     content: The password for Jamf Security Console authentication.
 
+
+
+required:
+  - key: include_ej_base
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to include the EJ base configuration.
+    category: MDM Workflows
+
+### Add Buildings, Categories, Smart Groups, Static Groups
+### To support a high-level onboarder option akin to "Do you want to include some pre-configured organizational onjects for your Jamf Pro environment"
+
 options:
   - key: include_ej_base
     type: <boolean>
