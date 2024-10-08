@@ -51,7 +51,8 @@ jobs:
                           -var "jsc_password=${{ secrets.jsc_password }}" \
                           -var "include_ej_base=true" \
                           -var "include_ej_jsc_config=true" \
-                          -auto-approve
+                          -auto-approve \
+                          -parallelism=1
       # Destroys Terraform using envionrment variables
       - name: Terraform Destroy
         run: |
@@ -62,4 +63,6 @@ jobs:
                           -var "jsc_password=${{ secrets.jsc_password }}" \
                           -var "include_ej_base=true" \
                           -var "include_ej_jsc_config=true" \
-                          -auto-approve
+                          -auto-approve \
+                          -parallelism=1 \
+                          -refresh=false
