@@ -1,4 +1,4 @@
-name: "Terraform"
+name: "Terraform init and fmt"
 
 on:
   push:
@@ -10,8 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  terraform:
-    name: "Terraform"
+  terraform-init-fmt:
     runs-on: ubuntu-latest
     environment: production
 
