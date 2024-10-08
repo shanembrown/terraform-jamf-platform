@@ -94,13 +94,6 @@ variable "tje_okta_orgdomain" {
   default = "jamf-harbor.okta.com"
 }
 
-
-## Define vingnette variables
-variable "include_jamfpro_prerequisites" {
-  type    = bool
-  default = false
-}
-
 variable "include_ej_base" {
   type    = bool
   default = false
@@ -208,11 +201,6 @@ variable "jsc_provided_idp_client" {
   default = ""
 }
 
-variable "wizard_suffix" {
-  type    = string
-  default = ""
-}
-
 variable "block_page_logo" {
   type      = string
   sensitive = true
@@ -300,6 +288,11 @@ variable "include_utm" {
 }
 
 variable "include_zoom" {
+  type    = bool
+  default = false
+}
+
+variable "include_jamf_pro_trial_kickstart" {
   type    = bool
   default = false
 }

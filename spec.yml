@@ -24,18 +24,34 @@ credentials:
     presence: required
     content: The password for Jamf Security Console authentication.
 
-options:
-  - key: include_ej_base
+required:
+  - key: include_jsc_base
     type: <boolean>
-    presence: optional
-    content: Indicates whether to include the EJ base configuration.
-    category: MDM Workflows
+    presence: required
+    content: Indicates wheter to include the UEMC and IDP setup for Jamf Security Cloud
 
-  - key: include_ej_jsc_config
+options:
+## Jamf Pro Onboarder Modules
+  - key: include_jamf_pro_trial_kickstart
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the EJ JSC configuration.
-    category: Security Workflows
+    content: This will fill your Jamf Pro trial instance with some basic suggested Categories, Departments, Buildings, and Smart Groups
+
+## Jamf Security Cloud Onboarder Modules
+  - key: include_jsc_all_services
+    type: <boolean>
+    presence: optional
+    content: This will create an Activation Profile in Jamf Security Cloud for all of our Security Cloud Services (ZTNA, Network Threat Prevention, Content Filtering) and upload the Configuration Profile to Jamf Pro.
+
+  - key: include_jsc_block_pages
+    type: <boolean>
+    presence: optional
+    content: This option will provide block pages that can be customized later by the Admin to reflect organizational policies.
+
+  - key: include_jsc_network_relay
+    type: <boolean>
+    presence: optional
+    content: This will create an Activation Profile in Jamf Security Cloud for our new Device Attestation-based Network Relay option for Zero Trust Network Access to organizational resources. It will then upload the Configuration Profile to Jamf Pro.
 
   ### App Installer Flags
   - key: include_google_chrome
@@ -131,55 +147,3 @@ options:
     content: Indicates whether to include the Zoom App Installer.
     category: Additional Apps
 
-  ### Protect for macOS options
-  - key: include_jamfprotectformacos_config
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to configure Protect for macOS.
-    category: Security Workflows
-    subkeys:
-      - key: jamfprotect_url
-        type: <string>
-        presence: required
-        content: Full URL of Protect for macOS tenant (including https://).
-
-      - key: jamfprotect_clientID
-        type: <string>
-        presence: required
-        content: API ClientID from Protect for macOS portal.
-
-      - key: jamfprotect_client_password
-        type: <string>
-        presence: required
-        content: API Password from Protect for macOS portal.
-
-  ### other EJ flags
-  - key: include_ej_incident_response
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to include the EJ incident response.
-    category: Security Workflows
-
-  - key: include_ej_mac_cis_benchmark
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to include the EJ Mac CIS benchmark.
-    category: Benchmarks
-
-  - key: include_jamfpro_prerequisites
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to include Jamf Pro prerequisites.
-    category: MDM Workflows
-
-  - key: include_jamfpro_demo_config
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to include Jamf Pro demo configuration.
-    category: MDM Workflows
-
-  - key: include_ej_mac_LMAM
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to include Local macOS Account Management.
-    category: MDM Workflows
