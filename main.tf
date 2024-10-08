@@ -63,7 +63,7 @@ module "jamf_protect_for_macOS" {
 
 module "google_chrome" {
   count  = var.include_google_chrome == true ? 1 : 0
-  source = "./modules/app_installers/google_chrome/"
+  source = "./modules/onboarder_modules/jamf_pro/app_installers/google_chrome/"
 }
 
 module "mozilla_firefox" {
