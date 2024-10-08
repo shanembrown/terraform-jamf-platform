@@ -128,11 +128,6 @@ resource "jsc_blockpage" "mangement_block" {
   depends_on          = [jsc_blockpage.device_risk]
 }
 
-## Create categories
-resource "jamfpro_category" "experience_jamf" {
-  name     = "Experience Jamf"
-  priority = 9
-}
 
 resource "jamfpro_smart_computer_group" "group_macOS_14" {
   name = "Macs Running macOS 14"
@@ -149,7 +144,6 @@ resource "jamfpro_macos_configuration_profile_plist" "ej_jsc_macos" {
   name                = "Experience Jamf Activation Profile - macOS (Supervised)"
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
-  category_id         = jamfpro_category.experience_jamf.id
   level               = "System"
 
   payloads         = jsc_ap.all_services.macosplist
