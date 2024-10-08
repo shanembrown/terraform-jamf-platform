@@ -29,111 +29,157 @@ options:
     type: <boolean>
     presence: optional
     content: Indicates whether to include the EJ base configuration.
+    category: MDM Workflows
 
   - key: include_ej_jsc_config
     type: <boolean>
     presence: optional
     content: Indicates whether to include the EJ JSC configuration.
+    category: Security Workflows
 
   ### App Installer Flags
   - key: include_google_chrome
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Google Chrome App Installer.
+    category: Browsers
 
   - key: include_microsoft_teams
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Microsoft Teams App Installer.
+    category: Additional Apps
 
   - key: include_mozilla_firefox
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Mozilla Firefix App Installer.
+    content: Indicates whether to include the Mozilla Firefox App Installer.
+    category: Browsers
 
   - key: include_slack
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Slack App Installer.
+    category: Additional Apps
 
   - key: include_okta_verify
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Okta Verify App Installer.
+    category: Security Workflows
+    tags:
+      - Additional Apps
+      - SSO
 
   - key: include_swift_dialog
     type: <boolean>
     presence: optional
     content: Indicates whether to include the swiftDialog App Installer.
+    category: MDM Workflows
 
   - key: include_dropbox
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Dropbox App Installer.
+    category: Additional Apps
 
   - key: include_google_drive
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Google Drive App Installer.
+    category: Additional Apps
 
   - key: include_jamf_composer
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Jamf Composer App Installer.
+    category: Additional Apps
 
   - key: include_jamf_connect
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Jamf Connect App Installer.
+    category: MDM Workflows
 
   - key: include_pppc_utility
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Jamf PPPC Utility App Installer.
+    category: Additional Apps
 
   - key: include_jamfcheck
     type: <boolean>
     presence: optional
     content: Indicates whether to include the JamfCheck App Installer.
+    category: Additional Apps
 
   - key: include_nudge
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Nudge App Installer.
+    category: Additional Apps
 
   - key: include_utm
     type: <boolean>
     presence: optional
     content: Indicates whether to include the UTM App Installer.
+    category: Additional Apps
 
   - key: include_zoom
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Zoom App Installer.
+    category: Additional Apps
+
+  ### Protect for macOS options
+  - key: include_jamfprotectformacos_config
+    type: <boolean>
+    presence: optional
+    content: Indicates whether to configure Protect for macOS.
+    category: Security Workflows
+    subkeys:
+      - key: jamfprotect_url
+        type: <string>
+        presence: required
+        content: Full URL of Protect for macOS tenant (including https://).
+
+      - key: jamfprotect_clientID
+        type: <string>
+        presence: required
+        content: API ClientID from Protect for macOS portal.
+
+      - key: jamfprotect_client_password
+        type: <string>
+        presence: required
+        content: API Password from Protect for macOS portal.
 
   ### other EJ flags
-
   - key: include_ej_incident_response
     type: <boolean>
     presence: optional
     content: Indicates whether to include the EJ incident response.
+    category: Security Workflows
 
   - key: include_ej_mac_cis_benchmark
     type: <boolean>
     presence: optional
     content: Indicates whether to include the EJ Mac CIS benchmark.
+    category: Benchmarks
 
   - key: include_jamfpro_prerequisites
     type: <boolean>
     presence: optional
     content: Indicates whether to include Jamf Pro prerequisites.
+    category: MDM Workflows
 
   - key: include_jamfpro_demo_config
     type: <boolean>
     presence: optional
     content: Indicates whether to include Jamf Pro demo configuration.
+    category: MDM Workflows
 
   - key: include_ej_mac_LMAM
     type: <boolean>
     presence: optional
     content: Indicates whether to include Local macOS Account Management.
+    category: MDM Workflows
