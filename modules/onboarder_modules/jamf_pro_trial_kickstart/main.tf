@@ -27,9 +27,9 @@ resource "jamfpro_building" "building_tokyo" {
 }
 
 resource "jamfpro_building" "building_london" {
-  name    = "London Office"
-  city    = "London"
-  country = "UK"
+  name       = "London Office"
+  city       = "London"
+  country    = "UK"
   depends_on = [jamfpro_building.building_tokyo]
 }
 
