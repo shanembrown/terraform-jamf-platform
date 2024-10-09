@@ -296,3 +296,8 @@ variable "include_jamf_pro_trial_kickstart" {
   type    = bool
   default = false
 }
+
+variable "include_jamf_protect_trial_kickstart" {
+  type    = bool
+  default = false
+}
