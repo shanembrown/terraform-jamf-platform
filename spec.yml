@@ -2,148 +2,203 @@ credentials:
   - key: jamfpro_instance_url
     type: <string>
     presence: required
-    content: The URL of the Jamf Pro instance, must start with 'https://'.
+    content: The URL of the Jamf Pro instance must start with 'https://'
+    display_name: Jamf Pro Instance URL
+    display_desc: URL for the Jamf Pro instance - must start with 'https://'
 
   - key: jamfpro_client_id
     type: <string>
     presence: required
-    content: The client ID for Jamf Pro API access.
+    content: The client ID for Jamf Pro API access
+    display_name: Jamf Pro Client ID
+    display_desc: Client ID used for Jamf Pro API access
 
   - key: jamfpro_client_secret
     type: <string>
     presence: required
-    content: The client secret for Jamf Pro API access.
+    content: The client secret for Jamf Pro API access
+    display_name: Jamf Pro Client Secret
+    display_desc: Client Secret used for Jamf Pro API access
 
   - key: jsc_username
     type: <string>
     presence: required
-    content: The username for Jamf Security Console authentication.
+    content: The username for Jamf Security Cloud authentication
+    display_name: Jamf Security Cloud Username
+    display_desc: Username for authenticating with Jamf Security Cloud
 
   - key: jsc_password
     type: <string>
     presence: required
-    content: The password for Jamf Security Console authentication.
-
-required:
-  - key: include_jsc_base
-    type: <boolean>
-    presence: required
-    content: Indicates wheter to include the UEMC and IDP setup for Jamf Security Cloud
+    content: The password for Jamf Security Cloud authentication
+    display_name: Jamf Security Cloud Password
+    display_desc: Password for authenticating with Jamf Security Cloud
 
 options:
 ## Jamf Pro Onboarder Modules
   - key: include_jamf_pro_trial_kickstart
     type: <boolean>
     presence: optional
-    content: This will fill your Jamf Pro trial instance with some basic suggested Categories, Departments, Buildings, and Smart Groups
+    content: This will fill your Jamf Pro trial instance with some basic suggested Categories Departments Buildings and Smart Groups
+    display_name: Jamf Pro Trial Kickstart
+    display_desc: Populates trial instance with initial configurations
 
 ## Jamf Security Cloud Onboarder Modules
   - key: include_jsc_all_services
     type: <boolean>
     presence: optional
-    content: This will create an Activation Profile in Jamf Security Cloud for all of our Security Cloud Services (ZTNA, Network Threat Prevention, Content Filtering) and upload the Configuration Profile to Jamf Pro.
+    content: Creates an Activation Profile for all Jamf Security Cloud services and uploads it to Jamf Pro
+    display_name: Include All JSC Services
+    display_desc: Activates all Jamf Security Cloud services (Identity-provider-based ZTNA Content & Threat Defense Data Policy) and adds the activation profile to Jamf Pro
+    subkeys:
+      - key: include_jsc_base
+        type: <boolean>
+        presence: required
+        content: Indicates whether to include the UEMC and IDP setup for Jamf Security Cloud
+        display_name: Include JSC Base Setup
+        display_desc: Enables UEMC and IDP configuration for Jamf Security Cloud
 
   - key: include_jsc_block_pages
     type: <boolean>
     presence: optional
-    content: This option will provide block pages that can be customized later by the Admin to reflect organizational policies.
+    content: Provides customizable block pages for organizational policies
+    display_name: JSC Block Pages
+    display_desc: Enables block pages in Jamf Security Cloud for content blocking
 
   - key: include_jsc_network_relay
     type: <boolean>
     presence: optional
-    content: This will create an Activation Profile in Jamf Security Cloud for our new Device Attestation-based Network Relay option for Zero Trust Network Access to organizational resources. It will then upload the Configuration Profile to Jamf Pro.
+    content: Creates a Network Relay Activation Profile for Zero Trust Network Access
+    display_name: JSC Network Relay
+    display_desc: Configures device-attestation-based network relay for ZTNA
+    subkeys:
+     - key: include_jsc_base
+       type: <boolean>
+       presence: required
+       content: Indicates whether to include the UEMC and IDP setup for Jamf Security Cloud
+       display_name: Include JSC Base Setup
+       display_desc: Enables UEMC and IDP configuration for Jamf Security Cloud
 
-  ### App Installer Flags
+  ### App Installer Modules
   - key: include_google_chrome
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Google Chrome App Installer.
+    content: Indicates whether to include the Google Chrome App Installer
     category: Browsers
+    display_name: Google Chrome Installer
+    display_desc: Configures Google Chrome in Jamf Pro to be deployable to computers
 
   - key: include_microsoft_teams
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Microsoft Teams App Installer.
+    content: Indicates whether to include the Microsoft Teams App Installer
     category: Additional Apps
+    display_name: Microsoft Teams Installer
+    display_desc: Configures Microsoft Teams in Jamf Pro to be deployable to computers
 
   - key: include_mozilla_firefox
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Mozilla Firefox App Installer.
+    content: Indicates whether to include the Mozilla Firefox App Installer
     category: Browsers
+    display_name: Mozilla Firefox Installer
+    display_desc: Configures Mozilla Firefox in Jamf Pro to be deployable to computers
 
   - key: include_slack
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Slack App Installer.
+    content: Indicates whether to include the Slack App Installer
     category: Additional Apps
+    display_name: Slack Installer
+    display_desc: Configures Slack in Jamf Pro to be deployable to computers
 
   - key: include_okta_verify
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Okta Verify App Installer.
+    content: Indicates whether to include the Okta Verify App Installer
     category: Security Workflows
     tags:
       - Additional Apps
       - SSO
+    display_name: Okta Verify Installer
+    display_desc: Configures Okta Verify in Jamf Pro to be deployable to computers
 
   - key: include_swift_dialog
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the swiftDialog App Installer.
+    content: Indicates whether to include the swiftDialog App Installer
     category: MDM Workflows
+    display_name: Swift Dialog Installer
+    display_desc: Configures swiftDialog in Jamf Pro to be deployable to computers
 
   - key: include_dropbox
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Dropbox App Installer.
+    content: Indicates whether to include the Dropbox App Installer
     category: Additional Apps
+    display_name: Dropbox Installer
+    display_desc: Configures Dropbox in Jamf Pro to be deployable to computers
 
   - key: include_google_drive
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Google Drive App Installer.
+    content: Indicates whether to include the Google Drive App Installer
     category: Additional Apps
+    display_name: Google Drive Installer
+    display_desc: Configures Google Drive in Jamf Pro to be deployable to computers
 
   - key: include_jamf_composer
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Jamf Composer App Installer.
+    content: Indicates whether to include the Jamf Composer App Installer
     category: Additional Apps
+    display_name: Jamf Composer Installer
+    display_desc: Configures Jamf Composer in Jamf Pro to be deployable to computers
 
   - key: include_jamf_connect
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Jamf Connect App Installer.
+    content: Indicates whether to include the Jamf Connect App Installer
     category: MDM Workflows
+    display_name: Jamf Connect Installer
+    display_desc: Configures Jamf Connect in Jamf Pro to be deployable to computers
 
   - key: include_pppc_utility
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Jamf PPPC Utility App Installer.
+    content: Indicates whether to include the Jamf PPPC Utility App Installer
     category: Additional Apps
+    display_name: PPPC Utility Installer
+    display_desc: Configures PPPC Utility in Jamf Pro to be deployable to computers
 
   - key: include_jamfcheck
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the JamfCheck App Installer.
+    content: Indicates whether to include the JamfCheck App Installer
     category: Additional Apps
+    display_name: JamfCheck Installer
+    display_desc: Configures JamfCheck in Jamf Pro to be deployable to computers
 
   - key: include_nudge
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Nudge App Installer.
+    content: Indicates whether to include the Nudge App Installer
     category: Additional Apps
+    display_name: Nudge Installer
+    display_desc: Configures Nudge in Jamf Pro to be deployable to computers
 
   - key: include_utm
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the UTM App Installer.
+    content: Indicates whether to include the UTM App Installer
     category: Additional Apps
+    display_name: UTM Installer
+    display_desc: Configures UTM in Jamf Pro to be deployable to computers
 
   - key: include_zoom
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Zoom App Installer.
+    content: Indicates whether to include the Zoom App Installer
     category: Additional Apps
-
+    display_name: Zoom Installer
+    display_desc: Configures Zoom in Jamf Pro to be deployable to computers

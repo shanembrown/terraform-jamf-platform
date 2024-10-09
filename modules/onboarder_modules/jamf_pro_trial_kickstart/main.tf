@@ -11,7 +11,7 @@ terraform {
   }
 }
 
-#Buildings
+# #Buildings
 
 resource "jamfpro_building" "building_headquarters" {
   name    = "Headquarters"
@@ -39,7 +39,6 @@ resource "jamfpro_building" "building_paris" {
   country    = "France"
   depends_on = [jamfpro_building.building_london]
 }
-
 
 #Categories
 
