@@ -6,7 +6,7 @@ on:
   push:
     branches: ["specrunner"]
   pull_request:
-    branches: ["specrunner"]
+    branches: ["specrunner", "main"]
 
 concurrency:
   group: stagingenvironment
@@ -71,8 +71,10 @@ jobs:
             || exit_code=$?  # Capture the exit code
             # Check if the exit code is present
             if [ "$exit_code" -ne 0 ]; then
+              echo "writing to logs failure of apply"
               echo "Terraform apply failed with exit code 1 for: $line" >> "$fail_log"
               non_zero_exit_code_found="true"  # Set to true if any exit code other than 0 is found
+              exit_code=0 #clear exit code
             fi
             terraform destroy -auto-approve -var "$line" -var "jamfpro_instance_url=${{ secrets.jamfpro_instance_url }}" \
                           -var "jamfpro_client_id=${{ secrets.jamfpro_client_id }}" \
