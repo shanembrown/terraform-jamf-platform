@@ -40,6 +40,7 @@ options:
     type: <boolean>
     presence: optional
     content: This will fill your Jamf Pro trial instance with some basic suggested Categories Departments Buildings and Smart Groups
+    category: MDM Workflows
     display_name: Jamf Pro Trial Kickstart
     display_desc: Populates trial instance with initial configurations
 
@@ -48,6 +49,7 @@ options:
     type: <boolean>
     presence: optional
     content: Creates an Activation Profile for all Jamf Security Cloud services and uploads it to Jamf Pro
+    category: Security
     display_name: Include All JSC Services
     display_desc: Activates all Jamf Security Cloud services (Identity-provider-based ZTNA Content & Threat Defense Data Policy) and adds the activation profile to Jamf Pro
     subkeys:
@@ -55,6 +57,7 @@ options:
         type: <boolean>
         presence: required
         content: Indicates whether to include the UEMC and IDP setup for Jamf Security Cloud
+        category: Security
         display_name: Include JSC Base Setup
         display_desc: Enables UEMC and IDP configuration for Jamf Security Cloud
 
@@ -62,6 +65,7 @@ options:
     type: <boolean>
     presence: optional
     content: Provides customizable block pages for organizational policies
+    category: Security
     display_name: JSC Block Pages
     display_desc: Enables block pages in Jamf Security Cloud for content blocking
 
@@ -69,6 +73,7 @@ options:
     type: <boolean>
     presence: optional
     content: Creates a Network Relay Activation Profile for Zero Trust Network Access
+    category: Security
     display_name: JSC Network Relay
     display_desc: Configures device-attestation-based network relay for ZTNA
     subkeys:
@@ -76,6 +81,7 @@ options:
        type: <boolean>
        presence: required
        content: Indicates whether to include the UEMC and IDP setup for Jamf Security Cloud
+       category: Security
        display_name: Include JSC Base Setup
        display_desc: Enables UEMC and IDP configuration for Jamf Security Cloud
 
