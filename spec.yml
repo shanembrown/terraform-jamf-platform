@@ -47,7 +47,7 @@ options:
     type: <boolean>
     presence: optional
     category: MDM Workflows
-    display_name: Set Common Inventory Collection and Check-in Settings
+    display_name: Set common Inventory Collection and Check-in Settings
     display_desc: This will set things like what information to collect when Jamf Pro does an Inventory Collection on a managed device as well as setting check-ins to every 15 minutes
 
   - key: include_filevault
