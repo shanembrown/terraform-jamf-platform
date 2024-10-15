@@ -69,8 +69,7 @@ jsc_password            = ""
 jsc_provided_idp_client = ""
 tje_okta_clientid       = ""
 tje_okta_orgdomain      = ""
-block_page_logo         = ""
-## block_page_logo takes a Base 64 encoded string conversion of the image only
+block_page_logo         = "" ## block_page_logo takes a Base 64 encoded string conversion of the image only
 
 ### SaaS Tenancy
 include_ej_saas_tenancy = false
@@ -91,7 +90,10 @@ wizard_suffix = ""
 ## MODULE KNOBS
 
 ## Onboarder Knobs
-include_jamf_pro_trial_kickstart     = false
+include_categories                   = false
+include_computer_management_settings = false
+include_filevault                    = false
+include_rosetta                      = false
 include_jamf_protect_trial_kickstart = false
 
 ## App Installer Knobs
