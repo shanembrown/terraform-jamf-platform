@@ -1,0 +1,84 @@
+name: "Check all spec.yaml boolean options with Terraform Apply"
+
+on:
+  schedule:
+    - cron: "1 */12 * * *" # This runs every 12 hours but only from main (1 hour offset)
+  push:
+    branches: ["specrunner"]
+  pull_request:
+    branches: ["specrunner"]
+
+concurrency:
+  group: stagingenvironment
+permissions:
+  contents: read
+
+jobs:
+  terraform-deploy-all-modules-to-staging:
+    runs-on: ubuntu-latest
+    environment: staging
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v4
+      #        with:
+      #          ref: ${{ github.event.pull_request.head.ref }}
+
+      # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      # Store all spec.yml booleans in temp file
+      - name: Get Spec.yml bools
+        run: |
+          grep -B 1 "<boolean>" "spec.yml" | grep "key:" | sed 's/.*key: //;s/$/ = true/' | sort | uniq | tee "/tmp/outputbool.txt"
+
+      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+      - name: Terraform Init
+        run: terraform init
+
+      # Checks that all Terraform configuration files adhere to a canonical format
+      - name: Terraform Format
+        run: terraform fmt -check -recursive
+
+      # Runs Terraform using envionrment variables
+      - name: Terraform Apply and Destroy all spec.yml options one by one
+        id: terraformapplyanddestroy
+        continue-on-error: false
+        run: |
+          # Create a file to log failures
+          fail_log="/tmp/terraform_failures.log"
+          > "$fail_log"  # Clear the file if it exists
+
+          # Read each line from the output file
+          while IFS= read -r line; do
+            # Run terraform apply with the line as a -var and capture errors
+            echo "Applying: $line"
+            if ! terraform apply -auto-approve -var "$line" -var "jamfpro_instance_url=${{ secrets.jamfpro_instance_url }}" \
+                          -var "jamfpro_client_id=${{ secrets.jamfpro_client_id }}" \
+                          -var "jamfpro_client_secret=${{ secrets.jamfpro_client_secret }}" \
+                          -var "jsc_username=${{ secrets.jsc_username }}" \
+                          -var "jsc_password=${{ secrets.jsc_password }}" \
+                          -parallelism=1 \
+                          2>> "$fail_log"; then
+              echo "Failed to apply: $line" >> "$fail_log"
+            fi
+            terraform destroy -auto-approve -var "$line" -var "jamfpro_instance_url=${{ secrets.jamfpro_instance_url }}" \
+                          -var "jamfpro_client_id=${{ secrets.jamfpro_client_id }}" \
+                          -var "jamfpro_client_secret=${{ secrets.jamfpro_client_secret }}" \
+                          -var "jsc_username=${{ secrets.jsc_username }}" \
+                          -var "jsc_password=${{ secrets.jsc_password }}" \
+                          -parallelism=1 \
+                          -refresh=false
+          done < /tmp/outputbool.txt
+
+      # Checks that Terraform Apply ran ok - if it didn't, we exit 1
+      - name: Exit code 1 if Terraform Apply failed
+        if: ${{ steps.terraformapplyanddestroy.outcome != 'success' }}
+        run: exit 1
