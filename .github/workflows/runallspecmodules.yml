@@ -91,7 +91,7 @@ jobs:
         run: |
           if [ "${{ env.non_zero_exit_code_found }}" == "true" ]; then
             echo "Terraform apply encountered failures with a non-zero exit code. Check the log for details."
-            cat terraform_failures.log
+            cat /tmp/terraform_failures.log
             exit code 1
           else
             echo "All applies were successful."
