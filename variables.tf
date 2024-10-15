@@ -303,21 +303,21 @@ variable "include_jamf_protect_trial_kickstart" {
 }
 
 variable "include_categories" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "include_computer_management_settings" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "include_filevault" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "include_rosetta" {
-  type = bool
+  type    = bool
   default = false
 }
