@@ -35,7 +35,7 @@ credentials:
     display_desc: Password for authenticating with Jamf Security Cloud
 
 options:
-## Jamf Pro Onboarder Modules
+  ## Jamf Pro Onboarder Modules
   - key: include_jamf_pro_trial_kickstart
     type: <boolean>
     presence: optional
@@ -44,7 +44,7 @@ options:
     display_name: Jamf Pro Trial Kickstart
     display_desc: Populates trial instance with initial configurations
 
-## Jamf Security Cloud Onboarder Modules
+  ## Jamf Security Cloud Onboarder Modules
   - key: include_jsc_all_services
     type: <boolean>
     presence: optional
@@ -69,7 +69,7 @@ options:
     display_name: JSC Block Pages
     display_desc: Enables block pages in Jamf Security Cloud for content blocking
 
-  - key: include_jsc_network_relay
+  - key: include_jsc_network_relay_old
     type: <boolean>
     presence: optional
     content: Creates a Network Relay Activation Profile for Zero Trust Network Access
@@ -77,13 +77,13 @@ options:
     display_name: JSC Network Relay
     display_desc: Configures device-attestation-based network relay for ZTNA
     subkeys:
-     - key: include_jsc_base
-       type: <boolean>
-       presence: required
-       content: Indicates whether to include the UEMC and IDP setup for Jamf Security Cloud
-       category: Security
-       display_name: Include JSC Base Setup
-       display_desc: Enables UEMC and IDP configuration for Jamf Security Cloud
+      - key: include_jsc_base
+        type: <boolean>
+        presence: required
+        content: Indicates whether to include the UEMC and IDP setup for Jamf Security Cloud
+        category: Security
+        display_name: Include JSC Base Setup
+        display_desc: Enables UEMC and IDP configuration for Jamf Security Cloud
 
   ### App Installer Modules
   - key: include_google_chrome
