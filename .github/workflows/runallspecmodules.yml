@@ -67,7 +67,7 @@ jobs:
                           -var "jamfpro_client_secret=${{ secrets.jamfpro_client_secret }}" \
                           -var "jsc_username=${{ secrets.jsc_username }}" \
                           -var "jsc_password=${{ secrets.jsc_password }}" \
-                          -parallelism=1 \
+                          -parallelism=1
             exit_code=$?  # Capture the exit code
             # Check if the exit code is 1
             if [ "$exit_code" -ne 0 ]; then
