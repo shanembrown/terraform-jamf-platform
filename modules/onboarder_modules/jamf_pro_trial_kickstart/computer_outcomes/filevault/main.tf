@@ -60,7 +60,7 @@ resource "jamfpro_policy" "policy_reissue_recovery_key" {
   trigger_other = ""
   frequency     = "Ongoing"
   category_id   = jamfpro_category.category_disk_encrpytion.id
-  
+
 
   scope {
     all_computers      = false
@@ -78,14 +78,14 @@ resource "jamfpro_policy" "policy_reissue_recovery_key" {
 
   payloads {
     scripts {
-      id = jamfpro_script.script_reissuekey.id
-      priority    = "After"
-      parameter4  = "<Replace with your organization name>"
-      parameter5  = ""
-      parameter6  = "<replace with additional info for the end user>"
+      id         = jamfpro_script.script_reissuekey.id
+      priority   = "After"
+      parameter4 = "<Replace with your organization name>"
+      parameter5 = ""
+      parameter6 = "<replace with additional info for the end user>"
     }
 
-   maintenance {
+    maintenance {
       recon                       = true
       reset_name                  = false
       install_all_cached_packages = false
@@ -107,7 +107,7 @@ resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuratio
   category_id         = jamfpro_category.category_disk_encrpytion.id
   redeploy_on_update  = "Newly Assigned"
   distribution_method = "Install Automatically"
-  payloads            = file("${var.support_files_path_prefix}support_files/computer_config_profiles/enablefilevault.mobileconfig")
+  payloads            = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/filevault/support_files/enablefilevault.mobileconfig")
   payload_validate    = false
   user_removable      = false
 

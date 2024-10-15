@@ -301,3 +301,23 @@ variable "include_jamf_protect_trial_kickstart" {
   type    = bool
   default = false
 }
+
+variable "include_categories" {
+  type = bool
+  default = false
+}
+
+variable "include_computer_management_settings" {
+  type = bool
+  default = false
+}
+
+variable "include_filevault" {
+  type = bool
+  default = false
+}
+
+variable "include_rosetta" {
+  type = bool
+  default = false
+}

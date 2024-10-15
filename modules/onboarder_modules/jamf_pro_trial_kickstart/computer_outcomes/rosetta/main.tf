@@ -28,12 +28,12 @@ resource "jamfpro_smart_computer_group" "group_apple_silicon" {
 
 ## Create Policy
 resource "jamfpro_policy" "policy_rosetta_2" {
-  name          = "Rosetta 2 Install"
-  enabled       = true
+  name            = "Rosetta 2 Install"
+  enabled         = true
   trigger_checkin = true
-  frequency     = "Once per computer"
-  category_id   = jamfpro_category.category_admin_tools.id
-  
+  frequency       = "Once per computer"
+  category_id     = jamfpro_category.category_admin_tools.id
+
 
   scope {
     all_computers      = false
@@ -61,7 +61,7 @@ resource "jamfpro_policy" "policy_rosetta_2" {
       run_command            = "/usr/sbin/softwareupdate --install-rosetta --agree-to-license"
     }
 
-   maintenance {
+    maintenance {
       recon                       = true
       reset_name                  = false
       install_all_cached_packages = false
