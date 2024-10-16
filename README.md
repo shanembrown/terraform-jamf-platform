@@ -18,7 +18,7 @@ While this project is private, you'll need to authenticate against GitHub to clo
 
 Open a Terminal window and enter the following commands. Replace the following placeholders:
 
-- [BRANCH-NAME]: The name of the branch to clone (main, danwork, vincent-work, etc)
+- [BRANCH-NAME]: The name of the branch to clone (typically should clone from staging unless specifcally looking to add onto another branch before it goes to staging)
 - [PAT]: Your Personal Access Token (you may receive additional SSO login prompts upon first use)
 - [FIRST.LAST]: Your local user directory
 
@@ -114,10 +114,10 @@ include_utm             = false
 include_zoom            = false
 
 ## Jamf Security Cloud Knobs
+include_jsc_uemc          = false
 include_jsc_dp_only       = false
 include_jsc_mtd_only      = false
 include_jsc_all_services  = false
-include_jsc_base          = false
 include_jsc_ztna          = false
 include_jsc_network_relay = false
 include_jsc_block_pages   = false
@@ -139,7 +139,19 @@ Save and exit.
 
 ## Usage
 
-Ensure that you are in the correct project folder when performing Terraform commands (e.g.: /Users/[FIRST.LAST]/ExperienceJamf-Terraform/)
+Ensure that you are in the correct project folder when performing Terraform commands, ie.,
+
+```
+/Users/[FIRST.LAST]/ExperienceJamf-Terraform/
+```
+
+Before applying any terraform modules you must initialize the providers being called. It's a good idea to run this before the first apply of your session
+
+```
+terrafrom init -upgrade
+```
+
+Terraform must be formatted correctly to run, which can be done manually after saving changes before each run with `terraform fmt`. If using Visual Studio Code, use [this guide](https://medium.com/nerd-for-tech/how-to-auto-format-hcl-terraform-code-in-visual-studio-code-6fa0e7afbb5e) to never have to run the format command again!
 
 Enter the following command to apply full Terraform config:
 
@@ -153,7 +165,7 @@ Enter this command to only apply specific modules:
 terraform apply -target "module.[MODULE_NAME]"
 ```
 
-N.b. by default all modules will be applied. You can unselect individual modules by modifing the module knobs in your tfvars file e.g.
+By default all modules will be applied. You can unselect individual modules by modifing the module knobs in your tfvars file e.g.
 
 ```
 include_ej_mac_cis_benchmark = false
