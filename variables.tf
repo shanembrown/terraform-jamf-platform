@@ -162,12 +162,12 @@ variable "include_jsc_uemc" {
 }
 
 variable "enable_jsc_uemc" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "enable_jsc_uemc_output" {
-  type = bool
+  type    = bool
   default = false
 }
 

@@ -94,12 +94,12 @@ variable "support_files_path_prefix" {
 }
 
 variable "enable_jsc_uemc" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "enable_jsc_uemc_output" {
-  type = string
+  type    = string
   default = ""
 }
 
