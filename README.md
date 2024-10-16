@@ -114,10 +114,10 @@ include_utm             = false
 include_zoom            = false
 
 ## Jamf Security Cloud Knobs
+include_jsc_uemc          = false
 include_jsc_dp_only       = false
 include_jsc_mtd_only      = false
 include_jsc_all_services  = false
-include_jsc_base          = false
 include_jsc_ztna          = false
 include_jsc_network_relay = false
 include_jsc_block_pages   = false
