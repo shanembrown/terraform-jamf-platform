@@ -41,3 +41,7 @@ resource "jamfpro_macos_configuration_profile_plist" "dp" {
   }
   depends_on = [jsc_ap.content_filtering_only]
 }
+
+output "enable_jsc_uemc_output" {
+  value = "yes"
+}

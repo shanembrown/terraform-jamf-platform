@@ -27,8 +27,6 @@ resource "jsc_ap" "ztna" {
   datapolicy       = false
 }
 
-
-
 resource "jamfpro_macos_configuration_profile_plist" "ztna_macos" {
   name                = "Jamf Connect ZTNA - macOS (Supervised)"
   distribution_method = "Install Automatically"
@@ -42,4 +40,8 @@ resource "jamfpro_macos_configuration_profile_plist" "ztna_macos" {
     all_computers = false
   }
   depends_on = [jsc_ap.ztna]
+}
+
+output "enable_jsc_uemc_output" {
+  value = "yes"
 }

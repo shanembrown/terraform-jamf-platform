@@ -65,6 +65,14 @@ options:
     display_desc: This will set up a Policy in Jamf Pro to execute a command locally on macOS to install Rosetta 2 which is required for running Intel based macOS apps
 
   ## Jamf Security Cloud Onboarder Modules
+  - key: include_jsc_uemc
+    type: <boolean>
+    presence: optional
+    content: This will create all the necessary API Roles and an API Client in your Jamf Pro instance and then set up UEM Connect for Group synchronization, automated risk signaling, and easier deployment
+    category: Security
+    display_name: Configure UEM Connect in Jamf Security Cloud
+    display_desc: This will create all the necessary API Roles and an API Client in your Jamf Pro instance and then set up UEM Connect for Group synchronization, automated risk signaling, and easier deployment 
+
   - key: include_jsc_all_services
     type: <boolean>
     presence: optional
@@ -72,14 +80,6 @@ options:
     category: Security
     display_name: Include All JSC Services
     display_desc: Activates all Jamf Security Cloud services (Identity-provider-based ZTNA Content & Threat Defense Data Policy) and adds the activation profile to Jamf Pro
-    subkeys:
-      - key: include_jsc_base
-        type: <boolean>
-        presence: required
-        content: Indicates whether to include the UEMC and IDP setup for Jamf Security Cloud
-        category: Security
-        display_name: Include JSC Base Setup
-        display_desc: Enables UEMC and IDP configuration for Jamf Security Cloud
 
   - key: include_jsc_block_pages
     type: <boolean>

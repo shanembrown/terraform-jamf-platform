@@ -200,14 +200,23 @@ module "ej_mac_LMAM" {
 ## Begin Jamf Security Cloud Configuration
 
 ## Create UEMC and Okta integrations
-module "jsc_base" {
-  count                = var.include_jsc_base == true ? 1 : 0
-  source               = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_base"
+module "jsc_uemc" {
+  count                = var.include_jsc_uemc == true ? 1 : 0
+  source               = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_uemc"
   tje_okta_clientid    = var.tje_okta_clientid
   tje_okta_orgdomain   = var.tje_okta_orgdomain
   jamfpro_instance_url = var.jamfpro_instance_url
   clientid             = var.jamfpro_client_id
   clientsecret         = var.jamfpro_client_secret
+}
+
+## Create Jamf Security Cloud Activation Profile containing ALL JSC Services
+module "jsc_all_services" {
+  count                         = var.include_jsc_all_services == true ? 1 : 0
+  source                        = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_all_services"
+  tje_okta_clientid             = var.tje_okta_clientid
+  tje_okta_orgdomain            = var.tje_okta_orgdomain
+  jsc_provided_idp_client_child = var.jsc_provided_idp_client
 }
 
 module "jsc_block_pages" {
@@ -273,17 +282,10 @@ module "jsc_ztna_mtd_only" {
 ## Create Jamf Security Cloud Activation Profile containing ONLY Connect Network Relay
 module "jsc_network_relay" {
   count  = var.include_jsc_network_relay == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_network_relay"
+  source = "./modules/trusted_access_outcomes/jsc_alternatives/jsc_network_relay"
 }
 
-## Create Jamf Security Cloud Activation Profile containing ALL JSC Services
-module "jsc_all_services" {
-  count                         = var.include_jsc_all_services == true ? 1 : 0
-  source                        = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_all_services"
-  tje_okta_clientid             = var.tje_okta_clientid
-  tje_okta_orgdomain            = var.tje_okta_orgdomain
-  jsc_provided_idp_client_child = var.jsc_provided_idp_client
-}
+
 
 
 
