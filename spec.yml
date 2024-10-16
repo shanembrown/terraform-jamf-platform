@@ -64,7 +64,7 @@ options:
     display_name: Install Rosetta 2 on Apple Silicon Macs
     display_desc: This will set up a Policy in Jamf Pro to execute a command locally on macOS to install Rosetta 2 which is required for running Intel based macOS apps
 
-## Jamf Security Cloud Onboarder Modules
+  ## Jamf Security Cloud Onboarder Modules
   - key: include_jsc_all_services
     type: <boolean>
     presence: optional
@@ -88,22 +88,6 @@ options:
     category: Security
     display_name: JSC Block Pages
     display_desc: Enables block pages in Jamf Security Cloud for content blocking
-
-  - key: include_jsc_network_relay
-    type: <boolean>
-    presence: optional
-    content: Creates a Network Relay Activation Profile for Zero Trust Network Access
-    category: Security
-    display_name: JSC Network Relay
-    display_desc: Configures device-attestation-based network relay for ZTNA
-    subkeys:
-     - key: include_jsc_base
-       type: <boolean>
-       presence: required
-       content: Indicates whether to include the UEMC and IDP setup for Jamf Security Cloud
-       category: Security
-       display_name: Include JSC Base Setup
-       display_desc: Enables UEMC and IDP configuration for Jamf Security Cloud
 
   ### App Installer Modules
   - key: include_google_chrome
