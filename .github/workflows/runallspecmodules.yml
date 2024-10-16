@@ -4,9 +4,9 @@ on:
   schedule:
     - cron: "1 */12 * * *" # This runs every 12 hours but only from main (1 hour offset)
   push:
-    branches: ["specrunner"]
+    branches: ["specrunner2"]
   pull_request:
-    branches: ["specrunner", "main"]
+    branches: ["specrunner2", "main"]
 
 concurrency:
   group: stagingenvironment
@@ -82,7 +82,20 @@ jobs:
                           -var "jsc_username=${{ secrets.jsc_username }}" \
                           -var "jsc_password=${{ secrets.jsc_password }}" \
                           -parallelism=1 \
+                          -refresh=false \
+            || exit_code_destroy=$?  # Capture the exit code
+            if [ "$exit_code_destroy" -ne 0 ]; then
+              echo "destroy failed so waiting 120 seconds before trying again" #tomcats please sync
+              sleep 121 
+              terraform destroy -auto-approve -var "$line" -var "jamfpro_instance_url=${{ secrets.jamfpro_instance_url }}" \
+                          -var "jamfpro_client_id=${{ secrets.jamfpro_client_id }}" \
+                          -var "jamfpro_client_secret=${{ secrets.jamfpro_client_secret }}" \
+                          -var "jsc_username=${{ secrets.jsc_username }}" \
+                          -var "jsc_password=${{ secrets.jsc_password }}" \
+                          -parallelism=1 \
                           -refresh=false
+            fi
+
           done < /tmp/outputbool.txt
 
           # Set output variable based on exit code
