@@ -93,3 +93,32 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "all_services_ios_u
 output "enable_jsc_uemc_output" {
   value = true
 }
+
+resource "jamfpro_smart_mobile_device_group" "byod_ios" {
+  name = "Jamf Security Cloud - BYOD Devices"
+
+  criteria {
+    name = "Serial Number"
+    priority = 0
+    search_type = "like"
+    value = ""
+  }
+}
+
+resource "jamfpro_mobile_device_configuration_profile_plist" "all_services_ios_byod" {
+  name = "Jamf Connect ZTNA + Jamf Protect Threat and Content Control - iOS / iPadOS (BYOD)"
+  redeploy_on_update = "Newly Assigned"
+  
+  payloads = jsc_ap.all_services.byodplist
+  payload_validate = false
+
+  scope {
+    all_mobile_devices = false
+  }
+  depends_on = [ jamfpro_mobile_device_configuration_profile_plist.all_services_ios_unsupervised ]
+}
+
+output "enable_jsc_uemc_output" {
+  value = true
+}
+
