@@ -41,3 +41,7 @@ resource "jamfpro_macos_configuration_profile_plist" "mtd" {
   }
   depends_on = [jsc_ap.mtd_only]
 }
+
+output "enable_jsc_uemc_output" {
+  value = "yes"
+}

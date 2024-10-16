@@ -31,3 +31,7 @@ resource "jamfpro_macos_configuration_profile_plist" "network_relay_macos" {
   }
   depends_on = [jsc_ap.networkrelay]
 }
+
+output "enable_jsc_uemc_output" {
+  value = "yes"
+}

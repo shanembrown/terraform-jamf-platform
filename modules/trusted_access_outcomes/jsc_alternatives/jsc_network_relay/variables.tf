@@ -92,6 +92,16 @@ variable "support_files_path_prefix" {
   default = ""
 }
 
+variable "enable_jsc_uemc" {
+  type = string
+  default = ""
+}
+
+variable "enable_jsc_uemc_output" {
+  type = string
+  default = ""
+}
+
 /* variable "wizard_suffix" {
   type = string
   sensitive = true

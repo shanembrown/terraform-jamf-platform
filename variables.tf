@@ -156,8 +156,18 @@ variable "include_jsc_all_services" {
   default = false
 }
 
-variable "include_jsc_base" {
+variable "include_jsc_uemc" {
   type    = bool
+  default = false
+}
+
+variable "enable_jsc_uemc" {
+  type = bool
+  default = false
+}
+
+variable "enable_jsc_uemc_output" {
+  type = bool
   default = false
 }
 
