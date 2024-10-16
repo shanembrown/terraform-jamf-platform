@@ -103,7 +103,7 @@ module "swift_dialog" {
 }
 
 module "okta_verify" {
-  count  = var.include_swift_dialog == true ? 1 : 0
+  count  = var.include_okta_verify == true ? 1 : 0
   source = "./modules/onboarder_modules/app_installers/okta_verify"
 }
 
@@ -124,7 +124,7 @@ module "jamf_composer" {
 
 module "jamf_connect" {
   count  = var.include_jamf_connect == true ? 1 : 0
-  source = "./modules/onboarder_modules/app_installers/dropbox"
+  source = "./modules/onboarder_modules/app_installers/jamf_connect"
 }
 
 module "pppc_utility" {
