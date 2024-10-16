@@ -35,14 +35,34 @@ credentials:
     display_desc: Password for authenticating with Jamf Security Cloud
 
 options:
-  ## Jamf Pro Onboarder Modules
-  - key: include_jamf_pro_trial_kickstart
+## Jamf Pro Onboarder Modules
+  - key: include_categories
     type: <boolean>
     presence: optional
-    content: This will fill your Jamf Pro trial instance with some basic suggested Categories Departments Buildings and Smart Groups
     category: MDM Workflows
-    display_name: Jamf Pro Trial Kickstart
-    display_desc: Populates trial instance with initial configurations
+    display_name: Add Example Categories
+    display_desc: This will add several example Categories to your Jamf Pro instance that can be used to organize items in your Jamf Pro
+
+  - key: include_computer_management_settings
+    type: <boolean>
+    presence: optional
+    category: MDM Workflows
+    display_name: Set common Inventory Collection and Check-in Settings
+    display_desc: This will set things like what information to collect when Jamf Pro does an Inventory Collection on a managed device as well as setting check-ins to every 15 minutes
+
+  - key: include_filevault
+    type: <boolean>
+    presence: optional
+    category: MDM Workflows
+    display_name: Set & Enforce FileVault 2
+    display_desc: This will configure some scripting as well as a Configuration Profile and a Policy to enable and enforce FileVault 2 as well as ensuring Jamf Pro escrows the Recovery Key
+
+  - key: include_rosetta
+    type: <boolean>
+    presence: optional
+    category: MDM Workflows
+    display_name: Install Rosetta 2 on Apple Silicon Macs
+    display_desc: This will set up a Policy in Jamf Pro to execute a command locally on macOS to install Rosetta 2 which is required for running Intel based macOS apps
 
   ## Jamf Security Cloud Onboarder Modules
   - key: include_jsc_all_services

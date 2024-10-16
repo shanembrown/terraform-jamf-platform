@@ -52,9 +52,29 @@ module "jamf_protect_for_macOS" {
 */
 
 
-module "jamf_pro_trial_kickstart" {
-  count  = var.include_jamf_pro_trial_kickstart == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart"
+# module "jamf_pro_trial_kickstart" {
+#   count  = var.include_jamf_pro_trial_kickstart == true ? 1 : 0
+#   source = "./modules/onboarder_modules/jamf_pro_trial_kickstart"
+# }
+
+module "categories" {
+  count  = var.include_categories == true ? 1 : 0
+  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/categories"
+}
+
+module "computer_management_settings" {
+  count  = var.include_computer_management_settings == true ? 1 : 0
+  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_management_settings"
+}
+
+module "filevault" {
+  count  = var.include_filevault == true ? 1 : 0
+  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/filevault"
+}
+
+module "rosetta" {
+  count  = var.include_rosetta == true ? 1 : 0
+  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/rosetta"
 }
 
 module "google_chrome" {
