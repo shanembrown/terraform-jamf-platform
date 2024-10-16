@@ -2,184 +2,213 @@ credentials:
   - key: jamfpro_instance_url
     type: <string>
     presence: required
-    content: The URL of the Jamf Pro instance, must start with 'https://'.
+    content: The URL of the Jamf Pro instance must start with 'https://'
+    display_name: Jamf Pro Instance URL
+    display_desc: URL for the Jamf Pro instance - must start with 'https://'
 
   - key: jamfpro_client_id
     type: <string>
     presence: required
-    content: The client ID for Jamf Pro API access.
+    content: The client ID for Jamf Pro API access
+    display_name: Jamf Pro Client ID
+    display_desc: Client ID used for Jamf Pro API access
 
   - key: jamfpro_client_secret
     type: <string>
     presence: required
-    content: The client secret for Jamf Pro API access.
+    content: The client secret for Jamf Pro API access
+    display_name: Jamf Pro Client Secret
+    display_desc: Client Secret used for Jamf Pro API access
 
   - key: jsc_username
     type: <string>
     presence: required
-    content: The username for Jamf Security Console authentication.
+    content: The username for Jamf Security Cloud authentication
+    display_name: Jamf Security Cloud Username
+    display_desc: Username for authenticating with Jamf Security Cloud
 
   - key: jsc_password
     type: <string>
     presence: required
-    content: The password for Jamf Security Console authentication.
+    content: The password for Jamf Security Cloud authentication
+    display_name: Jamf Security Cloud Password
+    display_desc: Password for authenticating with Jamf Security Cloud
 
 options:
-  - key: include_ej_base
+## Jamf Pro Onboarder Modules
+  - key: include_categories
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the EJ base configuration.
     category: MDM Workflows
+    display_name: Add Example Categories
+    display_desc: This will add several example Categories to your Jamf Pro instance that can be used to organize items in your Jamf Pro
 
-  - key: include_ej_jsc_config
+  - key: include_computer_management_settings
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the EJ JSC configuration.
-    category: Security Workflows
+    category: MDM Workflows
+    display_name: Set common Inventory Collection and Check-in Settings
+    display_desc: This will set things like what information to collect when Jamf Pro does an Inventory Collection on a managed device as well as setting check-ins to every 15 minutes
 
-  ### App Installer Flags
+  - key: include_filevault
+    type: <boolean>
+    presence: optional
+    category: MDM Workflows
+    display_name: Set & Enforce FileVault 2
+    display_desc: This will configure some scripting as well as a Configuration Profile and a Policy to enable and enforce FileVault 2 as well as ensuring Jamf Pro escrows the Recovery Key
+
+  - key: include_rosetta
+    type: <boolean>
+    presence: optional
+    category: MDM Workflows
+    display_name: Install Rosetta 2 on Apple Silicon Macs
+    display_desc: This will set up a Policy in Jamf Pro to execute a command locally on macOS to install Rosetta 2 which is required for running Intel based macOS apps
+
+  ## Jamf Security Cloud Onboarder Modules
+  - key: include_jsc_uemc
+    type: <boolean>
+    presence: optional
+    content: This will create all the necessary API Roles and an API Client in your Jamf Pro instance and then set up UEM Connect for Group synchronization, automated risk signaling, and easier deployment
+    category: Security
+    display_name: Configure UEM Connect in Jamf Security Cloud
+    display_desc: This will create all the necessary API Roles and an API Client in your Jamf Pro instance and then set up UEM Connect for Group synchronization, automated risk signaling, and easier deployment 
+
+  - key: include_jsc_all_services
+    type: <boolean>
+    presence: optional
+    content: Creates an Activation Profile for all Jamf Security Cloud services and uploads it to Jamf Pro
+    category: Security
+    display_name: Include All JSC Services
+    display_desc: Activates all Jamf Security Cloud services (Identity-provider-based ZTNA Content & Threat Defense Data Policy) and adds the activation profile to Jamf Pro
+
+  - key: include_jsc_block_pages
+    type: <boolean>
+    presence: optional
+    content: Provides customizable block pages for organizational policies
+    category: Security
+    display_name: JSC Block Pages
+    display_desc: Enables block pages in Jamf Security Cloud for content blocking
+
+  ### App Installer Modules
   - key: include_google_chrome
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Google Chrome App Installer.
+    content: Indicates whether to include the Google Chrome App Installer
     category: Browsers
+    display_name: Google Chrome Installer
+    display_desc: Configures Google Chrome in Jamf Pro to be deployable to computers
 
   - key: include_microsoft_teams
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Microsoft Teams App Installer.
+    content: Indicates whether to include the Microsoft Teams App Installer
     category: Additional Apps
+    display_name: Microsoft Teams Installer
+    display_desc: Configures Microsoft Teams in Jamf Pro to be deployable to computers
 
   - key: include_mozilla_firefox
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Mozilla Firefox App Installer.
+    content: Indicates whether to include the Mozilla Firefox App Installer
     category: Browsers
+    display_name: Mozilla Firefox Installer
+    display_desc: Configures Mozilla Firefox in Jamf Pro to be deployable to computers
 
   - key: include_slack
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Slack App Installer.
+    content: Indicates whether to include the Slack App Installer
     category: Additional Apps
+    display_name: Slack Installer
+    display_desc: Configures Slack in Jamf Pro to be deployable to computers
 
   - key: include_okta_verify
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Okta Verify App Installer.
+    content: Indicates whether to include the Okta Verify App Installer
     category: Security Workflows
     tags:
       - Additional Apps
       - SSO
+    display_name: Okta Verify Installer
+    display_desc: Configures Okta Verify in Jamf Pro to be deployable to computers
 
   - key: include_swift_dialog
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the swiftDialog App Installer.
+    content: Indicates whether to include the swiftDialog App Installer
     category: MDM Workflows
+    display_name: Swift Dialog Installer
+    display_desc: Configures swiftDialog in Jamf Pro to be deployable to computers
 
   - key: include_dropbox
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Dropbox App Installer.
+    content: Indicates whether to include the Dropbox App Installer
     category: Additional Apps
+    display_name: Dropbox Installer
+    display_desc: Configures Dropbox in Jamf Pro to be deployable to computers
 
   - key: include_google_drive
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Google Drive App Installer.
+    content: Indicates whether to include the Google Drive App Installer
     category: Additional Apps
+    display_name: Google Drive Installer
+    display_desc: Configures Google Drive in Jamf Pro to be deployable to computers
 
   - key: include_jamf_composer
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Jamf Composer App Installer.
+    content: Indicates whether to include the Jamf Composer App Installer
     category: Additional Apps
+    display_name: Jamf Composer Installer
+    display_desc: Configures Jamf Composer in Jamf Pro to be deployable to computers
 
   - key: include_jamf_connect
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Jamf Connect App Installer.
+    content: Indicates whether to include the Jamf Connect App Installer
     category: MDM Workflows
+    display_name: Jamf Connect Installer
+    display_desc: Configures Jamf Connect in Jamf Pro to be deployable to computers
 
   - key: include_pppc_utility
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Jamf PPPC Utility App Installer.
+    content: Indicates whether to include the Jamf PPPC Utility App Installer
     category: Additional Apps
+    display_name: PPPC Utility Installer
+    display_desc: Configures PPPC Utility in Jamf Pro to be deployable to computers
 
   - key: include_jamfcheck
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the JamfCheck App Installer.
+    content: Indicates whether to include the JamfCheck App Installer
     category: Additional Apps
+    display_name: JamfCheck Installer
+    display_desc: Configures JamfCheck in Jamf Pro to be deployable to computers
 
   - key: include_nudge
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Nudge App Installer.
+    content: Indicates whether to include the Nudge App Installer
     category: Additional Apps
+    display_name: Nudge Installer
+    display_desc: Configures Nudge in Jamf Pro to be deployable to computers
 
   - key: include_utm
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the UTM App Installer.
+    content: Indicates whether to include the UTM App Installer
     category: Additional Apps
+    display_name: UTM Installer
+    display_desc: Configures UTM in Jamf Pro to be deployable to computers
 
   - key: include_zoom
     type: <boolean>
     presence: optional
-    content: Indicates whether to include the Zoom App Installer.
+    content: Indicates whether to include the Zoom App Installer
     category: Additional Apps
-
-  ### Protect for macOS options
-  - key: include_jamfprotectformacos_config
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to configure Protect for macOS.
-    category: Security Workflows
-    subkeys:
-      - key: jamfprotect_url
-        type: <string>
-        presence: required
-        content: Full URL of Protect for macOS tenant (including https://).
-
-      - key: jamfprotect_clientID
-        type: <string>
-        presence: required
-        content: API ClientID from Protect for macOS portal.
-
-      - key: jamfprotect_client_password
-        type: <string>
-        presence: required
-        content: API Password from Protect for macOS portal.
-
-  ### other EJ flags
-  - key: include_ej_incident_response
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to include the EJ incident response.
-    category: Security Workflows
-
-  - key: include_ej_mac_cis_benchmark
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to include the EJ Mac CIS benchmark.
-    category: Benchmarks
-
-  - key: include_jamfpro_prerequisites
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to include Jamf Pro prerequisites.
-    category: MDM Workflows
-
-  - key: include_jamfpro_demo_config
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to include Jamf Pro demo configuration.
-    category: MDM Workflows
-
-  - key: include_ej_mac_LMAM
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to include Local macOS Account Management.
-    category: MDM Workflows
+    display_name: Zoom Installer
+    display_desc: Configures Zoom in Jamf Pro to be deployable to computers

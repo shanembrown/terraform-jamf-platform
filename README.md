@@ -69,8 +69,7 @@ jsc_password            = ""
 jsc_provided_idp_client = ""
 tje_okta_clientid       = ""
 tje_okta_orgdomain      = ""
-block_page_logo         = ""
-## block_page_logo takes a Base 64 encoded string conversion of the image only
+block_page_logo         = "" ## block_page_logo takes a Base 64 encoded string conversion of the image only
 
 ### SaaS Tenancy
 include_ej_saas_tenancy = false
@@ -89,14 +88,13 @@ support_files_path_prefix = "" ## Path to your directory - example: /Users/<your
 wizard_suffix = ""
 
 ## MODULE KNOBS
-## Experience Jamf Knobs
-include_ej_base                 = false
-include_ej_incident_response    = false
-include_ej_mac_cis_benchmark    = false
-include_ej_mobile_cis_benchmark = false
-include_ej_secure_remote_access = false
-include_ej_jsc_config           = false
-include_ej_mac_LMAM             = false
+
+## Onboarder Knobs
+include_categories                   = false
+include_computer_management_settings = false
+include_filevault                    = false
+include_rosetta                      = false
+include_jamf_protect_trial_kickstart = false
 
 ## App Installer Knobs
 include_google_chrome   = false
@@ -116,7 +114,6 @@ include_utm             = false
 include_zoom            = false
 
 ## Jamf Security Cloud Knobs
-include_jsc_demo_config   = false
 include_jsc_dp_only       = false
 include_jsc_mtd_only      = false
 include_jsc_all_services  = false
@@ -127,6 +124,14 @@ include_jsc_block_pages   = false
 include_jsc_mtd_dp_only   = false
 include_jsc_ztna_dp_only  = false
 include_jsc_ztna_mtd_only = false
+
+## Experience Jamf Knobs
+include_ej_base                 = false
+include_ej_incident_response    = false
+include_ej_mac_cis_benchmark    = false
+include_ej_mobile_cis_benchmark = false
+include_ej_jsc_config           = false
+include_ej_mac_LMAM             = false
 
 ```
 

@@ -1,7 +1,8 @@
 *.tfstate
 *.tfstate.backup
 .terraform*
-*.tfvars
+terraform.tfvars
+terraform.*.tfvars
 catalog-info.yaml
 .DS_Store
 plan.json

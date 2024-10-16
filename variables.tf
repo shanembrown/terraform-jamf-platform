@@ -94,13 +94,6 @@ variable "tje_okta_orgdomain" {
   default = "jamf-harbor.okta.com"
 }
 
-
-## Define vingnette variables
-variable "include_jamfpro_prerequisites" {
-  type    = bool
-  default = false
-}
-
 variable "include_ej_base" {
   type    = bool
   default = false
@@ -163,7 +156,17 @@ variable "include_jsc_all_services" {
   default = false
 }
 
-variable "include_jsc_base" {
+variable "include_jsc_uemc" {
+  type    = bool
+  default = false
+}
+
+variable "enable_jsc_uemc" {
+  type    = bool
+  default = false
+}
+
+variable "enable_jsc_uemc_output" {
   type    = bool
   default = false
 }
@@ -204,11 +207,6 @@ variable "include_jsc_ztna_mtd_only" {
 }
 
 variable "jsc_provided_idp_client" {
-  type    = string
-  default = ""
-}
-
-variable "wizard_suffix" {
   type    = string
   default = ""
 }
@@ -300,6 +298,36 @@ variable "include_utm" {
 }
 
 variable "include_zoom" {
+  type    = bool
+  default = false
+}
+
+variable "include_jamf_pro_trial_kickstart" {
+  type    = bool
+  default = false
+}
+
+variable "include_jamf_protect_trial_kickstart" {
+  type    = bool
+  default = false
+}
+
+variable "include_categories" {
+  type    = bool
+  default = false
+}
+
+variable "include_computer_management_settings" {
+  type    = bool
+  default = false
+}
+
+variable "include_filevault" {
+  type    = bool
+  default = false
+}
+
+variable "include_rosetta" {
   type    = bool
   default = false
 }
