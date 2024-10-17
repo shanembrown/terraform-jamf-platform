@@ -66,7 +66,6 @@ jamfprotect_client_password = ""
 ## Jamf Security Cloud (RADAR) Account Details
 jsc_username            = ""
 jsc_password            = ""
-jsc_provided_idp_client = ""
 tje_okta_clientid       = ""
 tje_okta_orgdomain      = ""
 block_page_logo         = "" ## block_page_logo takes a Base 64 encoded string conversion of the image only
@@ -78,14 +77,8 @@ KeyName                 = ""
 SubnetId                = ""
 aws_region              = ""
 
-## Choose which Activation Profile option you want to output in your module
-activation_profile_target = "macosplist"
-
 # File path prefix for Terraform directory
 support_files_path_prefix = "" ## Path to your directory - example: /Users/<youruser>/filename/
-
-## Optional suffix
-wizard_suffix = ""
 
 ## MODULE KNOBS
 
