@@ -24,8 +24,8 @@ terraform {
 # }
 
 resource "jsc_ap" "networkrelay" {
-  name             = "Network Relay - Testing"
-  idptype          = "none"
+  name    = "Network Relay - Testing"
+  idptype = "none"
   # oktaconnectionid = jsc_oktaidp.okta_idp_base.id
   # networkrelay     = true
 }
