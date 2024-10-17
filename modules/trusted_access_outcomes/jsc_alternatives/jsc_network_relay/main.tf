@@ -12,19 +12,6 @@ terraform {
   }
 }
 
-provider "jsc" {
-  username            = "ryan.legg+local@jamf.com"
-  password            = "Tw1ster8923"
-  customerid          = "66a2b81cd3698b6cb78d21af"
-}
-
-provider "jamfpro" {
-  jamfpro_instance_fqdn  = "https://rlegg.jamfcloud.com"
-  auth_method   = "oauth2" ## oauth2 or basic
-  client_id     = "5ee0c8f7-b519-44d4-ae5a-a764ac6ef784"
-  client_secret = "e899lyH7QU7Gq1HWB3FObV74IZUlgxJ-87ZpTZWNMC_zU0eMx0qn45kdDlKomOlr"
-}
-
 # resource "jsc_ap" "networkrelay" {
 #   name    = "Network Relay"
 #   idptype = "NetworkRelay"
