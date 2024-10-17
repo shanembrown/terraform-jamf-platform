@@ -51,12 +51,6 @@ module "jamf_protect_for_macOS" {
 }
 */
 
-
-# module "jamf_pro_trial_kickstart" {
-#   count  = var.include_jamf_pro_trial_kickstart == true ? 1 : 0
-#   source = "./modules/onboarder_modules/jamf_pro_trial_kickstart"
-# }
-
 module "categories" {
   count  = var.include_categories == true ? 1 : 0
   source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/categories"
