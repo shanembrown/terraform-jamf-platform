@@ -5,56 +5,6 @@
 		<key>PayloadContent</key>
 		<array>
 			<dict>
-				<key>AllowAllAppsAccess</key>
-				<false/>
-				<key>PayloadCertificateFileName</key>
-				<string>FileVault2Comm.cer</string>
-				<key>PayloadContent</key>
-				<data>
-			MIIDwzCCAqugAwIBAgIFANbUTaIwDQYJKoZIhvcNAQELBQAwOjE4
-			MDYGA1UEAxMvU3VwZXJGcmllbmRzIEpTUyBCdWlsdC1pbiBDZXJ0
-			aWZpY2F0ZSBBdXRob3JpdHkwHhcNMjQwODI3MTUwNzUyWhcNMjkw
-			ODI5MTUwNzUyWjBEMRcwFQYDVQQLEw5GSUxFVkFVTFQyQ09NTTEp
-			MCcGA1UEAxMgSlNTIEJ1aWx0LUluIFNpZ25pbmcgQ2VydGlmaWNh
-			dGUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQClV1Xi
-			X/onXTW+84HWOECmeE4Ptn0gR+aLF2DsWNyPLr68dSxiVjg7qsEj
-			KqliIcB2YarrlzqmC4JCC3ZQJkiLI4BQUXvr2zFykPU6+1G9nXDm
-			GZsHUyyMXgiWEc51jO/jAK3Ft3BYHnJK+eCTsvERwm+nGRdZ6LUy
-			fqcoi3mllCM33c8xq4zkRAC8GLoESMmJjw56bDRERxx3KqO8E8dy
-			cnE/8c5tPkjiMMlDgVxTtg6I97H2POxMJ8nty3QrJ9bLeJ6k7sSL
-			zAte7vjVeJu3r5hQhKNCrQPnXzKOx4VfLO/UceQ4oMBRu+21j2io
-			AiSlV7EccF2J20k37xhgjoiVAgMBAAGjgcUwgcIwHQYDVR0OBBYE
-			FA3MeGgChkxTZ5JFg2Fpp3QjoDlaMBMGA1UdJQQMMAoGCCsGAQUF
-			BwMBMA4GA1UdDwEB/wQEAwIBpjAMBgNVHRMBAf8EAjAAME0GA1Ud
-			HwRGMEQwQqBAoD6GPGh0dHBzOi8vc3VwZXJmcmllbmRjb25jZXB0
-			cy5qYW1mY2xvdWQuY29tLy9DQS9KQU1GQ1JMU2VydmxldDAfBgNV
-			HSMEGDAWgBT/qTkXh0ZVPzALxdTDLkQlD5EkTzANBgkqhkiG9w0B
-			AQsFAAOCAQEAEzw+sk7ofZGdzK/I6ENkZ01hYhRWwHqWARDJ4Yju
-			Ku2LLY6Q8PpU/Ky4iZDfIwfNvCPvUFOy9LzGQuIWB5nhTJ6hbcwo
-			cUu4y+V0w4hM8bzHVti3i2nvFRngcL+EkqxqDnsVDN9yoXhLI7mG
-			8vb7HcDgrCVFuDipu/MtsXLdtdW0+I6drqRqW6iyPef/x6vb1AnQ
-			XEQCW1qN/BgRHAAif4X+gKOg9BQo1vR1tYJX6VWnZHLJxKEz6bDr
-			hJRWk0f5Hjm679xHSvDI7pbyzZfqmK50+P6SetZxVn2k/VDejwnT
-			wXyv3zWYfcb+m1HuKKFJAEStifT2oTQBN+pONNBeNg==
-			</data>
-				<key>PayloadDescription</key>
-				<string/>
-				<key>PayloadDisplayName</key>
-				<string>JSS FileVault Recovery Key Escrow Certificate</string>
-				<key>PayloadEnabled</key>
-				<true/>
-				<key>PayloadIdentifier</key>
-				<string>2226E225-97D3-45FF-A34A-6EFC3DBF3898</string>
-				<key>PayloadOrganization</key>
-				<string>SuperFriends</string>
-				<key>PayloadType</key>
-				<string>com.apple.security.pkcs1</string>
-				<key>PayloadUUID</key>
-				<string>515851b2-9b26-4739-9801-0675a7584316</string>
-				<key>PayloadVersion</key>
-				<integer>1</integer>
-			</dict>
-			<dict>
 				<key>Defer</key>
 				<true/>
 				<key>DeferDontAskAtUserLogout</key>

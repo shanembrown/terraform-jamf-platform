@@ -112,7 +112,7 @@ resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuratio
   user_removable      = false
 
   scope {
-    all_computers = true
+    all_computers = false
     all_jss_users = false
   }
 }
