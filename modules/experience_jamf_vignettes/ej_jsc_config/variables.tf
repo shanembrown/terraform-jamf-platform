@@ -22,12 +22,6 @@ variable "tje_okta_orgdomain" {
   default   = ""
 }
 
-variable "wizard_suffix" {
-  type      = string
-  sensitive = true
-  default   = ""
-}
-
 variable "clientid" {
   type      = string
   sensitive = true
@@ -86,10 +80,3 @@ variable "support_files_path_prefix" {
   type    = string
   default = ""
 }
-
-/* variable "wizard_suffix" {
-  type = string
-  sensitive = true
-  default = ""
-}
-*/
