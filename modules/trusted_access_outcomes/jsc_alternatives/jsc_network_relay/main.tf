@@ -6,8 +6,8 @@ terraform {
       version = ">= 0.1.5"
     }
     jsc = {
-      source  = "jsctf"
-      version = "1.0.0"
+      source  = "danjamf/jsctfprovider"
+      version = ">= 0.0.15"
     }
   }
 }
@@ -40,7 +40,7 @@ resource "jsc_ap" "networkrelay" {
   name             = "Network Relay - Testing"
   idptype          = "none"
   # oktaconnectionid = jsc_oktaidp.okta_idp_base.id
-  networkrelay     = true
+  # networkrelay     = true
 }
 
 resource "jamfpro_macos_configuration_profile_plist" "network_relay_macos" {
