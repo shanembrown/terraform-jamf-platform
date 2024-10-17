@@ -1,8 +1,3 @@
-variable "jsc_provided_idp_client_child" {
-  type      = string
-  sensitive = true
-  default   = ""
-}
 
 variable "jamfpro_instance_url" {
   type      = string
@@ -23,12 +18,6 @@ variable "tje_okta_clientid" {
 }
 
 variable "tje_okta_orgdomain" {
-  type      = string
-  sensitive = true
-  default   = ""
-}
-
-variable "wizard_suffix" {
   type      = string
   sensitive = true
   default   = ""
@@ -102,10 +91,3 @@ variable "enable_jsc_uemc_output" {
   type    = string
   default = ""
 }
-
-/* variable "wizard_suffix" {
-  type = string
-  sensitive = true
-  default = ""
-}
-*/

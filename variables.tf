@@ -206,11 +206,6 @@ variable "include_jsc_ztna_mtd_only" {
   default = false
 }
 
-variable "jsc_provided_idp_client" {
-  type    = string
-  default = ""
-}
-
 variable "block_page_logo" {
   type      = string
   sensitive = true

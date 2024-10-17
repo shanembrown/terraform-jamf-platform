@@ -1,9 +1,3 @@
-## Define onboarder wizard variables
-variable "include_onboarder_wizard" {
-  type    = bool
-  default = false
-}
-
 variable "install_chrome" {
   type    = bool
   default = false

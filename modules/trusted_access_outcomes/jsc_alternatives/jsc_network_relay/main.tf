@@ -12,9 +12,22 @@ terraform {
   }
 }
 
+# resource "jsc_ap" "networkrelay" {
+#   name    = "Network Relay"
+#   idptype = "NetworkRelay"
+# }
+
+# resource "jsc_oktaidp" "okta_idp_base" {
+#   clientid  = "0oa71hsl3q3umwKZz5d7"
+#   name      = "Okta IDP Integration"
+#   orgdomain = var.tje_okta_orgdomain
+# }
+
 resource "jsc_ap" "networkrelay" {
-  name    = "Network Relay"
-  idptype = "NetworkRelay"
+  name    = "Network Relay - Testing"
+  idptype = "none"
+  # oktaconnectionid = jsc_oktaidp.okta_idp_base.id
+  # networkrelay     = true
 }
 
 resource "jamfpro_macos_configuration_profile_plist" "network_relay_macos" {
@@ -29,7 +42,7 @@ resource "jamfpro_macos_configuration_profile_plist" "network_relay_macos" {
   scope {
     all_computers = false
   }
-  depends_on = [jsc_ap.networkrelay]
+  # depends_on = [jsc_ap.networkrelay]
 }
 
 output "enable_jsc_uemc_output" {
