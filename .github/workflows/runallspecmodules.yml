@@ -32,7 +32,7 @@ jobs:
 
       # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
 
       # Store all spec.yml booleans in temp file
       - name: Get Spec.yml bools
