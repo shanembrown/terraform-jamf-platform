@@ -20,6 +20,27 @@ credentials:
     display_name: Jamf Pro Client Secret
     display_desc: Client Secret used for Jamf Pro API access
 
+  - key: jamfprotect_url
+    type: <string>
+    presence: required
+    content: Your Jamf Protect tenant URL (https://orgname.protect.jamfcloud.com)
+    display_name: Jamf Protect Tenant URL
+    display_desc: This is the URL you navigate to for Jamf Protect
+
+  - key: jamfprotect_clientID
+    type: <string>
+    presence: required
+    content: The Client ID created in the Jamf Protect console
+    display_name: Jamf Protect Client ID
+    display_desc: This value is generated when you create an API Client in Jamf Protect
+
+  - key: jamfprotect_client_password
+    type: <string>
+    presence: required
+    content: The Client Password created in the Jamf Protect console
+    display_name: Jamf Protect Client Password
+    display_desc: This value is generated when you create an API Client in Jamf Protect
+
   - key: jsc_username
     type: <string>
     presence: required
@@ -63,6 +84,14 @@ options:
     category: MDM Workflows
     display_name: Install Rosetta 2 on Apple Silicon Macs
     display_desc: This will set up a Policy in Jamf Pro to execute a command locally on macOS to install Rosetta 2 which is required for running Intel based macOS apps
+
+  ## Jamf Protect Onboarder Modules
+  - key: include_jamf_protect_trial_kickstart
+    type: <boolean>
+    presence: optional
+    category: Security
+    display_name: Register Jamf Protect API in Jamf Pro
+    display_desc: This will use the Client ID and Password you created in your Jamf Protect tenant to register the API in Jamf Pro for deployment and advanced remediation workflows
 
   ## Jamf Security Cloud Onboarder Modules
   - key: include_jsc_uemc

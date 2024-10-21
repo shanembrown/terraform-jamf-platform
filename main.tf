@@ -35,13 +35,12 @@ provider "jsc" {
 
 
 ## Initialize common modules
-/*
 
 ## Initialize Protect (for macOS) module
 
-module "jamf_protect_for_macOS" {
-  count                       = var.include_jamf_protect_for_macOS == true ? 1 : 0
-  source                      = "./modules/jamf_protect_for_macOS/"
+module "jamf_jamf_protect_trial_kickstart" {
+  count                       = var.include_jamf_protect_trial_kickstart == true ? 1 : 0
+  source                      = "./modules/onboarder_modules/jamf_protect_trial_kickstart"
   jamfpro_instance_url        = var.jamfpro_instance_url
   jamfpro_client_id           = var.jamfpro_client_id
   jamfpro_client_secret       = var.jamfpro_client_secret
@@ -49,7 +48,6 @@ module "jamf_protect_for_macOS" {
   jamfprotect_clientID        = var.jamfprotect_clientID
   jamfprotect_client_password = var.jamfprotect_client_password
 }
-*/
 
 module "categories" {
   count  = var.include_categories == true ? 1 : 0
