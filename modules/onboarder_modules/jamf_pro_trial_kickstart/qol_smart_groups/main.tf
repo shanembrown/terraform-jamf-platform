@@ -63,3 +63,58 @@ resource "jamfpro_smart_computer_group" "group_available_swu" {
     priority    = 0
   }
 }
+
+resource "jamfpro_smart_mobile_device_group" "supervised_ios" {
+  name = "Supervised Devices"
+
+  criteria {
+    name        = "Supervised"
+    priority    = 0
+    search_type = "is"
+    value       = "Supervised"
+  }
+}
+
+resource "jamfpro_smart_mobile_device_group" "unsupervised_ios" {
+  name = "Un-Supervised Devices"
+
+  criteria {
+    name        = "Supervised"
+    priority    = 0
+    search_type = "is"
+    value       = "Unsupervised"
+  }
+}
+
+resource "jamfpro_smart_mobile_device_group" "byod_ios" {
+  name = "BYOD Devices"
+
+  criteria {
+    name        = "Serial Number"
+    priority    = 0
+    search_type = "like"
+    value       = ""
+  }
+}
+
+resource "jamfpro_smart_mobile_device_group" "ios_17" {
+  name = "Devices Running iOS 17"
+
+  criteria {
+    name        = "OS Version"
+    priority    = 0
+    search_type = "like"
+    value       = "17."
+  }
+}
+
+resource "jamfpro_smart_mobile_device_group" "ios_18" {
+  name = "Devices Running iOS 18"
+
+  criteria {
+    name        = "OS Version"
+    priority    = 0
+    search_type = "like"
+    value       = "18."
+  }
+}
