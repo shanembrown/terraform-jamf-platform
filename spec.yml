@@ -57,6 +57,13 @@ credentials:
 
 options:
 ## Jamf Pro Onboarder Modules
+  - key: include_qol_smart_groups
+    type: <boolean>
+    presence: optional
+    category: MDM Workflows
+    display_name: Add Example Smart Groups
+    display_desc: This will add several example Smart Groups to your Jamf Pro instance that can help elevate visibilty of the computers enrolled in the instance
+  
   - key: include_categories
     type: <boolean>
     presence: optional
