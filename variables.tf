@@ -326,3 +326,8 @@ variable "include_rosetta" {
   type    = bool
   default = false
 }
+
+variable "include_qol_smart_groups" {
+  type    = bool
+  default = false
+}
