@@ -11,7 +11,7 @@ terraform {
 resource "jamfpro_app_installer" "jamfcheck" {
   name            = "JamfCheck"
   enabled         = true
-  deployment_type = "SELF_SERVICE"
+  deployment_type = "INSTALL_AUTOMATICALLY"
   update_behavior = "AUTOMATIC"
   category_id     = "-1"
   site_id         = "-1"

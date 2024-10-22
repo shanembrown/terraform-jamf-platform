@@ -78,6 +78,7 @@ options:
     display_name: Set common Inventory Collection and Check-in Settings
     display_desc: This will set things like what information to collect when Jamf Pro does an Inventory Collection on a managed device as well as setting check-ins to every 15 minutes
 
+  ## Jamf Pro Outcome Modules
   - key: include_filevault
     type: <boolean>
     presence: optional
@@ -91,6 +92,13 @@ options:
     category: MDM Workflows
     display_name: Install Rosetta 2 on Apple Silicon Macs
     display_desc: This will set up a Policy in Jamf Pro to execute a command locally on macOS to install Rosetta 2 which is required for running Intel based macOS apps
+
+  - key: include_microsoft_365
+    type: <boolean>
+    presence: optional
+    category: MDM Workflows
+    display_name: Auto-Update Microsoft 365 Apps
+    display_desc: This will create App Installers for each Microsoft 365 app and automatically keep them up to date on endpoints that they are already installed on
 
   ## Jamf Protect Onboarder Modules
   - key: include_jamf_protect_trial_kickstart
@@ -134,14 +142,6 @@ options:
     display_name: Google Chrome Installer
     display_desc: Configures Google Chrome in Jamf Pro to be deployable to computers
 
-  - key: include_microsoft_teams
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to include the Microsoft Teams App Installer
-    category: Additional Apps
-    display_name: Microsoft Teams Installer
-    display_desc: Configures Microsoft Teams in Jamf Pro to be deployable to computers
-
   - key: include_mozilla_firefox
     type: <boolean>
     presence: optional
@@ -157,25 +157,6 @@ options:
     category: Additional Apps
     display_name: Slack Installer
     display_desc: Configures Slack in Jamf Pro to be deployable to computers
-
-  - key: include_okta_verify
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to include the Okta Verify App Installer
-    category: Security Workflows
-    tags:
-      - Additional Apps
-      - SSO
-    display_name: Okta Verify Installer
-    display_desc: Configures Okta Verify in Jamf Pro to be deployable to computers
-
-  - key: include_swift_dialog
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to include the swiftDialog App Installer
-    category: MDM Workflows
-    display_name: Swift Dialog Installer
-    display_desc: Configures swiftDialog in Jamf Pro to be deployable to computers
 
   - key: include_dropbox
     type: <boolean>
@@ -201,14 +182,6 @@ options:
     display_name: Jamf Composer Installer
     display_desc: Configures Jamf Composer in Jamf Pro to be deployable to computers
 
-  - key: include_jamf_connect
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to include the Jamf Connect App Installer
-    category: MDM Workflows
-    display_name: Jamf Connect Installer
-    display_desc: Configures Jamf Connect in Jamf Pro to be deployable to computers
-
   - key: include_pppc_utility
     type: <boolean>
     presence: optional
@@ -224,22 +197,6 @@ options:
     category: Additional Apps
     display_name: JamfCheck Installer
     display_desc: Configures JamfCheck in Jamf Pro to be deployable to computers
-
-  - key: include_nudge
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to include the Nudge App Installer
-    category: Additional Apps
-    display_name: Nudge Installer
-    display_desc: Configures Nudge in Jamf Pro to be deployable to computers
-
-  - key: include_utm
-    type: <boolean>
-    presence: optional
-    content: Indicates whether to include the UTM App Installer
-    category: Additional Apps
-    display_name: UTM Installer
-    display_desc: Configures UTM in Jamf Pro to be deployable to computers
 
   - key: include_zoom
     type: <boolean>
