@@ -54,6 +54,11 @@ module "qol_smart_groups" {
   source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/qol_smart_groups"
 }
 
+module "microsoft_365" {
+  count  = var.include_microsoft_365 == true ? 1 : 0
+  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/microsoft_365"
+}
+
 module "categories" {
   count  = var.include_categories == true ? 1 : 0
   source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/categories"
@@ -84,24 +89,9 @@ module "mozilla_firefox" {
   source = "./modules/onboarder_modules/app_installers/mozilla_firefox"
 }
 
-module "microsoft_teams" {
-  count  = var.include_microsoft_teams == true ? 1 : 0
-  source = "./modules/onboarder_modules/app_installers/microsoft_teams"
-}
-
 module "slack" {
   count  = var.include_slack == true ? 1 : 0
   source = "./modules/onboarder_modules/app_installers/slack"
-}
-
-module "swift_dialog" {
-  count  = var.include_swift_dialog == true ? 1 : 0
-  source = "./modules/onboarder_modules/app_installers/swift_dialog"
-}
-
-module "okta_verify" {
-  count  = var.include_okta_verify == true ? 1 : 0
-  source = "./modules/onboarder_modules/app_installers/okta_verify"
 }
 
 module "dropbox" {
@@ -119,11 +109,6 @@ module "jamf_composer" {
   source = "./modules/onboarder_modules/app_installers/jamf_composer"
 }
 
-module "jamf_connect" {
-  count  = var.include_jamf_connect == true ? 1 : 0
-  source = "./modules/onboarder_modules/app_installers/jamf_connect"
-}
-
 module "pppc_utility" {
   count  = var.include_pppc_utility == true ? 1 : 0
   source = "./modules/onboarder_modules/app_installers/pppc_utility"
@@ -132,16 +117,6 @@ module "pppc_utility" {
 module "jamfcheck" {
   count  = var.include_jamfcheck == true ? 1 : 0
   source = "./modules/onboarder_modules/app_installers/jamfcheck"
-}
-
-module "nudge" {
-  count  = var.include_nudge == true ? 1 : 0
-  source = "./modules/onboarder_modules/app_installers/nudge"
-}
-
-module "utm" {
-  count  = var.include_utm == true ? 1 : 0
-  source = "./modules/onboarder_modules/app_installers/utm"
 }
 
 module "zoom" {

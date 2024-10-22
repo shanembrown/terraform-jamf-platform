@@ -83,27 +83,29 @@ support_files_path_prefix = "" ## Path to your directory - example: /Users/<your
 ## MODULE KNOBS
 
 ## Onboarder Knobs
+include_qol_smart_groups             = false
 include_categories                   = false
 include_computer_management_settings = false
-include_filevault                    = false
-include_rosetta                      = false
 include_jamf_protect_trial_kickstart = false
+
+## Outcome Knobs
+include_microsoft_365          = false
+include_filevault              = false
+include_rosetta                = false
+include_admin_tools            = false ## Pending build
+include_ssoe                   = false ## Pending build
+include_jc_privilege_elevation = false ## Pending build
+
 
 ## App Installer Knobs
 include_google_chrome   = false
 include_mozilla_firefox = false
-include_microsoft_teams = false
 include_slack           = false
-include_okta_verify     = false
-include_swift_dialog    = false
 include_dropbox         = false
 include_google_drive    = false
 include_jamf_composer   = false
-include_jamf_connect    = false
 include_pppc_utility    = false
 include_jamfcheck       = false
-include_nudge           = false
-include_utm             = false
 include_zoom            = false
 
 ## Jamf Security Cloud Knobs
