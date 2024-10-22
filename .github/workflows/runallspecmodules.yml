@@ -32,7 +32,7 @@ jobs:
 
       # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
 
       # Store all spec.yml booleans in temp file
       - name: Get Spec.yml bools
@@ -87,6 +87,7 @@ jobs:
             if [ "$exit_code_destroy" -ne 0 ]; then
               echo "destroy failed so waiting 120 seconds before trying again" #tomcats please sync
               sleep 121 
+              exit_code_destroy=0 #clear error code
               terraform destroy -auto-approve -var "$line" -var "jamfpro_instance_url=${{ secrets.jamfpro_instance_url }}" \
                           -var "jamfpro_client_id=${{ secrets.jamfpro_client_id }}" \
                           -var "jamfpro_client_secret=${{ secrets.jamfpro_client_secret }}" \

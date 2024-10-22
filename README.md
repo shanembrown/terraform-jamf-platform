@@ -66,7 +66,6 @@ jamfprotect_client_password = ""
 ## Jamf Security Cloud (RADAR) Account Details
 jsc_username            = ""
 jsc_password            = ""
-jsc_provided_idp_client = ""
 tje_okta_clientid       = ""
 tje_okta_orgdomain      = ""
 block_page_logo         = "" ## block_page_logo takes a Base 64 encoded string conversion of the image only
@@ -78,39 +77,35 @@ KeyName                 = ""
 SubnetId                = ""
 aws_region              = ""
 
-## Choose which Activation Profile option you want to output in your module
-activation_profile_target = "macosplist"
-
 # File path prefix for Terraform directory
 support_files_path_prefix = "" ## Path to your directory - example: /Users/<youruser>/filename/
-
-## Optional suffix
-wizard_suffix = ""
 
 ## MODULE KNOBS
 
 ## Onboarder Knobs
+include_qol_smart_groups             = false
 include_categories                   = false
 include_computer_management_settings = false
-include_filevault                    = false
-include_rosetta                      = false
 include_jamf_protect_trial_kickstart = false
+
+## Outcome Knobs
+include_microsoft_365          = false
+include_filevault              = false
+include_rosetta                = false
+include_admin_tools            = false ## Pending build
+include_ssoe                   = false ## Pending build
+include_jc_privilege_elevation = false ## Pending build
+
 
 ## App Installer Knobs
 include_google_chrome   = false
 include_mozilla_firefox = false
-include_microsoft_teams = false
 include_slack           = false
-include_okta_verify     = false
-include_swift_dialog    = false
 include_dropbox         = false
 include_google_drive    = false
 include_jamf_composer   = false
-include_jamf_connect    = false
 include_pppc_utility    = false
 include_jamfcheck       = false
-include_nudge           = false
-include_utm             = false
 include_zoom            = false
 
 ## Jamf Security Cloud Knobs

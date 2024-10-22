@@ -206,11 +206,6 @@ variable "include_jsc_ztna_mtd_only" {
   default = false
 }
 
-variable "jsc_provided_idp_client" {
-  type    = string
-  default = ""
-}
-
 variable "block_page_logo" {
   type      = string
   sensitive = true
@@ -237,22 +232,7 @@ variable "include_mozilla_firefox" {
   default = false
 }
 
-variable "include_microsoft_teams" {
-  type    = bool
-  default = false
-}
-
 variable "include_slack" {
-  type    = bool
-  default = false
-}
-
-variable "include_okta_verify" {
-  type    = bool
-  default = false
-}
-
-variable "include_swift_dialog" {
   type    = bool
   default = false
 }
@@ -272,11 +252,6 @@ variable "include_jamf_composer" {
   default = false
 }
 
-variable "include_jamf_connect" {
-  type    = bool
-  default = false
-}
-
 variable "include_pppc_utility" {
   type    = bool
   default = false
@@ -287,22 +262,7 @@ variable "include_jamfcheck" {
   default = false
 }
 
-variable "include_nudge" {
-  type    = bool
-  default = false
-}
-
-variable "include_utm" {
-  type    = bool
-  default = false
-}
-
 variable "include_zoom" {
-  type    = bool
-  default = false
-}
-
-variable "include_jamf_pro_trial_kickstart" {
   type    = bool
   default = false
 }
@@ -328,6 +288,31 @@ variable "include_filevault" {
 }
 
 variable "include_rosetta" {
+  type    = bool
+  default = false
+}
+
+variable "include_qol_smart_groups" {
+  type    = bool
+  default = false
+}
+
+variable "include_microsoft_365" {
+  type    = bool
+  default = false
+}
+
+variable "include_admin_tools" {
+  type    = bool
+  default = false
+}
+
+variable "include_ssoe" {
+  type    = bool
+  default = false
+}
+
+variable "include_jc_privilege_elevation" {
   type    = bool
   default = false
 }
