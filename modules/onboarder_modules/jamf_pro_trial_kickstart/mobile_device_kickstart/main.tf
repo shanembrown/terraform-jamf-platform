@@ -95,3 +95,87 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
     all_mobile_devices = false
   }
 }
+
+resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_configuration_profile_user_enrollment_byod_restrictions" {
+  name               = "Demo - User Enrollment / BYOD Restrictions"
+  description        = "Sets DLP restrictions for User Enrollment / BYOD"
+  deployment_method  = "Install Automatically"
+  level              = "Device Level"
+  redeploy_on_update = "Newly Assigned"
+  payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/user_enrollment_byod_restrictions.mobileconfig")
+
+  scope {
+    all_mobile_devices = false
+  }
+}
+
+## Extension Attribute for Shared Device and Kiosk Mode examples
+
+resource "jamfpro_mobile_device_extension_attribute" "device_type" {
+  name               = "Device Type"
+  description        = "Select between kiosk, shared, or none for device types"
+  data_type          = "String"
+  inventory_display  = "User and Location"
+
+  input_type {
+    type = "Pop-up Menu"
+    popup_choices = [
+      "Kiosk Device",
+      "Shared Device",
+    ]
+  }
+}
+
+## Smart Groups for Shared Device and Kiosk Mode
+
+resource "jamfpro_smart_mobile_device_group" "device_type_kiosk_mode" {
+  name = "Demo - Kiosk Devices"
+
+  criteria {
+    name        = "Device Type"
+    priority    = 0
+    search_type = "is"
+    value       = "Kiosk Device"
+  }
+}
+
+resource "jamfpro_smart_mobile_device_group" "device_type_shared_device_mode" {
+  name = "Demo - Shared Devices"
+
+  criteria {
+    name        = "Device Type"
+    priority    = 0
+    search_type = "is"
+    value       = "Shared Device"
+  }
+}
+
+## Configuration Profiles for Shared Device and Kiosk Mode
+
+resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_configuration_profile_kiosk_mode" {
+  name               = "Demo - Kiosk Mode - Safari (Single App Mode)"
+  description        = "Places device in Single App Mode for Safari"
+  deployment_method  = "Install Automatically"
+  level              = "Device Level"
+  redeploy_on_update = "Newly Assigned"
+  payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/kiosk_mode_safari_single_app_mode.mobileconfig")
+
+  scope {
+    all_mobile_devices = false
+    mobile_device_group_ids = [jamfpro_smart_mobile_device_group.device_type_kiosk_mode.id]
+  }
+}
+
+resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_configuration_profile_shared_device_mode" {
+  name               = "Demo - Shared Device Mode - Restrictions"
+  description        = "Restricts Airdrop, Apple ID changes, Screenshots, Erase, and Camera"
+  deployment_method  = "Install Automatically"
+  level              = "Device Level"
+  redeploy_on_update = "Newly Assigned"
+  payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/shared_device_restrictions.mobileconfig")
+
+  scope {
+    all_mobile_devices = false
+    mobile_device_group_ids = [jamfpro_smart_mobile_device_group.device_type_shared_device_mode.id]
+  }
+}

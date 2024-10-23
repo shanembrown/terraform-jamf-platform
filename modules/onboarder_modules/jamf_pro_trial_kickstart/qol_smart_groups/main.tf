@@ -42,17 +42,6 @@ resource "jamfpro_smart_computer_group" "group_last_checkin" {
   }
 }
 
-resource "jamfpro_smart_computer_group" "group_disk_encrypted" {
-  name = "* FileVault 2 Enabled"
-  criteria {
-    name        = "FileVault 2 Partition Encryption State"
-    search_type = "is"
-    value       = "Encrypted"
-    and_or      = "and"
-    priority    = 0
-  }
-}
-
 resource "jamfpro_smart_computer_group" "group_available_swu" {
   name = "* Available Software Updates"
   criteria {
@@ -122,10 +111,10 @@ resource "jamfpro_smart_mobile_device_group" "ios_18" {
 }
 
 resource "jamfpro_smart_mobile_device_group" "group_last_checkin" {
-  name = "* 7 Days Since Last Check-In"
+  name = "* Last Check-In More Than a Week Ago"
 
   criteria {
-    name        = "Last Check-In"
+    name        = "Last Inventory Update"
     priority    = 0
     search_type = "more than x days ago"
     value       = "7"
@@ -144,7 +133,7 @@ resource "jamfpro_smart_mobile_device_group" "group_used_space_above_75" {
 }
 
 resource "jamfpro_smart_mobile_device_group" "group_passcode_not_present" {
-  name = "Passcode Not Present"
+  name = "* Passcode Not Present"
 
   criteria {
     name        = "Passcode Status"
