@@ -112,10 +112,10 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
 ## Extension Attribute for Shared Device and Kiosk Mode examples
 
 resource "jamfpro_mobile_device_extension_attribute" "device_type" {
-  name               = "Device Type"
-  description        = "Select between kiosk, shared, or none for device types"
-  data_type          = "String"
-  inventory_display  = "User and Location"
+  name              = "Device Type"
+  description       = "Select between kiosk, shared, or none for device types"
+  data_type         = "String"
+  inventory_display = "User and Location"
 
   input_type {
     type = "Pop-up Menu"
@@ -161,7 +161,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/kiosk_mode_safari_single_app_mode.mobileconfig")
 
   scope {
-    all_mobile_devices = false
+    all_mobile_devices      = false
     mobile_device_group_ids = [jamfpro_smart_mobile_device_group.device_type_kiosk_mode.id]
   }
 }
@@ -175,7 +175,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/shared_device_restrictions.mobileconfig")
 
   scope {
-    all_mobile_devices = false
+    all_mobile_devices      = false
     mobile_device_group_ids = [jamfpro_smart_mobile_device_group.device_type_shared_device_mode.id]
   }
 }
