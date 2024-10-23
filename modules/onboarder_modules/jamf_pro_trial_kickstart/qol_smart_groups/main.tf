@@ -42,6 +42,17 @@ resource "jamfpro_smart_computer_group" "group_last_checkin" {
   }
 }
 
+ resource "jamfpro_smart_computer_group" "group_disk_encrypted" {
+   name = "* FileVault 2 Enabled"
+   criteria {
+     name        = "FileVault 2 Partition Encryption State"
+     search_type = "is"
+     value       = "Encrypted"
+     and_or      = "and"
+     priority    = 0
+   }
+}
+
 resource "jamfpro_smart_computer_group" "group_available_swu" {
   name = "* Available Software Updates"
   criteria {
