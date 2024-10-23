@@ -12,7 +12,7 @@ response=$(curl --silent --location --request POST "${jamfpro_instance_url}/api/
 		--data-urlencode "client_id=${jamfpro_client_id}" \
 		--data-urlencode "grant_type=client_credentials" \
 		--data-urlencode "client_secret=${jamfpro_client_secret}")
-access_token=$(echo "$response" | plutil -extract access_token raw -)
+access_token=$(echo "$response" | awk -F'"' '/"access_token":/ {print $4}')
 
 echo $access_token
 
