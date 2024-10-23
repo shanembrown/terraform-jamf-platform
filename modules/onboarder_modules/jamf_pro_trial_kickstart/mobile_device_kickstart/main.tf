@@ -9,12 +9,11 @@ Trial Baseline For Mobile Devices
   Restrict screenshots
 */
 
-## Call Terraform provider
 terraform {
   required_providers {
     jamfpro = {
       source  = "deploymenttheory/jamfpro"
-      version = "~> 0.3.1"
+      version = ">= 0.1.5"
     }
   }
 }
@@ -28,7 +27,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/restrict_appleid_changes.mobileconfig")
 
   scope {
-  all_mobile_devices = false
+    all_mobile_devices = false
   }
 }
 
@@ -41,7 +40,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/restrict_airdrop.mobileconfig")
 
   scope {
-  all_mobile_devices = false
+    all_mobile_devices = false
   }
 }
 
@@ -54,7 +53,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/passcode_requirements.mobileconfig")
 
   scope {
-  all_mobile_devices = false
+    all_mobile_devices = false
   }
 }
 
@@ -67,7 +66,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/restrict_erase_content_and_settings.mobileconfig")
 
   scope {
-  all_mobile_devices = false
+    all_mobile_devices = false
   }
 }
 
@@ -80,7 +79,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/restrict_camera.mobileconfig")
 
   scope {
-  all_mobile_devices = false
+    all_mobile_devices = false
   }
 }
 
@@ -93,6 +92,6 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/restrict_screenshots.mobileconfig")
 
   scope {
-  all_mobile_devices = false
+    all_mobile_devices = false
   }
 }
