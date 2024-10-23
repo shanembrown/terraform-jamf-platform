@@ -282,6 +282,12 @@ variable "include_computer_management_settings" {
   default = false
 }
 
+
+variable "include_mobile_device_kickstart" {
+  type    = bool
+  default = false
+}
+
 variable "include_filevault" {
   type    = bool
   default = false

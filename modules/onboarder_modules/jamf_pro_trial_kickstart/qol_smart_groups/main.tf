@@ -64,6 +64,8 @@ resource "jamfpro_smart_computer_group" "group_available_swu" {
   }
 }
 
+## Create Smart Mobile Device Groups - Quality Of Life
+
 resource "jamfpro_smart_mobile_device_group" "supervised_ios" {
   name = "Supervised Devices"
 
@@ -116,5 +118,38 @@ resource "jamfpro_smart_mobile_device_group" "ios_18" {
     priority    = 0
     search_type = "like"
     value       = "18."
+  }
+}
+
+resource "jamfpro_smart_mobile_device_group" "group_last_checkin" {
+  name = "* Last Check-In More Than a Week Ago"
+
+  criteria {
+    name        = "Last Inventory Update"
+    priority    = 0
+    search_type = "more than x days ago"
+    value       = "7"
+  }
+}
+
+resource "jamfpro_smart_mobile_device_group" "group_used_space_above_75" {
+  name = "Used Storage above 75 percent"
+
+  criteria {
+    name        = "Used Space Percentage"
+    priority    = 0
+    search_type = "more than"
+    value       = "75"
+  }
+}
+
+resource "jamfpro_smart_mobile_device_group" "group_passcode_not_present" {
+  name = "* Passcode Not Present"
+
+  criteria {
+    name        = "Passcode Status"
+    priority    = 0
+    search_type = "is"
+    value       = "Not Present"
   }
 }
