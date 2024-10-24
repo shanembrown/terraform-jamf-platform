@@ -12,23 +12,30 @@ terraform {
   }
 }
 
+resource "random_id" "rng" {
+  keepers = {
+    first = "${timestamp()}"
+  }
+  byte_length = 1
+}
+
 resource "jamfpro_api_role" "jamfpro_api_role_sync" {
-  display_name = "JSC API Role Device Sync"
+  display_name = "JSC API Role Device Sync [${random_id.rng.hex}]"
   privileges   = ["Read Mac Applications", "Read Mobile Devices", "Read Mobile Device Applications", "Read Smart Mobile Device Groups", "Read Static Mobile Device Groups", "Read Computers", "Read Smart Computer Groups", "Read Static Computer Groups"]
 }
 
 resource "jamfpro_api_role" "jamfpro_api_role_signalling" {
-  display_name = "JSC API Role Signalling"
+  display_name = "JSC API Role Signalling [${random_id.rng.hex}]"
   privileges   = ["Update Computer Extension Attributes", "Read Computer Extension Attributes", "Delete Computer Extension Attributes", "Create Computer Extension Attributes", "Read Mobile Device Extension Attributes", "Delete Mobile Device Extension Attributes", "Create Mobile Device Extension Attributes", "Update Mobile Devices", "Update Mobile Device Extension Attributes", "Update Computers", "Update User"]
 }
 
 resource "jamfpro_api_role" "jamfpro_api_role_deploy" {
-  display_name = "JSC API Role Deploy"
+  display_name = "JSC API Role Deploy [${random_id.rng.hex}]"
   privileges   = ["Create iOS Configuration Profiles", "Create macOS Configuration Profiles"]
 }
 
 resource "jamfpro_api_integration" "jamfpro_api_integration_jsc" {
-  display_name                  = "JSC API Client"
+  display_name                  = "JSC API Client [${random_id.rng.hex}]"
   enabled                       = true
   access_token_lifetime_seconds = 6000
   authorization_scopes          = [jamfpro_api_role.jamfpro_api_role_sync.display_name, jamfpro_api_role.jamfpro_api_role_signalling.display_name, jamfpro_api_role.jamfpro_api_role_deploy.display_name]
