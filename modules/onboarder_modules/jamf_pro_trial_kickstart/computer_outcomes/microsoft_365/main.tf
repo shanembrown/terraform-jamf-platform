@@ -8,7 +8,7 @@ terraform {
   }
 }
 
-resource "random_id" "rng" {
+resource "random_id" "entropy" {
   keepers = {
     first = "${timestamp()}"
   }
@@ -17,14 +17,14 @@ resource "random_id" "rng" {
 
 ## Create Microsoft 365 Category
 resource "jamfpro_category" "category_microsoft_365" {
-  name     = "Microsoft 365 [${random_id.rng.hex}]"
+  name     = "Microsoft 365 [${random_id.entropy.hex}]"
   priority = 9
 }
 
 
 ## Create Microsoft 365 Smart Groups
 resource "jamfpro_smart_computer_group" "group_msft_word" {
-  name = "Auto Update:  Microsoft Word [${random_id.rng.hex}]"
+  name = "Auto Update:  Microsoft Word [${random_id.entropy.hex}]"
   criteria {
     name        = "Application Title"
     search_type = "like"
@@ -35,7 +35,7 @@ resource "jamfpro_smart_computer_group" "group_msft_word" {
 }
 
 resource "jamfpro_smart_computer_group" "group_msft_excel" {
-  name = "Auto Update: Microsoft Excel [${random_id.rng.hex}]"
+  name = "Auto Update: Microsoft Excel [${random_id.entropy.hex}]"
   criteria {
     name        = "Application Title"
     search_type = "like"
@@ -46,7 +46,7 @@ resource "jamfpro_smart_computer_group" "group_msft_excel" {
 }
 
 resource "jamfpro_smart_computer_group" "group_msft_onedrive" {
-  name = "Auto Update: Microsoft OneDrive [${random_id.rng.hex}]"
+  name = "Auto Update: Microsoft OneDrive [${random_id.entropy.hex}]"
   criteria {
     name        = "Application Title"
     search_type = "like"
@@ -57,7 +57,7 @@ resource "jamfpro_smart_computer_group" "group_msft_onedrive" {
 }
 
 resource "jamfpro_smart_computer_group" "group_msft_outlook" {
-  name = "Auto Update: Microsoft Outlook [${random_id.rng.hex}]"
+  name = "Auto Update: Microsoft Outlook [${random_id.entropy.hex}]"
   criteria {
     name        = "Application Title"
     search_type = "like"
@@ -68,7 +68,7 @@ resource "jamfpro_smart_computer_group" "group_msft_outlook" {
 }
 
 resource "jamfpro_smart_computer_group" "group_msft_powerpoint" {
-  name = "Auto Update:  Microsoft PowerPoint [${random_id.rng.hex}]"
+  name = "Auto Update:  Microsoft PowerPoint [${random_id.entropy.hex}]"
   criteria {
     name        = "Application Title"
     search_type = "like"
@@ -79,7 +79,7 @@ resource "jamfpro_smart_computer_group" "group_msft_powerpoint" {
 }
 
 resource "jamfpro_smart_computer_group" "group_msft_edge" {
-  name = "Auto Update:  Microsoft Edge [${random_id.rng.hex}]"
+  name = "Auto Update:  Microsoft Edge [${random_id.entropy.hex}]"
   criteria {
     name        = "Application Title"
     search_type = "like"
@@ -90,7 +90,7 @@ resource "jamfpro_smart_computer_group" "group_msft_edge" {
 }
 
 resource "jamfpro_smart_computer_group" "group_msft_teams" {
-  name = "Auto Update: Microsoft Teams [${random_id.rng.hex}]"
+  name = "Auto Update: Microsoft Teams [${random_id.entropy.hex}]"
   criteria {
     name        = "Application Title"
     search_type = "like"
