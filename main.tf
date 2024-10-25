@@ -79,6 +79,11 @@ module "filevault" {
   source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/filevault"
 }
 
+module "msft_defender" {
+  count  = var.include_defender == true ? 1 : 0
+  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/msft_defender"
+}
+
 module "rosetta" {
   count  = var.include_rosetta == true ? 1 : 0
   source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/rosetta"
