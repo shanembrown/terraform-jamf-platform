@@ -322,3 +322,8 @@ variable "include_jc_privilege_elevation" {
   type    = bool
   default = false
 }
+
+variable "include_defender" {
+  type    = bool
+  default = false
+}
