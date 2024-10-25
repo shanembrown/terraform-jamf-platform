@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## Define variables
-path="/Users/nate.bucher/Desktop/User Enrollment _ BYOD Restrictions.mobileconfig"
+path=""
 prefix="converted"
 file=$1
 

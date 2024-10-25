@@ -61,22 +61,22 @@ options:
     type: <boolean>
     presence: optional
     category: MDM Workflows
-    display_name: Add Example Smart Groups
-    display_desc: This will add several example Smart Groups to your Jamf Pro instance that can help elevate visibilty of the computers enrolled in the instance
+    display_name: Add Smart Groups
+    display_desc: This will add several Jamf recommended Smart Groups to your Jamf Pro instance that can help elevate visibility of groupings of computers enrolled in Jamf Pro.
   
   - key: include_categories
     type: <boolean>
     presence: optional
     category: MDM Workflows
-    display_name: Add Example Categories
-    display_desc: This will add several example Categories to your Jamf Pro instance that can be used to organize items in your Jamf Pro
+    display_name: Add Categories
+    display_desc: This will add several  Categories to your Jamf Pro instance that can be used to organize items in your Jamf Pro.
 
   - key: include_computer_management_settings
     type: <boolean>
     presence: optional
     category: MDM Workflows
-    display_name: Set common Inventory Collection and Check-in Settings
-    display_desc: This will set things like what information to collect when Jamf Pro does an Inventory Collection on a managed device as well as setting check-ins to every 15 minutes
+    display_name: Set Inventory Collection and Check-in Settings
+    display_desc: This will configure inventory collection settings in Jamf Pro and set the check-in interval for macOS computers to 15 minutes.
 
   ## Jamf Pro Outcome Modules
   - key: include_filevault
@@ -84,29 +84,29 @@ options:
     presence: optional
     category: MDM Workflows
     display_name: Set & Enforce FileVault 2
-    display_desc: This will configure some scripting as well as a Configuration Profile and a Policy to enable and enforce FileVault 2 as well as ensuring Jamf Pro escrows the Recovery Key
-
+    display_desc: This will create the necessary Configuration Profile, Script, and Policy to enable and enforce FileVault 2 and make certain that the recovery key is escrowed in Jamf Pro.
+    
   - key: include_rosetta
     type: <boolean>
     presence: optional
     category: MDM Workflows
     display_name: Install Rosetta 2 on Apple Silicon Macs
-    display_desc: This will set up a Policy in Jamf Pro to execute a command locally on macOS to install Rosetta 2 which is required for running Intel based macOS apps
+    display_desc: This will set up a Policy in Jamf Pro to execute a command locally on macOS to install Rosetta 2 which is required for running Intel based macOS apps.
 
   - key: include_microsoft_365
     type: <boolean>
     presence: optional
     category: MDM Workflows
-    display_name: Auto-Update Microsoft 365 Apps
-    display_desc: This will create App Installers for each Microsoft 365 app and automatically keep them up to date on endpoints that they are already installed on
+    display_name: Microsoft 365 Apps
+    display_desc: Create App Installers for each Microsoft 365 app to install and automatically update the apps on macOS endpoints.
 
   ## Jamf Protect Onboarder Modules
   - key: include_jamf_protect_trial_kickstart
     type: <boolean>
     presence: optional
     category: Security
-    display_name: Register Jamf Protect API in Jamf Pro
-    display_desc: This will use the Client ID and Password you created in your Jamf Protect tenant to register the API in Jamf Pro for deployment and advanced remediation workflows
+    display_name: Integrate Jamf Protect and Jamf Pro
+    display_desc: Register Jamf Protect API in Jamf Pro, uses the Client ID and Password you created in your Jamf Protect tenant to register the API in Jamf Pro for deployment and advanced remediation workflows.
 
   ## Jamf Security Cloud Onboarder Modules
   - key: include_jsc_uemc
@@ -115,23 +115,23 @@ options:
     content: This will create all the necessary API Roles and an API Client in your Jamf Pro instance and then set up UEM Connect for Group synchronization, automated risk signaling, and easier deployment
     category: Security
     display_name: Configure UEM Connect in Jamf Security Cloud
-    display_desc: This will create all the necessary API Roles and an API Client in your Jamf Pro instance and then set up UEM Connect for Group synchronization, automated risk signaling, and easier deployment 
+    display_desc: This will create all the necessary API Roles and an API Client in your Jamf Pro instance and then set up UEM Connect for Group synchronization, automated risk signaling, and easier deployment of Jamf Security Cloud Capabilities.
 
   - key: include_jsc_all_services
     type: <boolean>
     presence: optional
     content: Creates an Activation Profile for all Jamf Security Cloud services and uploads it to Jamf Pro
     category: Security
-    display_name: Include All JSC Services
-    display_desc: Activates all Jamf Security Cloud services (Identity-provider-based ZTNA Content & Threat Defense Data Policy) and adds the activation profile to Jamf Pro
+    display_name: Configure Jamf Security Cloud Capabilities
+    display_desc: Activates all Jamf Security Cloud services (Identity-provider-based ZTNA, Content & Threat Defense Policies, and Data Policy) and adds the activation profile to Jamf Pro.
 
   - key: include_jsc_block_pages
     type: <boolean>
     presence: optional
     content: Provides customizable block pages for organizational policies
     category: Security
-    display_name: JSC Block Pages
-    display_desc: Enables block pages in Jamf Security Cloud for content blocking
+    display_name: Jamf Security Cloud Block Pages
+    display_desc: Enables block pages in Jamf Security Cloud for content blocking.
 
   ### App Installer Modules
   - key: include_google_chrome
@@ -139,55 +139,55 @@ options:
     presence: optional
     content: Indicates whether to include the Google Chrome App Installer
     category: Browsers
-    display_name: Google Chrome Installer
-    display_desc: Configures Google Chrome in Jamf Pro to be deployable to computers
+    display_name: Google Chrome
+    display_desc: Configures Google Chrome in Jamf Pro to be deployable to computers.
 
   - key: include_mozilla_firefox
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Mozilla Firefox App Installer
     category: Browsers
-    display_name: Mozilla Firefox Installer
-    display_desc: Configures Mozilla Firefox in Jamf Pro to be deployable to computers
+    display_name: Mozilla Firefox
+    display_desc: Configures Mozilla Firefox in Jamf Pro to be deployable to computers.
 
   - key: include_slack
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Slack App Installer
     category: Additional Apps
-    display_name: Slack Installer
-    display_desc: Configures Slack in Jamf Pro to be deployable to computers
+    display_name: Slack
+    display_desc: Configures Slack in Jamf Pro to be deployable to computers.
 
   - key: include_dropbox
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Dropbox App Installer
     category: Additional Apps
-    display_name: Dropbox Installer
-    display_desc: Configures Dropbox in Jamf Pro to be deployable to computers
+    display_name: Dropbox
+    display_desc: Configures Dropbox in Jamf Pro to be deployable to computers.
 
   - key: include_google_drive
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Google Drive App Installer
     category: Additional Apps
-    display_name: Google Drive Installer
-    display_desc: Configures Google Drive in Jamf Pro to be deployable to computers
+    display_name: Google Drive
+    display_desc: Configures Google Drive in Jamf Pro to be deployable to computers.
 
   - key: include_jamf_composer
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Jamf Composer App Installer
     category: Additional Apps
-    display_name: Jamf Composer Installer
-    display_desc: Configures Jamf Composer in Jamf Pro to be deployable to computers
+    display_name: Jamf Composer
+    display_desc: Configures Jamf Composer in Jamf Pro to be deployable to computers.
 
   - key: include_pppc_utility
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Jamf PPPC Utility App Installer
     category: Additional Apps
-    display_name: PPPC Utility Installer
+    display_name: PPPC Utility.
     display_desc: Configures PPPC Utility in Jamf Pro to be deployable to computers
 
   - key: include_jamfcheck
@@ -195,13 +195,13 @@ options:
     presence: optional
     content: Indicates whether to include the JamfCheck App Installer
     category: Additional Apps
-    display_name: JamfCheck Installer
-    display_desc: Configures JamfCheck in Jamf Pro to be deployable to computers
+    display_name: JamfCheck
+    display_desc: Configures JamfCheck in Jamf Pro to be deployable to computers.
 
   - key: include_zoom
     type: <boolean>
     presence: optional
     content: Indicates whether to include the Zoom App Installer
     category: Additional Apps
-    display_name: Zoom Installer
-    display_desc: Configures Zoom in Jamf Pro to be deployable to computers
+    display_name: Zoom
+    display_desc: Configures Zoom in Jamf Pro to be deployable to computers.
