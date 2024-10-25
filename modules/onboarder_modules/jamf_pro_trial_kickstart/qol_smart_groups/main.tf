@@ -8,9 +8,16 @@ terraform {
   }
 }
 
+resource "random_id" "entropy" {
+  keepers = {
+    first = "${timestamp()}"
+  }
+  byte_length = 1
+}
+
 ## Create Smart Computer Groups - Quality Of Life
 resource "jamfpro_smart_computer_group" "group_sonoma_computers" {
-  name = "* Sonoma Macs"
+  name = "*Sonoma Macs [${random_id.entropy.hex}]"
   criteria {
     name        = "Operating System Version"
     search_type = "like"
@@ -21,7 +28,7 @@ resource "jamfpro_smart_computer_group" "group_sonoma_computers" {
 }
 
 resource "jamfpro_smart_computer_group" "group_sequoia_computers" {
-  name = "* Sequoia Macs"
+  name = "*Sequoia Macs [${random_id.entropy.hex}]"
   criteria {
     name        = "Operating System Version"
     search_type = "like"
@@ -32,7 +39,7 @@ resource "jamfpro_smart_computer_group" "group_sequoia_computers" {
 }
 
 resource "jamfpro_smart_computer_group" "group_last_checkin" {
-  name = "* 7 Days Since Last Check-In"
+  name = "*7 Days Since Last Check-In [${random_id.entropy.hex}]"
   criteria {
     name        = "Last Check-in"
     search_type = "more than x days ago"
@@ -42,19 +49,8 @@ resource "jamfpro_smart_computer_group" "group_last_checkin" {
   }
 }
 
-# resource "jamfpro_smart_computer_group" "group_disk_encrypted" {
-#   name = "* FileVault 2 Enabled"
-#   criteria {
-#     name        = "FileVault 2 Partition Encryption State"
-#     search_type = "is"
-#     value       = "Encrypted"
-#     and_or      = "and"
-#     priority    = 0
-#   }
-# }
-
 resource "jamfpro_smart_computer_group" "group_available_swu" {
-  name = "* Available Software Updates"
+  name = "*Available Software Updates [${random_id.entropy.hex}]"
   criteria {
     name        = "Number of Available Updates"
     search_type = "more than"
@@ -67,7 +63,7 @@ resource "jamfpro_smart_computer_group" "group_available_swu" {
 ## Create Smart Mobile Device Groups - Quality Of Life
 
 resource "jamfpro_smart_mobile_device_group" "supervised_ios" {
-  name = "Supervised Devices"
+  name = "*Supervised Devices [${random_id.entropy.hex}]"
 
   criteria {
     name        = "Supervised"
@@ -78,7 +74,7 @@ resource "jamfpro_smart_mobile_device_group" "supervised_ios" {
 }
 
 resource "jamfpro_smart_mobile_device_group" "unsupervised_ios" {
-  name = "Un-Supervised Devices"
+  name = "*Un-Supervised Devices [${random_id.entropy.hex}]"
 
   criteria {
     name        = "Supervised"
@@ -89,7 +85,7 @@ resource "jamfpro_smart_mobile_device_group" "unsupervised_ios" {
 }
 
 resource "jamfpro_smart_mobile_device_group" "byod_ios" {
-  name = "BYOD Devices"
+  name = "*BYOD Devices [${random_id.entropy.hex}]"
 
   criteria {
     name        = "Serial Number"
@@ -100,7 +96,7 @@ resource "jamfpro_smart_mobile_device_group" "byod_ios" {
 }
 
 resource "jamfpro_smart_mobile_device_group" "ios_17" {
-  name = "Devices Running iOS 17"
+  name = "*Devices Running iOS 17 [${random_id.entropy.hex}]"
 
   criteria {
     name        = "OS Version"
@@ -111,7 +107,7 @@ resource "jamfpro_smart_mobile_device_group" "ios_17" {
 }
 
 resource "jamfpro_smart_mobile_device_group" "ios_18" {
-  name = "Devices Running iOS 18"
+  name = "*Devices Running iOS 18 [${random_id.entropy.hex}]"
 
   criteria {
     name        = "OS Version"
@@ -122,7 +118,7 @@ resource "jamfpro_smart_mobile_device_group" "ios_18" {
 }
 
 resource "jamfpro_smart_mobile_device_group" "group_last_checkin" {
-  name = "* Last Check-In More Than a Week Ago"
+  name = "*Last Check-In More Than a Week Ago [${random_id.entropy.hex}]"
 
   criteria {
     name        = "Last Inventory Update"
@@ -133,7 +129,7 @@ resource "jamfpro_smart_mobile_device_group" "group_last_checkin" {
 }
 
 resource "jamfpro_smart_mobile_device_group" "group_used_space_above_75" {
-  name = "Used Storage above 75 percent"
+  name = "*Used Storage above 75 percent [${random_id.entropy.hex}]"
 
   criteria {
     name        = "Used Space Percentage"
@@ -144,7 +140,7 @@ resource "jamfpro_smart_mobile_device_group" "group_used_space_above_75" {
 }
 
 resource "jamfpro_smart_mobile_device_group" "group_passcode_not_present" {
-  name = "* Passcode Not Present"
+  name = "*Passcode Not Present [${random_id.entropy.hex}]"
 
   criteria {
     name        = "Passcode Status"
