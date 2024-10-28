@@ -139,7 +139,7 @@ resource "jamfpro_smart_mobile_device_group" "device_type_kiosk_mode" {
   name = "Demo - Kiosk Devices [${random_id.entropy.hex}]"
 
   criteria {
-    name        = "Device Type"
+    name        = jamfpro_mobile_device_extension_attribute.device_type.name
     priority    = 0
     search_type = "is"
     value       = "Kiosk Device"
@@ -150,7 +150,7 @@ resource "jamfpro_smart_mobile_device_group" "device_type_shared_device_mode" {
   name = "Demo - Shared Devices [${random_id.entropy.hex}]"
 
   criteria {
-    name        = "Device Type"
+    name        = jamfpro_mobile_device_extension_attribute.device_type.name
     priority    = 0
     search_type = "is"
     value       = "Shared Device"
