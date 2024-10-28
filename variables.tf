@@ -288,6 +288,7 @@ variable "include_mobile_device_kickstart" {
   default = false
 }
 
+
 variable "include_filevault" {
   type    = bool
   default = false
@@ -327,3 +328,4 @@ variable "include_defender" {
   type    = bool
   default = false
 }
+
