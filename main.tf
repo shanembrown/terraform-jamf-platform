@@ -84,6 +84,11 @@ module "msft_defender" {
   source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/msft_defender"
 }
 
+module "profiles_from_github" {
+  count  = var.include_github_profiles == true ? 1 : 0
+  source = "./modules/profiles_from_github"
+}
+
 module "rosetta" {
   count  = var.include_rosetta == true ? 1 : 0
   source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/rosetta"

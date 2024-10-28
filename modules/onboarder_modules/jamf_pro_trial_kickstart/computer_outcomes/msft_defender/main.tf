@@ -8,22 +8,27 @@ terraform {
   }
 }
 
+## Data Source
+data "http" "defender_combined" {
+  url = "https://raw.githubusercontent.com/microsoft/mdatp-xplat/refs/heads/master/macos/mobileconfig/combined/mdatp.mobileconfig"
+}
+
+
 ## Create Categories
 resource "jamfpro_category" "category_defender" {
-  name     = "Windows Defender"
+  name     = "MS Windows Defender"
   priority = 9
 }
 
-## Create Configuration Profile
-
-resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuration_defender_pppc" {
-  name                = "Windows Defender Standard Permissions"
-  description         = "Source: https://learn.microsoft.com/en-us/defender-endpoint/mac-install-with-jamf"
+## Combined Config Profile with Content Filtering, Notifications, PPPC, Allowed System Extension and Managed Login items
+resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuration_combined" {
+  name                = "Windows Defender MacOS Settings"
+  description         = ""
   level               = "System"
   category_id         = jamfpro_category.category_defender.id
   redeploy_on_update  = "Newly Assigned"
   distribution_method = "Install Automatically"
-  payloads            = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/msft_defender/support_files/defender.mobileconfig")
+  payloads            = data.http.defender_combined.response_body
   payload_validate    = false
   user_removable      = false
 
