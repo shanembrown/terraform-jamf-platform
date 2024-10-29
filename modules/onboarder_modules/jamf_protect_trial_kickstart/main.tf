@@ -8,6 +8,13 @@ terraform {
   }
 }
 
+resource "random_id" "entropy" {
+  keepers = {
+    first = "${timestamp()}"
+  }
+  byte_length = 1
+}
+
 # Define a resource to use the local-exec provisioner
 resource "null_resource" "run_script" {
 
@@ -24,5 +31,35 @@ resource "null_resource" "run_script" {
   provisioner "local-exec" {
     command = "${path.module}/protectintegrationdelete.sh ${self.triggers.jamfpro_instance_url} ${self.triggers.jamfpro_client_id} ${self.triggers.jamfpro_client_secret}"
     when    = destroy
+  }
+}
+
+# Create Smart Group and Congfiguration Profile to identify Sequoia Macs and make Jamf Protect a non removable system extension
+
+resource "jamfpro_smart_computer_group" "group_sequoia_computers_jamf_protect" {
+  name = "Macs on MacOS Sequoia (Jamf Protect System Extension Enforcement) [${random_id.entropy.hex}]"
+  criteria {
+    name        = "Operating System Version"
+    search_type = "like"
+    value       = "15."
+    and_or      = "and"
+    priority    = 0
+  }
+}
+
+resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuration_profile_jamf_protect_system_extension" {
+  name                = "Jamf Protect System Extension Enforcement [${random_id.entropy.hex}]"
+  description         = "This configuration profile prevents users from disabling the Jamf Protect System Extension"
+  level               = "System"
+  redeploy_on_update  = "Newly Assigned"
+  distribution_method = "Install Automatically"
+  payloads            = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_protect_trial_kickstart/support_files/non_removable_system_extension_jamf_protect.mobileconfig")
+  payload_validate    = false
+  user_removable      = false
+
+  scope {
+    all_computers = false
+    all_jss_users = false
+    computer_group_ids = [jamfpro_smart_computer_group.group_sequoia_computers_jamf_protect.id]
   }
 }
