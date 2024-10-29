@@ -1,5 +1,74 @@
 #!/bin/bash
 
+: '
+###############################################################################
+# Script Name: EJ_tart-VM-build.sh
+# Description: Automated VM builder for Experience Jamf using Tart
+# Author: Rob Potvin and Matthew Ward
+# Version: 0.9
+###############################################################################
+
+REQUIREMENTS
+-----------
+* Apple Silicon Mac (ARM64)
+* macOS 12 Monterey or newer
+* Non-root user execution
+* Internet connectivity
+* Dialog CLI tool (/usr/local/bin/dialog)
+
+FUNCTIONS
+---------
+log()           - Handles logging with timestamps and levels
+check_error()   - Error handling and validation
+check_requirements() - Validates system requirements
+handle_debug_cleanup() - Manages debug mode cleanup
+install_tart()  - Handles Tart installation
+setup_vm()      - Configures and launches VM
+
+PROCESS FLOW
+-----------
+1. Parse arguments
+2. Check system requirements
+3. Handle debug cleanup (if enabled)
+4. Install Tart (if needed)
+5. Download base image
+6. Clone and configure VM
+7. Start VM
+
+ERROR CODES
+----------
+1  - General error
+48 - Not enough disk space
+98 - Unsupported macOS version
+
+LOGGING
+-------
+All operations are logged to /Users/Shared/experiencejamf.log
+Format: [TIMESTAMP] [LEVEL] Message
+
+NOTES
+-----
+* Script is idempotent (safe for multiple runs)
+* Preserves existing Tart installations
+* Requires write access to /Users/Shared (default with macOS)
+* Uses Dialog for progress visualization
+* Generates a new random MAC and serial number for the cloned VM (required for enrollment)
+
+EXAMPLES
+--------
+# Standard installation:
+./EJ_tart-VM-build.sh
+
+# Debug mode with cache cleanup (deletes cached images from ~/.tart/ and the downloaded tart.app in /Users/Shared/)
+./EJ_tart-VM-build.sh --debug
+
+# Check logs:
+tail -f /Users/Shared/experiencejamf.log
+
+###############################################################################
+'
+
+
 # Script configuration
 LOG_FILE="/Users/Shared/experiencejamf.log"
 DIALOG_CMD_FILE="/var/tmp/dialog.command"
@@ -66,7 +135,7 @@ dialogInstall() {
 # System requirements check
 check_requirements() {
     log "INFO" "Checking system requirements..."
-
+    
     # Check if running on ARM Mac
     if [ "$(uname -m)" != "arm64" ]; then
         log "ERROR" "This script requires an ARM-based Mac"
@@ -79,6 +148,15 @@ check_requirements() {
         exit 1
     fi
 
+    # Check for minimum 90GB free disk space
+    FREE_SPACE=$(df -H / | awk 'NR==2 {print $4}' | sed 's/G//')
+    FREE_SPACE_GB=${FREE_SPACE%.*} # Remove decimal places
+    
+    if [ "$FREE_SPACE_GB" -lt 90 ]; then
+        log "ERROR" "Insufficient disk space. At least 100GB required, only ${FREE_SPACE_GB}GB available"
+        exit 48
+    fi
+
     # Check minimal macOS requirement
     if [[ $(/usr/bin/sw_vers -buildVersion ) < "21A" ]]; then
         log "ERROR" "This script requires at least macOS 12 Monterey"
@@ -89,13 +167,6 @@ check_requirements() {
     if ! curl --silent --head github.com > /dev/null; then
         log "ERROR" "No network connectivity to GitHub"
         exit 1
-    fi
-
-    # Check for Swift Dialog and install if missing
-    if [[ ! -x $DIALOG ]]; then
-        dialogInstall
-    else
-        log "INFO" "swiftDialog is already installed"
     fi
 }
 
@@ -207,6 +278,9 @@ setup_vm() {
 
     ./tart set --random-serial "$VMNAME"
     check_error "Failed to set random serial"
+
+    ./tart delete ghcr.io/cirruslabs/macos-sequoia-vanilla:latest
+    check_error "Failed to delete base image"
 
     log "INFO" "Starting VM..."
     ./tart run "$VMNAME" &
