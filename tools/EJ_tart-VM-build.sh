@@ -31,10 +31,42 @@ check_error() {
     fi
 }
 
+# Dialog installation function
+dialogInstall() {
+    dialogURL=$(curl -L --silent --fail "https://api.github.com/repos/swiftDialog/swiftDialog/releases/latest" | awk -F '"' "/browser_download_url/ && /pkg\"/ { print \$4; exit }")
+    expectedDialogTeamID="PWA5E9TQ59"
+
+    log "INFO" "PRE-FLIGHT CHECK: Installing swiftDialog..."
+
+    # Create temporary working directory
+    workDirectory=$( /usr/bin/basename "$0" )
+    tempDirectory=$( /usr/bin/mktemp -d "/private/tmp/$workDirectory.XXXXXX" )
+
+    # Download the installer package
+    /usr/bin/curl --location --silent "$dialogURL" -o "$tempDirectory/Dialog.pkg"
+
+    # Verify the download
+    teamID=$(/usr/sbin/spctl -a -vv -t install "$tempDirectory/Dialog.pkg" 2>&1 | awk '/origin=/ {print $NF }' | tr -d '()')
+
+    # Install the package if Team ID validates
+    if [[ "$expectedDialogTeamID" == "$teamID" ]]; then
+        /usr/sbin/installer -pkg "$tempDirectory/Dialog.pkg" -target /
+        sleep 2
+        dialogVersion=$( /usr/local/bin/dialog --version )
+        log "INFO" "PRE-FLIGHT CHECK: swiftDialog version ${dialogVersion} installed; proceeding..."
+    else
+        osascript -e 'display dialog "Please advise your Support Representative of the following error:\r\r• Dialog Team ID verification failed\r\r" with title "Setup Your Mac: Error" buttons {"Close"} with icon caution'
+        exit 1
+    fi
+
+   # Remove the temporary working directory when done
+    /bin/rm -Rf "$tempDirectory"
+}
+
 # System requirements check
 check_requirements() {
     log "INFO" "Checking system requirements..."
-    
+
     # Check if running on ARM Mac
     if [ "$(uname -m)" != "arm64" ]; then
         log "ERROR" "This script requires an ARM-based Mac"
@@ -57,6 +89,13 @@ check_requirements() {
     if ! curl --silent --head github.com > /dev/null; then
         log "ERROR" "No network connectivity to GitHub"
         exit 1
+    fi
+
+    # Check for Swift Dialog and install if missing
+    if [[ ! -x $DIALOG ]]; then
+        dialogInstall
+    else
+        log "INFO" "swiftDialog is already installed"
     fi
 }
 
