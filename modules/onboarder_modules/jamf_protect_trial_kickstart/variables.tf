@@ -35,3 +35,8 @@ variable "jamfprotect_client_password" {
   sensitive   = true
   default     = ""
 }
+
+variable "support_files_path_prefix" {
+  type    = string
+  default = ""
+}
