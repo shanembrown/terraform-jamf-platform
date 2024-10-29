@@ -38,6 +38,24 @@ resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuratio
   }
 }
 
+resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuration_mau" {
+  name                = "Microsoft Defender Auto Update Settings"
+  description         = ""
+  level               = "System"
+  category_id         = jamfpro_category.category_defender.id
+  redeploy_on_update  = "Newly Assigned"
+  distribution_method = "Install Automatically"
+  payloads            = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/msft_defender/support_files/defendermau.mobileconfig")
+  payload_validate    = true
+  user_removable      = false
+
+  scope {
+    all_computers = true
+    all_jss_users = false
+  }
+}
+
+
 ## Create Microsoft Defender Appinstaller
 resource "jamfpro_app_installer" "jamfpro_app_installer_microsoft_defender" {
   name            = "Microsoft Defender"
