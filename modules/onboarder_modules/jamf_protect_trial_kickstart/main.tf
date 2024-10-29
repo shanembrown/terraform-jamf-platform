@@ -58,8 +58,8 @@ resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuratio
   user_removable      = false
 
   scope {
-    all_computers = false
-    all_jss_users = false
+    all_computers      = false
+    all_jss_users      = false
     computer_group_ids = [jamfpro_smart_computer_group.group_sequoia_computers_jamf_protect.id]
   }
 }
