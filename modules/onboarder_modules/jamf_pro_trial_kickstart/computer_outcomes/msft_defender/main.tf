@@ -46,11 +46,45 @@ resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuratio
   redeploy_on_update  = "Newly Assigned"
   distribution_method = "Install Automatically"
   payloads            = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/msft_defender/support_files/defendermau.mobileconfig")
-  payload_validate    = true
+  payload_validate    = false
   user_removable      = false
 
   scope {
     all_computers = true
+    all_jss_users = false
+  }
+}
+
+resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuration_onboarding" {
+  name                = "|Customization Required| Microsoft Defender Onboarding Settings"
+  description         = "Use the following link to obtain your Onboarding plist https://learn.microsoft.com/en-us/defender-endpoint/mac-jamfpro-policies#step-1-get-the-microsoft-defender-for-endpoint-onboarding-package"
+  level               = "System"
+  category_id         = jamfpro_category.category_defender.id
+  redeploy_on_update  = "Newly Assigned"
+  distribution_method = "Install Automatically"
+  payloads            = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/msft_defender/support_files/onboarding.mobileconfig")
+  payload_validate    = false
+  user_removable      = false
+
+  scope {
+    all_computers = false
+    all_jss_users = false
+  }
+}
+
+resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuration_epsettings" {
+  name                = "|Customization Required| Microsoft Defender Endpoint Settings"
+  description         = "Endpoint detection settings guide can be found https://learn.microsoft.com/en-us/defender-endpoint/mac-jamfpro-policies#step-3-configure-microsoft-defender-for-endpoint-settings"
+  level               = "System"
+  category_id         = jamfpro_category.category_defender.id
+  redeploy_on_update  = "Newly Assigned"
+  distribution_method = "Install Automatically"
+  payloads            = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/msft_defender/support_files/endpointsettings.mobileconfig")
+  payload_validate    = false
+  user_removable      = false
+
+  scope {
+    all_computers = false
     all_jss_users = false
   }
 }
