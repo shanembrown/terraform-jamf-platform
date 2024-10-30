@@ -86,8 +86,11 @@ export PATH=/usr/bin:/bin:/usr/sbin:/sbin
 log() {
     local level=$1
     shift
-    local message="$*"
-    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+    local message
+    local timestamp
+    
+    message="$*"
+    timestamp=$(date '+%Y-%m-%d %H:%M:%S')
     mkdir -p "$(dirname "$LOG_FILE")"
     echo "[$timestamp] [$level] $message" | tee -a "$LOG_FILE"
 }
@@ -247,7 +250,7 @@ setup_vm() {
         --commandfile "$DIALOG_CMD_FILE" &
 
     DIALOG_PID=$!
-    > "$DIALOG_CMD_FILE"
+    true > "$DIALOG_CMD_FILE"
 
     # Pull the image and monitor progress with error handling
     log "INFO" "Pulling base image..."
