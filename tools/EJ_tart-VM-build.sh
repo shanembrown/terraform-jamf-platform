@@ -156,10 +156,10 @@ check_requirements() {
     fi
 
     # Check for Dialog CLI tool
-    if ! command -v dialog &> /dev/null; then
-        log "ERROR" "Dialog CLI tool could not be found"
+    if [ ! -f "/usr/local/bin/dialog" ]; then
+        log "ERROR" "swiftdialog tool could not be found at /usr/local/bin/dialog"
         exit 1
-    fi  
+    fi
 
     # Check for minimum 90GB free disk space
     FREE_SPACE=$(df -H / | awk 'NR==2 {print $4}' | sed 's/G//')
