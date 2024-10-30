@@ -152,6 +152,12 @@ check_requirements() {
         exit 1
     fi
 
+    # Check for Dialog CLI tool
+    if ! command -v dialog &> /dev/null; then
+        log "ERROR" "Dialog CLI tool could not be found"
+        exit 1
+    fi  
+
     # Check for minimum 90GB free disk space
     FREE_SPACE=$(df -H / | awk 'NR==2 {print $4}' | sed 's/G//')
     FREE_SPACE_GB=${FREE_SPACE%.*} # Remove decimal places
