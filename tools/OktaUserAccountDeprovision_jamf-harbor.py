@@ -51,32 +51,50 @@ async def main(mode="production"):
                 return
 
             for user in users:
+                print(f"Initial Status of {user.profile.first_name} {user.profile.last_name}: {user.status}")
+
                 if user.status == 'DEPROVISIONED':
                     print(f"{user.profile.first_name} {user.profile.last_name} is already deactivated, skipping..")
                     continue
-            
+
                 user_count += 1
-            
+
                 print(f"Account ID: {user.profile.first_name} {user.profile.last_name}")
                 date_object = datetime.strptime(user.activated, "%Y-%m-%dT%H:%M:%S.%fZ").replace(tzinfo=timezone.utc)
                 print(f"Activated Date: {date_object}")
                 print(f"Current Date: {datetime.now(timezone.utc)}")
                 difference = datetime.now(timezone.utc) - date_object
                 print(f"Days since activation: {difference.days}")
+                
+                # Proceed with deactivation in test mode or if the activation date exceeds the threshold
                 if mode == "test" or difference.days >= daysuntilexpire:
-                    print("Account active for more than " + str(daysuntilexpire) + " days or in test mode, deactivating user " + str(
-                        user.profile.first_name) + str(user.profile.last_name))
+                    print(f"Account active for more than {daysuntilexpire} days or in test mode, deactivating user {user.profile.first_name} {user.profile.last_name}")
+                    
                     # Deactivate or delete the user
                     delete_resp, err = await client.deactivate_or_delete_user(user.id)
                     if err:
                         print(f"Error deactivating/deleting user: {err}")
                     else:
-                        print(delete_resp)
+                        print("Deactivation Response:", delete_resp, "\n")
 
-            print(users)
-            print(type(users))
-            print(page_count)
-            print(user_count)
+                        # Fetch the updated user information to verify deactivation status
+                        try:
+                            updated_user_tuple = await client.get_user(user.id)
+
+                            # Extract the user object from the returned tuple
+                            if isinstance(updated_user_tuple, tuple):
+                                updated_user = updated_user_tuple[0]
+                            else:
+                                updated_user = updated_user_tuple
+
+                            # Print the status after the deactivation attempt
+                            if hasattr(updated_user, 'status'):
+                                print(f"Updated Status of {updated_user.profile.first_name} {updated_user.profile.last_name}: {updated_user.status}\n")
+                            else:
+                                print("Unable to access user status directly.\n")
+                        except Exception as e:
+                            print(f"Error fetching updated user: {e}")
+
             if okta_resp.has_next():
                 page_count += 1
                 users, err = await okta_resp.next()
