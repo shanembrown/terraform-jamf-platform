@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Ward
 
 import asyncio
 import os
@@ -6,7 +7,7 @@ from datetime import datetime, timezone
 import time
 from okta.client import Client as OktaClient
 
-# An asynchronous Python script that interacts with the Okta API to manage user accounts based on their activation dates.
+# An asynchronous Python script that interacts with the Okta API to deactivate user accounts based on their activation dates.
 
 # Number of days after which an account is considered for deactivation or deletion if not used.
 daysuntilexpire = 14
