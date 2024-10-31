@@ -11,13 +11,6 @@ from okta.client import Client as OktaClient
 # Number of days after which an account is considered for deactivation or deletion if not used.
 daysuntilexpire = 14
 
-# Define configuration for the environment (Jamf Harbor tenant)
-config = {
-    'orgUrl': 'https://jamf-harbor.okta.com',
-    # Okta API Token: TJE Account Deactivate, Token ID: 00TtdxonheaiY4lE11d6
-    'token': '00E1YW0wjkuxWZ0aK2uCPmm6i8y6MZqOMrXSL_ye78'
-}
-
 # Specifies the search filter and sorting options for querying user accounts.
 # Test mode searches for the user named "Barry Sanders", while production searches for accounts starting with "TJE".
 search_params = {
@@ -29,7 +22,16 @@ search_params = {
              'sortOrder': 'asc'}
 }
 
-async def main(mode="production"):
+async def main(tenant="jamf-harbor", mode="production"):
+    # Print which tenant and mode are being used
+    print(f"Targeting Okta Tenant: {tenant}, Mode: {mode}")
+
+    # Define configuration for the selected environment
+    config = {
+        'orgUrl': 'https://jamf-harbor.okta.com' if tenant == 'jamf-harbor' else 'https://onjamf.oktapreview.com',
+        'token': '00E1YW0wjkuxWZ0aK2uCPmm6i8y6MZqOMrXSL_ye78' if tenant == 'jamf-harbor' else '00Ezj337x1hOQ_96PoyLLrtB8YJGl2oM_hh4f3dyiH'
+    }
+
     # Use the same configuration for both test and production environments
     query_params = search_params[mode]
 
@@ -102,7 +104,9 @@ async def main(mode="production"):
                 break
 
 if __name__ == "__main__":
-    print("deactivate loop start")
+    # Allow the user to easily toggle between tenants
+    tenant = input("Enter Okta tenant ('jamf-harbor' or 'onjamf'): ").strip().lower()
     # Allow the user to easily toggle between test and production mode.
     mode = input("Enter mode ('test' or 'production'): ").strip().lower()
-    asyncio.run(main(mode=mode))
+    print("deactivate loop start")
+    asyncio.run(main(tenant=tenant, mode=mode))
