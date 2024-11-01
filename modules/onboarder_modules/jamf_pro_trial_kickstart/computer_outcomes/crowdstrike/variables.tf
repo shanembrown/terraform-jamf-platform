@@ -1,7 +1,7 @@
 ## Define miscellaneous variables
 variable "prefix" {
   type    = string
-  default = "Trial baseline - "
+  default = ""
 }
 
 variable "support_files_path_prefix" {
