@@ -29,10 +29,10 @@ resource "jamfpro_script" "scripts_falconpkg" {
   priority        = "AFTER"
   info            = "Source: https://github.com/franton/Crowdstrike-API-Scripts/blob/main/install-csf.sh"
   notes           = ""
-  parameter4      = "Falcon API Client ID"           
-  parameter5      = "Falcon API Client Secret"         
-  parameter6      = "" 
-  parameter7      = ""           
+  parameter4      = "Falcon API Client ID"
+  parameter5      = "Falcon API Client Secret"
+  parameter6      = ""
+  parameter7      = ""
 }
 
 resource "jamfpro_script" "scripts_falconcid" {
@@ -43,10 +43,10 @@ resource "jamfpro_script" "scripts_falconcid" {
   priority        = "AFTER"
   info            = ""
   notes           = ""
-  parameter4      = "Customer ID"           
-  parameter5      = ""         
-  parameter6      = "" 
-  parameter7      = ""           
+  parameter4      = "Customer ID"
+  parameter5      = ""
+  parameter6      = ""
+  parameter7      = ""
 }
 
 
@@ -55,7 +55,7 @@ resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuratio
   name                = "Crowdstrike Falcon Settings"
   description         = ""
   level               = "System"
-  category_id         = jamfpro_category.category_crowdstrike.id 
+  category_id         = jamfpro_category.category_crowdstrike.id
   redeploy_on_update  = "Newly Assigned"
   distribution_method = "Install Automatically"
   payloads            = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/crowdstrike/support_files/falcon.mobileconfig")
@@ -70,15 +70,15 @@ resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuratio
 
 ## Create Crowdsrike Install Policy
 resource "jamfpro_policy" "policy_crowdstrike_api_install" {
-  name          = "Crowdstrike Falcon API Install"
-  enabled       = true
+  name            = "Crowdstrike Falcon API Install"
+  enabled         = true
   trigger_checkin = "true"
-  frequency     = "Once per computer"
-  category_id   = jamfpro_category.category_crowdstrike.id
+  frequency       = "Once per computer"
+  category_id     = jamfpro_category.category_crowdstrike.id
 
 
   scope {
-    all_computers      = true
+    all_computers = true
   }
 
   self_service {
@@ -98,7 +98,7 @@ resource "jamfpro_policy" "policy_crowdstrike_api_install" {
       parameter5 = ""
       parameter6 = ""
     }
-        scripts {
+    scripts {
       id         = jamfpro_script.scripts_falconcid.id
       priority   = "After"
       parameter4 = ""
