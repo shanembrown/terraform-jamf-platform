@@ -329,3 +329,8 @@ variable "include_defender" {
   default = false
 }
 
+variable "include_crowdstrike" {
+  type    = bool
+  default = false
+}
+
