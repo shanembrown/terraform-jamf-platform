@@ -8,7 +8,7 @@ terraform {
   }
 }
 
-## Data Source
+## Data Source for script
 data "http" "crowdstrike_install" {
   url = "https://raw.githubusercontent.com/franton/Crowdstrike-API-Scripts/refs/heads/main/install-csf.sh"
 }
