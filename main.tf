@@ -62,8 +62,9 @@ module "mac_stig_benchmark" {
 }
 
 module "mobile_cis_benchmark" {
-  count  = var.include_mobile_cis_benchmark == true ? 1 : 0
-  source = "./modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_benchmark"
+  count                     = var.include_mobile_cis_benchmark == true ? 1 : 0
+  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_benchmark"
+  support_files_path_prefix = var.support_files_path_prefix
 }
 
 module "qol_smart_groups" {
