@@ -49,6 +49,24 @@ module "jamf_protect_trial_kickstart" {
   jamfprotect_client_password = var.jamfprotect_client_password
 }
 
+module "mac_cis_benchmark" {
+  count                     = var.include_mac_cis_benchmark == true ? 1 : 0
+  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cis_benchmark"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+# module "mac_stig_benchmark" {
+#   count                     = var.include_mac_stig_benchmark == true ? 1 : 0
+#   source                    = "./modules/trusted_access_outcomes/endpoint_compliance/computers/mac_stig_benchmark"
+#   support_files_path_prefix = var.support_files_path_prefix
+# }
+
+module "mobile_cis_benchmark" {
+  count                     = var.include_mobile_cis_benchmark == true ? 1 : 0
+  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_benchmark"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
 module "qol_smart_groups" {
   count  = var.include_qol_smart_groups == true ? 1 : 0
   source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/qol_smart_groups"

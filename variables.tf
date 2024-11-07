@@ -119,6 +119,21 @@ variable "include_ej_mobile_cis_benchmark" {
   default = false
 }
 
+variable "include_mobile_cis_benchmark" {
+  type    = bool
+  default = false
+}
+
+variable "include_mac_cis_benchmark" {
+  type    = bool
+  default = false
+}
+
+variable "include_mac_stig_benchmark" {
+  type    = bool
+  default = false
+}
+
 variable "include_ej_secure_remote_access" {
   type    = bool
   default = false
