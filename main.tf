@@ -55,15 +55,21 @@ module "mac_cis_benchmark" {
   support_files_path_prefix = var.support_files_path_prefix
 }
 
-# module "mac_stig_benchmark" {
-#   count                     = var.include_mac_stig_benchmark == true ? 1 : 0
-#   source                    = "./modules/trusted_access_outcomes/endpoint_compliance/computers/mac_stig_benchmark"
-#   support_files_path_prefix = var.support_files_path_prefix
-# }
-
 module "mobile_cis_benchmark" {
   count                     = var.include_mobile_cis_benchmark == true ? 1 : 0
   source                    = "./modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_benchmark"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "mac_stig_benchmark" {
+  count                     = var.include_mac_stig_benchmark == true ? 1 : 0
+  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/computers/mac_stig_benchmark"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "mobile_stig_benchmark" {
+  count                     = var.include_mobile_stig_benchmark == true ? 1 : 0
+  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_stig_benchmark"
   support_files_path_prefix = var.support_files_path_prefix
 }
 

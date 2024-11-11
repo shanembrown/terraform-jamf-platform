@@ -90,6 +90,8 @@ include_jamf_protect_trial_kickstart = false
 include_mobile_device_kickstart      = false
 include_mac_cis_benchmark            = false
 include_mobile_cis_benchmark         = false
+include_mac_stig_benchmark           = false
+include_mobile_stig_benchmark        = false
 
 ## Outcome Knobs
 include_microsoft_365          = false
