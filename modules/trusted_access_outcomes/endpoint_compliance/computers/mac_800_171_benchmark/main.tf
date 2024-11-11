@@ -321,7 +321,6 @@ locals {
     "Screen Saver"          = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark/support_files/computer_config_profiles/Sonoma_800-171-screensaver.mobileconfig"
     "Firewall"              = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark/support_files/computer_config_profiles/Sonoma_800-171-security.firewall.mobileconfig"
     "Security"              = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark/support_files/computer_config_profiles/Sonoma_800-171-security.mobileconfig"
-    "Smart Card"            = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark/support_files/computer_config_profiles/Sonoma_800-171-security.smartcard.mobileconfig"
     "Setup Assistant"       = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark/support_files/computer_config_profiles/Sonoma_800-171-SetupAssistant.managed.mobileconfig"
     "Submit Diag Info"      = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark/support_files/computer_config_profiles/Sonoma_800-171-SubmitDiagInfo.mobileconfig"
     "System Policy Control" = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark/support_files/computer_config_profiles/Sonoma_800-171-systempolicy.control.mobileconfig"
@@ -349,6 +348,22 @@ resource "jamfpro_macos_configuration_profile_plist" "sonoma_800_171" {
   }
 }
 
+resource "jamfpro_macos_configuration_profile_plist" "sonoma_800_171_smart_card" {
+  name                = "Sonoma NIST 800-171 - Smart Card [${random_id.entropy.hex}]"
+  distribution_method = "Install Automatically"
+  redeploy_on_update  = "Newly Assigned"
+  category_id         = jamfpro_category.category_sonoma_800_171_benchmarks.id
+  level               = "System"
+
+  payloads         = file("${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark/support_files/computer_config_profiles/Sonoma_800-171-security.smartcard.mobileconfig")
+  payload_validate = false
+
+  scope {
+    all_computers      = false
+    computer_group_ids = []
+  }
+}
+
 ## Define configuration profile details for Sequoia part 1
 locals {
   sequoia_800_171_dict = {
@@ -368,7 +383,6 @@ locals {
     "Password Policy"       = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark/support_files/computer_config_profiles/Sequoia_800-171-mobiledevice.passwordpolicy.mobileconfig"
     "Screen Saver"          = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark/support_files/computer_config_profiles/Sequoia_800-171-screensaver.mobileconfig"
     "Firewall"              = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark/support_files/computer_config_profiles/Sequoia_800-171-security.firewall.mobileconfig"
-    "Smart Card"            = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark/support_files/computer_config_profiles/Sequoia_800-171-security.smartcard.mobileconfig"
     "Setup Assistant"       = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark/support_files/computer_config_profiles/Sequoia_800-171-SetupAssistant.managed.mobileconfig"
     "Submit Diag Info"      = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark/support_files/computer_config_profiles/Sequoia_800-171-SubmitDiagInfo.mobileconfig"
     "System Policy Control" = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark/support_files/computer_config_profiles/Sequoia_800-171-systempolicy.control.mobileconfig"
@@ -395,4 +409,20 @@ resource "jamfpro_macos_configuration_profile_plist" "sequoia_800_171" {
     computer_group_ids = [jamfpro_smart_computer_group.group_sequoia_computers.id]
   }
   depends_on = [jamfpro_macos_configuration_profile_plist.sonoma_800_171]
+}
+
+resource "jamfpro_macos_configuration_profile_plist" "sequoia_800_171_smart_card" {
+  name                = "Sequoia NIST 800-171 - Smart Card [${random_id.entropy.hex}]"
+  distribution_method = "Install Automatically"
+  redeploy_on_update  = "Newly Assigned"
+  category_id         = jamfpro_category.category_sequoia_800_171_benchmarks.id
+  level               = "System"
+
+  payloads         = file("${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark/support_files/computer_config_profiles/Sequoia_800-171-security.smartcard.mobileconfig")
+  payload_validate = false
+
+  scope {
+    all_computers      = false
+    computer_group_ids = []
+  }
 }
