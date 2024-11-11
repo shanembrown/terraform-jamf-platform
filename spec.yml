@@ -122,6 +122,13 @@ options:
     category: Endpoint Compliance
     display_name: Configure and Apply CIS Level 1 for iOS
     display_desc: This will create all the pieces required for you to apply CIS Level 1 to both iOS 17 and 18. The Smart Groups that the Configuration Profiles are scoped to are built intentionally so they don't deploy automatically. To get CIS Level 1 enforcement - you must edit the Smart Group created. You can either remove the Serial Number criteria to apply to all enrolled devices or change the Serial Number criteria with your own test device Serial Number to apply to one at a time.
+  
+  - key: include_mac_stig_benchmark
+    type: <boolean>
+    presence: optional
+    category: Endpoint Compliance
+    display_name: Configure and Apply DISA STIG for macOS
+    display_desc: This will create all the pieces required for you to apply DISA STIG to both macOS Sonoma and Sequoia. The Smart Groups that the Policies and Configuration Profiles are scoped to are built intentionally so they don't deploy automatically. To get DISA STIG enforcement, auditing, and remediation - you must edit the Smart Group created. You can either remove the Serial Number criteria to apply to all enrolled Macs or change the Serial Number criteria with your own test machine Serial Number to apply to one at a time.
  
   ## Jamf Security Cloud Onboarder Modules
   - key: include_jsc_uemc
