@@ -108,6 +108,12 @@ module "msft_defender" {
   source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/msft_defender"
 }
 
+module "passwordless_sso" {
+  count                     = var.include_passwordless_ssoe == true ? 1 : 0
+  source                    = "./modules/trusted_access_outcomes/passwordless_sso"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
 module "crowdstrike" {
   count  = var.include_crowdstrike == true ? 1 : 0
   source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/crowdstrike"

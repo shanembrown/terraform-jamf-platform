@@ -37,10 +37,41 @@ locals {
   }
 }
 
+# locals {
+#   passwordless_sso_dict = {
+#     "Passwordless SSO" = "${var.support_files_path_prefix}modules/trusted_access_outcomes/passwordless_sso/support_files/computer_config_profiles/passwordless_sso_signed.mobileconfig"
+#   }
+# }
+
+# locals {
+#   passwordless_sso_dict = {
+#     "Passwordless SSO" = "${var.support_files_path_prefix}modules/trusted_access_outcomes/passwordless_sso/support_files/computer_config_profiles/passwordless_sso_signed_base64.txt"
+#   }
+# }
+
+# ## Create configuration profiles for Passwordless SSO
+# resource "jamfpro_macos_configuration_profile_plist" "passwordless_sso" {
+#   for_each            = local.passwordless_sso_dict
+#   name                = "Okta FastPass - ${each.key} [${random_id.entropy.hex}]"
+#   distribution_method = "Install Automatically"
+#   redeploy_on_update  = "Newly Assigned"
+#   category_id         = jamfpro_category.category_passwordless_sso.id
+#   level               = "System"
+
+#   # Decode the Base64-encoded file content
+#   payloads         = base64decode(file("${each.value}"))
+#   payload_validate = false
+
+#   scope {
+#     all_computers = true
+#   }
+# }
+
+
 ## Create configuration profiles for Passwordless SSO
 resource "jamfpro_macos_configuration_profile_plist" "passwordless_sso" {
   for_each            = local.passwordless_sso_dict
-  name                = "Okta FastPass SSOe - ${each.key} [${random_id.entropy.hex}]"
+  name                = "Okta FastPass - ${each.key} [${random_id.entropy.hex}]"
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   category_id         = jamfpro_category.category_passwordless_sso.id
