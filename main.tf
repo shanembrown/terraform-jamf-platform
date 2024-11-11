@@ -79,12 +79,6 @@ module "mac_800_171_benchmark" {
   support_files_path_prefix = var.support_files_path_prefix
 }
 
-# module "mobile_800_171_benchmark" {
-#   count                     = var.include_mobile_800_171_benchmark == true ? 1 : 0
-#   source                    = "./modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_800_171_benchmark"
-#   support_files_path_prefix = var.support_files_path_prefix
-# }
-
 module "qol_smart_groups" {
   count  = var.include_qol_smart_groups == true ? 1 : 0
   source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/qol_smart_groups"
