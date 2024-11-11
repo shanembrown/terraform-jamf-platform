@@ -30,42 +30,31 @@ resource "jamfpro_script" "script_passwordless_sso" {
   info            = "This script will check for the presence of the Okta Verify App. If not present, it will download and install the latest version. It will then launch the app with the the URL of the Experience Jamf Okta tenant."
 }
 
+## Create Smart Computer Groups
+resource "jamfpro_smart_computer_group" "group_passwordless_sso" {
+  name = "Passwordless SSO [${random_id.entropy.hex}]"
+  criteria {
+    name        = "Operating System Version"
+    search_type = "like"
+    value       = "15."
+    and_or      = "and"
+    priority    = 0
+  }
+  criteria {
+    name        = "Serial Number"
+    search_type = "like"
+    value       = "111222333444555"
+    and_or      = "and"
+    priority    = 1
+  }
+}
+
 ## Define configuration profiles
 locals {
   passwordless_sso_dict = {
     "Passwordless SSO" = "${var.support_files_path_prefix}modules/trusted_access_outcomes/passwordless_sso/support_files/computer_config_profiles/passwordless_sso.mobileconfig"
   }
 }
-
-# locals {
-#   passwordless_sso_dict = {
-#     "Passwordless SSO" = "${var.support_files_path_prefix}modules/trusted_access_outcomes/passwordless_sso/support_files/computer_config_profiles/passwordless_sso_signed.mobileconfig"
-#   }
-# }
-
-# locals {
-#   passwordless_sso_dict = {
-#     "Passwordless SSO" = "${var.support_files_path_prefix}modules/trusted_access_outcomes/passwordless_sso/support_files/computer_config_profiles/passwordless_sso_signed_base64.txt"
-#   }
-# }
-
-# ## Create configuration profiles for Passwordless SSO
-# resource "jamfpro_macos_configuration_profile_plist" "passwordless_sso" {
-#   for_each            = local.passwordless_sso_dict
-#   name                = "Okta FastPass - ${each.key} [${random_id.entropy.hex}]"
-#   distribution_method = "Install Automatically"
-#   redeploy_on_update  = "Newly Assigned"
-#   category_id         = jamfpro_category.category_passwordless_sso.id
-#   level               = "System"
-
-#   # Decode the Base64-encoded file content
-#   payloads         = base64decode(file("${each.value}"))
-#   payload_validate = false
-
-#   scope {
-#     all_computers = true
-#   }
-# }
 
 
 ## Create configuration profiles for Passwordless SSO
@@ -81,7 +70,8 @@ resource "jamfpro_macos_configuration_profile_plist" "passwordless_sso" {
   payload_validate = false
 
   scope {
-    all_computers = true
+    all_computers      = false
+    computer_group_ids = [jamfpro_smart_computer_group.group_passwordless_sso.id]
   }
 }
 
@@ -95,7 +85,8 @@ resource "jamfpro_policy" "policy_passwordless_sso" {
   category_id     = jamfpro_category.category_passwordless_sso.id
 
   scope {
-    all_computers = true
+    all_computers      = false
+    computer_group_ids = [jamfpro_smart_computer_group.group_passwordless_sso.id]
   }
 
   self_service {
