@@ -57,6 +57,13 @@ credentials:
 
 options:
 ## Jamf Pro Onboarder Modules
+- key: include_passwordless_ssoe
+    type: <boolean>
+    presence: optional
+    category: MDM Workflows
+    display_name: Enable Passwordless SSOe
+    display_desc: This will create a macOS Configuration Profile, Script, and Policy scoped to all computers in Jamf Pro. Outcome is Okta Verify and applicable SSOe Configuration Profile installed.
+
   - key: include_qol_smart_groups
     type: <boolean>
     presence: optional
@@ -69,7 +76,7 @@ options:
     presence: optional
     category: MDM Workflows
     display_name: Add Categories
-    display_desc: This will add several  Categories to your Jamf Pro instance that can be used to organize items in your Jamf Pro.
+    display_desc: This will add several Categories to your Jamf Pro instance that can be used to organize items in your Jamf Pro.
 
   - key: include_computer_management_settings
     type: <boolean>

@@ -339,7 +339,7 @@ variable "include_admin_tools" {
   default = false
 }
 
-variable "include_ssoe" {
+variable "include_passwordless_ssoe" {
   type    = bool
   default = false
 }
