@@ -304,18 +304,18 @@ resource "jamfpro_policy" "policy_sequoia_cmmc_lvl1_remediation" {
 ## Define configuration profile details for Sonoma
 locals {
   sonoma_cmmc_lvl1_dict = {
-    "Application Access"     = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/sonoma_cmmc_lvl1-applicationaccess.mobileconfig"
+    "Application Access"     = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sonoma_cmmc_lvl1-applicationaccess.mobileconfig"
     "Assistant"              = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sonoma_cmmc_lvl1-assistant.support.mobileconfig"
     "iCloud"                 = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sonoma_cmmc_lvl1-icloud.managed.mobileconfig"
-    "Login Window"           = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/sonoma_cmmc_lvl1-loginwindow.mobileconfig"
-    "MCX"                    = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/sonoma_cmmc_lvl1-MCX.mobileconfig"
+    "Login Window"           = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sonoma_cmmc_lvl1-loginwindow.mobileconfig"
+    "MCX"                    = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sonoma_cmmc_lvl1-MCX.mobileconfig"
     "Sharing Preferences"    = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sonoma_cmmc_lvl1-preferences.sharing.SharingPrefsExtension.mobileconfig"
-    "Firewall"               = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/sonoma_cmmc_lvl1-security.firewall.mobileconfig"
+    "Firewall"               = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sonoma_cmmc_lvl1-security.firewall.mobileconfig"
     "Security"               = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sonoma_cmmc_lvl1-security.mobileconfig"
     "Setup Assistant"        = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sonoma_cmmc_lvl1-SetupAssistant.managed.mobileconfig"
-    "Software Update"        = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/sonoma_cmmc_lvl1-SoftwareUpdate.mobileconfig"
+    "Software Update"        = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sonoma_cmmc_lvl1-SoftwareUpdate.mobileconfig"
     "Submit Diagnostic Info" = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sonoma_cmmc_lvl1-SubmitDiagInfo.mobileconfig"
-    "System Policy Control"  = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/sonoma_cmmc_lvl1-systempolicy.control.mobileconfig"
+    "System Policy Control"  = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sonoma_cmmc_lvl1-systempolicy.control.mobileconfig"
     "System Preferences"     = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sonoma_cmmc_lvl1-systempreferences.mobileconfig"
   }
 }
@@ -358,17 +358,17 @@ resource "jamfpro_macos_configuration_profile_plist" "sonoma_cmmc_lvl1_smart_car
 locals {
   sequoia_cmmc_lvl1_dict = {
     "Accessibility"          = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-Accessibility.mobileconfig"
-    "Application Access"     = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/sonoma_cmmc_lvl1-applicationaccess.mobileconfig"
-    "Assistant"              = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sonoma_cmmc_lvl1-assistant.support.mobileconfig"
-    "iCloud"                 = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sonoma_cmmc_lvl1-icloud.managed.mobileconfig"
-    "Login Window"           = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/sonoma_cmmc_lvl1-loginwindow.mobileconfig"
-    "MCX"                    = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/sonoma_cmmc_lvl1-MCX.mobileconfig"
-    "Firewall"               = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/sonoma_cmmc_lvl1-security.firewall.mobileconfig"
-    "Setup Assistant"        = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sonoma_cmmc_lvl1-SetupAssistant.managed.mobileconfig"
-    "Software Update"        = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/sonoma_cmmc_lvl1-SoftwareUpdate.mobileconfig"
-    "Submit Diagnostic Info" = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sonoma_cmmc_lvl1-SubmitDiagInfo.mobileconfig"
-    "System Policy Control"  = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/sonoma_cmmc_lvl1-systempolicy.control.mobileconfig"
-    "System Preferences"     = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sonoma_cmmc_lvl1-systempreferences.mobileconfig"
+    "Application Access"     = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-applicationaccess.mobileconfig"
+    "Assistant"              = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-assistant.support.mobileconfig"
+    "iCloud"                 = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-icloud.managed.mobileconfig"
+    "Login Window"           = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-loginwindow.mobileconfig"
+    "MCX"                    = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-MCX.mobileconfig"
+    "Firewall"               = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-security.firewall.mobileconfig"
+    "Setup Assistant"        = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-SetupAssistant.managed.mobileconfig"
+    "Software Update"        = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-SoftwareUpdate.mobileconfig"
+    "Submit Diagnostic Info" = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-SubmitDiagInfo.mobileconfig"
+    "System Policy Control"  = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-systempolicy.control.mobileconfig"
+    "System Preferences"     = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-systempreferences.mobileconfig"
   }
 }
 
