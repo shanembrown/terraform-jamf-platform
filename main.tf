@@ -49,6 +49,42 @@ module "jamf_protect_trial_kickstart" {
   jamfprotect_client_password = var.jamfprotect_client_password
 }
 
+module "mac_cis_lvl1_benchmark" {
+  count                     = var.include_mac_cis_lvl1_benchmark == true ? 1 : 0
+  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cis_lvl1_benchmark"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "mobile_cis_lvl1_benchmark" {
+  count                     = var.include_mobile_cis_lvl1_benchmark == true ? 1 : 0
+  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_lvl1_benchmark"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "mac_stig_benchmark" {
+  count                     = var.include_mac_stig_benchmark == true ? 1 : 0
+  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/computers/mac_stig_benchmark"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "mobile_stig_benchmark" {
+  count                     = var.include_mobile_stig_benchmark == true ? 1 : 0
+  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_stig_benchmark"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "mac_800_171_benchmark" {
+  count                     = var.include_mac_800_171_benchmark == true ? 1 : 0
+  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "mac_cmmc_lvl1_benchmark" {
+  count                     = var.include_mac_cmmc_lvl1_benchmark == true ? 1 : 0
+  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
 module "qol_smart_groups" {
   count  = var.include_qol_smart_groups == true ? 1 : 0
   source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/qol_smart_groups"
@@ -64,6 +100,11 @@ module "categories" {
   source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/categories"
 }
 
+module "mobile_device_kickstart" {
+  count  = var.include_mobile_device_kickstart == true ? 1 : 0
+  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart"
+}
+
 module "computer_management_settings" {
   count  = var.include_computer_management_settings == true ? 1 : 0
   source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_management_settings"
@@ -73,6 +114,23 @@ module "filevault" {
   count  = var.include_filevault == true ? 1 : 0
   source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/filevault"
 }
+
+module "msft_defender" {
+  count  = var.include_defender == true ? 1 : 0
+  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/msft_defender"
+}
+
+module "passwordless_sso" {
+  count                     = var.include_passwordless_ssoe == true ? 1 : 0
+  source                    = "./modules/trusted_access_outcomes/passwordless_sso"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "crowdstrike" {
+  count  = var.include_crowdstrike == true ? 1 : 0
+  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/crowdstrike"
+}
+
 
 module "rosetta" {
   count  = var.include_rosetta == true ? 1 : 0

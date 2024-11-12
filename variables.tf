@@ -119,6 +119,36 @@ variable "include_ej_mobile_cis_benchmark" {
   default = false
 }
 
+variable "include_mobile_cis_lvl1_benchmark" {
+  type    = bool
+  default = false
+}
+
+variable "include_mac_cis_lvl1_benchmark" {
+  type    = bool
+  default = false
+}
+
+variable "include_mac_stig_benchmark" {
+  type    = bool
+  default = false
+}
+
+variable "include_mobile_stig_benchmark" {
+  type    = bool
+  default = false
+}
+
+variable "include_mac_800_171_benchmark" {
+  type    = bool
+  default = false
+}
+
+variable "include_mac_cmmc_lvl1_benchmark" {
+  type    = bool
+  default = false
+}
+
 variable "include_ej_secure_remote_access" {
   type    = bool
   default = false
@@ -282,6 +312,13 @@ variable "include_computer_management_settings" {
   default = false
 }
 
+
+variable "include_mobile_device_kickstart" {
+  type    = bool
+  default = false
+}
+
+
 variable "include_filevault" {
   type    = bool
   default = false
@@ -307,7 +344,7 @@ variable "include_admin_tools" {
   default = false
 }
 
-variable "include_ssoe" {
+variable "include_passwordless_ssoe" {
   type    = bool
   default = false
 }
@@ -316,3 +353,14 @@ variable "include_jc_privilege_elevation" {
   type    = bool
   default = false
 }
+
+variable "include_defender" {
+  type    = bool
+  default = false
+}
+
+variable "include_crowdstrike" {
+  type    = bool
+  default = false
+}
+

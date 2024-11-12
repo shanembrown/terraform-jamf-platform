@@ -12,6 +12,13 @@ terraform {
   }
 }
 
+resource "random_id" "entropy" {
+  keepers = {
+    first = "${timestamp()}"
+  }
+  byte_length = 1
+}
+
 resource "jsc_oktaidp" "okta_idp_base" {
   clientid  = var.tje_okta_clientid
   name      = "Okta IDP Integration"
@@ -19,7 +26,7 @@ resource "jsc_oktaidp" "okta_idp_base" {
 }
 
 resource "jsc_ap" "all_services" {
-  name             = "Jamf Connect ZTNA and Protect"
+  name             = "Jamf Connect ZTNA and Protect [${random_id.entropy.hex}]"
   idptype          = "OKTA"
   oktaconnectionid = jsc_oktaidp.okta_idp_base.id
   privateaccess    = true
@@ -28,12 +35,12 @@ resource "jsc_ap" "all_services" {
 }
 
 resource "jamfpro_category" "jsc_all_services_profiles" {
-  name     = "Jamf Security Cloud - Activation Profiles"
+  name     = "Jamf Security Cloud - Activation Profiles [${random_id.entropy.hex}]"
   priority = 9
 }
 
 resource "jamfpro_macos_configuration_profile_plist" "all_services_macos" {
-  name                = "Jamf Connect ZTNA + Jamf Protect Threat and Content Control - macOS (Supervised)"
+  name                = "Jamf Connect ZTNA + Jamf Protect Threat and Content Control - macOS (Supervised) [${random_id.entropy.hex}]"
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   level               = "System"
@@ -47,86 +54,3 @@ resource "jamfpro_macos_configuration_profile_plist" "all_services_macos" {
   }
   depends_on = [jsc_ap.all_services]
 }
-
-# resource "jamfpro_smart_mobile_device_group" "supervised_ios" {
-#   name = "Jamf Security Cloud - Supervised Devices"
-
-#   criteria {
-#     name        = "Supervised"
-#     priority    = 0
-#     search_type = "is"
-#     value       = "Supervised"
-#   }
-#   depends_on = [jamfpro_macos_configuration_profile_plist.all_services_macos]
-# }
-
-# resource "jamfpro_mobile_device_configuration_profile_plist" "all_services_ios_supervised" {
-#   name               = "Jamf Connect ZTNA + Jamf Protect Threat and Content Control - iOS / iPadOS (Supervised)"
-#   redeploy_on_update = "Newly Assigned"
-#   category_id        = jamfpro_category.jsc_all_services_profiles.id
-
-#   payloads         = jsc_ap.all_services.supervisedplist
-#   payload_validate = false
-
-#   scope {
-#     all_mobile_devices = false
-#   }
-#   depends_on = [jamfpro_smart_mobile_device_group.supervised_ios]
-# }
-
-# resource "jamfpro_smart_mobile_device_group" "unsupervised_ios" {
-#   name = "Jamf Security Cloud - Un-Supervised Devices"
-
-#   criteria {
-#     name        = "Supervised"
-#     priority    = 0
-#     search_type = "is"
-#     value       = "Unsupervised"
-#   }
-#   depends_on = [jamfpro_mobile_device_configuration_profile_plist.all_services_ios_supervised]
-# }
-
-# resource "jamfpro_mobile_device_configuration_profile_plist" "all_services_ios_unsupervised" {
-#   name               = "Jamf Connect ZTNA + Jamf Protect Threat and Content Control - iOS / iPadOS (Un-Supervised)"
-#   redeploy_on_update = "Newly Assigned"
-#   category_id        = jamfpro_category.jsc_all_services_profiles.id
-
-#   payloads         = jsc_ap.all_services.unsupervisedplist
-#   payload_validate = false
-
-#   scope {
-#     all_mobile_devices = false
-#   }
-#   depends_on = [jamfpro_smart_mobile_device_group.unsupervised_ios]
-# }
-
-# resource "jamfpro_smart_mobile_device_group" "byod_ios" {
-#   name = "Jamf Security Cloud - BYOD Devices"
-
-#   criteria {
-#     name        = "Serial Number"
-#     priority    = 0
-#     search_type = "like"
-#     value       = ""
-#   }
-#   depends_on = [jamfpro_mobile_device_configuration_profile_plist.all_services_ios_unsupervised]
-# }
-
-# resource "jamfpro_mobile_device_configuration_profile_plist" "all_services_ios_byod" {
-#   name               = "Jamf Connect ZTNA + Jamf Protect Threat and Content Control - iOS / iPadOS (BYOD)"
-#   redeploy_on_update = "Newly Assigned"
-#   category_id        = jamfpro_category.jsc_all_services_profiles.id
-
-#   payloads         = jsc_ap.all_services.byodplist
-#   payload_validate = false
-
-#   scope {
-#     all_mobile_devices = false
-#   }
-#   depends_on = [jamfpro_smart_mobile_device_group.byod_ios]
-# }
-
-# output "enable_jsc_uemc_output" {
-#   value = true
-# }
-

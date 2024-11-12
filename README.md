@@ -87,13 +87,22 @@ include_qol_smart_groups             = false
 include_categories                   = false
 include_computer_management_settings = false
 include_jamf_protect_trial_kickstart = false
+include_mobile_device_kickstart      = false
+
+## Compliance Benchmark Knobs
+include_mac_cis_lvl1_benchmark    = false
+include_mobile_cis_lvl1_benchmark = false
+include_mac_stig_benchmark        = false
+include_mobile_stig_benchmark     = false
+include_mac_800_171_benchmark     = false
+include_mac_cmmc_lvl1_benchmark   = false
 
 ## Outcome Knobs
 include_microsoft_365          = false
 include_filevault              = false
 include_rosetta                = false
+include_passwordless_ssoe      = false
 include_admin_tools            = false ## Pending build
-include_ssoe                   = false ## Pending build
 include_jc_privilege_elevation = false ## Pending build
 
 
