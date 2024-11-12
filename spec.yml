@@ -57,7 +57,7 @@ credentials:
 
 options:
 ## Jamf Pro Onboarder Modules
-- key: include_passwordless_ssoe
+  - key: include_passwordless_ssoe
     type: <boolean>
     presence: optional
     category: MDM Workflows
