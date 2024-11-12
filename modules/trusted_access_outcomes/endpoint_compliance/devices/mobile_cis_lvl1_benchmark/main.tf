@@ -65,9 +65,9 @@ resource "jamfpro_smart_mobile_device_group" "group_ios18" {
 ## Define configuration profile details for iOS 17
 locals {
   ios17_cis_lvl1_dict = {
-    "Application Access" = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_benchmark/support_files/mobile_configuration_profiles/iOS17_cis_lvl1_enterprise-applicationaccess.mobileconfig"
-    "Mail Policy"        = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_benchmark/support_files/mobile_configuration_profiles/iOS17_cis_lvl1_enterprise-mail.managed.mobileconfig"
-    "Password Policy"    = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_benchmark/support_files/mobile_configuration_profiles/iOS17_cis_lvl1_enterprise-mobiledevice.passwordpolicy.mobileconfig"
+    "Application Access" = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_lvl1_benchmark/support_files/mobile_configuration_profiles/iOS17_cis_lvl1_enterprise-applicationaccess.mobileconfig"
+    "Mail Policy"        = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_lvl1_benchmark/support_files/mobile_configuration_profiles/iOS17_cis_lvl1_enterprise-mail.managed.mobileconfig"
+    "Password Policy"    = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_lvl1_benchmark/support_files/mobile_configuration_profiles/iOS17_cis_lvl1_enterprise-mobiledevice.passwordpolicy.mobileconfig"
   }
 }
 
@@ -91,9 +91,9 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "config_ios17" {
 ## Define configuration profile details for iOS 18
 locals {
   ios18_cis_lvl1_dict = {
-    "Application Access" = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_benchmark/support_files/mobile_configuration_profiles/iOS18_cis_lvl1_enterprise-applicationaccess.mobileconfig"
-    "Mail Policy"        = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_benchmark/support_files/mobile_configuration_profiles/iOS18_cis_lvl1_enterprise-mail.managed.mobileconfig"
-    "Password Policy"    = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_benchmark/support_files/mobile_configuration_profiles/iOS18_cis_lvl1_enterprise-mobiledevice.passwordpolicy.mobileconfig"
+    "Application Access" = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_lvl1_benchmark/support_files/mobile_configuration_profiles/iOS18_cis_lvl1_enterprise-applicationaccess.mobileconfig"
+    "Mail Policy"        = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_lvl1_benchmark/support_files/mobile_configuration_profiles/iOS18_cis_lvl1_enterprise-mail.managed.mobileconfig"
+    "Password Policy"    = "${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_lvl1_benchmark/support_files/mobile_configuration_profiles/iOS18_cis_lvl1_enterprise-mobiledevice.passwordpolicy.mobileconfig"
   }
 }
 

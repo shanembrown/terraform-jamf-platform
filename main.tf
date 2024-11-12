@@ -49,15 +49,15 @@ module "jamf_protect_trial_kickstart" {
   jamfprotect_client_password = var.jamfprotect_client_password
 }
 
-module "mac_cis_benchmark" {
-  count                     = var.include_mac_cis_benchmark == true ? 1 : 0
-  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cis_benchmark"
+module "mac_cis_lvl1_benchmark" {
+  count                     = var.include_mac_cis_lvl1_benchmark == true ? 1 : 0
+  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cis_lvl1_benchmark"
   support_files_path_prefix = var.support_files_path_prefix
 }
 
-module "mobile_cis_benchmark" {
-  count                     = var.include_mobile_cis_benchmark == true ? 1 : 0
-  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_benchmark"
+module "mobile_cis_lvl1_benchmark" {
+  count                     = var.include_mobile_cis_lvl1_benchmark == true ? 1 : 0
+  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_lvl1_benchmark"
   support_files_path_prefix = var.support_files_path_prefix
 }
 
@@ -76,6 +76,12 @@ module "mobile_stig_benchmark" {
 module "mac_800_171_benchmark" {
   count                     = var.include_mac_800_171_benchmark == true ? 1 : 0
   source                    = "./modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "mac_cmmc_lvl1_benchmark" {
+  count                     = var.include_mac_cmmc_lvl1_benchmark == true ? 1 : 0
+  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark"
   support_files_path_prefix = var.support_files_path_prefix
 }
 

@@ -119,12 +119,12 @@ variable "include_ej_mobile_cis_benchmark" {
   default = false
 }
 
-variable "include_mobile_cis_benchmark" {
+variable "include_mobile_cis_lvl1_benchmark" {
   type    = bool
   default = false
 }
 
-variable "include_mac_cis_benchmark" {
+variable "include_mac_cis_lvl1_benchmark" {
   type    = bool
   default = false
 }
@@ -140,6 +140,11 @@ variable "include_mobile_stig_benchmark" {
 }
 
 variable "include_mac_800_171_benchmark" {
+  type    = bool
+  default = false
+}
+
+variable "include_mac_cmmc_lvl1_benchmark" {
   type    = bool
   default = false
 }
