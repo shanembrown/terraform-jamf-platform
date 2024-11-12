@@ -115,48 +115,48 @@ options:
     display_name: Integrate Jamf Protect and Jamf Pro
     display_desc: Register Jamf Protect API in Jamf Pro, uses the Client ID and Password you created in your Jamf Protect tenant to register the API in Jamf Pro for deployment and advanced remediation workflows.
 
-  ## macOS Security Compliance Project Benchmark Modules
+## macOS Security Compliance Project Benchmark Modules
   - key: include_mac_cis_lvl1_benchmark
     type: <boolean>
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply CIS Level 1 for macOS
-    display_desc: This will create all the configurations, scripts and Policies required for to apply CIS Level 1 to both macOS Sonoma and macOS Sequoia. For Scoping, additional steps are required - please see the Sales Engineering Guide for more information. **Benchmark is sourced from the macOS Security Compliance Project**
+    display_desc: Creates and uploads all necessary components for applying CIS Level 1 to macOS Sonoma and Sequoia. Smart Groups are pre-configured to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
 
   - key: include_mobile_cis_lvl1_benchmark
     type: <boolean>
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply CIS Level 1 for iOS
-    display_desc: This will create all the configurations, scripts and Policies required for to apply CIS Level 1 to both iOS 17 and 18. For Scoping, additional steps are required - please see the Sales Engineering Guide for more information. **Benchmark is sourced from the macOS Security Compliance Project**
+    display_desc: Prepares all components needed for CIS Level 1 on iOS 17 and 18. Smart Groups for profiles are set to not deploy automatically. Edit the group for enforcement by adjusting the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
   
   - key: include_mac_stig_benchmark
     type: <boolean>
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply DISA STIG for macOS
-    display_desc: This will create all the configurations, scripts and Policies required for to apply DISA STIG to both macOS Sonoma and macOS Sequoia. For Scoping, additional steps are required - please see the Sales Engineering Guide for more information. **Benchmark is sourced from the macOS Security Compliance Project**
+    display_desc: Creates and uploads the DISA STIG profile for macOS Sonoma and Sequoia (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-configured to not deploy automatically. Modify the group for enforcement and remediation as needed. **Benchmark from macOS Security Compliance Project**
  
   - key: include_mobile_stig_benchmark
     type: <boolean>
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply DISA STIG for iOS
-    display_desc: This will create all the configurations, scripts and Policies required for to apply DISA STIG to iOS 17 (iOS 18 is not supported). For Scoping, additional steps are required - please see the Sales Engineering Guide for more information. **Benchmark is sourced from the macOS Security Compliance Project**
+    display_desc: Prepares the necessary components for DISA STIG on iOS 17 (not yet mapped for iOS 18). Smart Groups are pre-set to not deploy automatically. Adjust the group for enforcement. **Benchmark from macOS Security Compliance Project**
 
   - key: include_mac_800_171_benchmark
     type: <boolean>
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply NIST 800-171 for macOS
-    display_desc: This will create all the configurations, scripts and Policies required for to apply NIST 800-171 to both macOS Sonoma and macOS Sequoia. For Scoping, additional steps are required - please see the Sales Engineering Guide for more information. **Benchmark is sourced from the macOS Security Compliance Project**
-
+    display_desc: Creates and uploads the NIST 800-171 profile for macOS Sonoma and Sequoia  (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-configured to not deploy automatically. Edit the group for enforcement as needed. **Benchmark from macOS Security Compliance Project**
+  
   - key: include_mac_cmmc_lvl1_benchmark
     type: <boolean>
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply US CMMC 2.0 Level 1 for macOS
-    display_desc: This will create all the configurations, scripts and Policies required for to apply US CMMC 2.0 Level 1 to both macOS Sonoma and macOS Sequoia. For Scoping, additional steps are required - please see the Sales Engineering Guide for more information. **Benchmark is sourced from the macOS Security Compliance Project**
+    display_desc: Creates and uploads the US CMMC 2.0 Level 1 profile for macOS Sonoma and Sequoia (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-set to not deploy automatically. Adjust for enforcement as needed. **Benchmark from macOS Security Compliance Project**
 
   ## Jamf Security Cloud Onboarder Modules
   - key: include_jsc_uemc
