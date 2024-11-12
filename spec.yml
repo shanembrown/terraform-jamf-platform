@@ -121,42 +121,42 @@ options:
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply CIS Level 1 for macOS
-    display_desc: This will create all the pieces required for you to apply CIS Level 1 to both macOS Sonoma and macOS Sequoia. The Smart Groups that the Policies and Configuration Profiles are scoped to are built intentionally so they don't deploy automatically. To get CIS Level 1 enforcement, auditing, and remediation - you must edit the Smart Group created. You can either remove the Serial Number criteria to apply to all enrolled Macs or change the Serial Number criteria with your own test machine Serial Number to apply to one at a time. **Benchmark is pulled from the macOS Security Compliance Project**
+    display_desc: This will create all the configurations, scripts and Policies required for to apply CIS Level 1 to both macOS Sonoma and macOS Sequoia. For Scoping, additional steps are required - please see the Sales Engineering Guide for more information. **Benchmark is sourced from the macOS Security Compliance Project**
 
   - key: include_mobile_cis_lvl1_benchmark
     type: <boolean>
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply CIS Level 1 for iOS
-    display_desc: This will create all the pieces required for you to apply CIS Level 1 to both iOS 17 and 18. The Smart Groups that the Configuration Profiles are scoped to are built intentionally so they don't deploy automatically. To get CIS Level 1 enforcement - you must edit the Smart Group created. You can either remove the Serial Number criteria to apply to all enrolled devices or change the Serial Number criteria with your own test device Serial Number to apply to one at a time. **Benchmark is pulled from the macOS Security Compliance Project**
+    display_desc: This will create all the configurations, scripts and Policies required for to apply CIS Level 1 to both iOS 17 and 18. For Scoping, additional steps are required - please see the Sales Engineering Guide for more information. **Benchmark is sourced from the macOS Security Compliance Project**
   
   - key: include_mac_stig_benchmark
     type: <boolean>
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply DISA STIG for macOS
-    display_desc: CAUTION -  DISA STIG includes Smart Card configurations which can drastically alter login workflows on computers. The Profile will be created and uploaded to your Jamf Pro instance but it will NOT be scoped for this reason. This will create all the pieces required for you to apply DISA STIG to both macOS Sonoma and Sequoia. The Smart Groups that the Policies and Configuration Profiles are scoped to are built intentionally so they don't deploy automatically. To get DISA STIG enforcement, auditing, and remediation - you must edit the Smart Group created. You can either remove the Serial Number criteria to apply to all enrolled Macs or change the Serial Number criteria with your own test machine Serial Number to apply to one at a time. **Benchmark is pulled from the macOS Security Compliance Project**
+    display_desc: This will create all the configurations, scripts and Policies required for to apply DISA STIG to both macOS Sonoma and macOS Sequoia. For Scoping, additional steps are required - please see the Sales Engineering Guide for more information. **Benchmark is sourced from the macOS Security Compliance Project**
  
   - key: include_mobile_stig_benchmark
     type: <boolean>
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply DISA STIG for iOS
-    display_desc: This will create all the pieces required for you to apply DISA STIG to iOS 17 (DISA STIG for iOS 18 has not been mapped). The Smart Groups that the Configuration Profiles are scoped to are built intentionally so they don't deploy automatically. To get DISA STIG enforcement - you must edit the Smart Group created. You can either remove the Serial Number criteria to apply to all enrolled devices or change the Serial Number criteria with your own test device Serial Number to apply to one at a time. **Benchmark is pulled from the macOS Security Compliance Project**
+    display_desc: This will create all the configurations, scripts and Policies required for to apply DISA STIG to iOS 17 (iOS 18 is not supported). For Scoping, additional steps are required - please see the Sales Engineering Guide for more information. **Benchmark is sourced from the macOS Security Compliance Project**
 
   - key: include_mac_800_171_benchmark
     type: <boolean>
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply NIST 800-171 for macOS
-    display_desc: CAUTION -  the NIST 800-171 benchmark includes Smart Card configurations which can drastically alter login workflows on computers. The Profile will be created and uploaded to your Jamf Pro instance but it will NOT be scoped for this reason. This will create all the pieces required for you to apply NIST 800-171 to both macOS Sonoma and Sequoia. The Smart Groups that the Policies and Configuration Profiles are scoped to are built intentionally so they don't deploy automatically. To get NIST 800-171 enforcement, auditing, and remediation - you must edit the Smart Group created. You can either remove the Serial Number criteria to apply to all enrolled Macs or change the Serial Number criteria with your own test machine Serial Number to apply to one at a time. **Benchmark is pulled from the macOS Security Compliance Project**
-  
+    display_desc: This will create all the configurations, scripts and Policies required for to apply NIST 800-171 to both macOS Sonoma and macOS Sequoia. For Scoping, additional steps are required - please see the Sales Engineering Guide for more information. **Benchmark is sourced from the macOS Security Compliance Project**
+
   - key: include_mac_cmmc_lvl1_benchmark
     type: <boolean>
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply US CMMC 2.0 Level 1 for macOS
-    display_desc: CAUTION -  the US CMMC 2.0 Level 1 benchmark includes Smart Card configurations which can drastically alter login workflows on computers. The Profile will be created and uploaded to your Jamf Pro instance but it will NOT be scoped for this reason. This will create all the pieces required for you to applyUS CMMC 2.0 Level 1 to both macOS Sonoma and Sequoia. The Smart Groups that the Policies and Configuration Profiles are scoped to are built intentionally so they don't deploy automatically. To get US CMMC 2.0 Level 1 enforcement, auditing, and remediation - you must edit the Smart Group created. You can either remove the Serial Number criteria to apply to all enrolled Macs or change the Serial Number criteria with your own test machine Serial Number to apply to one at a time. **Benchmark is pulled from the macOS Security Compliance Project**
+    display_desc: This will create all the configurations, scripts and Policies required for to apply US CMMC 2.0 Level 1 to both macOS Sonoma and macOS Sequoia. For Scoping, additional steps are required - please see the Sales Engineering Guide for more information. **Benchmark is sourced from the macOS Security Compliance Project**
 
   ## Jamf Security Cloud Onboarder Modules
   - key: include_jsc_uemc
