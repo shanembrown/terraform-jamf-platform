@@ -89,8 +89,8 @@ options:
     type: <boolean>
     presence: optional
     category: MDM Workflows
-    display_name: (NATE UPDATE HERE)
-    display_desc: (NATE UPDATE HERE)
+    display_name: Mobile Device Configurations
+    display_desc: This will create some common restriction profiles, along with a shared device and kiosk mode workflow, enabled with smart groups and extension attributes.
 
   ## Jamf Pro Outcome Modules
   - key: include_filevault
