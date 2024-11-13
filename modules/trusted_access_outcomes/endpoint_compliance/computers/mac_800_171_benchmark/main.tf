@@ -8,27 +8,25 @@ terraform {
   }
 }
 
-resource "random_id" "entropy" {
-  keepers = {
-    first = "${timestamp()}"
-  }
-  byte_length = 1
+resource "random_integer" "entropy" {
+  min = 10
+  max = 999
 }
 
 ## Create categories
 resource "jamfpro_category" "category_sonoma_800_171_benchmarks" {
-  name     = "Sonoma - NIST 800-171 Benchmarks [${random_id.entropy.hex}]"
+  name     = "Sonoma - NIST 800-171 Benchmarks [${random_integer.entropy.result}]"
   priority = 9
 }
 
 resource "jamfpro_category" "category_sequoia_800_171_benchmarks" {
-  name     = "Sequoia - NIST 800-171 Benchmarks [${random_id.entropy.hex}]"
+  name     = "Sequoia - NIST 800-171 Benchmarks [${random_integer.entropy.result}]"
   priority = 9
 }
 
 ## Create scripts
 resource "jamfpro_script" "script_sonoma_800_171_compliance" {
-  name            = "Sonoma - NIST 800-171 Compliance [${random_id.entropy.hex}]"
+  name            = "Sonoma - NIST 800-171 Compliance [${random_integer.entropy.result}]"
   priority        = "AFTER"
   script_contents = file("${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark/support_files/computer_scripts/sonoma_800-171_compliance.sh")
   category_id     = jamfpro_category.category_sonoma_800_171_benchmarks.id
@@ -36,7 +34,7 @@ resource "jamfpro_script" "script_sonoma_800_171_compliance" {
 }
 
 resource "jamfpro_script" "script_sequoia_800_171_compliance" {
-  name            = "Sequoia - NIST 800-171 Compliance [${random_id.entropy.hex}]"
+  name            = "Sequoia - NIST 800-171 Compliance [${random_integer.entropy.result}]"
   priority        = "AFTER"
   script_contents = file("${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark/support_files/computer_scripts/sequoia_800-171_compliance.sh")
   category_id     = jamfpro_category.category_sequoia_800_171_benchmarks.id
@@ -45,7 +43,7 @@ resource "jamfpro_script" "script_sequoia_800_171_compliance" {
 
 ## Create computer extension attributes
 resource "jamfpro_computer_extension_attribute" "ea_800_171_failed_count" {
-  name                   = "NIST 800-171 - Failed Results Count [${random_id.entropy.hex}]"
+  name                   = "NIST 800-171 - Failed Results Count [${random_integer.entropy.result}]"
   input_type             = "SCRIPT"
   enabled                = true
   data_type              = "INTEGER"
@@ -54,7 +52,7 @@ resource "jamfpro_computer_extension_attribute" "ea_800_171_failed_count" {
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_800_171_failed_list" {
-  name                   = "NIST 800-171 - Failed Results List [${random_id.entropy.hex}]"
+  name                   = "NIST 800-171 - Failed Results List [${random_integer.entropy.result}]"
   input_type             = "SCRIPT"
   enabled                = true
   data_type              = "STRING"
@@ -63,7 +61,7 @@ resource "jamfpro_computer_extension_attribute" "ea_800_171_failed_list" {
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_800_171_version" {
-  name                   = "Compliance Version [${random_id.entropy.hex}]"
+  name                   = "Compliance Version [${random_integer.entropy.result}]"
   input_type             = "SCRIPT"
   enabled                = true
   data_type              = "STRING"
@@ -73,7 +71,7 @@ resource "jamfpro_computer_extension_attribute" "ea_800_171_version" {
 
 ## Create Smart Computer Groups
 resource "jamfpro_smart_computer_group" "group_sonoma_computers" {
-  name = "NIST 800-171 - Sonoma Computers [${random_id.entropy.hex}]"
+  name = "NIST 800-171 - Sonoma Computers [${random_integer.entropy.result}]"
   criteria {
     name        = "Operating System Version"
     search_type = "like"
@@ -91,7 +89,7 @@ resource "jamfpro_smart_computer_group" "group_sonoma_computers" {
 }
 
 resource "jamfpro_smart_computer_group" "group_sonoma_800_171_non_compliant" {
-  name = "NIST 800-171 - Sonoma - Non Compliant Computers [${random_id.entropy.hex}]"
+  name = "NIST 800-171 - Sonoma - Non Compliant Computers [${random_integer.entropy.result}]"
   criteria {
     name        = "Operating System Version"
     search_type = "like"
@@ -109,7 +107,7 @@ resource "jamfpro_smart_computer_group" "group_sonoma_800_171_non_compliant" {
 }
 
 resource "jamfpro_smart_computer_group" "group_sequoia_computers" {
-  name = "NIST 800-171 - Sequoia Computers [${random_id.entropy.hex}]"
+  name = "NIST 800-171 - Sequoia Computers [${random_integer.entropy.result}]"
   criteria {
     name        = "Operating System Version"
     search_type = "like"
@@ -127,7 +125,7 @@ resource "jamfpro_smart_computer_group" "group_sequoia_computers" {
 }
 
 resource "jamfpro_smart_computer_group" "group_sequoia_800_171_non_compliant" {
-  name = "NIST 800-171 - Sequoia - Non Compliant Computers [${random_id.entropy.hex}]"
+  name = "NIST 800-171 - Sequoia - Non Compliant Computers [${random_integer.entropy.result}]"
   criteria {
     name        = "Operating System Version"
     search_type = "like"
@@ -146,7 +144,7 @@ resource "jamfpro_smart_computer_group" "group_sequoia_800_171_non_compliant" {
 
 ## Create policies
 resource "jamfpro_policy" "policy_sonoma_800_171_audit" {
-  name            = "NIST 800-171 - Audit (Sonoma) [${random_id.entropy.hex}]"
+  name            = "NIST 800-171 - Audit (Sonoma) [${random_integer.entropy.result}]"
   enabled         = true
   trigger_checkin = true
   frequency       = "Ongoing"
@@ -184,7 +182,7 @@ resource "jamfpro_policy" "policy_sonoma_800_171_audit" {
 }
 
 resource "jamfpro_policy" "policy_sonoma_800_171_remediation" {
-  name            = "NIST 800-171 - Remediation (Sonoma) [${random_id.entropy.hex}]"
+  name            = "NIST 800-171 - Remediation (Sonoma) [${random_integer.entropy.result}]"
   enabled         = true
   trigger_checkin = true
   frequency       = "Ongoing"
@@ -224,7 +222,7 @@ resource "jamfpro_policy" "policy_sonoma_800_171_remediation" {
 }
 
 resource "jamfpro_policy" "policy_sequoia_800_171_audit" {
-  name            = "NIST 800-171 - Audit (Sequoia) [${random_id.entropy.hex}]"
+  name            = "NIST 800-171 - Audit (Sequoia) [${random_integer.entropy.result}]"
   enabled         = true
   trigger_checkin = true
   frequency       = "Ongoing"
@@ -262,7 +260,7 @@ resource "jamfpro_policy" "policy_sequoia_800_171_audit" {
 }
 
 resource "jamfpro_policy" "policy_sequoia_800_171_remediation" {
-  name            = "NIST 800-171 - Remediation (Sequoia) [${random_id.entropy.hex}]"
+  name            = "NIST 800-171 - Remediation (Sequoia) [${random_integer.entropy.result}]"
   enabled         = true
   trigger_checkin = true
   frequency       = "Ongoing"
@@ -333,7 +331,7 @@ locals {
 ## Create configuration profiles for Sonoma
 resource "jamfpro_macos_configuration_profile_plist" "sonoma_800_171" {
   for_each            = local.sonoma_800_171_dict
-  name                = "Sonoma NIST 800-171 - ${each.key} [${random_id.entropy.hex}]"
+  name                = "Sonoma NIST 800-171 - ${each.key} [${random_integer.entropy.result}]"
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   category_id         = jamfpro_category.category_sonoma_800_171_benchmarks.id
@@ -349,7 +347,7 @@ resource "jamfpro_macos_configuration_profile_plist" "sonoma_800_171" {
 }
 
 resource "jamfpro_macos_configuration_profile_plist" "sonoma_800_171_smart_card" {
-  name                = "Sonoma NIST 800-171 - Smart Card [${random_id.entropy.hex}]"
+  name                = "Sonoma NIST 800-171 - Smart Card [${random_integer.entropy.result}]"
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   category_id         = jamfpro_category.category_sonoma_800_171_benchmarks.id
@@ -395,7 +393,7 @@ locals {
 ## Create configuration profiles for Sequoia part 1
 resource "jamfpro_macos_configuration_profile_plist" "sequoia_800_171" {
   for_each            = local.sequoia_800_171_dict
-  name                = "Sequoia NIST 800-171 - ${each.key} [${random_id.entropy.hex}]"
+  name                = "Sequoia NIST 800-171 - ${each.key} [${random_integer.entropy.result}]"
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   category_id         = jamfpro_category.category_sequoia_800_171_benchmarks.id
@@ -412,7 +410,7 @@ resource "jamfpro_macos_configuration_profile_plist" "sequoia_800_171" {
 }
 
 resource "jamfpro_macos_configuration_profile_plist" "sequoia_800_171_smart_card" {
-  name                = "Sequoia NIST 800-171 - Smart Card [${random_id.entropy.hex}]"
+  name                = "Sequoia NIST 800-171 - Smart Card [${random_integer.entropy.result}]"
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   category_id         = jamfpro_category.category_sequoia_800_171_benchmarks.id
