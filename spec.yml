@@ -85,13 +85,12 @@ options:
     display_name: Set Inventory Collection and Check-in Settings
     display_desc: This will configure inventory collection settings in Jamf Pro and set the check-in interval for macOS computers to 15 minutes.
 
-    ## Jamf Pro Outcome Modules
   - key: mobile_device_kickstart
     type: <boolean>
     presence: optional
     category: MDM Workflows
-    display_name: Enforce & Escrow FileVault 2
-    display_desc: This will create the necessary Configuration Profile, Script, and Policy to enable and enforce FileVault 2 and make certain that the recovery key is escrowed in Jamf Pro.
+    display_name: (NATE UPDATE HERE)
+    display_desc: (NATE UPDATE HERE)
 
   ## Jamf Pro Outcome Modules
   - key: include_filevault
