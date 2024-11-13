@@ -61,8 +61,8 @@ options:
     type: <boolean>
     presence: optional
     category: MDM Workflows
-    display_name: Enable Passwordless SSOe
-    display_desc: This will create a macOS Configuration Profile, Script, and Policy scoped to all computers in Jamf Pro. Outcome is Okta Verify and applicable SSOe Configuration Profile installed.
+    display_name: Enable macOS Passwordless SSOe
+    display_desc: This will create the Jamf Pro objects needed to configure and install the Okta Verify.app enabled for SSOe on macOS. Use @tryjamf.com credentials to authenticate the Okta Verify App. Objects are scoped to smart group that requires action to install computers in Jamf Pro.
 
   - key: include_qol_smart_groups
     type: <boolean>
@@ -85,19 +85,27 @@ options:
     display_name: Set Inventory Collection and Check-in Settings
     display_desc: This will configure inventory collection settings in Jamf Pro and set the check-in interval for macOS computers to 15 minutes.
 
+    ## Jamf Pro Outcome Modules
+  - key: mobile_device_kickstart
+    type: <boolean>
+    presence: optional
+    category: MDM Workflows
+    display_name: Enforce & Escrow FileVault 2
+    display_desc: This will create the necessary Configuration Profile, Script, and Policy to enable and enforce FileVault 2 and make certain that the recovery key is escrowed in Jamf Pro.
+
   ## Jamf Pro Outcome Modules
   - key: include_filevault
     type: <boolean>
     presence: optional
     category: MDM Workflows
-    display_name: Set & Enforce FileVault 2
+    display_name: Enforce & Escrow FileVault 2
     display_desc: This will create the necessary Configuration Profile, Script, and Policy to enable and enforce FileVault 2 and make certain that the recovery key is escrowed in Jamf Pro.
     
   - key: include_rosetta
     type: <boolean>
     presence: optional
     category: MDM Workflows
-    display_name: Install Rosetta 2 on Apple Silicon Macs
+    display_name: Install Rosetta 2
     display_desc: This will set up a Policy in Jamf Pro to execute a command locally on macOS to install Rosetta 2 which is required for running Intel based macOS apps.
 
   - key: include_microsoft_365
