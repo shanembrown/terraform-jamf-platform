@@ -8,27 +8,25 @@ terraform {
   }
 }
 
-resource "random_id" "entropy" {
-  keepers = {
-    first = "${timestamp()}"
-  }
-  byte_length = 1
+resource "random_integer" "entropy" {
+  min = 10
+  max = 999
 }
 
 ## Create categories
 resource "jamfpro_category" "category_sonoma_cmmc_lvl1_benchmarks" {
-  name     = "Sonoma - US CMMC 2.0 Level 1 Benchmarks [${random_id.entropy.hex}]"
+  name     = "Sonoma - US CMMC 2.0 Level 1 Benchmarks [${random_integer.entropy.result}]"
   priority = 9
 }
 
 resource "jamfpro_category" "category_sequoia_cmmc_lvl1_benchmarks" {
-  name     = "Sequoia - US CMMC 2.0 Level 1 Benchmarks [${random_id.entropy.hex}]"
+  name     = "Sequoia - US CMMC 2.0 Level 1 Benchmarks [${random_integer.entropy.result}]"
   priority = 9
 }
 
 ## Create scripts
 resource "jamfpro_script" "script_sonoma_cmmc_lvl1_compliance" {
-  name            = "Sonoma - US CMMC 2.0 Level 1 Compliance [${random_id.entropy.hex}]"
+  name            = "Sonoma - US CMMC 2.0 Level 1 Compliance [${random_integer.entropy.result}]"
   priority        = "AFTER"
   script_contents = file("${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_scripts/sonoma_cmmc_lvl1_compliance.sh")
   category_id     = jamfpro_category.category_sonoma_cmmc_lvl1_benchmarks.id
@@ -36,7 +34,7 @@ resource "jamfpro_script" "script_sonoma_cmmc_lvl1_compliance" {
 }
 
 resource "jamfpro_script" "script_sequoia_cmmc_lvl1_compliance" {
-  name            = "Sequoia - US CMMC 2.0 Level 1 Compliance [${random_id.entropy.hex}]"
+  name            = "Sequoia - US CMMC 2.0 Level 1 Compliance [${random_integer.entropy.result}]"
   priority        = "AFTER"
   script_contents = file("${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark/support_files/computer_scripts/sequoia_cmmc_lvl1_compliance.sh")
   category_id     = jamfpro_category.category_sequoia_cmmc_lvl1_benchmarks.id
@@ -45,7 +43,7 @@ resource "jamfpro_script" "script_sequoia_cmmc_lvl1_compliance" {
 
 ## Create computer extension attributes
 resource "jamfpro_computer_extension_attribute" "ea_cmmc_lvl1_failed_count" {
-  name                   = "US CMMC 2.0 Level 1 - Failed Results Count [${random_id.entropy.hex}]"
+  name                   = "US CMMC 2.0 Level 1 - Failed Results Count [${random_integer.entropy.result}]"
   input_type             = "SCRIPT"
   enabled                = true
   data_type              = "INTEGER"
@@ -54,7 +52,7 @@ resource "jamfpro_computer_extension_attribute" "ea_cmmc_lvl1_failed_count" {
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_cmmc_lvl1_failed_list" {
-  name                   = "US CMMC 2.0 Level 1 - Failed Results List [${random_id.entropy.hex}]"
+  name                   = "US CMMC 2.0 Level 1 - Failed Results List [${random_integer.entropy.result}]"
   input_type             = "SCRIPT"
   enabled                = true
   data_type              = "STRING"
@@ -63,7 +61,7 @@ resource "jamfpro_computer_extension_attribute" "ea_cmmc_lvl1_failed_list" {
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_cmmc_lvl1_version" {
-  name                   = "Compliance Version [${random_id.entropy.hex}]"
+  name                   = "Compliance Version [${random_integer.entropy.result}]"
   input_type             = "SCRIPT"
   enabled                = true
   data_type              = "STRING"
@@ -73,7 +71,7 @@ resource "jamfpro_computer_extension_attribute" "ea_cmmc_lvl1_version" {
 
 ## Create Smart Computer Groups
 resource "jamfpro_smart_computer_group" "group_sonoma_computers" {
-  name = "US CMMC 2.0 Level 1 - Sonoma Computers [${random_id.entropy.hex}]"
+  name = "US CMMC 2.0 Level 1 - Sonoma Computers [${random_integer.entropy.result}]"
   criteria {
     name        = "Operating System Version"
     search_type = "like"
@@ -91,7 +89,7 @@ resource "jamfpro_smart_computer_group" "group_sonoma_computers" {
 }
 
 resource "jamfpro_smart_computer_group" "group_sonoma_cmmc_lvl1_non_compliant" {
-  name = "US CMMC 2.0 Level 1 - Sonoma - Non Compliant Computers [${random_id.entropy.hex}]"
+  name = "US CMMC 2.0 Level 1 - Sonoma - Non Compliant Computers [${random_integer.entropy.result}]"
   criteria {
     name        = "Operating System Version"
     search_type = "like"
@@ -109,7 +107,7 @@ resource "jamfpro_smart_computer_group" "group_sonoma_cmmc_lvl1_non_compliant" {
 }
 
 resource "jamfpro_smart_computer_group" "group_sequoia_computers" {
-  name = "US CMMC 2.0 Level 1 - Sequoia Computers [${random_id.entropy.hex}]"
+  name = "US CMMC 2.0 Level 1 - Sequoia Computers [${random_integer.entropy.result}]"
   criteria {
     name        = "Operating System Version"
     search_type = "like"
@@ -127,7 +125,7 @@ resource "jamfpro_smart_computer_group" "group_sequoia_computers" {
 }
 
 resource "jamfpro_smart_computer_group" "group_sequoia_cmmc_lvl1_non_compliant" {
-  name = "US CMMC 2.0 Level 1 - Sequoia - Non Compliant Computers [${random_id.entropy.hex}]"
+  name = "US CMMC 2.0 Level 1 - Sequoia - Non Compliant Computers [${random_integer.entropy.result}]"
   criteria {
     name        = "Operating System Version"
     search_type = "like"
@@ -146,7 +144,7 @@ resource "jamfpro_smart_computer_group" "group_sequoia_cmmc_lvl1_non_compliant" 
 
 ## Create policies
 resource "jamfpro_policy" "policy_sonoma_cmmc_lvl1_audit" {
-  name            = "US CMMC 2.0 Level 1 - Audit (Sonoma) [${random_id.entropy.hex}]"
+  name            = "US CMMC 2.0 Level 1 - Audit (Sonoma) [${random_integer.entropy.result}]"
   enabled         = true
   trigger_checkin = true
   frequency       = "Ongoing"
@@ -184,7 +182,7 @@ resource "jamfpro_policy" "policy_sonoma_cmmc_lvl1_audit" {
 }
 
 resource "jamfpro_policy" "policy_sonoma_cmmc_lvl1_remediation" {
-  name            = "US CMMC 2.0 Level 1 - Remediation (Sonoma) [${random_id.entropy.hex}]"
+  name            = "US CMMC 2.0 Level 1 - Remediation (Sonoma) [${random_integer.entropy.result}]"
   enabled         = true
   trigger_checkin = true
   frequency       = "Ongoing"
@@ -224,7 +222,7 @@ resource "jamfpro_policy" "policy_sonoma_cmmc_lvl1_remediation" {
 }
 
 resource "jamfpro_policy" "policy_sequoia_cmmc_lvl1_audit" {
-  name            = "US CMMC 2.0 Level 1 - Audit (Sequoia) [${random_id.entropy.hex}]"
+  name            = "US CMMC 2.0 Level 1 - Audit (Sequoia) [${random_integer.entropy.result}]"
   enabled         = true
   trigger_checkin = true
   frequency       = "Ongoing"
@@ -262,7 +260,7 @@ resource "jamfpro_policy" "policy_sequoia_cmmc_lvl1_audit" {
 }
 
 resource "jamfpro_policy" "policy_sequoia_cmmc_lvl1_remediation" {
-  name            = "US CMMC 2.0 Level 1 - Remediation (Sequoia) [${random_id.entropy.hex}]"
+  name            = "US CMMC 2.0 Level 1 - Remediation (Sequoia) [${random_integer.entropy.result}]"
   enabled         = true
   trigger_checkin = true
   frequency       = "Ongoing"
@@ -323,7 +321,7 @@ locals {
 ## Create configuration profiles for Sonoma
 resource "jamfpro_macos_configuration_profile_plist" "sonoma_cmmc_lvl1" {
   for_each            = local.sonoma_cmmc_lvl1_dict
-  name                = "Sonoma US CMMC 2.0 Level 1 - ${each.key} [${random_id.entropy.hex}]"
+  name                = "Sonoma US CMMC 2.0 Level 1 - ${each.key} [${random_integer.entropy.result}]"
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   category_id         = jamfpro_category.category_sonoma_cmmc_lvl1_benchmarks.id
@@ -339,7 +337,7 @@ resource "jamfpro_macos_configuration_profile_plist" "sonoma_cmmc_lvl1" {
 }
 
 resource "jamfpro_macos_configuration_profile_plist" "sonoma_cmmc_lvl1_smart_card" {
-  name                = "Sonoma US CMMC 2.0 Level 1 - Smart Card [${random_id.entropy.hex}]"
+  name                = "Sonoma US CMMC 2.0 Level 1 - Smart Card [${random_integer.entropy.result}]"
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   category_id         = jamfpro_category.category_sonoma_cmmc_lvl1_benchmarks.id
@@ -375,7 +373,7 @@ locals {
 ## Create configuration profiles for Sequoia
 resource "jamfpro_macos_configuration_profile_plist" "sequoia_cmmc_lvl1" {
   for_each            = local.sequoia_cmmc_lvl1_dict
-  name                = "Sequoia US CMMC 2.0 Level 1 - ${each.key} [${random_id.entropy.hex}]"
+  name                = "Sequoia US CMMC 2.0 Level 1 - ${each.key} [${random_integer.entropy.result}]"
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   category_id         = jamfpro_category.category_sequoia_cmmc_lvl1_benchmarks.id
@@ -392,7 +390,7 @@ resource "jamfpro_macos_configuration_profile_plist" "sequoia_cmmc_lvl1" {
 }
 
 resource "jamfpro_macos_configuration_profile_plist" "sequoia_cmmc_lvl1_smart_card" {
-  name                = "Sequoia US CMMC 2.0 Level 1 - Smart Card [${random_id.entropy.hex}]"
+  name                = "Sequoia US CMMC 2.0 Level 1 - Smart Card [${random_integer.entropy.result}]"
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   category_id         = jamfpro_category.category_sequoia_cmmc_lvl1_benchmarks.id

@@ -10,26 +10,24 @@ terraform {
 
 ## DISA STIG is not available for iOS 18 yet. Relevant resources are commented out until we can add support.
 
-resource "random_id" "entropy" {
-  keepers = {
-    first = "${timestamp()}"
-  }
-  byte_length = 1
+resource "random_integer" "entropy" {
+  min = 10
+  max = 999
 }
 
 ## Create categories
 resource "jamfpro_category" "category_ios17_stig_benchmarks" {
-  name     = "iOS 17 - DISA STIG Benchmarks [${random_id.entropy.hex}]"
+  name     = "iOS 17 - DISA STIG Benchmarks [${random_integer.entropy.result}]"
   priority = 9
 }
 
 # resource "jamfpro_category" "category_ios18_cis_benchmarks" {
-#   name     = "iOS 18 - DISA STIG Benchmarks [${random_id.entropy.hex}]"
+#   name     = "iOS 18 - DISA STIG Benchmarks [${random_integer.entropy.result}]"
 #   priority = 9
 # }
 
 resource "jamfpro_smart_mobile_device_group" "group_ios17" {
-  name = "iOS 17 - DISA STIG [${random_id.entropy.hex}]"
+  name = "iOS 17 - DISA STIG [${random_integer.entropy.result}]"
 
   criteria {
     name        = "OS Version"
@@ -47,7 +45,7 @@ resource "jamfpro_smart_mobile_device_group" "group_ios17" {
 }
 
 # resource "jamfpro_smart_mobile_device_group" "group_ios18" {
-#   name = "iOS 18 - DISA STIG [${random_id.entropy.hex}]"
+#   name = "iOS 18 - DISA STIG [${random_integer.entropy.result}]"
 
 #   criteria {
 #     name        = "OS Version"
@@ -76,7 +74,7 @@ locals {
 
 resource "jamfpro_mobile_device_configuration_profile_plist" "config_ios17" {
   for_each           = local.ios17_stig_dict
-  name               = "iOS 17 DISA STIG - ${each.key} [${random_id.entropy.hex}]"
+  name               = "iOS 17 DISA STIG - ${each.key} [${random_integer.entropy.result}]"
   deployment_method  = "Install Automatically"
   level              = "Device Level"
   redeploy_on_update = "Newly Assigned"
@@ -103,7 +101,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "config_ios17" {
 
 # resource "jamfpro_mobile_device_configuration_profile_plist" "config_ios18" {
 #   for_each           = local.ios18_stig_dict
-#   name               = "iOS 18 DISA STIG - ${each.key} [${random_id.entropy.hex}]"
+#   name               = "iOS 18 DISA STIG - ${each.key} [${random_integer.entropy.result}]"
 #   deployment_method  = "Install Automatically"
 #   level              = "Device Level"
 #   redeploy_on_update = "Newly Assigned"

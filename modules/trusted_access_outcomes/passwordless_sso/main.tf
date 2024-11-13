@@ -8,22 +8,20 @@ terraform {
   }
 }
 
-resource "random_id" "entropy" {
-  keepers = {
-    first = "${timestamp()}"
-  }
-  byte_length = 1
+resource "random_integer" "entropy" {
+  min = 10
+  max = 999
 }
 
 ## Create categories
 resource "jamfpro_category" "category_passwordless_sso" {
-  name     = "IdP & SSO [${random_id.entropy.hex}]"
+  name     = "IdP & SSO [${random_integer.entropy.result}]"
   priority = 9
 }
 
 ## Create scripts
 resource "jamfpro_script" "script_passwordless_sso" {
-  name            = "Passwordless SSO [${random_id.entropy.hex}]"
+  name            = "Passwordless SSO [${random_integer.entropy.result}]"
   priority        = "AFTER"
   script_contents = file("${var.support_files_path_prefix}modules/trusted_access_outcomes/passwordless_sso/support_files/computer_scripts/passwordless_sso.zsh")
   category_id     = jamfpro_category.category_passwordless_sso.id
@@ -32,7 +30,7 @@ resource "jamfpro_script" "script_passwordless_sso" {
 
 ## Create Smart Computer Groups
 resource "jamfpro_smart_computer_group" "group_passwordless_sso" {
-  name = "Passwordless SSO [${random_id.entropy.hex}]"
+  name = "Passwordless SSO [${random_integer.entropy.result}]"
   criteria {
     name        = "Operating System Version"
     search_type = "like"
@@ -60,7 +58,7 @@ locals {
 ## Create configuration profiles for Passwordless SSO
 resource "jamfpro_macos_configuration_profile_plist" "passwordless_sso" {
   for_each            = local.passwordless_sso_dict
-  name                = "Okta FastPass - ${each.key} [${random_id.entropy.hex}]"
+  name                = "Okta FastPass - ${each.key} [${random_integer.entropy.result}]"
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   category_id         = jamfpro_category.category_passwordless_sso.id
@@ -78,7 +76,7 @@ resource "jamfpro_macos_configuration_profile_plist" "passwordless_sso" {
 
 ## Create policies
 resource "jamfpro_policy" "policy_passwordless_sso" {
-  name            = "Passwordless SSO (Okta Verify) [${random_id.entropy.hex}]"
+  name            = "Passwordless SSO (Okta Verify) [${random_integer.entropy.result}]"
   enabled         = true
   trigger_checkin = true
   frequency       = "Once per computer"

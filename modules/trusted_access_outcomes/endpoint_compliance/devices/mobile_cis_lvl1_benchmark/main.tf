@@ -8,26 +8,24 @@ terraform {
   }
 }
 
-resource "random_id" "entropy" {
-  keepers = {
-    first = "${timestamp()}"
-  }
-  byte_length = 1
+resource "random_integer" "entropy" {
+  min = 10
+  max = 999
 }
 
 ## Create categories
 resource "jamfpro_category" "category_ios17_cis_benchmarks" {
-  name     = "iOS 17 - CIS Level 1 Benchmarks [${random_id.entropy.hex}]"
+  name     = "iOS 17 - CIS Level 1 Benchmarks [${random_integer.entropy.result}]"
   priority = 9
 }
 
 resource "jamfpro_category" "category_ios18_cis_benchmarks" {
-  name     = "iOS 18 - CIS Level 1 Benchmarks [${random_id.entropy.hex}]"
+  name     = "iOS 18 - CIS Level 1 Benchmarks [${random_integer.entropy.result}]"
   priority = 9
 }
 
 resource "jamfpro_smart_mobile_device_group" "group_ios17" {
-  name = "iOS 17 - CIS Level 1 [${random_id.entropy.hex}]"
+  name = "iOS 17 - CIS Level 1 [${random_integer.entropy.result}]"
 
   criteria {
     name        = "OS Version"
@@ -45,7 +43,7 @@ resource "jamfpro_smart_mobile_device_group" "group_ios17" {
 }
 
 resource "jamfpro_smart_mobile_device_group" "group_ios18" {
-  name = "iOS 18 - CIS Level 1 [${random_id.entropy.hex}]"
+  name = "iOS 18 - CIS Level 1 [${random_integer.entropy.result}]"
 
   criteria {
     name        = "OS Version"
@@ -73,7 +71,7 @@ locals {
 
 resource "jamfpro_mobile_device_configuration_profile_plist" "config_ios17" {
   for_each           = local.ios17_cis_lvl1_dict
-  name               = "iOS 17 CIS Level 1 - ${each.key} [${random_id.entropy.hex}]"
+  name               = "iOS 17 CIS Level 1 - ${each.key} [${random_integer.entropy.result}]"
   deployment_method  = "Install Automatically"
   level              = "Device Level"
   redeploy_on_update = "Newly Assigned"
@@ -99,7 +97,7 @@ locals {
 
 resource "jamfpro_mobile_device_configuration_profile_plist" "config_ios18" {
   for_each           = local.ios18_cis_lvl1_dict
-  name               = "iOS 18 CIS Level 1 - ${each.key} [${random_id.entropy.hex}]"
+  name               = "iOS 18 CIS Level 1 - ${each.key} [${random_integer.entropy.result}]"
   deployment_method  = "Install Automatically"
   level              = "Device Level"
   redeploy_on_update = "Newly Assigned"
