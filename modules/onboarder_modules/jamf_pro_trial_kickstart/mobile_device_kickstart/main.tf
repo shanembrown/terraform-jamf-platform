@@ -23,11 +23,24 @@ resource "random_integer" "entropy" {
   max = 999
 }
 
+## Create Categories
+resource "jamfpro_category" "category_restrictions" {
+  name     = "Restrictions [${random_integer.entropy.result}]"
+  priority = 9
+}
+
+resource "jamfpro_category" "category_demo" {
+  name     = "Demo [${random_integer.entropy.result}]"
+  priority = 9
+}
+
+
 resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_configuration_profile_restrict_apple_id_changes" {
   name               = "Restrict Apple ID Changes [${random_integer.entropy.result}]"
   description        = "This restricts the ability to modify account settings for Apple ID"
   deployment_method  = "Install Automatically"
   level              = "Device Level"
+  category_id        = jamfpro_category.category_restrictions.id
   redeploy_on_update = "Newly Assigned"
   payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/restrict_appleid_changes.mobileconfig")
 
@@ -41,6 +54,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   description        = "This restricts the ability to use Airdrop"
   deployment_method  = "Install Automatically"
   level              = "Device Level"
+  category_id        = jamfpro_category.category_restrictions.id
   redeploy_on_update = "Newly Assigned"
   payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/restrict_airdrop.mobileconfig")
 
@@ -54,6 +68,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   description        = "Enforces a non complex 6 digit passcode"
   deployment_method  = "Install Automatically"
   level              = "Device Level"
+  category_id        = jamfpro_category.category_demo.id
   redeploy_on_update = "Newly Assigned"
   payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/passcode_requirements.mobileconfig")
 
@@ -67,6 +82,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   description        = "Restricts Erase all Content and Settings"
   deployment_method  = "Install Automatically"
   level              = "Device Level"
+  category_id        = jamfpro_category.category_restrictions.id
   redeploy_on_update = "Newly Assigned"
   payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/restrict_erase_content_and_settings.mobileconfig")
 
@@ -80,6 +96,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   description        = "Restricts the Camera in all Use and Apps"
   deployment_method  = "Install Automatically"
   level              = "Device Level"
+  category_id        = jamfpro_category.category_restrictions.id
   redeploy_on_update = "Newly Assigned"
   payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/restrict_camera.mobileconfig")
 
@@ -93,6 +110,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   description        = "Restricts the Ability to take Screenshots"
   deployment_method  = "Install Automatically"
   level              = "Device Level"
+  category_id        = jamfpro_category.category_restrictions.id
   redeploy_on_update = "Newly Assigned"
   payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/restrict_screenshots.mobileconfig")
 
@@ -106,6 +124,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   description        = "Sets DLP restrictions for User Enrollment / BYOD"
   deployment_method  = "Install Automatically"
   level              = "Device Level"
+  category_id        = jamfpro_category.category_demo.id
   redeploy_on_update = "Newly Assigned"
   payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/user_enrollment_byod_restrictions.mobileconfig")
 
@@ -162,6 +181,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   description        = "Places device in Single App Mode for Safari"
   deployment_method  = "Install Automatically"
   level              = "Device Level"
+  category_id        = jamfpro_category.category_demo.id
   redeploy_on_update = "Newly Assigned"
   payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/kiosk_mode_safari_single_app_mode.mobileconfig")
 
@@ -176,6 +196,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   description        = "Restricts Airdrop, Apple ID changes, Screenshots, Erase, and Camera"
   deployment_method  = "Install Automatically"
   level              = "Device Level"
+  category_id        = jamfpro_category.category_demo.id
   redeploy_on_update = "Newly Assigned"
   payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/shared_device_restrictions.mobileconfig")
 
