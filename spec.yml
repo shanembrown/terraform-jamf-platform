@@ -85,7 +85,7 @@ options:
     display_name: Set Inventory Collection and Check-in Settings
     display_desc: This will configure inventory collection settings in Jamf Pro and set the check-in interval for macOS computers to 15 minutes.
 
-  - key: mobile_device_kickstart
+  - key: include_mobile_device_kickstart
     type: <boolean>
     presence: optional
     category: MDM Workflows
