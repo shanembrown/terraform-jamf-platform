@@ -8,11 +8,9 @@ terraform {
   }
 }
 
-resource "random_id" "entropy" {
-  keepers = {
-    first = "${timestamp()}"
-  }
-  byte_length = 1
+resource "random_integer" "entropy" {
+  min = 10
+  max = 999
 }
 
 # Define a resource to use the local-exec provisioner
@@ -34,10 +32,15 @@ resource "null_resource" "run_script" {
   }
 }
 
+## Create Category
+resource "jamfpro_category" "category_jamfprotect_security" {
+  name = "Security - Jamf Protect"
+}
+
 # Create Smart Group and Congfiguration Profile to identify Sequoia Macs and make Jamf Protect a non removable system extension
 
 resource "jamfpro_smart_computer_group" "group_sequoia_computers_jamf_protect" {
-  name = "Macs on MacOS Sequoia (Jamf Protect System Extension Enforcement) [${random_id.entropy.hex}]"
+  name = "Macs on MacOS Sequoia (Jamf Protect System Extension Enforcement) [${random_integer.entropy.result}]"
   criteria {
     name        = "Operating System Version"
     search_type = "like"
@@ -48,7 +51,7 @@ resource "jamfpro_smart_computer_group" "group_sequoia_computers_jamf_protect" {
 }
 
 resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuration_profile_jamf_protect_system_extension" {
-  name                = "Jamf Protect System Extension Enforcement [${random_id.entropy.hex}]"
+  name                = "Jamf Protect System Extension Enforcement [${random_integer.entropy.result}]"
   description         = "This configuration profile prevents users from disabling the Jamf Protect System Extension"
   level               = "System"
   redeploy_on_update  = "Newly Assigned"
@@ -56,6 +59,7 @@ resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuratio
   payloads            = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_protect_trial_kickstart/support_files/non_removable_system_extension_jamf_protect.mobileconfig")
   payload_validate    = false
   user_removable      = false
+  category_id         = jamfpro_category.category_jamfprotect_security.id
 
   scope {
     all_computers      = false

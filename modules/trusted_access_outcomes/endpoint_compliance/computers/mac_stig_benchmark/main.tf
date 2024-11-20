@@ -8,27 +8,25 @@ terraform {
   }
 }
 
-resource "random_id" "entropy" {
-  keepers = {
-    first = "${timestamp()}"
-  }
-  byte_length = 1
+resource "random_integer" "entropy" {
+  min = 10
+  max = 999
 }
 
 ## Create categories
 resource "jamfpro_category" "category_sonoma_stig_benchmarks" {
-  name     = "Sonoma - DISA STIG Benchmarks [${random_id.entropy.hex}]"
+  name     = "Sonoma - DISA STIG Benchmarks [${random_integer.entropy.result}]"
   priority = 9
 }
 
 resource "jamfpro_category" "category_sequoia_stig_benchmarks" {
-  name     = "Sequoia - DISA STIG Benchmarks [${random_id.entropy.hex}]"
+  name     = "Sequoia - DISA STIG Benchmarks [${random_integer.entropy.result}]"
   priority = 9
 }
 
 ## Create scripts
 resource "jamfpro_script" "script_sonoma_stig_compliance" {
-  name            = "Sonoma - DISA STIG Compliance [${random_id.entropy.hex}]"
+  name            = "Sonoma - DISA STIG Compliance [${random_integer.entropy.result}]"
   priority        = "AFTER"
   script_contents = file("${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_stig_benchmark/support_files/computer_scripts/sonoma_stig_compliance.sh")
   category_id     = jamfpro_category.category_sonoma_stig_benchmarks.id
@@ -36,7 +34,7 @@ resource "jamfpro_script" "script_sonoma_stig_compliance" {
 }
 
 resource "jamfpro_script" "script_sequoia_stig_compliance" {
-  name            = "Sequoia - DISA STIG Compliance [${random_id.entropy.hex}]"
+  name            = "Sequoia - DISA STIG Compliance [${random_integer.entropy.result}]"
   priority        = "AFTER"
   script_contents = file("${var.support_files_path_prefix}modules/trusted_access_outcomes/endpoint_compliance/computers/mac_stig_benchmark/support_files/computer_scripts/sequoia_stig_compliance.sh")
   category_id     = jamfpro_category.category_sequoia_stig_benchmarks.id
@@ -45,7 +43,7 @@ resource "jamfpro_script" "script_sequoia_stig_compliance" {
 
 ## Create computer extension attributes
 resource "jamfpro_computer_extension_attribute" "ea_stig_failed_count" {
-  name                   = "DISA STIG - Failed Results Count [${random_id.entropy.hex}]"
+  name                   = "DISA STIG - Failed Results Count [${random_integer.entropy.result}]"
   input_type             = "SCRIPT"
   enabled                = true
   data_type              = "INTEGER"
@@ -54,7 +52,7 @@ resource "jamfpro_computer_extension_attribute" "ea_stig_failed_count" {
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_stig_failed_list" {
-  name                   = "DISA STIG - Failed Results List [${random_id.entropy.hex}]"
+  name                   = "DISA STIG - Failed Results List [${random_integer.entropy.result}]"
   input_type             = "SCRIPT"
   enabled                = true
   data_type              = "STRING"
@@ -63,7 +61,7 @@ resource "jamfpro_computer_extension_attribute" "ea_stig_failed_list" {
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_stig_version" {
-  name                   = "Compliance Version [${random_id.entropy.hex}]"
+  name                   = "Compliance Version [${random_integer.entropy.result}]"
   input_type             = "SCRIPT"
   enabled                = true
   data_type              = "STRING"
@@ -73,7 +71,7 @@ resource "jamfpro_computer_extension_attribute" "ea_stig_version" {
 
 ## Create Smart Computer Groups
 resource "jamfpro_smart_computer_group" "group_sonoma_computers" {
-  name = "DISA STIG - Sonoma Computers [${random_id.entropy.hex}]"
+  name = "DISA STIG - Sonoma Computers [${random_integer.entropy.result}]"
   criteria {
     name        = "Operating System Version"
     search_type = "like"
@@ -91,7 +89,7 @@ resource "jamfpro_smart_computer_group" "group_sonoma_computers" {
 }
 
 resource "jamfpro_smart_computer_group" "group_sonoma_stig_non_compliant" {
-  name = "DISA STIG - Sonoma - Non Compliant Computers [${random_id.entropy.hex}]"
+  name = "DISA STIG - Sonoma - Non Compliant Computers [${random_integer.entropy.result}]"
   criteria {
     name        = "Operating System Version"
     search_type = "like"
@@ -109,7 +107,7 @@ resource "jamfpro_smart_computer_group" "group_sonoma_stig_non_compliant" {
 }
 
 resource "jamfpro_smart_computer_group" "group_sequoia_computers" {
-  name = "DISA STIG - Sequoia Computers [${random_id.entropy.hex}]"
+  name = "DISA STIG - Sequoia Computers [${random_integer.entropy.result}]"
   criteria {
     name        = "Operating System Version"
     search_type = "like"
@@ -127,7 +125,7 @@ resource "jamfpro_smart_computer_group" "group_sequoia_computers" {
 }
 
 resource "jamfpro_smart_computer_group" "group_sequoia_stig_non_compliant" {
-  name = "DISA STIG - Sequoia - Non Compliant Computers [${random_id.entropy.hex}]"
+  name = "DISA STIG - Sequoia - Non Compliant Computers [${random_integer.entropy.result}]"
   criteria {
     name        = "Operating System Version"
     search_type = "like"
@@ -146,7 +144,7 @@ resource "jamfpro_smart_computer_group" "group_sequoia_stig_non_compliant" {
 
 ## Create policies
 resource "jamfpro_policy" "policy_sonoma_stig_audit" {
-  name            = "DISA STIG - Audit (Sonoma) [${random_id.entropy.hex}]"
+  name            = "DISA STIG - Audit (Sonoma) [${random_integer.entropy.result}]"
   enabled         = true
   trigger_checkin = true
   frequency       = "Ongoing"
@@ -184,7 +182,7 @@ resource "jamfpro_policy" "policy_sonoma_stig_audit" {
 }
 
 resource "jamfpro_policy" "policy_sonoma_stig_remediation" {
-  name            = "DISA STIG - Remediation (Sonoma) [${random_id.entropy.hex}]"
+  name            = "DISA STIG - Remediation (Sonoma) [${random_integer.entropy.result}]"
   enabled         = true
   trigger_checkin = true
   frequency       = "Ongoing"
@@ -224,7 +222,7 @@ resource "jamfpro_policy" "policy_sonoma_stig_remediation" {
 }
 
 resource "jamfpro_policy" "policy_sequoia_stig_audit" {
-  name            = "DISA STIG - Audit (Sequoia) [${random_id.entropy.hex}]"
+  name            = "DISA STIG - Audit (Sequoia) [${random_integer.entropy.result}]"
   enabled         = true
   trigger_checkin = true
   frequency       = "Ongoing"
@@ -262,7 +260,7 @@ resource "jamfpro_policy" "policy_sequoia_stig_audit" {
 }
 
 resource "jamfpro_policy" "policy_sequoia_stig_remediation" {
-  name            = "DISA STIG - Remediation (Sequoia) [${random_id.entropy.hex}]"
+  name            = "DISA STIG - Remediation (Sequoia) [${random_integer.entropy.result}]"
   enabled         = true
   trigger_checkin = true
   frequency       = "Ongoing"
@@ -330,7 +328,7 @@ locals {
 ## Create configuration profiles for Sonoma
 resource "jamfpro_macos_configuration_profile_plist" "sonoma_stig" {
   for_each            = local.sonoma_stig_dict
-  name                = "Sonoma DISA STIG - ${each.key} [${random_id.entropy.hex}]"
+  name                = "Sonoma DISA STIG - ${each.key} [${random_integer.entropy.result}]"
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   category_id         = jamfpro_category.category_sonoma_stig_benchmarks.id
@@ -346,7 +344,7 @@ resource "jamfpro_macos_configuration_profile_plist" "sonoma_stig" {
 }
 
 resource "jamfpro_macos_configuration_profile_plist" "sonoma_stig_smart_card" {
-  name                = "Sonoma DISA STIG - Smart Card [${random_id.entropy.hex}]"
+  name                = "Sonoma DISA STIG - Smart Card [${random_integer.entropy.result}]"
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   category_id         = jamfpro_category.category_sonoma_stig_benchmarks.id
@@ -389,7 +387,7 @@ locals {
 ## Create configuration profiles for Sequoia part 1
 resource "jamfpro_macos_configuration_profile_plist" "sequoia_stig" {
   for_each            = local.sequoia_stig_dict
-  name                = "Sequoia DISA STIG - ${each.key} [${random_id.entropy.hex}]"
+  name                = "Sequoia DISA STIG - ${each.key} [${random_integer.entropy.result}]"
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   category_id         = jamfpro_category.category_sequoia_stig_benchmarks.id
@@ -406,7 +404,7 @@ resource "jamfpro_macos_configuration_profile_plist" "sequoia_stig" {
 }
 
 resource "jamfpro_macos_configuration_profile_plist" "sequoia_stig_smart_card" {
-  name                = "Sequoia DISA STIG - Smart Card [${random_id.entropy.hex}]"
+  name                = "Sequoia DISA STIG - Smart Card [${random_integer.entropy.result}]"
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   category_id         = jamfpro_category.category_sequoia_stig_benchmarks.id

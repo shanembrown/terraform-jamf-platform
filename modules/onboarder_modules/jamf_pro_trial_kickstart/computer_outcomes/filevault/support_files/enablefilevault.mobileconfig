@@ -68,7 +68,7 @@
 		<key>PayloadDescription</key>
 		<string/>
 		<key>PayloadDisplayName</key>
-		<string>Filevault 2 Enforcement</string>
+		<string>FileVault 2 Enforcement</string>
 		<key>PayloadEnabled</key>
 		<true/>
 		<key>PayloadIdentifier</key>

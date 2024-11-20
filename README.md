@@ -80,16 +80,17 @@ aws_region              = ""
 # File path prefix for Terraform directory
 support_files_path_prefix = "" ## Path to your directory - example: /Users/<youruser>/filename/
 
-## MODULE KNOBS
+##################################
+##### ONBOARDER MODULE KNOBS #####
+##################################
 
-## Onboarder Knobs
+
+## (Jamf Pro) General Settings Knobs ##
 include_qol_smart_groups             = false
 include_categories                   = false
 include_computer_management_settings = false
-include_jamf_protect_trial_kickstart = false
-include_mobile_device_kickstart      = false
 
-## Compliance Benchmark Knobs
+## (Jamf Pro) Compliance Benchmark Knobs
 include_mac_cis_lvl1_benchmark    = false
 include_mobile_cis_lvl1_benchmark = false
 include_mac_stig_benchmark        = false
@@ -97,16 +98,16 @@ include_mobile_stig_benchmark     = false
 include_mac_800_171_benchmark     = false
 include_mac_cmmc_lvl1_benchmark   = false
 
-## Outcome Knobs
+## (Jamf Pro) Computer Outcome Knobs
 include_microsoft_365          = false
 include_filevault              = false
 include_rosetta                = false
 include_passwordless_ssoe      = false
-include_admin_tools            = false ## Pending build
-include_jc_privilege_elevation = false ## Pending build
 
+## (Jamf Pro) Mobile Outcome Knobs
+include_mobile_device_kickstart      = false
 
-## App Installer Knobs
+## (Jamf Pro) App Installer Knobs
 include_google_chrome   = false
 include_mozilla_firefox = false
 include_slack           = false
@@ -117,19 +118,32 @@ include_pppc_utility    = false
 include_jamfcheck       = false
 include_zoom            = false
 
-## Jamf Security Cloud Knobs
+## Jamf Protect Knobs ##
+include_jamf_protect_trial_kickstart = false
+
+## Jamf Security Cloud Knobs ##
+include_jsc_block_pages   = false
+include_jsc_all_services  = false
 include_jsc_uemc          = false
+
+############################################
+
+##################################
+##### MISC MODULE KNOBS ##########
+##################################
+
+##### NOT INCLUDED IN ONBORDER ###
+
+## Jamf Security Cloud Knobs ##
 include_jsc_dp_only       = false
 include_jsc_mtd_only      = false
-include_jsc_all_services  = false
 include_jsc_ztna          = false
 include_jsc_network_relay = false
-include_jsc_block_pages   = false
 include_jsc_mtd_dp_only   = false
 include_jsc_ztna_dp_only  = false
 include_jsc_ztna_mtd_only = false
 
-## Experience Jamf Knobs
+## Experience Jamf Knobs ##
 include_ej_base                 = false
 include_ej_incident_response    = false
 include_ej_mac_cis_benchmark    = false

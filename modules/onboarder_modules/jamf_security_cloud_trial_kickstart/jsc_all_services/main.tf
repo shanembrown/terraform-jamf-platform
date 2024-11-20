@@ -12,11 +12,9 @@ terraform {
   }
 }
 
-resource "random_id" "entropy" {
-  keepers = {
-    first = "${timestamp()}"
-  }
-  byte_length = 1
+resource "random_integer" "entropy" {
+  min = 10
+  max = 999
 }
 
 resource "jsc_oktaidp" "okta_idp_base" {
@@ -26,7 +24,7 @@ resource "jsc_oktaidp" "okta_idp_base" {
 }
 
 resource "jsc_ap" "all_services" {
-  name             = "Jamf Connect ZTNA and Protect [${random_id.entropy.hex}]"
+  name             = "Jamf Connect ZTNA and Protect [${random_integer.entropy.result}]"
   idptype          = "OKTA"
   oktaconnectionid = jsc_oktaidp.okta_idp_base.id
   privateaccess    = true
@@ -35,12 +33,12 @@ resource "jsc_ap" "all_services" {
 }
 
 resource "jamfpro_category" "jsc_all_services_profiles" {
-  name     = "Jamf Security Cloud - Activation Profiles [${random_id.entropy.hex}]"
+  name     = "Jamf Security Cloud - Activation Profiles [${random_integer.entropy.result}]"
   priority = 9
 }
 
 resource "jamfpro_macos_configuration_profile_plist" "all_services_macos" {
-  name                = "Jamf Connect ZTNA + Jamf Protect Threat and Content Control - macOS (Supervised) [${random_id.entropy.hex}]"
+  name                = "Jamf Connect ZTNA + Jamf Protect Threat and Content Control - macOS (Supervised) [${random_integer.entropy.result}]"
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   level               = "System"

@@ -8,22 +8,20 @@ terraform {
   }
 }
 
-resource "random_id" "entropy" {
-  keepers = {
-    first = "${timestamp()}"
-  }
-  byte_length = 1
+resource "random_integer" "entropy" {
+  min = 10
+  max = 999
 }
 
 ## Create Categories
 resource "jamfpro_category" "category_admin_tools" {
-  name     = "Admin Tools [${random_id.entropy.hex}]"
+  name     = "Admin Tools [${random_integer.entropy.result}]"
   priority = 9
 }
 
 ## Create Smart Group
 resource "jamfpro_smart_computer_group" "group_apple_silicon" {
-  name = "Apple Silicon Macs [${random_id.entropy.hex}]"
+  name = "Apple Silicon Macs [${random_integer.entropy.result}]"
   criteria {
     name        = "Apple Silicon"
     search_type = "is"
@@ -35,7 +33,7 @@ resource "jamfpro_smart_computer_group" "group_apple_silicon" {
 
 ## Create Policy
 resource "jamfpro_policy" "policy_rosetta_2" {
-  name            = "Rosetta 2 Install [${random_id.entropy.hex}]"
+  name            = "Rosetta 2 Install [${random_integer.entropy.result}]"
   enabled         = true
   trigger_checkin = true
   frequency       = "Once per computer"
