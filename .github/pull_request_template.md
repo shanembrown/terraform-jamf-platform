@@ -21,10 +21,9 @@ Please delete options that are not relevant.
 ## Checklist
 
 - [ ] I'm sure there are no other open Pull Requests for the same update/change
+- [ ] For module changes - I have included an example in the /examples directory and a README.md in the module root
 - [ ] My corresponding pipelines / checks run clean and green without any errors or warnings
-- [ ] My code follows the style guidelines of this project
 - [ ] I have commented my code, particularly in hard-to-understand areas
-- [ ] I have made corresponding changes to the documentation (readme)
 - [ ] I have updated spec.yaml as appropraite
 - [ ] I have checked `Terraform Init` and `Terraform Fmt`
 - [ ] I have ran `Terraform Apply` against any active module changes
