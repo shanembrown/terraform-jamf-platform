@@ -67,7 +67,7 @@ jobs:
                           -var "jamfpro_client_secret=${{ secrets.jamfpro_client_secret }}" \
                           -var "jsc_username=${{ secrets.jsc_username }}" \
                           -var "jsc_password=${{ secrets.jsc_password }}" \
-                          -var "jsc_jsc_applicationid=${{ secrets.jsc_applicationid }}" \
+                          -var "jsc_applicationid=${{ secrets.jsc_applicationid }}" \
                           -var "jsc_applicationsecret=${{ secrets.jsc_applicationsecret }}" \
                           -parallelism=1 \
             || exit_code=$?  # Capture the exit code
@@ -83,7 +83,7 @@ jobs:
                           -var "jamfpro_client_secret=${{ secrets.jamfpro_client_secret }}" \
                           -var "jsc_username=${{ secrets.jsc_username }}" \
                           -var "jsc_password=${{ secrets.jsc_password }}" \
-                          -var "jsc_jsc_applicationid=${{ secrets.jsc_applicationid }}" \
+                          -var "jsc_applicationid=${{ secrets.jsc_applicationid }}" \
                           -var "jsc_applicationsecret=${{ secrets.jsc_applicationsecret }}" \
                           -parallelism=1 \
                           -refresh=false \
@@ -97,7 +97,7 @@ jobs:
                           -var "jamfpro_client_secret=${{ secrets.jamfpro_client_secret }}" \
                           -var "jsc_username=${{ secrets.jsc_username }}" \
                           -var "jsc_password=${{ secrets.jsc_password }}" \
-                          -var "jsc_jsc_applicationid=${{ secrets.jsc_applicationid }}" \
+                          -var "jsc_applicationid=${{ secrets.jsc_applicationid }}" \
                           -var "jsc_applicationsecret=${{ secrets.jsc_applicationsecret }}" \
                           -parallelism=1 \
                           -refresh=false
