@@ -17,11 +17,11 @@ data "jsc_pag_vpnroutes" "vpn_route_nearest" {
 }
 
 data "jsc_pag_apptemplates" "ap_data_docusign" {
-  name = "Docusign"
+  name = "DocuSign"
 }
 
 resource "jsc_pag_ztnaapp" "ap_docusign" {
-  name                                             = "Docusign"
+  name                                             = "DocuSign"
   routingtype                                      = "CUSTOM"
   routingid                                        = data.jsc_pag_vpnroutes.vpn_route_nearest.id
   routingdnstype                                   = "IPv6"

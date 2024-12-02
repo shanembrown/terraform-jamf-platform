@@ -146,6 +146,7 @@ include_jsc_ap_splunk     = false
 include_jsc_ap_square     = false
 include_jsc_ap_twilio     = false
 include_jsc_ap_webex      = false
+include_jsc_ap_workday    = false
 include_jsc_ap_zendesk    = false
 include_jsc_ap_zoom       = false
 
