@@ -308,6 +308,11 @@ variable "include_jsc_ap_webex" {
   default = false
 }
 
+variable "include_jsc_ap_workday" {
+  type    = bool
+  default = false
+}
+
 variable "include_jsc_ap_zendesk" {
   type    = bool
   default = false

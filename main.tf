@@ -356,6 +356,11 @@ module "jsc_ap_webex" {
   source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_webex"
 }
 
+module "jsc_ap_workday" {
+  count  = var.include_jsc_ap_workday == true ? 1 : 0
+  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_workday"
+}
+
 module "jsc_ap_zendesk" {
   count  = var.include_jsc_ap_zendesk == true ? 1 : 0
   source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_zendesk"
