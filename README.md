@@ -57,17 +57,17 @@ jamfpro_client_id     = ""
 jamfpro_client_secret = ""
 
 
-## Jamf Protect Account Details
-jamfprotect_url             = ""
-jamfprotect_clientID        = ""
-jamfprotect_client_password = ""
-
 ## Jamf Security Cloud (RADAR) Account Details
-jsc_username            = ""
-jsc_password            = ""
-tje_okta_clientid       = ""
-tje_okta_orgdomain      = ""
-block_page_logo         = "" ## block_page_logo takes a Base 64 encoded string conversion of the image only
+jsc_username          = ""
+jsc_password          = ""
+jsc_applicationid     = ""
+jsc_applicationsecret = ""
+block_page_logo       = ""
+## block_page_logo takes a Base 64 encoded string conversion of the image only
+
+## tryjamf Okta Account Details
+tje_okta_clientid  = ""
+tje_okta_orgdomain = ""
 
 ### SaaS Tenancy
 include_ej_saas_tenancy = false
@@ -124,6 +124,30 @@ include_jamf_protect_trial_kickstart = false
 include_jsc_block_pages   = false
 include_jsc_all_services  = false
 include_jsc_uemc          = false
+include_jsc_ap_adobe      = false
+include_jsc_ap_atlassian  = false
+include_jsc_ap_bluejeans  = false
+include_jsc_ap_box        = false
+include_jsc_ap_docusign   = false
+include_jsc_ap_dropbox    = false
+include_jsc_ap_github     = false
+include_jsc_ap_google     = false
+include_jsc_ap_hubspot    = false
+include_jsc_ap_mailchimp  = false
+include_jsc_ap_mathworks  = false
+include_jsc_ap_microsoft  = false
+include_jsc_ap_my_ip      = false
+include_jsc_ap_okta       = false
+include_jsc_ap_salesforce = false
+include_jsc_ap_servicenow = false
+include_jsc_ap_slack      = false
+include_jsc_ap_snowflake  = false
+include_jsc_ap_splunk     = false
+include_jsc_ap_square     = false
+include_jsc_ap_twilio     = false
+include_jsc_ap_webex      = false
+include_jsc_ap_zendesk    = false
+include_jsc_ap_zoom       = false
 
 ############################################
 
