@@ -5,7 +5,7 @@ credentials:
     content: The URL of the Jamf Pro instance must start with 'https://'
     display_name: Jamf Pro Instance URL
     display_desc: URL for the Jamf Pro instance - must start with 'https://'
-
+    
   - key: jamfpro_client_id
     type: <string>
     presence: required
@@ -62,35 +62,35 @@ options:
     presence: optional
     category: MDM Workflows
     display_name: Enable macOS Passwordless SSOe
-    display_desc: This will create the Jamf Pro objects needed to configure and install the Okta Verify.app enabled for SSOe on macOS. Use @tryjamf.com credentials to authenticate the Okta Verify App. Objects are scoped to smart group that requires action to install computers in Jamf Pro.
+    display_desc: This will configure the management capabilities needed to configure and install the Okta Verify.app for SSOe on macOS. Use @tryjamf.com credentials to authenticate with the Okta Verify App. Objects are scoped to the Passwordless SSO Smart Group. To scope configurations to computers edit the serial number criteria to match the serial number of a test computer or remove the serial number criteria to scope to all enrolled computers.
 
   - key: include_qol_smart_groups
     type: <boolean>
     presence: optional
     category: MDM Workflows
     display_name: Add Smart Groups
-    display_desc: This will add several Jamf recommended Smart Groups to your Jamf Pro instance that can help elevate visibility of groupings of computers enrolled in Jamf Pro.
+    display_desc: This will add several Jamf recommended Smart Groups. Jamf allows you to create smart groups to group managed computers, mobile devices, or users. Smart group membership is dynamically updated based on the criteria you add to the smart group.
   
   - key: include_categories
     type: <boolean>
     presence: optional
     category: MDM Workflows
     display_name: Add Categories
-    display_desc: This will add several Categories to your Jamf Pro instance that can be used to organize items in your Jamf Pro.
+    display_desc: This will add several Jamf recommended Categories. Categories are organizational components that allow you to group management capabilities such as configurations, policies, packages and scripts. You can also use categories to group policies, configuration profiles, apps, and books in Jamf Self Service for end users.
 
   - key: include_computer_management_settings
     type: <boolean>
     presence: optional
     category: MDM Workflows
     display_name: Set Inventory Collection and Check-in Settings
-    display_desc: This will configure inventory collection settings in Jamf Pro and set the check-in interval for macOS computers to 15 minutes.
+    display_desc: For managed computers and devices, configure inventory collection settings. Set the check-in interval for managed computers to 15 minutes.
 
   - key: include_mobile_device_kickstart
     type: <boolean>
     presence: optional
     category: MDM Workflows
     display_name: Mobile Device Configurations
-    display_desc: This will create some common restriction profiles, along with a shared device and kiosk mode workflow, enabled with smart groups and extension attributes.
+    display_desc: For managed mobile devices, configure common restriction profiles. Configure shared device and kiosk mode capabilities. Shared device and kiosk mode capabilities can be enabled with smart groups and extension attributes.
 
   ## Jamf Pro Outcome Modules
   - key: include_filevault
@@ -98,29 +98,29 @@ options:
     presence: optional
     category: MDM Workflows
     display_name: Enforce & Escrow FileVault 2
-    display_desc: This will create the necessary Configuration Profile, Script, and Policy to enable and enforce FileVault 2 and make certain that the recovery key is escrowed in Jamf Pro.
+    display_desc: For managed computers, configure the necessary management capabilities including Configuration Profile, Script, and Policy to enable and enforce FileVault 2 and make certain that the recovery key is escrowed by Jamf.
     
   - key: include_rosetta
     type: <boolean>
     presence: optional
     category: MDM Workflows
     display_name: Install Rosetta 2
-    display_desc: This will set up a Policy in Jamf Pro to execute a command locally on macOS to install Rosetta 2 which is required for running Intel based macOS apps.
+    display_desc: For managed computers, configure a policy to execute a command locally on macOS to install Rosetta 2 which is required for running Intel (x86) based macOS apps.
 
   - key: include_microsoft_365
     type: <boolean>
     presence: optional
     category: MDM Workflows
     display_name: Microsoft 365 Apps
-    display_desc: Create App Installers for each Microsoft 365 app to install and automatically update the apps on macOS endpoints.
+    display_desc: For managed computers, create App Installers for each Microsoft 365 app to install and automatically update the apps on macOS endpoints.
 
   ## Jamf Protect Onboarder Modules
   - key: include_jamf_protect_trial_kickstart
     type: <boolean>
     presence: optional
     category: Security
-    display_name: Integrate Jamf Protect and Jamf Pro
-    display_desc: Register Jamf Protect API in Jamf Pro, uses the Client ID and Password you created in your Jamf Protect tenant to register the API in Jamf Pro for deployment and advanced remediation workflows.
+    display_name: Integrate macOS Endpoint Security and Management Capabilities
+    display_desc: This will create all the necessary API connections for integration of macOS endpoint security and macOS management capabilities. This streamlines deployment and advanced remediation workflows.
 
 ## macOS Security Compliance Project Benchmark Modules
   - key: include_mac_cis_lvl1_benchmark
@@ -128,42 +128,42 @@ options:
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply CIS Level 1 for macOS
-    display_desc: Creates and uploads all necessary components for applying CIS Level 1 to macOS Sonoma and Sequoia. Smart Groups are pre-configured to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
+    display_desc: For managed computers, prepares and uploads all necessary components for applying CIS Level 1 to macOS Sonoma and Sequoia. Smart Groups are pre-configured to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
 
   - key: include_mobile_cis_lvl1_benchmark
     type: <boolean>
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply CIS Level 1 for iOS
-    display_desc: Prepares all components needed for CIS Level 1 on iOS 17 and 18. Smart Groups for profiles are set to not deploy automatically. Edit the group for enforcement by adjusting the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
+    display_desc: For managed devices, prepares and uploads all necessary components for applying CIS Level 1 to iOS/iPadOS 17 & 18. Smart Groups are pre-configured to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
   
   - key: include_mac_stig_benchmark
     type: <boolean>
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply DISA STIG for macOS
-    display_desc: Creates and uploads the DISA STIG profile for macOS Sonoma and Sequoia (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-configured to not deploy automatically. Modify the group for enforcement and remediation as needed. **Benchmark from macOS Security Compliance Project**
+    display_desc: For managed computers, prepares and uploads the necessary components for DISA STIG to macOS Sonoma and Sequoia (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-configured to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria.  **Benchmark from macOS Security Compliance Project**
  
   - key: include_mobile_stig_benchmark
     type: <boolean>
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply DISA STIG for iOS
-    display_desc: Prepares the necessary components for DISA STIG on iOS 17 (not yet mapped for iOS 18). Smart Groups are pre-set to not deploy automatically. Adjust the group for enforcement. **Benchmark from macOS Security Compliance Project**
+    display_desc: For managed devices, prepares and uploads the necessary components for DISA STIG on iOS 17 (not yet mapped for iOS 18). Smart Groups are pre-set to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria.  **Benchmark from macOS Security Compliance Project**
 
   - key: include_mac_800_171_benchmark
     type: <boolean>
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply NIST 800-171 for macOS
-    display_desc: Creates and uploads the NIST 800-171 profile for macOS Sonoma and Sequoia  (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-configured to not deploy automatically. Edit the group for enforcement as needed. **Benchmark from macOS Security Compliance Project**
+    display_desc: For managed computers, prepares and uploads the necessary components for NIST 800-171 for macOS Sonoma and Sequoia  (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-configured to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
   
   - key: include_mac_cmmc_lvl1_benchmark
     type: <boolean>
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply US CMMC 2.0 Level 1 for macOS
-    display_desc: Creates and uploads the US CMMC 2.0 Level 1 profile for macOS Sonoma and Sequoia (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-set to not deploy automatically. Adjust for enforcement as needed. **Benchmark from macOS Security Compliance Project**
+    display_desc: For managed computers, prepares and uploads the necessary components for US CMMC 2.0 Level 1 profile for macOS Sonoma and Sequoia (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-set to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
 
   ## Jamf Security Cloud Onboarder Modules
   - key: include_jsc_uemc
@@ -171,24 +171,24 @@ options:
     presence: optional
     content: This will create all the necessary API Roles and an API Client in your Jamf Pro instance and then set up UEM Connect for Group synchronization, automated risk signaling, and easier deployment
     category: Security
-    display_name: Configure UEM Connect in Jamf Security Cloud
-    display_desc: This will create all the necessary API Roles and an API Client in your Jamf Pro instance and then set up UEM Connect for Group synchronization, automated risk signaling, and easier deployment of Jamf Security Cloud Capabilities.
+    display_name: Synchronize Management and Security Capabilities
+    display_desc: This will create all the necessary API connections for integration of management and security capabilities needed to enable group synchronization, automated risk signaling, and easier deployment of Jamf's security capabilities.
 
   - key: include_jsc_all_services
     type: <boolean>
     presence: optional
     content: Creates an Activation Profile for all Jamf Security Cloud services and uploads it to Jamf Pro
     category: Security
-    display_name: Configure Jamf Security Cloud Capabilities
-    display_desc: Activates all Jamf Security Cloud services (Identity-provider-based ZTNA, Content & Threat Defense Policies, and Data Policy) and adds the activation profile to Jamf Pro.
+    display_name: Configure Jamf Security Capabilities 
+    display_desc: Enables the following security capabilities, Wireguard ZTNA, Content Filtering, Data and Threat Defense Policies. Creates an Activation Profile for deployment to managed devices. Access Policies will need to be configured for organizational resources prior to deployment to make best use of ZTNA capabilities.
 
   - key: include_jsc_block_pages
     type: <boolean>
     presence: optional
     content: Provides customizable block pages for organizational policies
     category: Security
-    display_name: Jamf Security Cloud Block Pages
-    display_desc: Enables block pages in Jamf Security Cloud for content blocking.
+    display_name: Enable Customizable Block Pages
+    display_desc: Configures block pages for content filtering. Block pages can be further customized with company/organization branding.
 
   ### App Installer Modules
   - key: include_google_chrome
@@ -197,7 +197,7 @@ options:
     content: Indicates whether to include the Google Chrome App Installer
     category: Browsers
     display_name: Google Chrome
-    display_desc: Configures Google Chrome in Jamf Pro to be deployable to computers.
+    display_desc: Configures Google Chrome in to be deployable to managed computers.
 
   - key: include_mozilla_firefox
     type: <boolean>
@@ -205,7 +205,7 @@ options:
     content: Indicates whether to include the Mozilla Firefox App Installer
     category: Browsers
     display_name: Mozilla Firefox
-    display_desc: Configures Mozilla Firefox in Jamf Pro to be deployable to computers.
+    display_desc: Configures Mozilla Firefox in Jamf Pro to be deployable to managed computers.
 
   - key: include_slack
     type: <boolean>
@@ -213,7 +213,7 @@ options:
     content: Indicates whether to include the Slack App Installer
     category: Additional Apps
     display_name: Slack
-    display_desc: Configures Slack in Jamf Pro to be deployable to computers.
+    display_desc: Configures Slack in Jamf Pro to be deployable to managed computers.
 
   - key: include_dropbox
     type: <boolean>
@@ -221,7 +221,7 @@ options:
     content: Indicates whether to include the Dropbox App Installer
     category: Additional Apps
     display_name: Dropbox
-    display_desc: Configures Dropbox in Jamf Pro to be deployable to computers.
+    display_desc: Configures Dropbox in Jamf Pro to be deployable to managed computers.
 
   - key: include_google_drive
     type: <boolean>
@@ -229,7 +229,7 @@ options:
     content: Indicates whether to include the Google Drive App Installer
     category: Additional Apps
     display_name: Google Drive
-    display_desc: Configures Google Drive in Jamf Pro to be deployable to computers.
+    display_desc: Configures Google Drive in Jamf Pro to be deployable to managed computers.
 
   - key: include_jamf_composer
     type: <boolean>
@@ -237,7 +237,7 @@ options:
     content: Indicates whether to include the Jamf Composer App Installer
     category: Additional Apps
     display_name: Jamf Composer
-    display_desc: Configures Jamf Composer in Jamf Pro to be deployable to computers.
+    display_desc: Configures Jamf Composer in Jamf Pro to be deployable to managed computers.
 
   - key: include_pppc_utility
     type: <boolean>
@@ -245,7 +245,7 @@ options:
     content: Indicates whether to include the Jamf PPPC Utility App Installer
     category: Additional Apps
     display_name: PPPC Utility.
-    display_desc: Configures PPPC Utility in Jamf Pro to be deployable to computers
+    display_desc: Configures PPPC Utility in Jamf Pro to be deployable to managed computers
 
   - key: include_jamfcheck
     type: <boolean>
@@ -253,7 +253,7 @@ options:
     content: Indicates whether to include the JamfCheck App Installer
     category: Additional Apps
     display_name: JamfCheck
-    display_desc: Configures JamfCheck in Jamf Pro to be deployable to computers.
+    display_desc: Configures JamfCheck in Jamf Pro to be deployable to managed computers.
 
   - key: include_zoom
     type: <boolean>
@@ -261,4 +261,4 @@ options:
     content: Indicates whether to include the Zoom App Installer
     category: Additional Apps
     display_name: Zoom
-    display_desc: Configures Zoom in Jamf Pro to be deployable to computers.
+    display_desc: Configures Zoom in Jamf Pro to be deployable to managed computers.
