@@ -23,7 +23,7 @@ resource "jamfpro_category" "category_crowdstrike" {
 ## Create Scripts
 resource "jamfpro_script" "scripts_falconpkg" {
   name            = "Falcon Sensor API Install"
-  script_contents = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/crowdstrike/support_files/scripts/falconinstall.sh")
+  script_contents = file("${var.support_files_path_prefix}modules/endpoint_security_macOS_crowdstrike/support_files/scripts/falconinstall.sh")
   category_id     = jamfpro_category.category_crowdstrike.id
   os_requirements = "0"
   priority        = "AFTER"
@@ -37,7 +37,7 @@ resource "jamfpro_script" "scripts_falconpkg" {
 
 resource "jamfpro_script" "scripts_falconcid" {
   name            = "Falcon CID"
-  script_contents = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/crowdstrike/support_files/scripts/falconcid.sh")
+  script_contents = file("${var.support_files_path_prefix}modules/endpoint_security_macOS_crowdstrike/support_files/scripts/falconcid.sh")
   category_id     = jamfpro_category.category_crowdstrike.id
   os_requirements = "0"
   priority        = "AFTER"
@@ -58,7 +58,7 @@ resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuratio
   category_id         = jamfpro_category.category_crowdstrike.id
   redeploy_on_update  = "Newly Assigned"
   distribution_method = "Install Automatically"
-  payloads            = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/crowdstrike/support_files/falcon.mobileconfig")
+  payloads            = file("${var.support_files_path_prefix}modules/endpoint_security_macOS_crowdstrike/support_files/falcon.mobileconfig")
   payload_validate    = false
   user_removable      = false
 

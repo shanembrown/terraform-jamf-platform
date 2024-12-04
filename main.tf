@@ -52,7 +52,7 @@ module "jamf_protect_trial_kickstart" {
 
 module "mac_cis_lvl1_benchmark" {
   count                     = var.include_mac_cis_lvl1_benchmark == true ? 1 : 0
-  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cis_lvl1_benchmark"
+  source                    = "./modules/compliance_macOS_cis_level_1"
   support_files_path_prefix = var.support_files_path_prefix
 }
 
@@ -88,17 +88,17 @@ module "mac_cmmc_lvl1_benchmark" {
 
 module "qol_smart_groups" {
   count  = var.include_qol_smart_groups == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/qol_smart_groups"
+  source = "./modules/configuration_jamf_pro_smart_groups"
 }
 
 module "microsoft_365" {
   count  = var.include_microsoft_365 == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/microsoft_365"
+  source = "./modules/management_app_installers_microsoft_365"
 }
 
 module "categories" {
   count  = var.include_categories == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/categories"
+  source = "./modules/configuration_jamf_pro_categories"
 }
 
 module "mobile_device_kickstart" {
@@ -108,17 +108,17 @@ module "mobile_device_kickstart" {
 
 module "computer_management_settings" {
   count  = var.include_computer_management_settings == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_management_settings"
+  source = "./modules/configuration_jamf_pro_computer_management_settings"
 }
 
 module "filevault" {
   count  = var.include_filevault == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/filevault"
+  source = "./modules/endpoint_security_macOS_filevault"
 }
 
 module "msft_defender" {
   count  = var.include_defender == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/msft_defender"
+  source = "./modules/endpoint_security_macOS_microsoft_defender"
 }
 
 module "passwordless_sso" {
@@ -129,13 +129,13 @@ module "passwordless_sso" {
 
 module "crowdstrike" {
   count  = var.include_crowdstrike == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/crowdstrike"
+  source = "./modules/endpoint_security_macOS_crowdstrike"
 }
 
 
 module "rosetta" {
   count  = var.include_rosetta == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/computer_outcomes/rosetta"
+  source = "./modules/management_macOS_rosetta"
 }
 
 module "google_chrome" {
