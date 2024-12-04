@@ -76,7 +76,7 @@ module "mobile_stig_benchmark" {
 
 module "mac_800_171_benchmark" {
   count                     = var.include_mac_800_171_benchmark == true ? 1 : 0
-  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/computers/mac_800_171_benchmark"
+  source                    = "./modules/compliance_macOS_nist_800-171"
   support_files_path_prefix = var.support_files_path_prefix
 }
 
