@@ -82,7 +82,7 @@ module "mac_800_171_benchmark" {
 
 module "mac_cmmc_lvl1_benchmark" {
   count                     = var.include_mac_cmmc_lvl1_benchmark == true ? 1 : 0
-  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/computers/mac_cmmc_lvl1_benchmark"
+  source                    = "./modules/compliance_macOS_cmmc_level_1"
   support_files_path_prefix = var.support_files_path_prefix
 }
 
