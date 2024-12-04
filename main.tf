@@ -140,47 +140,47 @@ module "rosetta" {
 
 module "google_chrome" {
   count  = var.include_google_chrome == true ? 1 : 0
-  source = "./modules/onboarder_modules/app_installers/google_chrome"
+  source = "./modules/management_app_installers_google_chrome"
 }
 
 module "mozilla_firefox" {
   count  = var.include_mozilla_firefox == true ? 1 : 0
-  source = "./modules/onboarder_modules/app_installers/mozilla_firefox"
+  source = "./modules/management_app_installers_mozilla_firefox"
 }
 
 module "slack" {
   count  = var.include_slack == true ? 1 : 0
-  source = "./modules/onboarder_modules/app_installers/slack"
+  source = "./modules/management_app_installers_slack"
 }
 
 module "dropbox" {
   count  = var.include_dropbox == true ? 1 : 0
-  source = "./modules/onboarder_modules/app_installers/dropbox"
+  source = "./modules/management_app_installers_dropbox"
 }
 
 module "google_drive" {
   count  = var.include_google_drive == true ? 1 : 0
-  source = "./modules/onboarder_modules/app_installers/google_drive"
+  source = "./modules/management_app_installers_google_drive"
 }
 
 module "jamf_composer" {
   count  = var.include_jamf_composer == true ? 1 : 0
-  source = "./modules/onboarder_modules/app_installers/jamf_composer"
+  source = "./modules/management_app_installers_jamf_composer"
 }
 
 module "pppc_utility" {
   count  = var.include_pppc_utility == true ? 1 : 0
-  source = "./modules/onboarder_modules/app_installers/pppc_utility"
+  source = "./modules/management_app_installers_pppc_utility"
 }
 
 module "jamfcheck" {
   count  = var.include_jamfcheck == true ? 1 : 0
-  source = "./modules/onboarder_modules/app_installers/jamfcheck"
+  source = "./modules/management_app_installers_jamfcheck"
 }
 
 module "zoom" {
   count  = var.include_zoom == true ? 1 : 0
-  source = "./modules/onboarder_modules/app_installers/zoom"
+  source = "./modules/management_app_installers_zoom"
 }
 
 ## Initialize Experience Jamf vignette modules

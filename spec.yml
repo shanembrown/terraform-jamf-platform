@@ -5,7 +5,7 @@ credentials:
     content: The URL of the Jamf Pro instance must start with 'https://'
     display_name: Jamf Pro Instance URL
     display_desc: URL for the Jamf Pro instance - must start with 'https://'
-    
+
   - key: jamfpro_client_id
     type: <string>
     presence: required
@@ -56,7 +56,7 @@ credentials:
     display_desc: Password for authenticating with Jamf Security Cloud
 
 options:
-## Jamf Pro Onboarder Modules
+  ## Jamf Pro Onboarder Modules
   - key: include_passwordless_ssoe
     type: <boolean>
     presence: optional
@@ -70,7 +70,7 @@ options:
     category: MDM Workflows
     display_name: Add Smart Groups
     display_desc: This will add several Jamf recommended Smart Groups. Jamf allows you to create smart groups to group managed computers, mobile devices, or users. Smart group membership is dynamically updated based on the criteria you add to the smart group.
-  
+
   - key: include_categories
     type: <boolean>
     presence: optional
@@ -99,7 +99,7 @@ options:
     category: MDM Workflows
     display_name: Enforce & Escrow FileVault 2
     display_desc: For managed computers, configure the necessary management capabilities including Configuration Profile, Script, and Policy to enable and enforce FileVault 2 and make certain that the recovery key is escrowed by Jamf.
-    
+
   - key: include_rosetta
     type: <boolean>
     presence: optional
@@ -122,7 +122,7 @@ options:
     display_name: Integrate macOS Endpoint Security and Management Capabilities
     display_desc: This will create all the necessary API connections for integration of macOS endpoint security and macOS management capabilities. This streamlines deployment and advanced remediation workflows.
 
-## macOS Security Compliance Project Benchmark Modules
+  ## macOS Security Compliance Project Benchmark Modules
   - key: include_mac_cis_lvl1_benchmark
     type: <boolean>
     presence: optional
@@ -136,14 +136,14 @@ options:
     category: Endpoint Compliance
     display_name: Configure and Apply CIS Level 1 for iOS
     display_desc: For managed devices, prepares and uploads all necessary components for applying CIS Level 1 to iOS/iPadOS 17 & 18. Smart Groups are pre-configured to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
-  
+
   - key: include_mac_stig_benchmark
     type: <boolean>
     presence: optional
     category: Endpoint Compliance
     display_name: Configure and Apply DISA STIG for macOS
     display_desc: For managed computers, prepares and uploads the necessary components for DISA STIG to macOS Sonoma and Sequoia (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-configured to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria.  **Benchmark from macOS Security Compliance Project**
- 
+
   - key: include_mobile_stig_benchmark
     type: <boolean>
     presence: optional
@@ -157,7 +157,7 @@ options:
     category: Endpoint Compliance
     display_name: Configure and Apply NIST 800-171 for macOS
     display_desc: For managed computers, prepares and uploads the necessary components for NIST 800-171 for macOS Sonoma and Sequoia  (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-configured to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
-  
+
   - key: include_mac_cmmc_lvl1_benchmark
     type: <boolean>
     presence: optional
@@ -179,7 +179,7 @@ options:
     presence: optional
     content: Creates an Activation Profile for all Jamf Security Cloud services and uploads it to Jamf Pro
     category: Security
-    display_name: Configure Jamf Security Capabilities 
+    display_name: Configure Jamf Security Capabilities
     display_desc: Enables the following security capabilities, Wireguard ZTNA, Content Filtering, Data and Threat Defense Policies. Creates an Activation Profile for deployment to managed devices. Access Policies will need to be configured for organizational resources prior to deployment to make best use of ZTNA capabilities.
 
   - key: include_jsc_block_pages
@@ -189,206 +189,6 @@ options:
     category: Security
     display_name: Enable Customizable Block Pages
     display_desc: Configures block pages for content filtering. Block pages can be further customized with company/organization branding.
-
-  - key: include_jsc_ap_adobe
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Adobe
-    category: Security
-    display_name: Create Access Policy for Adobe
-    display_desc: Creates an Access Policy for traffic to Adobe and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_atlassian
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Atlassian
-    category: Security
-    display_name: Create Access Policy for Atlassian
-    display_desc: Creates an Access Policy for traffic to Atlassian and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_bluejeans
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Bluejeans
-    category: Security
-    display_name: Create Access Policy for Bluejeans
-    display_desc: Creates an Access Policy for traffic to Bluejeans and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_box
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Box
-    category: Security
-    display_name: Create Access Policy for Box
-    display_desc: Creates an Access Policy for traffic to Box and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_docusign
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Docusign 
-    category: Security
-    display_name: Create Access Policy for Docusign
-    display_desc: Creates an Access Policy for traffic to Docusign and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_dropbox
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Dropbox
-    category: Security
-    display_name: Create Access Policy for Dropbox
-    display_desc: Creates an Access Policy for traffic to Dropbox and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_github
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Github
-    category: Security
-    display_name: Create Access Policy for Github
-    display_desc: Creates an Access Policy for traffic to Github and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_google
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Google Apps
-    category: Security
-    display_name: Create Access Policy for Google Apps
-    display_desc: Creates an Access Policy for traffic to Google Apps and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_hubspot
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to HubSpot
-    category: Security
-    display_name: Create Access Policy for HubSpot
-    display_desc: Creates an Access Policy for traffic to HubSpot and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_mailchimp
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to MailChimp
-    category: Security
-    display_name: Create Access Policy for MailChimp
-    display_desc: Creates an Access Policy for traffic to MailChimp and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_mathworks
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to MathWorks
-    category: Security
-    display_name: Create Access Policy for MathWorks
-    display_desc: Creates an Access Policy for traffic to MathWorks and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_microsoft
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Microsoft apps
-    category: Security
-    display_name: Create Access Policy for Microsoft apps
-    display_desc: Creates an Access Policy for traffic to Microsoft apps and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_my_ip
-    type: <boolean>
-    presence: optional
-    content: Creates a test Access Policy for map.wandera.com to test functionality of Jamf Trust and Connect ZTNA on endpoints
-    category: Security
-    display_name: Create Access Policy for My IP on a Map
-    display_desc: Creates an Access Policy for traffic to My IP on a Map for test purposes. An admin can go to map.wandera.com on a test device once this has been deployed and see that endpoint's IP address as well as a map of the generalized location. If anything did not deploy properly, you will see the word "forbidden" in the top left corner of the browser page.
-
-  - key: include_jsc_ap_okta
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Okta
-    category: Security
-    display_name: Create Access Policy for Okta
-    display_desc: Creates an Access Policy for traffic to Okta and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_salesforce
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Salesforce
-    category: Security
-    display_name: Create Access Policy for Salesforce
-    display_desc: Creates an Access Policy for traffic to Salesforce and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_servicenow
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to ServiceNow
-    category: Security
-    display_name: Create Access Policy for ServiceNow
-    display_desc: Creates an Access Policy for traffic to ServiceNow and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_slack
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Slack
-    category: Security
-    display_name: Create Access Policy for Slack
-    display_desc: Creates an Access Policy for traffic to Slack and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_snowflake
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Snowflake
-    category: Security
-    display_name: Create Access Policy for Snowflake
-    display_desc: Creates an Access Policy for traffic to Snowflake and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_splunk
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Splunk
-    category: Security
-    display_name: Create Access Policy for Splunk
-    display_desc: Creates an Access Policy for traffic to Splunk and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_square
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Square
-    category: Security
-    display_name: Create Access Policy for Square
-    display_desc: Creates an Access Policy for traffic to Square and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_twilio
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Twilio
-    category: Security
-    display_name: Create Access Policy for Twilio
-    display_desc: Creates an Access Policy for traffic to Twilio and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_webex
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Webex
-    category: Security
-    display_name: Create Access Policy for Webex
-    display_desc: Creates an Access Policy for traffic to Webex and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_workday
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Workday
-    category: Security
-    display_name: Create Access Policy for Workday
-    display_desc: Creates an Access Policy for traffic to Workday and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_zendesk
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Zendesk
-    category: Security
-    display_name: Create Access Policy for Zendesk
-    display_desc: Creates an Access Policy for traffic to Zendesk and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
-
-  - key: include_jsc_ap_zoom
-    type: <boolean>
-    presence: optional
-    content: Creates an Access Policy to monitor and secure traffic to Zoom
-    category: Security
-    display_name: Create Access Policy for Zoom
-    display_desc: Creates an Access Policy for traffic to Zoom and sets a restriction to block devices that are considered high risk as well as a block for un-managed devices.
 
   ### App Installer Modules
   - key: include_google_chrome
