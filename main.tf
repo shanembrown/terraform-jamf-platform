@@ -58,19 +58,19 @@ module "mac_cis_lvl1_benchmark" {
 
 module "mobile_cis_lvl1_benchmark" {
   count                     = var.include_mobile_cis_lvl1_benchmark == true ? 1 : 0
-  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_cis_lvl1_benchmark"
+  source                    = "./modules/compliance_iOS_cis_level_1"
   support_files_path_prefix = var.support_files_path_prefix
 }
 
 module "mac_stig_benchmark" {
   count                     = var.include_mac_stig_benchmark == true ? 1 : 0
-  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/computers/mac_stig_benchmark"
+  source                    = "./modules/compliance_macOS_disa_stig"
   support_files_path_prefix = var.support_files_path_prefix
 }
 
 module "mobile_stig_benchmark" {
   count                     = var.include_mobile_stig_benchmark == true ? 1 : 0
-  source                    = "./modules/trusted_access_outcomes/endpoint_compliance/devices/mobile_stig_benchmark"
+  source                    = "./modules/compliance_iOS_disa_stig"
   support_files_path_prefix = var.support_files_path_prefix
 }
 
