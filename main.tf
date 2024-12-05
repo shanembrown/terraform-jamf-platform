@@ -380,7 +380,7 @@ module "jsc_block_pages" {
 ## Create Jamf Security Cloud Activation Profile containing ONLY Category Based Content Filtering
 module "jsc_dp_only" {
   count              = var.include_jsc_dp_only == true ? 1 : 0
-  source             = "./modules/trusted_access_outcomes/jsc_alternatives/jsc_dp_only"
+  source             = "./modules/network_security_jamf_pro_content_filtering"
   tje_okta_clientid  = var.tje_okta_clientid
   tje_okta_orgdomain = var.tje_okta_orgdomain
 }
@@ -388,7 +388,7 @@ module "jsc_dp_only" {
 ## Create Jamf Security Cloud Activation Profile containing ONLY Threat Response (MTD) 
 module "jsc_mtd_only" {
   count              = var.include_jsc_mtd_only == true ? 1 : 0
-  source             = "./modules/trusted_access_outcomes/jsc_alternatives/jsc_mtd_only"
+  source             = "./modules/network_security_jamf_pro_network_threat_defense"
   tje_okta_clientid  = var.tje_okta_clientid
   tje_okta_orgdomain = var.tje_okta_orgdomain
 }
@@ -396,7 +396,7 @@ module "jsc_mtd_only" {
 ## Create Jamf Security Cloud Activation Profile containing ONLY Threat Response (MTD) 
 module "jsc_mtd_dp_only" {
   count              = var.include_jsc_mtd_dp_only == true ? 1 : 0
-  source             = "./modules/trusted_access_outcomes/jsc_alternatives/jsc_mtd_dp_only"
+  source             = "./modules/network_security_jamf_pro_content_filtering_and_network_threat_defense"
   tje_okta_clientid  = var.tje_okta_clientid
   tje_okta_orgdomain = var.tje_okta_orgdomain
 }
@@ -404,7 +404,7 @@ module "jsc_mtd_dp_only" {
 ## Create Jamf Security Cloud Activation Profile containing ONLY Connect ZTNA
 module "jsc_ztna" {
   count              = var.include_jsc_ztna == true ? 1 : 0
-  source             = "./modules/trusted_access_outcomes/jsc_alternatives/jsc_ztna"
+  source             = "./modules/network_security_jamf_pro_zero_trust_network_access"
   tje_okta_clientid  = var.tje_okta_clientid
   tje_okta_orgdomain = var.tje_okta_orgdomain
 }
@@ -412,7 +412,7 @@ module "jsc_ztna" {
 ## Create Jamf Security Cloud Activation Profile containing ONLY Connect ZTNA
 module "jsc_ztna_dp_only" {
   count              = var.include_jsc_ztna_dp_only == true ? 1 : 0
-  source             = "./modules/trusted_access_outcomes/jsc_alternatives/jsc_ztna_dp_only"
+  source             = "./modules/network_security_jamf_pro_zero_trust_network_access_and_content_filtering"
   tje_okta_clientid  = var.tje_okta_clientid
   tje_okta_orgdomain = var.tje_okta_orgdomain
 }
@@ -420,7 +420,7 @@ module "jsc_ztna_dp_only" {
 ## Create Jamf Security Cloud Activation Profile containing ONLY Connect ZTNA
 module "jsc_ztna_mtd_only" {
   count              = var.include_jsc_ztna_mtd_only == true ? 1 : 0
-  source             = "./modules/trusted_access_outcomes/jsc_alternatives/jsc_ztna_mtd_only"
+  source             = "./modules/network_security_jamf_pro_zero_trust_network_access_and_network_threat_prevention"
   tje_okta_clientid  = var.tje_okta_clientid
   tje_okta_orgdomain = var.tje_okta_orgdomain
 }
@@ -428,7 +428,7 @@ module "jsc_ztna_mtd_only" {
 ## Create Jamf Security Cloud Activation Profile containing ONLY Connect Network Relay
 # module "jsc_network_relay" {
 #   count  = var.include_jsc_network_relay == true ? 1 : 0
-#   source = "./modules/trusted_access_outcomes/jsc_alternatives/jsc_network_relay"
+#   source = "./modules/network_security_jamf_pro_network_relay"
 # }
 
 
