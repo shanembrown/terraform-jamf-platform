@@ -1,1 +1,0 @@
-in onboarder, prompt to choose ZTNA (identity-based) or Network Relay

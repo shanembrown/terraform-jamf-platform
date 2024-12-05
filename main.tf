@@ -230,7 +230,7 @@ module "ej_mac_LMAM" {
 ## Create UEMC and Okta integrations
 module "jsc_uemc" {
   count                = var.include_jsc_uemc == true ? 1 : 0
-  source               = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_uemc"
+  source               = "./modules/configuration_jamf_security_cloud_jamf_pro"
   tje_okta_clientid    = var.tje_okta_clientid
   tje_okta_orgdomain   = var.tje_okta_orgdomain
   jamfpro_instance_url = var.jamfpro_instance_url
@@ -241,7 +241,7 @@ module "jsc_uemc" {
 ## Create Jamf Security Cloud Activation Profile containing ALL JSC Services
 module "jsc_all_services" {
   count              = var.include_jsc_all_services == true ? 1 : 0
-  source             = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_all_services"
+  source             = "./modules/configuration_jamf_security_cloud_all_services"
   tje_okta_clientid  = var.tje_okta_clientid
   tje_okta_orgdomain = var.tje_okta_orgdomain
 }
