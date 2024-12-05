@@ -56,7 +56,7 @@ resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuratio
   level               = "System"
   redeploy_on_update  = "Newly Assigned"
   distribution_method = "Install Automatically"
-  payloads            = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_protect_trial_kickstart/support_files/non_removable_system_extension_jamf_protect.mobileconfig")
+  payloads            = file("${var.support_files_path_prefix}modules/configuration_jamf_pro_jamf_protect/support_files/non_removable_system_extension_jamf_protect.mobileconfig")
   payload_validate    = false
   user_removable      = false
   category_id         = jamfpro_category.category_jamfprotect_security.id

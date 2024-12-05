@@ -41,7 +41,7 @@ provider "jsc" {
 
 module "jamf_protect_trial_kickstart" {
   count                       = var.include_jamf_protect_trial_kickstart == true ? 1 : 0
-  source                      = "./modules/onboarder_modules/jamf_protect_trial_kickstart"
+  source                      = "./modules/configuration_jamf_pro_jamf_protect"
   jamfpro_instance_url        = var.jamfpro_instance_url
   jamfpro_client_id           = var.jamfpro_client_id
   jamfpro_client_secret       = var.jamfpro_client_secret
@@ -248,132 +248,132 @@ module "jsc_all_services" {
 
 module "jsc_ap_adobe" {
   count  = var.include_jsc_ap_adobe == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_adobe"
+  source = "./modules/network_security_access_policy_adobe"
 }
 
 module "jsc_ap_atlassian" {
   count  = var.include_jsc_ap_atlassian == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_atlassian"
+  source = "./modules/network_security_access_policy_atlassian"
 }
 
 module "jsc_ap_bluejeans" {
   count  = var.include_jsc_ap_bluejeans == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_bluejeans"
+  source = "./modules/network_security_access_policy_bluejeans"
 }
 
 module "jsc_ap_box" {
   count  = var.include_jsc_ap_box == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_box"
+  source = "./modules/network_security_access_policy_box"
 }
 
 module "jsc_ap_docusign" {
   count  = var.include_jsc_ap_docusign == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_docusign"
+  source = "./modules/network_security_access_policy_docusign"
 }
 
 module "jsc_ap_dropbox" {
   count  = var.include_jsc_ap_dropbox == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_dropbox"
+  source = "./modules/network_security_access_policy_dropbox"
 }
 
 module "jsc_ap_github" {
   count  = var.include_jsc_ap_github == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_github"
+  source = "./modules/network_security_access_policy_github"
 }
 
 module "jsc_ap_google" {
   count  = var.include_jsc_ap_google == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_google"
+  source = "./modules/network_security_access_policy_google"
 }
 
 module "jsc_ap_hubspot" {
   count  = var.include_jsc_ap_hubspot == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_hubspot"
+  source = "./modules/network_security_access_policy_hubspot"
 }
 
 module "jsc_ap_mailchimp" {
   count  = var.include_jsc_ap_mailchimp == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_mailchimp"
+  source = "./modules/network_security_access_policy_mailchimp"
 }
 
 module "jsc_ap_mathworks" {
   count  = var.include_jsc_ap_mathworks == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_mathworks"
+  source = "./modules/network_security_access_policy_mathworks"
 }
 
 module "jsc_ap_microsoft" {
   count  = var.include_jsc_ap_microsoft == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_microsoft"
+  source = "./modules/network_security_access_policy_microsoft"
 }
 
 module "jsc_ap_my_ip" {
   count  = var.include_jsc_ap_my_ip == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_my_ip"
+  source = "./modules/network_security_access_policy_my_ip"
 }
 
 module "jsc_ap_okta" {
   count  = var.include_jsc_ap_okta == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_okta"
+  source = "./modules/network_security_access_policy_okta"
 }
 
 module "jsc_ap_salesforce" {
   count  = var.include_jsc_ap_salesforce == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_salesforce"
+  source = "./modules/network_security_access_policy_salesforce"
 }
 
 module "jsc_ap_servicenow" {
   count  = var.include_jsc_ap_servicenow == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_servicenow"
+  source = "./modules/network_security_access_policy_servicenow"
 }
 
 module "jsc_ap_slack" {
   count  = var.include_jsc_ap_slack == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_slack"
+  source = "./modules/network_security_access_policy_slack"
 }
 
 module "jsc_ap_snowflake" {
   count  = var.include_jsc_ap_snowflake == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_snowflake"
+  source = "./modules/network_security_access_policy_snowflake"
 }
 
 module "jsc_ap_splunk" {
   count  = var.include_jsc_ap_splunk == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_splunk"
+  source = "./modules/network_security_access_policy_splunk"
 }
 
 module "jsc_ap_square" {
   count  = var.include_jsc_ap_square == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_square"
+  source = "./modules/network_security_access_policy_square"
 }
 
 module "jsc_ap_twilio" {
   count  = var.include_jsc_ap_twilio == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_twilio"
+  source = "./modules/network_security_access_policy_twilio"
 }
 
 module "jsc_ap_webex" {
   count  = var.include_jsc_ap_webex == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_webex"
+  source = "./modules/network_security_access_policy_webex"
 }
 
 module "jsc_ap_workday" {
   count  = var.include_jsc_ap_workday == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_workday"
+  source = "./modules/network_security_access_policy_workday"
 }
 
 module "jsc_ap_zendesk" {
   count  = var.include_jsc_ap_zendesk == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_zendesk"
+  source = "./modules/network_security_access_policy_zendesk"
 }
 
 module "jsc_ap_zoom" {
   count  = var.include_jsc_ap_zoom == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_ap_zoom"
+  source = "./modules/network_security_access_policy_zoom"
 }
 
 module "jsc_block_pages" {
   count           = var.include_jsc_block_pages == true ? 1 : 0
-  source          = "./modules/onboarder_modules/jamf_security_cloud_trial_kickstart/jsc_block_pages"
+  source          = "./modules/configuration_jamf_security_cloud_block_pages"
   block_page_logo = var.block_page_logo
 }
 
