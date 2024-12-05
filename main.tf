@@ -123,7 +123,7 @@ module "msft_defender" {
 
 module "passwordless_sso" {
   count                     = var.include_passwordless_ssoe == true ? 1 : 0
-  source                    = "./modules/trusted_access_outcomes/passwordless_sso"
+  source                    = "./modules/management_macOS_passwordless_sso"
   support_files_path_prefix = var.support_files_path_prefix
 }
 
