@@ -103,7 +103,7 @@ module "categories" {
 
 module "mobile_device_kickstart" {
   count  = var.include_mobile_device_kickstart == true ? 1 : 0
-  source = "./modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart"
+  source = "./modules/management_iOS_configuration_profiles"
 }
 
 module "computer_management_settings" {

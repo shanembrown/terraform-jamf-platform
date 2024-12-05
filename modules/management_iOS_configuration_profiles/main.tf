@@ -42,7 +42,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   level              = "Device Level"
   category_id        = jamfpro_category.category_restrictions.id
   redeploy_on_update = "Newly Assigned"
-  payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/restrict_appleid_changes.mobileconfig")
+  payloads           = file("${var.support_files_path_prefix}modules/management_iOS_configuration_profiles/support_files/restrict_appleid_changes.mobileconfig")
 
   scope {
     all_mobile_devices = false
@@ -56,7 +56,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   level              = "Device Level"
   category_id        = jamfpro_category.category_restrictions.id
   redeploy_on_update = "Newly Assigned"
-  payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/restrict_airdrop.mobileconfig")
+  payloads           = file("${var.support_files_path_prefix}modules/management_iOS_configuration_profiles/support_files/restrict_airdrop.mobileconfig")
 
   scope {
     all_mobile_devices = false
@@ -70,7 +70,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   level              = "Device Level"
   category_id        = jamfpro_category.category_demo.id
   redeploy_on_update = "Newly Assigned"
-  payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/passcode_requirements.mobileconfig")
+  payloads           = file("${var.support_files_path_prefix}modules/management_iOS_configuration_profiles/support_files/passcode_requirements.mobileconfig")
 
   scope {
     all_mobile_devices = false
@@ -84,7 +84,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   level              = "Device Level"
   category_id        = jamfpro_category.category_restrictions.id
   redeploy_on_update = "Newly Assigned"
-  payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/restrict_erase_content_and_settings.mobileconfig")
+  payloads           = file("${var.support_files_path_prefix}modules/management_iOS_configuration_profiles/support_files/restrict_erase_content_and_settings.mobileconfig")
 
   scope {
     all_mobile_devices = false
@@ -98,7 +98,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   level              = "Device Level"
   category_id        = jamfpro_category.category_restrictions.id
   redeploy_on_update = "Newly Assigned"
-  payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/restrict_camera.mobileconfig")
+  payloads           = file("${var.support_files_path_prefix}modules/management_iOS_configuration_profiles/support_files/restrict_camera.mobileconfig")
 
   scope {
     all_mobile_devices = false
@@ -112,7 +112,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   level              = "Device Level"
   category_id        = jamfpro_category.category_restrictions.id
   redeploy_on_update = "Newly Assigned"
-  payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/restrict_screenshots.mobileconfig")
+  payloads           = file("${var.support_files_path_prefix}modules/management_iOS_configuration_profiles/support_files/restrict_screenshots.mobileconfig")
 
   scope {
     all_mobile_devices = false
@@ -126,7 +126,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   level              = "Device Level"
   category_id        = jamfpro_category.category_demo.id
   redeploy_on_update = "Newly Assigned"
-  payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/user_enrollment_byod_restrictions.mobileconfig")
+  payloads           = file("${var.support_files_path_prefix}modules/management_iOS_configuration_profiles/support_files/user_enrollment_byod_restrictions.mobileconfig")
 
   scope {
     all_mobile_devices = false
@@ -183,7 +183,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   level              = "Device Level"
   category_id        = jamfpro_category.category_demo.id
   redeploy_on_update = "Newly Assigned"
-  payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/kiosk_mode_safari_single_app_mode.mobileconfig")
+  payloads           = file("${var.support_files_path_prefix}modules/management_iOS_configuration_profiles/support_files/kiosk_mode_safari_single_app_mode.mobileconfig")
 
   scope {
     all_mobile_devices      = false
@@ -198,7 +198,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
   level              = "Device Level"
   category_id        = jamfpro_category.category_demo.id
   redeploy_on_update = "Newly Assigned"
-  payloads           = file("${var.support_files_path_prefix}modules/onboarder_modules/jamf_pro_trial_kickstart/mobile_device_kickstart/support_files/shared_device_restrictions.mobileconfig")
+  payloads           = file("${var.support_files_path_prefix}modules/management_iOS_configuration_profiles/support_files/shared_device_restrictions.mobileconfig")
 
   scope {
     all_mobile_devices      = false
