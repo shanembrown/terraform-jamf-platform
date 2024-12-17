@@ -51,6 +51,18 @@ variable "jsc_password" {
   default   = ""
 }
 
+variable "jsc_applicationid" {
+  type      = string
+  sensitive = true
+  default   = ""
+}
+
+variable "jsc_applicationsecret" {
+  type      = string
+  sensitive = true
+  default   = ""
+}
+
 /*
 variable "VPCId" {
   type      = string
@@ -182,6 +194,131 @@ variable "include_jsc_mtd_only" {
 }
 
 variable "include_jsc_all_services" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_adobe" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_atlassian" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_bluejeans" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_box" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_docusign" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_dropbox" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_github" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_google" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_hubspot" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_mailchimp" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_mathworks" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_microsoft" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_my_ip" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_okta" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_salesforce" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_servicenow" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_slack" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_snowflake" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_splunk" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_square" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_twilio" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_webex" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_workday" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_zendesk" {
+  type    = bool
+  default = false
+}
+
+variable "include_jsc_ap_zoom" {
   type    = bool
   default = false
 }
