@@ -1,1 +1,0 @@
-custom scenerios where trial customers once 1 or 2 of the 3 options but not all 3 configure in the jsc_all_services module 
