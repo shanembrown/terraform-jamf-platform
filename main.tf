@@ -183,48 +183,6 @@ module "zoom" {
   source = "./modules/management_app_installers_zoom"
 }
 
-## Initialize Experience Jamf vignette modules
-module "ej_base" {
-  count  = var.include_ej_base == true ? 1 : 0
-  source = "./CLEANUP_BEFORE_PUBLIC_REPO/experience_jamf_vignettes/ej_base"
-}
-
-## Initialiaze JSC child modules
-module "ej_jsc_config" {
-  count                     = var.include_ej_jsc_config == true ? 1 : 0
-  source                    = "./CLEANUP_BEFORE_PUBLIC_REPO/experience_jamf_vignettes/ej_jsc_config"
-  jamfpro_instance_url      = var.jamfpro_instance_url
-  tje_okta_clientid         = var.tje_okta_clientid
-  tje_okta_orgdomain        = var.tje_okta_orgdomain
-  block_page_logo           = var.block_page_logo
-  support_files_path_prefix = var.support_files_path_prefix
-}
-
-# SaaS tenancy moved to saastenconfig.tf.bak
-
-module "ej_incident_response" {
-  count                     = var.include_ej_incident_response == true ? 1 : 0
-  source                    = "./CLEANUP_BEFORE_PUBLIC_REPO/experience_jamf_vignettes/ej_incident_response"
-  support_files_path_prefix = var.support_files_path_prefix
-}
-
-module "ej_mac_cis_benchmark" {
-  count                     = var.include_ej_mac_cis_benchmark == true ? 1 : 0
-  source                    = "./CLEANUP_BEFORE_PUBLIC_REPO/experience_jamf_vignettes/ej_mac_cis_benchmark"
-  support_files_path_prefix = var.support_files_path_prefix
-}
-
-module "ej_mobile_cis_benchmark" {
-  count  = var.include_ej_mobile_cis_benchmark == true ? 1 : 0
-  source = "./CLEANUP_BEFORE_PUBLIC_REPO/experience_jamf_vignettes/ej_mobile_cis_benchmark"
-}
-
-module "ej_mac_LMAM" {
-  count                     = var.include_ej_mac_LMAM == true ? 1 : 0
-  source                    = "./CLEANUP_BEFORE_PUBLIC_REPO/experience_jamf_vignettes/ej_mac_LMAM"
-  support_files_path_prefix = var.support_files_path_prefix
-}
-
 ## Begin Jamf Security Cloud Configuration
 
 ## Create UEMC and Okta integrations
