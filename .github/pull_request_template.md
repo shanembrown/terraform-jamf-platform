@@ -24,6 +24,6 @@ Please delete options that are not relevant.
 - [ ] For module changes - I have included an example in the /examples directory and a README.md in the module root
 - [ ] My corresponding pipelines / checks run clean and green without any errors or warnings
 - [ ] I have commented my code, particularly in hard-to-understand areas
-- [ ] I have updated spec.yaml as appropraite
+- [ ] I have updated spec.yaml as appropriate
 - [ ] I have checked `Terraform Init` and `Terraform Fmt`
 - [ ] I have ran `Terraform Apply` against any active module changes
