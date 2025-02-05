@@ -54,8 +54,6 @@ jobs:
                           -var "jamfpro_client_secret=${{ secrets.jamfpro_client_secret }}" \
                           -var "jsc_username=${{ secrets.jsc_username }}" \
                           -var "jsc_password=${{ secrets.jsc_password }}" \
-                          -var "include_ej_base=true" \
-                          -var "include_ej_jsc_config=true" \
                           -auto-approve \
                           -parallelism=1
           else
@@ -65,8 +63,6 @@ jobs:
                           -var "jamfpro_client_secret=${{ secrets.jamfpro_client_secret }}" \
                           -var "jsc_username=${{ secrets.jsc_username }}" \
                           -var "jsc_password=${{ secrets.jsc_password }}" \
-                          -var "include_ej_base=true" \
-                          -var "include_ej_jsc_config=true" \
                           -auto-approve \
                           -parallelism=1
           fi
@@ -81,8 +77,6 @@ jobs:
                           -var "jamfpro_client_secret=${{ secrets.jamfpro_client_secret }}" \
                           -var "jsc_username=${{ secrets.jsc_username }}" \
                           -var "jsc_password=${{ secrets.jsc_password }}" \
-                          -var "include_ej_base=true" \
-                          -var "include_ej_jsc_config=true" \
                           -auto-approve \
                           -parallelism=1 \
                           -refresh=false
@@ -93,8 +87,6 @@ jobs:
                           -var "jamfpro_client_secret=${{ secrets.jamfpro_client_secret }}" \
                           -var "jsc_username=${{ secrets.jsc_username }}" \
                           -var "jsc_password=${{ secrets.jsc_password }}" \
-                          -var "include_ej_base=true" \
-                          -var "include_ej_jsc_config=true" \
                           -auto-approve \
                           -parallelism=1 \
                           -refresh=false

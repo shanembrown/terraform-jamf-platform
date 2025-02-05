@@ -106,31 +106,6 @@ variable "tje_okta_orgdomain" {
   default = "jamf-harbor.okta.com"
 }
 
-variable "include_ej_base" {
-  type    = bool
-  default = false
-}
-
-variable "include_ej_saas_tenancy" {
-  type    = bool
-  default = false
-}
-
-variable "include_ej_incident_response" {
-  type    = bool
-  default = false
-}
-
-variable "include_ej_mac_cis_benchmark" {
-  type    = bool
-  default = false
-}
-
-variable "include_ej_mobile_cis_benchmark" {
-  type    = bool
-  default = false
-}
-
 variable "include_mobile_cis_lvl1_benchmark" {
   type    = bool
   default = false
@@ -161,15 +136,6 @@ variable "include_mac_cmmc_lvl1_benchmark" {
   default = false
 }
 
-variable "include_ej_secure_remote_access" {
-  type    = bool
-  default = false
-}
-
-variable "include_ej_mac_LMAM" {
-  type    = bool
-  default = false
-}
 
 
 ## Define demo config variables
@@ -349,11 +315,6 @@ variable "include_jsc_network_relay" {
 }
 
 variable "include_jsc_block_pages" {
-  type    = bool
-  default = false
-}
-
-variable "include_ej_jsc_config" {
   type    = bool
   default = false
 }
