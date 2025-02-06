@@ -23,7 +23,7 @@ resource "jamfpro_category" "category_disk_encrpytion" {
 resource "jamfpro_script" "script_reissuekey" {
   name            = "${var.prefix}Reissue FileVault 2 Key [${random_integer.entropy.result}]"
   priority        = "AFTER"
-  script_contents = file("${var.support_files_path_prefix}modules/endpoint_security_macOS_filevault/support_files/reissuekey.sh")
+  script_contents = file("${var.support_files_path_prefix}modules/endpoint-security-macOS-filevault/support_files/reissuekey.sh")
   category_id     = jamfpro_category.category_disk_encrpytion.id
   info            = "Source: https://github.com/jamf/FileVault2_Scripts/blob/master/reissueKey.sh"
 }
@@ -112,7 +112,7 @@ resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuratio
   category_id         = jamfpro_category.category_disk_encrpytion.id
   redeploy_on_update  = "Newly Assigned"
   distribution_method = "Install Automatically"
-  payloads            = file("${var.support_files_path_prefix}modules/endpoint_security_macOS_filevault/support_files/enablefilevault.mobileconfig")
+  payloads            = file("${var.support_files_path_prefix}modules/endpoint-security-macOS-filevault/support_files/enablefilevault.mobileconfig")
   payload_validate    = false
   user_removable      = false
 
