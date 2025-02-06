@@ -65,10 +65,10 @@ resource "jamfpro_smart_mobile_device_group" "group_ios17" {
 ## Define configuration profile details for iOS 17
 locals {
   ios17_stig_dict = {
-    "Application Access"            = "${var.support_files_path_prefix}modules/compliance_iOS_disa_stig/support_files/mobile_configuration_profiles/iOS17_ios_stig-applicationaccess.mobileconfig"
-    "Exchange Active Sync Settings" = "${var.support_files_path_prefix}modules/compliance_iOS_disa_stig/support_files/mobile_configuration_profiles/iOS17_ios_stig-eas.account.mobileconfig"
-    "Mail Policy"                   = "${var.support_files_path_prefix}modules/compliance_iOS_disa_stig/support_files/mobile_configuration_profiles/iOS17_ios_stig-mail.managed.mobileconfig"
-    "Password Policy"               = "${var.support_files_path_prefix}modules/compliance_iOS_disa_stig/support_files/mobile_configuration_profiles/iOS17_ios_stig-mobiledevice.passwordpolicy.mobileconfig"
+    "Application Access"            = "${var.support_files_path_prefix}modules/compliance-iOS-disa-stig/support_files/mobile_configuration_profiles/iOS17_ios_stig-applicationaccess.mobileconfig"
+    "Exchange Active Sync Settings" = "${var.support_files_path_prefix}modules/compliance-iOS-disa-stig/support_files/mobile_configuration_profiles/iOS17_ios_stig-eas.account.mobileconfig"
+    "Mail Policy"                   = "${var.support_files_path_prefix}modules/compliance-iOS-disa-stig/support_files/mobile_configuration_profiles/iOS17_ios_stig-mail.managed.mobileconfig"
+    "Password Policy"               = "${var.support_files_path_prefix}modules/compliance-iOS-disa-stig/support_files/mobile_configuration_profiles/iOS17_ios_stig-mobiledevice.passwordpolicy.mobileconfig"
   }
 }
 
@@ -92,10 +92,10 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "config_ios17" {
 ## Define configuration profile details for iOS 18
 # locals {
 #   ios18_stig_dict = {
-#     "Application Access"            = "${var.support_files_path_prefix}modules/compliance_iOS_disa_stig/support_files/mobile_configuration_profiles/iOS18_ios_stig-applicationaccess.mobileconfig"
-#     "Exchange Active Sync Settings" = "${var.support_files_path_prefix}modules/compliance_iOS_disa_stig/support_files/mobile_configuration_profiles/iOS18_ios_stig-eas.account.mobileconfig"
-#     "Mail Policy"                   = "${var.support_files_path_prefix}modules/compliance_iOS_disa_stig/support_files/mobile_configuration_profiles/iOS18_ios_stig-mail.managed.mobileconfig"
-#     "Password Policy"               = "${var.support_files_path_prefix}modules/compliance_iOS_disa_stig/support_files/mobile_configuration_profiles/iOS18_ios_stig-mobiledevice.passwordpolicy.mobileconfig"
+#     "Application Access"            = "${var.support_files_path_prefix}modules/compliance-iOS-disa-stig/support_files/mobile_configuration_profiles/iOS18_ios_stig-applicationaccess.mobileconfig"
+#     "Exchange Active Sync Settings" = "${var.support_files_path_prefix}modules/compliance-iOS-disa-stig/support_files/mobile_configuration_profiles/iOS18_ios_stig-eas.account.mobileconfig"
+#     "Mail Policy"                   = "${var.support_files_path_prefix}modules/compliance-iOS-disa-stig/support_files/mobile_configuration_profiles/iOS18_ios_stig-mail.managed.mobileconfig"
+#     "Password Policy"               = "${var.support_files_path_prefix}modules/compliance-iOS-disa-stig/support_files/mobile_configuration_profiles/iOS18_ios_stig-mobiledevice.passwordpolicy.mobileconfig"
 #   }
 # }
 

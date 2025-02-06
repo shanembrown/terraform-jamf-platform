@@ -45,7 +45,7 @@ resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuratio
   category_id         = jamfpro_category.category_defender.id
   redeploy_on_update  = "Newly Assigned"
   distribution_method = "Install Automatically"
-  payloads            = file("${var.support_files_path_prefix}modules/endpoint_security_macOS_microsoft_defender/support_files/defendermau.mobileconfig")
+  payloads            = file("${var.support_files_path_prefix}modules/endpoint-security-macOS-microsoft-defender/support_files/defendermau.mobileconfig")
   payload_validate    = false
   user_removable      = false
 
@@ -62,7 +62,7 @@ resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuratio
   category_id         = jamfpro_category.category_defender.id
   redeploy_on_update  = "Newly Assigned"
   distribution_method = "Install Automatically"
-  payloads            = file("${var.support_files_path_prefix}modules/endpoint_security_macOS_microsoft_defender/support_files/onboarding.mobileconfig")
+  payloads            = file("${var.support_files_path_prefix}modules/endpoint-security-macOS-microsoft-defender/support_files/onboarding.mobileconfig")
   payload_validate    = false
   user_removable      = false
 
@@ -79,7 +79,7 @@ resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuratio
   category_id         = jamfpro_category.category_defender.id
   redeploy_on_update  = "Newly Assigned"
   distribution_method = "Install Automatically"
-  payloads            = file("${var.support_files_path_prefix}modules/endpoint_security_macOS_microsoft_defender/support_files/endpointsettings.mobileconfig")
+  payloads            = file("${var.support_files_path_prefix}modules/endpoint-security-macOS-microsoft-defender/support_files/endpointsettings.mobileconfig")
   payload_validate    = false
   user_removable      = false
 

@@ -23,7 +23,7 @@ resource "jamfpro_category" "category_passwordless_sso" {
 resource "jamfpro_script" "script_passwordless_sso" {
   name            = "Passwordless SSO [${random_integer.entropy.result}]"
   priority        = "AFTER"
-  script_contents = file("${var.support_files_path_prefix}modules/management_macOS_passwordless_sso/support_files/computer_scripts/passwordless_sso.zsh")
+  script_contents = file("${var.support_files_path_prefix}modules/management-macOS-passwordless-sso/support_files/computer_scripts/passwordless_sso.zsh")
   category_id     = jamfpro_category.category_passwordless_sso.id
   info            = "This script will check for the presence of the Okta Verify App. If not present, it will download and install the latest version. It will then launch the app with the the URL of the Experience Jamf Okta tenant."
 }
@@ -50,7 +50,7 @@ resource "jamfpro_smart_computer_group" "group_passwordless_sso" {
 ## Define configuration profiles
 locals {
   passwordless_sso_dict = {
-    "Passwordless SSO" = "${var.support_files_path_prefix}modules/management_macOS_passwordless_sso/support_files/computer_config_profiles/passwordless_sso.mobileconfig"
+    "Passwordless SSO" = "${var.support_files_path_prefix}modules/management-macOS-passwordless-sso/support_files/computer_config_profiles/passwordless_sso.mobileconfig"
   }
 }
 
