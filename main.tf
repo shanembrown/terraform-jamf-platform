@@ -50,6 +50,26 @@ module "jamf_protect_trial_kickstart" {
   jamfprotect_client_password = var.jamfprotect_client_password
 }
 
+module "onboarder-all" {
+  source                    = "./modules/onboarder-all"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "onboarder-management" {
+  source                    = "./modules/onboarder-management"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "onboarder-security" {
+  source                    = "./modules/onboarder-security"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "onboarder-app-installers" {
+  source                    = "./modules/onboarder-app-installers"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
 module "mac_cis_lvl1_benchmark" {
   count                     = var.include_mac_cis_lvl1_benchmark == true ? 1 : 0
   source                    = "./modules/compliance-macOS-cis-level-1"
