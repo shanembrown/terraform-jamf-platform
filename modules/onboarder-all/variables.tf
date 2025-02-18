@@ -461,8 +461,3 @@ variable "include_crowdstrike" {
   type    = bool
   default = false
 }
-
-variable "include_onboarder" {
-  type    = bool
-  default = false
-}

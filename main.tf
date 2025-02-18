@@ -35,6 +35,31 @@ provider "jsc" {
   applicationsecret = var.jsc_applicationsecret
 }
 
+# Onboarder Modules
+module "onboarder-all" {
+  count                     = var.include_onboarder == true ? 1 : 0
+  source                    = "./modules/onboarder-all"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "onboarder-management" {
+  count                     = var.include_onboarder == true ? 1 : 0
+  source                    = "./modules/onboarder-management"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "onboarder-security" {
+  count                     = var.include_onboarder == true ? 1 : 0
+  source                    = "./modules/onboarder-security"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "onboarder-app-installers" {
+  count                     = var.include_onboarder == true ? 1 : 0
+  source                    = "./modules/onboarder-app-installers"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
 ## Initialize common modules
 
 ## Initialize Protect (for macOS) module
