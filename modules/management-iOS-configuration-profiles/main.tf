@@ -36,7 +36,7 @@ resource "jamfpro_category" "category_demo" {
 
 
 resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_configuration_profile_restrict_apple_id_changes" {
-  name               = "Restrict Apple ID Changes [${random_integer.entropy.result}]"
+  name               = "Restrict Apple Account Changes [${random_integer.entropy.result}]"
   description        = "This restricts the ability to modify account settings for Apple ID"
   deployment_method  = "Install Automatically"
   level              = "Device Level"
@@ -50,8 +50,8 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
 }
 
 resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_configuration_profile_restrict_airdrop" {
-  name               = "Restrict Airdrop [${random_integer.entropy.result}]"
-  description        = "This restricts the ability to use Airdrop"
+  name               = "Restrict AirDrop [${random_integer.entropy.result}]"
+  description        = "This restricts the ability to use AirDrop"
   deployment_method  = "Install Automatically"
   level              = "Device Level"
   category_id        = jamfpro_category.category_restrictions.id
@@ -78,8 +78,8 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
 }
 
 resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_configuration_profile_restrict_erase_all_content_and_settings" {
-  name               = "Restrict Erase all Content and Settings [${random_integer.entropy.result}]"
-  description        = "Restricts Erase all Content and Settings"
+  name               = "Restrict Erase All Content and Settings [${random_integer.entropy.result}]"
+  description        = "Restricts Erase All Content and Settings"
   deployment_method  = "Install Automatically"
   level              = "Device Level"
   category_id        = jamfpro_category.category_restrictions.id
@@ -193,7 +193,7 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
 
 resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_configuration_profile_shared_device_mode" {
   name               = "Demo - Shared Device Mode - Restrictions [${random_integer.entropy.result}]"
-  description        = "Restricts Airdrop, Apple ID changes, Screenshots, Erase, and Camera"
+  description        = "Restricts AirDrop, Apple Account changes, Screenshots, Erase, and Camera"
   deployment_method  = "Install Automatically"
   level              = "Device Level"
   category_id        = jamfpro_category.category_demo.id
