@@ -1,1 +1,6 @@
-External modules require README.md - This is a placeholder and more details should be added
+**This module requires Jamf Pro credentials.**
+
+Running this will:
+
+- Create an App Installer for PPPC Utility 
+- Scope that App Installer to All Managed Computers
