@@ -14,11 +14,7 @@ response=$(curl --silent --location --request POST "${jamfpro_instance_url}/api/
 		--data-urlencode "client_secret=${jamfpro_client_secret}")
 access_token=$(echo "$response" | awk -F'"' '/"access_token":/ {print $4}')
 
-echo $access_token
-
 response=$(curl --silent --location --request DELETE "${jamfpro_instance_url}/api/v1/jamf-protect" \
 	 --header "Authorization: Bearer $access_token" \
      --header "accept: application/json" \
      --header "content-type: application/json")
-
-echo $response
