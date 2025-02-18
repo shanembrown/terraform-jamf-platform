@@ -14,12 +14,8 @@ response=$(curl --silent --location --request POST "${jamfpro_instance_url}/api/
 		--data-urlencode "client_secret=${jamfpro_client_secret}")
 access_token=$(echo "$response" | awk -F'"' '/"access_token":/ {print $4}')
 
-echo $access_token
-
 response=$(curl --silent --location --request POST "${jamfpro_instance_url}/api/v1/jamf-protect/register" \
 	 --header "Authorization: Bearer $access_token" \
      --header "accept: application/json" \
      --header "content-type: application/json" \
      --data '{"protectUrl": "'$jamfprotect_url'","clientId": "'$jamfprotect_clientID'","password": "'$jamfprotect_client_password'"}')
-
-echo $response
