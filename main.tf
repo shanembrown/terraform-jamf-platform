@@ -35,6 +35,31 @@ provider "jsc" {
   applicationsecret = var.jsc_applicationsecret
 }
 
+# Onboarder Modules
+module "onboarder-all" {
+  count                     = var.include_onboarder == true ? 1 : 0
+  source                    = "./modules/onboarder-all"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "onboarder-management" {
+  count                     = var.include_onboarder == true ? 1 : 0
+  source                    = "./modules/onboarder-management"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "onboarder-security" {
+  count                     = var.include_onboarder == true ? 1 : 0
+  source                    = "./modules/onboarder-security"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "onboarder-app-installers" {
+  count                     = var.include_onboarder == true ? 1 : 0
+  source                    = "./modules/onboarder-app-installers"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
 ## Initialize common modules
 
 ## Initialize Protect (for macOS) module
@@ -48,26 +73,6 @@ module "jamf_protect_trial_kickstart" {
   jamfprotect_url             = var.jamfprotect_url
   jamfprotect_clientID        = var.jamfprotect_clientID
   jamfprotect_client_password = var.jamfprotect_client_password
-}
-
-module "onboarder-all" {
-  source                    = "./modules/onboarder-all"
-  support_files_path_prefix = var.support_files_path_prefix
-}
-
-module "onboarder-management" {
-  source                    = "./modules/onboarder-management"
-  support_files_path_prefix = var.support_files_path_prefix
-}
-
-module "onboarder-security" {
-  source                    = "./modules/onboarder-security"
-  support_files_path_prefix = var.support_files_path_prefix
-}
-
-module "onboarder-app-installers" {
-  source                    = "./modules/onboarder-app-installers"
-  support_files_path_prefix = var.support_files_path_prefix
 }
 
 module "mac_cis_lvl1_benchmark" {
