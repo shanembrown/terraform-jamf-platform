@@ -17,12 +17,27 @@ module "onboarder-security" {
   support_files_path_prefix = var.support_files_path_prefix
 }
 
-module "onboarder-management" {
-  source                    = "../onboarder-management"
+module "onboarder-management-macOS" {
+  source                    = "../onboarder-management-macOS"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "onboarder-management-mobile" {
+  source                    = "../onboarder-management-mobile"
   support_files_path_prefix = var.support_files_path_prefix
 }
 
 module "onboarder-app-installers" {
   source                    = "../onboarder-app-installers"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "compliance-macOS-cis-level-1" {
+  source                    = "../compliance-macOS-cis-level-1"
+  support_files_path_prefix = var.support_files_path_prefix
+}
+
+module "compliance-iOS-cis-level-1" {
+  source                    = "../compliance-iOS-cis-level-1"
   support_files_path_prefix = var.support_files_path_prefix
 }

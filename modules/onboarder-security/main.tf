@@ -29,3 +29,8 @@ module "configuration-jamf-pro-jamf-protect" {
 module "configuration-jamf-security-cloud-block-pages" {
   source = "../configuration-jamf-security-cloud-block-pages"
 }
+
+module "endpoint-security-macOS-filevault" {
+  source                    = "../endpoint-security-macOS-filevault"
+  support_files_path_prefix = var.support_files_path_prefix
+}

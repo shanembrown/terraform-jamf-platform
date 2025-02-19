@@ -20,16 +20,6 @@ module "configuration-jamf-pro-computer-management-settings" {
   source = "../configuration-jamf-pro-computer-management-settings"
 }
 
-module "management-iOS-configuration-profiles" {
-  source                    = "../management-iOS-configuration-profiles"
-  support_files_path_prefix = var.support_files_path_prefix
-}
-
 module "management-macOS-rosetta" {
   source = "../management-macOS-rosetta"
-}
-
-module "endpoint-security-macOS-filevault" {
-  source                    = "../endpoint-security-macOS-filevault"
-  support_files_path_prefix = var.support_files_path_prefix
 }
