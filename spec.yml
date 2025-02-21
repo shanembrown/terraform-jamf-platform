@@ -56,41 +56,66 @@ credentials:
     display_desc: Password for authenticating with Jamf Security Cloud
 
 options:
+    - key: onboarder-all
+      presence: optional
+      display_name: Apply All
+      display_desc: Apply all configurations and settings available in Onboarder + CIS Level 1 for macOS, iOS, and iPadOS
+
+    - key: onboarder-app-installers
+      presence: optional
+      display_name: Configure App Installers
+      display_desc: Configure all available App Installers in Onboarder
+
+    - key: onboarder-management-macOS
+      presence: optional
+      display_name: Configure Management for macOS
+      display_desc: Configure all available management settings in Onboarder for macOS
+
+    - key: onboarder-management-mobile
+      presence: optional
+      display_name: Configure Management for iOS and iPadOS
+      display_desc: Configure all available management settings in Onboarder for iOS and iPadOS
+
+    - key: onboarder-security
+      presence: optional
+      display_name: Configure Security Capabilities
+      display_desc: Configre all available seurity configurations and settings in Onbarder
+
   ## Jamf Pro Onboarder Modules
-  - key: include_passwordless_ssoe
-    type: <boolean>
-    presence: optional
-    category: MDM Workflows
-    display_name: Enable macOS Passwordless SSOe
-    display_desc: This will configure the management capabilities needed to configure and install the Okta Verify.app for SSOe on macOS. Use @tryjamf.com credentials to authenticate with the Okta Verify App. Objects are scoped to the Passwordless SSO Smart Group. To scope configurations to computers edit the serial number criteria to match the serial number of a test computer or remove the serial number criteria to scope to all enrolled computers.
+  # - key: include_passwordless_ssoe
+  #   type: <boolean>
+  #   presence: optional
+  #   category: MDM Workflows
+  #   display_name: Enable macOS Passwordless SSOe
+  #   display_desc: This will configure the management capabilities needed to configure and install the Okta Verify.app for SSOe on macOS. Use @tryjamf.com credentials to authenticate with the Okta Verify App. Objects are scoped to the Passwordless SSO Smart Group. To scope configurations to computers edit the serial number criteria to match the serial number of a test computer or remove the serial number criteria to scope to all enrolled computers.
 
-  - key: include_qol_smart_groups
-    type: <boolean>
-    presence: optional
-    category: MDM Workflows
-    display_name: Add Smart Groups
-    display_desc: This will add several Jamf recommended Smart Groups. Jamf allows you to create smart groups to group managed computers, mobile devices, or users. Smart group membership is dynamically updated based on the criteria you add to the smart group.
+  # - key: include_qol_smart_groups
+  #   type: <boolean>
+  #   presence: optional
+  #   category: MDM Workflows
+  #   display_name: Add Smart Groups
+  #   display_desc: This will add several Jamf recommended Smart Groups. Jamf allows you to create smart groups to group managed computers, mobile devices, or users. Smart group membership is dynamically updated based on the criteria you add to the smart group.
 
-  - key: include_categories
-    type: <boolean>
-    presence: optional
-    category: MDM Workflows
-    display_name: Add Categories
-    display_desc: This will add several Jamf recommended Categories. Categories are organizational components that allow you to group management capabilities such as configurations, policies, packages and scripts. You can also use categories to group policies, configuration profiles, apps, and books in Jamf Self Service for end users.
+  # - key: include_categories
+  #   type: <boolean>
+  #   presence: optional
+  #   category: MDM Workflows
+  #   display_name: Add Categories
+  #   display_desc: This will add several Jamf recommended Categories. Categories are organizational components that allow you to group management capabilities such as configurations, policies, packages and scripts. You can also use categories to group policies, configuration profiles, apps, and books in Jamf Self Service for end users.
 
-  - key: include_computer_management_settings
-    type: <boolean>
-    presence: optional
-    category: MDM Workflows
-    display_name: Set Inventory Collection and Check-in Settings
-    display_desc: For managed computers and devices, configure inventory collection settings. Set the check-in interval for managed computers to 15 minutes.
+  # - key: include_computer_management_settings
+  #   type: <boolean>
+  #   presence: optional
+  #   category: MDM Workflows
+  #   display_name: Set Inventory Collection and Check-in Settings
+  #   display_desc: For managed computers and devices, configure inventory collection settings. Set the check-in interval for managed computers to 15 minutes.
 
-  - key: include_mobile_device_kickstart
-    type: <boolean>
-    presence: optional
-    category: MDM Workflows
-    display_name: Mobile Device Configurations
-    display_desc: For managed mobile devices, configure common restriction profiles. Configure shared device and kiosk mode capabilities. Shared device and kiosk mode capabilities can be enabled with smart groups and extension attributes.
+  # - key: include_mobile_device_kickstart
+  #   type: <boolean>
+  #   presence: optional
+  #   category: MDM Workflows
+  #   display_name: Mobile Device Configurations
+  #   display_desc: For managed mobile devices, configure common restriction profiles. Configure shared device and kiosk mode capabilities. Shared device and kiosk mode capabilities can be enabled with smart groups and extension attributes.
 
   ## Jamf Pro Outcome Modules
   - key: include_filevault
