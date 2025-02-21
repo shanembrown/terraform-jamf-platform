@@ -27,5 +27,5 @@ The following projects are incorporated as resources in this project:
 | Project                                      | Source                                                   | License                                                 |
 |----------------------------------------------|----------------------------------------------------------|---------------------------------------------------------|
 | macOS Security & Compliance Project | [usnistgov/macos_security](https://github.com/usnistgov/macos_security) | [CC BY 4.0](https://github.com/usnistgov/macos_security/blob/main/LICENSE.md) |
-| Falcon Install | [Blog Post (purves.com)](https://richard-purves.com/2022/05/03/downloading-crowdstrike-via-api-for-fun-and-profit/) |  |
+| Falcon Install | [Crowdstrike-API-Scripts](https://github.com/franton/Crowdstrike-API-Scripts) | [MIT](https://github.com/franton/Crowdstrike-API-Scripts/blob/main/LICENSE) |
 | Reissue Filevault Key | [jamf/FileVault2_Scripts](https://github.com/jamf/FileVault2_Scripts) | [MIT](https://github.com/jamf/FileVault2_Scripts/blob/master/README.md) |
