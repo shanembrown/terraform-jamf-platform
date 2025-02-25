@@ -350,6 +350,31 @@ variable "activation_profile_target" {
   default = ""
 }
 
+variable "include_microsoft_edge" {
+  type    = bool
+  default = false
+}
+
+variable "include_box_drive" {
+  type    = bool
+  default = false
+}
+
+variable "include_nudge" {
+  type    = bool
+  default = false
+}
+
+variable "include_adobe_creative_cloud" {
+  type    = bool
+  default = false
+}
+
+variable "include_text_expander" {
+  type    = bool
+  default = false
+}
+
 variable "include_google_chrome" {
   type    = bool
   default = false
