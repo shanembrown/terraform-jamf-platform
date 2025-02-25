@@ -36,29 +36,29 @@ provider "jsc" {
 }
 
 # Onboarder Modules
-# module "onboarder-all" {
-#   count                     = var.include_onboarder == true ? 1 : 0
-#   source                    = "./modules/onboarder-all"
-#   support_files_path_prefix = var.support_files_path_prefix
-# }
+module "onboarder-all" {
+  count                     = var.include_onboarder == true ? 1 : 0
+  source                    = "./modules/onboarder-all"
+  support_files_path_prefix = var.support_files_path_prefix
+}
 
-# module "onboarder-management-macOS" {
-#   count                     = var.include_onboarder == true ? 1 : 0
-#   source                    = "./modules/onboarder-management-macOS"
-#   support_files_path_prefix = var.support_files_path_prefix
-# }
+module "onboarder-management-macOS" {
+  count                     = var.include_onboarder == true ? 1 : 0
+  source                    = "./modules/onboarder-management-macOS"
+  support_files_path_prefix = var.support_files_path_prefix
+}
 
-# module "onboarder-management-mobile" {
-#   count                     = var.include_onboarder == true ? 1 : 0
-#   source                    = "./modules/onboarder-management-mobile"
-#   support_files_path_prefix = var.support_files_path_prefix
-# }
+module "onboarder-management-mobile" {
+  count                     = var.include_onboarder == true ? 1 : 0
+  source                    = "./modules/onboarder-management-mobile"
+  support_files_path_prefix = var.support_files_path_prefix
+}
 
-# module "onboarder-security" {
-#   count                     = var.include_onboarder == true ? 1 : 0
-#   source                    = "./modules/onboarder-security"
-#   support_files_path_prefix = var.support_files_path_prefix
-# }
+module "onboarder-security" {
+  count                     = var.include_onboarder == true ? 1 : 0
+  source                    = "./modules/onboarder-security"
+  support_files_path_prefix = var.support_files_path_prefix
+}
 
 module "onboarder-app-installers" {
   count                     = var.include_onboarder == true ? 1 : 0
