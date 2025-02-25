@@ -3,7 +3,7 @@ terraform {
   required_providers {
     jamfpro = {
       source  = "deploymenttheory/jamfpro"
-      version = ">= 0.2.0"
+      version = ">= 0.1.5"
     }
     jsc = {
       source  = "danjamf/jsctfprovider"
@@ -36,32 +36,32 @@ provider "jsc" {
 }
 
 # Onboarder Modules
-module "onboarder-all" {
-  # count                     = var.include_onboarder == true ? 1 : 0
-  source                    = "./modules/onboarder-all"
-  support_files_path_prefix = var.support_files_path_prefix
-}
+# module "onboarder-all" {
+#   count                     = var.include_onboarder == true ? 1 : 0
+#   source                    = "./modules/onboarder-all"
+#   support_files_path_prefix = var.support_files_path_prefix
+# }
 
-module "onboarder-management-macOS" {
-  # count                     = var.include_onboarder == true ? 1 : 0
-  source                    = "./modules/onboarder-management-macOS"
-  support_files_path_prefix = var.support_files_path_prefix
-}
+# module "onboarder-management-macOS" {
+#   count                     = var.include_onboarder == true ? 1 : 0
+#   source                    = "./modules/onboarder-management-macOS"
+#   support_files_path_prefix = var.support_files_path_prefix
+# }
 
-module "onboarder-management-mobile" {
-  # count                     = var.include_onboarder == true ? 1 : 0
-  source                    = "./modules/onboarder-management-mobile"
-  support_files_path_prefix = var.support_files_path_prefix
-}
+# module "onboarder-management-mobile" {
+#   count                     = var.include_onboarder == true ? 1 : 0
+#   source                    = "./modules/onboarder-management-mobile"
+#   support_files_path_prefix = var.support_files_path_prefix
+# }
 
-module "onboarder-security" {
-  # count                     = var.include_onboarder == true ? 1 : 0
-  source                    = "./modules/onboarder-security"
-  support_files_path_prefix = var.support_files_path_prefix
-}
+# module "onboarder-security" {
+#   count                     = var.include_onboarder == true ? 1 : 0
+#   source                    = "./modules/onboarder-security"
+#   support_files_path_prefix = var.support_files_path_prefix
+# }
 
 module "onboarder-app-installers" {
-  # count                     = var.include_onboarder == true ? 1 : 0
+  count                     = var.include_onboarder == true ? 1 : 0
   source                    = "./modules/onboarder-app-installers"
   support_files_path_prefix = var.support_files_path_prefix
 }
@@ -229,7 +229,7 @@ module "jsc_uemc" {
 
 ## Create Jamf Security Cloud Activation Profile containing ALL JSC Services
 module "jsc_all_services" {
-  count              = var.include_jsc_all_services == true ? 1 : 0
+  # count              = var.include_jsc_all_services == true ? 1 : 0
   source             = "./modules/configuration-jamf-security-cloud-all-services"
   tje_okta_clientid  = var.tje_okta_clientid
   tje_okta_orgdomain = var.tje_okta_orgdomain

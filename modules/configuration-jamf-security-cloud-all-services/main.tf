@@ -50,5 +50,4 @@ resource "jamfpro_macos_configuration_profile_plist" "all_services_macos" {
   scope {
     all_computers = false
   }
-  depends_on = [jsc_ap.all_services]
 }
