@@ -90,3 +90,18 @@ variable "enable_jsc_uemc_output" {
   type    = string
   default = ""
 }
+
+variable "category_id_output" {
+  type    = string
+  default = ""
+}
+
+variable "jsc_mobile_plist" {
+  type    = string
+  default = ""
+}
+
+variable "supervisedplist_output" {
+  type    = string
+  default = ""
+}

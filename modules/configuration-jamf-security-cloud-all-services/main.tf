@@ -51,3 +51,37 @@ resource "jamfpro_macos_configuration_profile_plist" "all_services_macos" {
     all_computers = false
   }
 }
+
+output "supervisedplist_output" {
+  value = jsc_ap.all_services.supervisedplist
+}
+
+output "jsc_ap_category" {
+  value = jamfpro_category.jsc_all_services_profiles.id
+}
+
+# module "jsc_mobile" {
+#   source             = "../configuration-jamf-security-cloud-all-services_mobile"
+#   category_id_output = jamfpro_category.jsc_all_services_profiles.id
+#   jsc_mobile_plist   = module.jsc_all_services.supervisedplist_output
+# }
+
+# resource "jamfpro_mobile_device_configuration_profile_plist" "all_services_mobile" {
+#   name               = "Jamf Connect ZTNA + Jamf Protect Threat and Content Control - mobile (Supervised) [${random_integer.entropy.result}]"
+#   deployment_method  = "Install Automatically"
+#   level              = "Device Level"
+#   redeploy_on_update = "Newly Assigned"
+#   category_id        = var.category_id_output
+
+#   payloads         = module.jsc_all_services.supervisedplist_output
+#   payload_validate = false
+
+#   scope {
+#     all_mobile_devices = false
+#     all_jss_users      = false
+#   }
+
+#   lifecycle {
+#     ignore_changes = [payloads]
+#   }
+# }

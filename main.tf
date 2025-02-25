@@ -229,7 +229,7 @@ module "jsc_uemc" {
 
 ## Create Jamf Security Cloud Activation Profile containing ALL JSC Services
 module "jsc_all_services" {
-  # count              = var.include_jsc_all_services == true ? 1 : 0
+  count              = var.include_jsc_all_services == true ? 1 : 0
   source             = "./modules/configuration-jamf-security-cloud-all-services"
   tje_okta_clientid  = var.tje_okta_clientid
   tje_okta_orgdomain = var.tje_okta_orgdomain
