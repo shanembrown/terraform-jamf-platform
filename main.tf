@@ -55,6 +55,7 @@ module "onboarder-management-mobile" {
 }
 
 module "onboarder-security" {
+
   count                     = var.include_onboarder == true ? 1 : 0
   source                    = "./modules/onboarder-security"
   support_files_path_prefix = var.support_files_path_prefix
