@@ -55,6 +55,7 @@ module "onboarder-management-mobile" {
 }
 
 module "onboarder-security" {
+
   count                     = var.include_onboarder == true ? 1 : 0
   source                    = "./modules/onboarder-security"
   support_files_path_prefix = var.support_files_path_prefix
@@ -167,6 +168,31 @@ module "crowdstrike" {
 module "rosetta" {
   count  = var.include_rosetta == true ? 1 : 0
   source = "./modules/management-macOS-rosetta"
+}
+
+module "box_drive" {
+  count  = var.include_box_drive == true ? 1 : 0
+  source = "./modules/management-app-installers-box-drive"
+}
+
+module "nudge" {
+  count  = var.include_nudge == true ? 1 : 0
+  source = "./modules/management-app-installers-nudge"
+}
+
+module "adobe_creative_cloud" {
+  count  = var.include_adobe_creative_cloud == true ? 1 : 0
+  source = "./modules/management-app-installers-adobe-creative-cloud"
+}
+
+module "text_expander" {
+  count  = var.include_text_expander == true ? 1 : 0
+  source = "./modules/management-app-installers-text-expander"
+}
+
+module "microsoft_edge" {
+  count  = var.include_microsoft_edge == true ? 1 : 0
+  source = "./modules/management-app-installers-microsoft-edge"
 }
 
 module "google_chrome" {

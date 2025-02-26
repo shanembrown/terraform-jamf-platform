@@ -47,3 +47,23 @@ module "jamfcheck" {
 module "zoom" {
   source = "../management-app-installers-zoom"
 }
+
+module "include_microsoft_edge" {
+  source = "../management-app-installers-microsoft-edge"
+}
+
+module "box_drive" {
+  source = "../management-app-installers-box-drive"
+}
+
+module "nudge" {
+  source = "../management-app-installers-nudge"
+}
+
+module "adobe_creative_cloud" {
+  source = "../management-app-installers-adobe-creative-cloud"
+}
+
+module "text_expander" {
+  source = "../management-app-installers-text-expander"
+}
