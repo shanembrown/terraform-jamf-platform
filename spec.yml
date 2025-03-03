@@ -55,7 +55,7 @@ credentials:
     display_name: Jamf Security Cloud Password
     display_desc: Password for authenticating with Jamf Security Cloud
 
-options:
+  ## Onboarder Parent Modules
   - key: onboarder-all
     presence: optional
     module_name: module.onboarder-all
@@ -86,7 +86,31 @@ options:
     display_name: Configure Security Capabilities
     display_desc: Configre all available seurity configurations and settings in Onbarder
 
-  ## Jamf Pro Onboarder Modules
+  ## Security Onboarder Modules
+  - key: configuration-jamf-security-cloud-jamf-pro
+    presence: optional
+    module_name: module.configuration-jamf-security-cloud-jamf-pro
+    content: This will create all the necessary API Roles and an API Client in your Jamf Pro instance and then set up UEM Connect for Group synchronization, automated risk signaling, and easier deployment
+    category: Security
+    display_name: Synchronize Management and Security Capabilities
+    display_desc: This will create all the necessary API connections for integration of management and security capabilities needed to enable group synchronization, automated risk signaling, and easier deployment of Jamf's security capabilities.
+
+  - key: configuration-jamf-security-cloud-all-services
+    presence: optional
+    module_name: module.configuration-jamf-security-cloud-all-services
+    content: Creates an Activation Profile for all Jamf Security Cloud services and uploads it to Jamf Pro
+    category: Security
+    display_name: Configure Jamf Security Capabilities
+    display_desc: Enables the following security capabilities, Wireguard ZTNA, Content Filtering, Data and Threat Defense Policies. Creates an Activation Profile for deployment to managed devices. Access Policies will need to be configured for organizational resources prior to deployment to make best use of ZTNA capabilities.
+
+  - key: configuration-jamf-security-cloud-block-pages
+    presence: optional
+    module_name: module.configuration-jamf-security-cloud-block-pages
+    content: Provides customizable block pages for organizational policies
+    category: Security
+    display_name: Enable Customizable Block Pages
+    display_desc: Configures block pages for content filtering. Block pages can be further customized with company/organization branding.
+
   # - key: management-macOS-passwordless-sso
   #   presence: optional
   #   module_name: module.management-macOS-passwordless-sso
@@ -136,31 +160,6 @@ options:
     category: Endpoint Compliance
     display_name: Configure and Apply US CMMC 2.0 Level 1 for macOS
     display_desc: For managed computers, prepares and uploads the necessary components for US CMMC 2.0 Level 1 profile for macOS Sonoma and Sequoia (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-set to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
-
-  ## Security Onboarder Modules
-  - key: configuration-jamf-security-cloud-jamf-pro
-    presence: optional
-    module_name: module.configuration-jamf-security-cloud-jamf-pro
-    content: This will create all the necessary API Roles and an API Client in your Jamf Pro instance and then set up UEM Connect for Group synchronization, automated risk signaling, and easier deployment
-    category: Security
-    display_name: Synchronize Management and Security Capabilities
-    display_desc: This will create all the necessary API connections for integration of management and security capabilities needed to enable group synchronization, automated risk signaling, and easier deployment of Jamf's security capabilities.
-
-  - key: configuration-jamf-security-cloud-all-services
-    presence: optional
-    module_name: module.configuration-jamf-security-cloud-all-services
-    content: Creates an Activation Profile for all Jamf Security Cloud services and uploads it to Jamf Pro
-    category: Security
-    display_name: Configure Jamf Security Capabilities
-    display_desc: Enables the following security capabilities, Wireguard ZTNA, Content Filtering, Data and Threat Defense Policies. Creates an Activation Profile for deployment to managed devices. Access Policies will need to be configured for organizational resources prior to deployment to make best use of ZTNA capabilities.
-
-  - key: configuration-jamf-security-cloud-block-pages
-    presence: optional
-    module_name: module.configuration-jamf-security-cloud-block-pages
-    content: Provides customizable block pages for organizational policies
-    category: Security
-    display_name: Enable Customizable Block Pages
-    display_desc: Configures block pages for content filtering. Block pages can be further customized with company/organization branding.
 
   ### App Installer Modules
   - key: management-app-installers-microsoft-365
