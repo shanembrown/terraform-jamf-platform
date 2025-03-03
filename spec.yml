@@ -59,30 +59,35 @@ credentials:
   - key: onboarder-all
     presence: optional
     module_name: module.onboarder-all
+    category: Standard
     display_name: Apply All
     display_desc: Apply all configurations and settings available in Onboarder + CIS Level 1 for macOS, iOS, and iPadOS
 
   - key: onboarder-app-installers
     presence: optional
     module_name: module.onboarder-app-installers
+    category: All App Installers
     display_name: Configure App Installers
     display_desc: Configure all available App Installers in Onboarder
 
   - key: onboarder-management-macOS
     presence: optional
     module_name: module.onboarder-management-macOS
-    display_name: Configure Management for macOS
+    category: Management
+    display_name: macOS Foundation
     display_desc: Configure all available management settings in Onboarder for macOS
 
   - key: onboarder-management-mobile
     presence: optional
     module_name: module.onboarder-management-mobile
-    display_name: Configure Management for iOS and iPadOS
+    category: Management
+    display_name: iOS/iPadOS Foundation
     display_desc: Configure all available management settings in Onboarder for iOS and iPadOS
 
   - key: onboarder-security
     presence: optional
     module_name: module.onboarder-security
+    category: All Security
     display_name: Configure Security Capabilities
     display_desc: Configre all available seurity configurations and settings in Onbarder
 
@@ -110,6 +115,14 @@ credentials:
     category: Security
     display_name: Enable Customizable Block Pages
     display_desc: Configures block pages for content filtering. Block pages can be further customized with company/organization branding.
+
+  ## Jamf Protect Onboarder Modules
+  - key: configuration-jamf-pro-jamf-protect
+    presence: optional
+    module_name: module.configuration-jamf-pro-jamf-protect
+    category: Security
+    display_name: Integrate macOS Endpoint Security and Management Capabilities
+    display_desc: This will create all the necessary API connections for integration of macOS endpoint security and macOS management capabilities. This streamlines deployment and advanced remediation workflows.
 
   # - key: management-macOS-passwordless-sso
   #   presence: optional
