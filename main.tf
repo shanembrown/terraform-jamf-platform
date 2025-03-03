@@ -65,7 +65,9 @@ module "onboarder-app-installers" {
 
 ## Initialize Protect (for macOS) module
 
+
 module "configuration-jamf-pro-jamf-protect" {
+
   source                      = "./modules/configuration-jamf-pro-jamf-protect"
   jamfpro_instance_url        = var.jamfpro_instance_url
   jamfpro_client_id           = var.jamfpro_client_id
@@ -75,25 +77,30 @@ module "configuration-jamf-pro-jamf-protect" {
   jamfprotect_client_password = var.jamfprotect_client_password
 }
 
+
 module "compliance-macOS-cis-level-1" {
   source                    = "./modules/compliance-macOS-cis-level-1"
   support_files_path_prefix = var.support_files_path_prefix
 }
+
 
 module "compliance-iOS-cis-level-1" {
   source                    = "./modules/compliance-iOS-cis-level-1"
   support_files_path_prefix = var.support_files_path_prefix
 }
 
+
 module "compliance-macOS-disa-stig" {
   source                    = "./modules/compliance-macOS-disa-stig"
   support_files_path_prefix = var.support_files_path_prefix
 }
 
+
 module "compliance-iOS-disa-stig" {
   source                    = "./modules/compliance-iOS-disa-stig"
   support_files_path_prefix = var.support_files_path_prefix
 }
+
 
 module "compliance-macOS-nist-800-171" {
   source                    = "./modules/compliance-macOS-nist-800-171"
@@ -104,6 +111,7 @@ module "compliance-macOS-cmmc-level-1" {
   source                    = "./modules/compliance-macOS-cmmc-level-1"
   support_files_path_prefix = var.support_files_path_prefix
 }
+
 
 module "configuration-jamf-pro-smart-groups" {
   source = "./modules/configuration-jamf-pro-smart-groups"
@@ -138,6 +146,7 @@ module "management-macOS-passwordless-sso" {
   support_files_path_prefix = var.support_files_path_prefix
 }
 
+
 module "endpoint-security-macOS-crowdstrike" {
   source = "./modules/endpoint-security-macOS-crowdstrike"
 }
@@ -162,6 +171,7 @@ module "management-app-installers-adobe-creative-cloud" {
 module "management-app-installers-text-expander" {
   source = "./modules/management-app-installers-text-expander"
 }
+
 
 module "management-app-installers-microsoft-edge" {
   source = "./modules/management-app-installers-microsoft-edge"
@@ -206,6 +216,7 @@ module "management-app-installers-zoom" {
 ## Begin Jamf Security Cloud Configuration
 
 ## Create UEMC and Okta integrations
+
 module "configuration-jamf-security-cloud-jamf-pro" {
   source               = "./modules/configuration-jamf-security-cloud-jamf-pro"
   tje_okta_clientid    = var.tje_okta_clientid
@@ -216,6 +227,7 @@ module "configuration-jamf-security-cloud-jamf-pro" {
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ALL JSC Services
+
 module "configuration-jamf-security-cloud-all-services" {
   source             = "./modules/configuration-jamf-security-cloud-all-services"
   tje_okta_clientid  = var.tje_okta_clientid
@@ -328,6 +340,7 @@ module "configuration-jamf-security-cloud-block-pages" {
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Category Based Content Filtering
+
 module "network-security-jamf-pro-content-filtering" {
   source             = "./modules/network-security-jamf-pro-content-filtering"
   tje_okta_clientid  = var.tje_okta_clientid
@@ -335,6 +348,7 @@ module "network-security-jamf-pro-content-filtering" {
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Threat Response (MTD) 
+
 module "network-security-jamf-pro-network-threat-defense" {
   source             = "./modules/network-security-jamf-pro-network-threat-defense"
   tje_okta_clientid  = var.tje_okta_clientid
@@ -342,6 +356,7 @@ module "network-security-jamf-pro-network-threat-defense" {
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Threat Response (MTD) 
+
 module "network-security-jamf-pro-content-filtering-and-network-threat-defense" {
   source             = "./modules/network-security-jamf-pro-content-filtering-and-network-threat-defense"
   tje_okta_clientid  = var.tje_okta_clientid
@@ -349,6 +364,7 @@ module "network-security-jamf-pro-content-filtering-and-network-threat-defense" 
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Connect ZTNA
+
 module "network-security-jamf-pro-zero-trust-network-access" {
   source             = "./modules/network-security-jamf-pro-zero-trust-network-access"
   tje_okta_clientid  = var.tje_okta_clientid
@@ -356,6 +372,7 @@ module "network-security-jamf-pro-zero-trust-network-access" {
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Connect ZTNA
+
 module "network-security-jamf-pro-zero-trust-network-access-and-content-filtering" {
   source             = "./modules/network-security-jamf-pro-zero-trust-network-access-and-content-filtering"
   tje_okta_clientid  = var.tje_okta_clientid
@@ -363,6 +380,7 @@ module "network-security-jamf-pro-zero-trust-network-access-and-content-filterin
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Connect ZTNA
+
 module "network-security-jamf-pro-zero-trust-network-access-and-network-threat-prevention" {
   source             = "./modules/network-security-jamf-pro-zero-trust-network-access-and-network-threat-prevention"
   tje_okta_clientid  = var.tje_okta_clientid
