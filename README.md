@@ -75,20 +75,9 @@ terraform init -upgrade
 
 Terraform must be formatted correctly to run, which can be done manually after saving changes before each run with `terraform fmt`. If using Visual Studio Code, use [this guide](https://medium.com/nerd-for-tech/how-to-auto-format-hcl-terraform-code-in-visual-studio-code-6fa0e7afbb5e) to never have to run the format command again!
 
-Enter the following command to apply full Terraform config:
+Enter the following command, replacing the module_name with the module you intend to run. 
+You can absolutely include more than one target.
 
 ```
-terraform apply
-```
-
-Enter this command to only apply specific modules:
-
-```
-terraform apply -target "module.[MODULE_NAME]"
-```
-
-By default all modules will be applied. You can unselect individual modules by modifing the module knobs in your tfvars file e.g.
-
-```
-mac_cis_lvl1_benchmark = false
+terraform apply -target module.module_name -target module.module_name -parallelism=1
 ```
