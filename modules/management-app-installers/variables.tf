@@ -28,16 +28,9 @@ variable "jamfpro_client_secret" {
   default     = ""
 }
 
-variable "app_installers" {
-  description = "Set of selected App Installers"
-  type        = set(string)
-  default     = []
-}
-
-variable "app_name" {
-  description = "The name of the App for App Installer"
-  type        = string
-  default     = ""
+variable "app_installer_name" {
+  type    = string
+  default = ""
 }
 
 variable "enabled" {
@@ -168,9 +161,4 @@ variable "self_service_description" {
   description = "Description for the app in Self Service"
   type        = string
   default     = "This is an app provided from your Self Service Provider."
-}
-
-variable "app_installer_name" {
-  type    = string
-  default = ""
 }

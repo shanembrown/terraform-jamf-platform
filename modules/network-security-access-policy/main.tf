@@ -30,5 +30,5 @@ resource "jsc_pag_ztnaapp" "access_policy" {
   securitydevicemanagementbasedaccessenabled       = var.security_management_block
   securitydevicemanagementbasedaccessnotifications = var.security_management_block_notification
   assignmentallusers                               = var.all_users
-  apptemplateid                                    = data.jsc_pag_apptemplates.ap_data_atlassian.id
+  apptemplateid                                    = data.jsc_pag_apptemplates.app_template.id
 }

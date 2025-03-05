@@ -518,11 +518,6 @@ variable "app_installers" {
   default     = []
 }
 
-variable "app_installer_name" {
-  type    = string
-  default = ""
-}
-
 variable "access_policies" {
   type    = list(string)
   default = []
