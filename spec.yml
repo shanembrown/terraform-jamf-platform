@@ -237,7 +237,7 @@ options:
     module_name: module.management-app-installers-zoom
     content: Indicates whether to include the Zoom App Installer
     category: Productivity
-    display_name: Zoom
+    display_name: Zoom Client for Meetings
     display_desc: Configures Zoom in Jamf Pro to be deployable to managed computers.
 
   - key: management-app-installers-adobe-creative-cloud
