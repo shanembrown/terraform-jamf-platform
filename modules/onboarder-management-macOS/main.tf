@@ -25,5 +25,5 @@ module "management-macOS-rosetta" {
 }
 
 module "microsoft_365" {
-  source = "../management-app-installers-microsoft-365"
+  source = "../management-macOS-microsoft-365"
 }

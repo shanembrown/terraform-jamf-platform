@@ -122,9 +122,9 @@ module "configuration-jamf-pro-smart-groups" {
   source = "./modules/configuration-jamf-pro-smart-groups"
 }
 
-module "management-app-installers-microsoft-365" {
+module "management-macOS-microsoft-365" {
   count  = var.include_microsoft_365 == true ? 1 : 0
-  source = "./modules/management-app-installers-microsoft-365"
+  source = "./modules/management-macOS-microsoft-365"
 }
 
 module "configuration-jamf-pro-categories" {
@@ -168,75 +168,75 @@ module "management-macOS-rosetta" {
   source = "./modules/management-macOS-rosetta"
 }
 
-module "management-app-installers-box-drive" {
-  count  = var.include_box_drive == true ? 1 : 0
-  source = "./modules/management-app-installers-box-drive"
-}
+# module "management-app-installers-box-drive" {
+#   count  = var.include_box_drive == true ? 1 : 0
+#   source = "./modules/management-app-installers-box-drive"
+# }
 
-module "management-app-installers-nudge" {
-  count  = var.include_nudge == true ? 1 : 0
-  source = "./modules/management-app-installers-nudge"
-}
+# module "management-app-installers-nudge" {
+#   count  = var.include_nudge == true ? 1 : 0
+#   source = "./modules/management-app-installers-nudge"
+# }
 
-module "management-app-installers-adobe-creative-cloud" {
-  count  = var.include_adobe_creative_cloud == true ? 1 : 0
-  source = "./modules/management-app-installers-adobe-creative-cloud"
-}
+# module "management-app-installers-adobe-creative-cloud" {
+#   count  = var.include_adobe_creative_cloud == true ? 1 : 0
+#   source = "./modules/management-app-installers-adobe-creative-cloud"
+# }
 
-module "management-app-installers-text-expander" {
-  count  = var.include_text_expander == true ? 1 : 0
-  source = "./modules/management-app-installers-text-expander"
-}
+# module "management-app-installers-text-expander" {
+#   count  = var.include_text_expander == true ? 1 : 0
+#   source = "./modules/management-app-installers-text-expander"
+# }
 
-module "management-app-installers-microsoft-edge" {
-  count  = var.include_microsoft_edge == true ? 1 : 0
-  source = "./modules/management-app-installers-microsoft-edge"
-}
+# module "management-app-installers-microsoft-edge" {
+#   count  = var.include_microsoft_edge == true ? 1 : 0
+#   source = "./modules/management-app-installers-microsoft-edge"
+# }
 
-module "management-app-installers-google-chrome" {
-  count  = var.include_google_chrome == true ? 1 : 0
-  source = "./modules/management-app-installers-google-chrome"
-}
+# module "management-app-installers-google-chrome" {
+#   count  = var.include_google_chrome == true ? 1 : 0
+#   source = "./modules/management-app-installers-google-chrome"
+# }
 
-module "management-app-installers-mozilla-firefox" {
-  count  = var.include_mozilla_firefox == true ? 1 : 0
-  source = "./modules/management-app-installers-mozilla-firefox"
-}
+# module "management-app-installers-mozilla-firefox" {
+#   count  = var.include_mozilla_firefox == true ? 1 : 0
+#   source = "./modules/management-app-installers-mozilla-firefox"
+# }
 
-module "management-app-installers-slack" {
-  count  = var.include_slack == true ? 1 : 0
-  source = "./modules/management-app-installers-slack"
-}
+# module "management-app-installers-slack" {
+#   count  = var.include_slack == true ? 1 : 0
+#   source = "./modules/management-app-installers-slack"
+# }
 
-module "management-app-installers-dropbox" {
-  count  = var.include_dropbox == true ? 1 : 0
-  source = "./modules/management-app-installers-dropbox"
-}
+# module "management-app-installers-dropbox" {
+#   count  = var.include_dropbox == true ? 1 : 0
+#   source = "./modules/management-app-installers-dropbox"
+# }
 
-module "management-app-installers-google-drive" {
-  count  = var.include_google_drive == true ? 1 : 0
-  source = "./modules/management-app-installers-google-drive"
-}
+# module "management-app-installers-google-drive" {
+#   count  = var.include_google_drive == true ? 1 : 0
+#   source = "./modules/management-app-installers-google-drive"
+# }
 
-module "management-app-installers-jamf-composer" {
-  count  = var.include_jamf_composer == true ? 1 : 0
-  source = "./modules/management-app-installers-jamf-composer"
-}
+# module "management-app-installers-jamf-composer" {
+#   count  = var.include_jamf_composer == true ? 1 : 0
+#   source = "./modules/management-app-installers-jamf-composer"
+# }
 
-module "management-app-installers-pppc-utility" {
-  count  = var.include_pppc_utility == true ? 1 : 0
-  source = "./modules/management-app-installers-pppc-utility"
-}
+# module "management-app-installers-pppc-utility" {
+#   count  = var.include_pppc_utility == true ? 1 : 0
+#   source = "./modules/management-app-installers-pppc-utility"
+# }
 
-module "management-app-installers-jamfcheck" {
-  count  = var.include_jamfcheck == true ? 1 : 0
-  source = "./modules/management-app-installers-jamfcheck"
-}
+# module "management-app-installers-jamfcheck" {
+#   count  = var.include_jamfcheck == true ? 1 : 0
+#   source = "./modules/management-app-installers-jamfcheck"
+# }
 
-module "management-app-installers-zoom" {
-  count  = var.include_zoom == true ? 1 : 0
-  source = "./modules/management-app-installers-zoom"
-}
+# module "management-app-installers-zoom" {
+#   count  = var.include_zoom == true ? 1 : 0
+#   source = "./modules/management-app-installers-zoom"
+# }
 
 module "management-app-installers" {
   source             = "./modules/management-app-installers"
