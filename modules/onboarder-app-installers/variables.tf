@@ -38,6 +38,7 @@ variable "jamfpro_password" {
 }
 
 
+
 ## Define JSC provider variables (populated by .tfvars file)
 variable "jsc_username" {
   type      = string

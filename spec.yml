@@ -144,7 +144,6 @@ options:
 
   ## macOS Security Compliance Project Benchmark Modules
   - key: include_mac_cis_lvl1_benchmark
-    type: <boolean>
     presence: optional
     module_name: module.compliance-macOS-cis-level-1
     category: Endpoint Compliance
@@ -152,7 +151,6 @@ options:
     display_desc: For managed computers, prepares and uploads all necessary components for applying CIS Level 1 to macOS Sonoma and Sequoia. Smart Groups are pre-configured to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
 
   - key: include_mobile_cis_lvl1_benchmark
-    type: <boolean>
     presence: optional
     module_name: module.compliance-iOS-cis-level-1
     category: Endpoint Compliance
@@ -160,7 +158,6 @@ options:
     display_desc: For managed devices, prepares and uploads all necessary components for applying CIS Level 1 to iOS/iPadOS 17 & 18. Smart Groups are pre-configured to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
 
   - key: include_mac_stig_benchmark
-    type: <boolean>
     presence: optional
     module_name: module.compliance-macOS-disa-stig
     category: Endpoint Compliance
@@ -176,7 +173,6 @@ options:
     display_desc: For managed devices, prepares and uploads the necessary components for DISA STIG on iOS 17 (not yet mapped for iOS 18). Smart Groups are pre-set to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria.  **Benchmark from macOS Security Compliance Project**
 
   - key: include_mac_800_171_benchmark
-    type: <boolean>
     presence: optional
     module_name: module.compliance-macOS-nist-800-171
     category: Endpoint Compliance
@@ -184,7 +180,6 @@ options:
     display_desc: For managed computers, prepares and uploads the necessary components for NIST 800-171 for macOS Sonoma and Sequoia  (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-configured to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
 
   - key: include_mac_cmmc_lvl1_benchmark
-    type: <boolean>
     presence: optional
     module_name: module.compliance-macOS-cmmc-level-1
     category: Endpoint Compliance
