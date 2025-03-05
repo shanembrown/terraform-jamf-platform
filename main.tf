@@ -153,7 +153,7 @@ module "endpoint-security-macOS-microsoft-defender" {
 }
 
 module "management-macOS-SSOe-Okta" {
-  count                     = var.include_ssoe-okta == true ? 1 : 0
+  count                     = var.include_ssoe_okta == true ? 1 : 0
   source                    = "./modules/management-macOS-SSOe-Okta"
   support_files_path_prefix = var.support_files_path_prefix
 }
