@@ -58,6 +58,7 @@ credentials:
 options:
   ## Onboarder Parent Modules
   - key: include_onboarder-all
+    type: <boolean>
     presence: optional
     module_name: module.onboarder-all
     category: Standard
@@ -65,6 +66,7 @@ options:
     display_desc: Create all API intergrations between management and security capabilties. Create all management configurations and security configurations available in Onboarder + CIS Level 1 for macOS, iOS, and iPadOS.
 
   - key: include_onboarder-app-installers
+    type: <boolean>
     presence: optional
     module_name: module.onboarder-app-installers
     category: All App Installers
@@ -72,6 +74,7 @@ options:
     display_desc: Configure all available App Installers in Onboarder
 
   - key: include_onboarder-management-macOS
+    type: <boolean>
     presence: optional
     module_name: module.onboarder-management-macOS
     category: Management
@@ -79,6 +82,7 @@ options:
     display_desc: Configure all available management settings in Onboarder for macOS. Includes common configurations, settings, Smart Computer groups, and quality of life settings for macOS management.
 
   - key: include_onboarder-management-mobile
+    type: <boolean>
     presence: optional
     module_name: module.onboarder-management-mobile
     category: Management
@@ -86,6 +90,7 @@ options:
     display_desc: Configure all available management settings in Onboarder for iOS and iPadOS. Includes common configurations, settings, Smart Device groups, and quality of life settings for iOS and iPadOS management.
 
   - key: include_onboarder-security
+    type: <boolean>
     presence: optional
     module_name: module.onboarder-security
     category: All Security
@@ -94,6 +99,7 @@ options:
 
   ## Security Onboarder Modules
   - key: include_jsc_uemc
+    type: <boolean>
     presence: optional
     module_name: module.configuration-jamf-security-cloud-jamf-pro
     content: This will create all the necessary API Roles and an API Client in your Jamf Pro instance and then set up UEM Connect for Group synchronization, automated risk signaling, and easier deployment
@@ -102,6 +108,7 @@ options:
     display_desc: Configures the API connection and integration between management and security capabilities in the Jamf Pro and Jamf Security Cloud consoles. Enables group sync, automated risk signaling, and easier deployment of Jamf's web & network security capabilities.
 
   - key: include_jsc_all_services
+    type: <boolean>
     presence: optional
     module_name: module.configuration-jamf-security-cloud-all-services
     content: Creates an Activation Profile for all Jamf Security Cloud services and uploads it to Jamf Pro
@@ -110,6 +117,7 @@ options:
     display_desc: Enables Wireguard ZTNA. Configures Content Filtering, Data and Threat Defense Policies. Creates an Activation Profile for deployment to managed devices. Access Policies will need to be configured in console to fully implement ZTNA capabilities.
 
   - key: include_jsc_block_pages
+    type: <boolean>
     presence: optional
     module_name: module.configuration-jamf-security-cloud-block-pages
     content: Provides customizable block pages for organizational policies
@@ -119,6 +127,7 @@ options:
 
   ## Jamf Protect Onboarder Modules
   - key: include_jamf_protect_trial_kickstart
+    type: <boolean>
     presence: optional
     module_name: module.configuration-jamf-pro-jamf-protect
     category: Security
@@ -126,6 +135,8 @@ options:
     display_desc: Configures the API connection and integration between macOS management and security capabiltiies and their consoles. Streamlines deployment and enables advanced remediation workflows.
 
   - key: include_ssoe-okta
+    type: <boolean>
+    presence: optional
     module_name: module.management-macOS-SSOe-Okta
     category: Security
     display_name: Enable SSOe (Okta)
@@ -154,6 +165,8 @@ options:
     display_desc: For managed computers, prepares and uploads the necessary components for DISA STIG to macOS Sonoma and Sequoia (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-configured to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria.  **Benchmark from macOS Security Compliance Project**
 
   - key: include_mobile_stig_benchmark
+    type: <boolean>
+    presence: optional
     module_name: module.compliance-iOS-disa-stig
     category: Endpoint Compliance
     display_name: Configure and Apply DISA STIG for iOS
