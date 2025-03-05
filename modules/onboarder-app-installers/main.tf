@@ -13,7 +13,3 @@ module "management-app-installers" {
   for_each           = toset(var.app_installers)
   app_installer_name = each.value
 }
-
-module "microsoft_365" {
-  source = "../management-app-installers-microsoft-365"
-}
