@@ -224,22 +224,6 @@ options:
     display_name: Google Drive
     display_desc: Configures Google Drive in Jamf Pro to be deployable to managed computers.
 
-  # - key: management-app-installers-jamf-composer
-  #   presence: optional
-  #   module_name: module.management-app-installers-jamf-composer
-  #   content: Indicates whether to include the Jamf Composer App Installer
-  #   category: Additional Apps
-  #   display_name: Jamf Composer
-  #   display_desc: Configures Jamf Composer in Jamf Pro to be deployable to managed computers.
-
-  # - key: management-app-installers-pppc-utility
-  #   presence: optional
-  #   module_name: module.management-app-installers-pppc-utility
-  #   content: Indicates whether to include the Jamf PPPC Utility App Installer
-  #   category: Additional Apps
-  #   display_name: PPPC Utility
-  #   display_desc: Configures PPPC Utility in Jamf Pro to be deployable to managed computers
-
   - key: management-app-installers-jamfcheck
     presence: optional
     module_name: module.management-app-installers-jamfcheck
