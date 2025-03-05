@@ -467,7 +467,7 @@ variable "include_admin_tools" {
   default = false
 }
 
-variable "include_passwordless_ssoe" {
+variable "include_ssoe_okta" {
   type    = bool
   default = false
 }

@@ -154,7 +154,7 @@ module "msft_defender" {
 }
 
 module "passwordless_sso" {
-  count                     = var.include_passwordless_ssoe == true ? 1 : 0
+  count                     = var.include_ssoe_okta == true ? 1 : 0
   source                    = "./modules/management-macOS-passwordless-sso"
   support_files_path_prefix = var.support_files_path_prefix
 }

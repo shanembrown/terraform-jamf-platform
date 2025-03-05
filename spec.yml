@@ -57,7 +57,7 @@ credentials:
 
 options:
   ## Onboarder Parent Modules
-  - key: include_onboarder-all
+  - key: include_onboarder_all
     type: <boolean>
     presence: optional
     module_name: module.onboarder-all
@@ -65,7 +65,7 @@ options:
     display_name: Apply All
     display_desc: Create all API intergrations between management and security capabilties. Create all management configurations and security configurations available in Onboarder + CIS Level 1 for macOS, iOS, and iPadOS.
 
-  - key: include_onboarder-app-installers
+  - key: include_onboarder_app_installers
     type: <boolean>
     presence: optional
     module_name: module.onboarder-app-installers
@@ -73,7 +73,7 @@ options:
     display_name: Configure App Installers
     display_desc: Configure all available App Installers in Onboarder
 
-  - key: include_onboarder-management-macOS
+  - key: include_onboarder_management_macOS
     type: <boolean>
     presence: optional
     module_name: module.onboarder-management-macOS
@@ -81,7 +81,7 @@ options:
     display_name: macOS Foundation
     display_desc: Configure all available management settings in Onboarder for macOS. Includes common configurations, settings, Smart Computer groups, and quality of life settings for macOS management.
 
-  - key: include_onboarder-management-mobile
+  - key: include_onboarder_management_mobile
     type: <boolean>
     presence: optional
     module_name: module.onboarder-management-mobile
@@ -89,7 +89,7 @@ options:
     display_name: iOS/iPadOS Foundation
     display_desc: Configure all available management settings in Onboarder for iOS and iPadOS. Includes common configurations, settings, Smart Device groups, and quality of life settings for iOS and iPadOS management.
 
-  - key: include_onboarder-security
+  - key: include_onboarder_security
     type: <boolean>
     presence: optional
     module_name: module.onboarder-security
@@ -134,7 +134,7 @@ options:
     display_name: Integrate macOS Endpoint Security with Management Capabilities
     display_desc: Configures the API connection and integration between macOS management and security capabiltiies and their consoles. Streamlines deployment and enables advanced remediation workflows.
 
-  - key: include_ssoe-okta
+  - key: include_ssoe_okta
     type: <boolean>
     presence: optional
     module_name: module.management-macOS-SSOe-Okta
