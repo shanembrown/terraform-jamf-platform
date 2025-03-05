@@ -239,8 +239,9 @@ module "management-app-installers-zoom" {
 }
 
 module "management-app-installers" {
-  source         = "./modules/management-app-installers"
-  app_installers = var.app_installers
+  source             = "./modules/management-app-installers"
+  for_each           = toset(var.app_installers)
+  app_installer_name = each.value
 }
 
 ## Begin Jamf Security Cloud Configuration

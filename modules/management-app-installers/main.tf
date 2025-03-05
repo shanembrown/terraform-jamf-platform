@@ -10,9 +10,7 @@ terraform {
 
 ## Iterate over selected App Installers
 resource "jamfpro_app_installer" "app_installers" {
-  for_each = toset(var.app_installers)
-  # count           = length(var.app_installers)
-  name            = each.key
+  name            = var.app_installer_name
   enabled         = var.enabled
   deployment_type = var.deployment_type
   update_behavior = var.update_behavior
@@ -24,7 +22,7 @@ resource "jamfpro_app_installer" "app_installers" {
   trigger_admin_notifications        = var.trigger_admin_notifications
 
   notification_settings {
-    notification_message  = "A new ${each.key} update is available"
+    notification_message  = "A new ${var.app_installer_name} update is available"
     notification_interval = var.notification_interval
     deadline_message      = var.deadline_message
     deadline              = var.deadline
@@ -38,6 +36,6 @@ resource "jamfpro_app_installer" "app_installers" {
     include_in_featured_category   = var.include_in_featured_category
     include_in_compliance_category = var.include_in_compliance_category
     force_view_description         = var.force_view_description
-    description                    = "${each.key} is an App provided from your Self Service Provider."
+    description                    = "${var.app_installer_name} is an App provided from your Self Service Provider."
   }
 }

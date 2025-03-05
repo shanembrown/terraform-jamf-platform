@@ -517,3 +517,8 @@ variable "app_installers" {
   type        = list(string)
   default     = []
 }
+
+variable "app_installer_name" {
+  type    = string
+  default = ""
+}

@@ -169,3 +169,8 @@ variable "self_service_description" {
   type        = string
   default     = "This is an app provided from your Self Service Provider."
 }
+
+variable "app_installer_name" {
+  type    = string
+  default = ""
+}
