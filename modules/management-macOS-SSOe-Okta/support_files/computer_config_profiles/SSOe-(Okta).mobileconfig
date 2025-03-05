@@ -13,7 +13,7 @@
     <key>PayloadDisplayName</key>
     <string>Okta FastPass</string>
     <key>PayloadDescription</key>
-    <string>Enables Okta FastPass and Apple Single Sign On Extension for Passwordless and phishing resistant app authentication.</string>
+    <string>Enables Okta FastPass and Apple Single Sign On Extension for phishing resistant app authentication.</string>
     <key>PayloadVersion</key>
     <integer>1</integer>
     <key>PayloadEnabled</key>
@@ -30,7 +30,7 @@
         <key>PayloadType</key>
         <string>com.apple.loginitems.managed</string>
         <key>PayloadOrganization</key>
-        <string>Experience Jamf</string>
+        <string>Insert Org Name</string>
         <key>PayloadIdentifier</key>
         <string>F0C88545-55BC-4ED5-BAB0-C864202F6D59</string>
         <key>PayloadDisplayName</key>
@@ -63,7 +63,7 @@
         <key>PayloadType</key>
         <string>com.apple.loginwindow</string>
         <key>PayloadOrganization</key>
-        <string>Experience Jamf</string>
+        <string>Insert Org Name</string>
         <key>PayloadIdentifier</key>
         <string>0DA7212A-22F9-4401-9D77-0FD7B936AB43</string>
         <key>PayloadDisplayName</key>
@@ -83,7 +83,7 @@
         <key>PayloadType</key>
         <string>com.apple.security.scep</string>
         <key>PayloadOrganization</key>
-        <string>Experience Jamf</string>
+        <string>Insert Org Name</string>
         <key>PayloadIdentifier</key>
         <string>831532EB-835F-460A-BAF8-BB67539D1226</string>
         <key>PayloadDisplayName</key>
@@ -99,7 +99,7 @@
           <key>Name</key>
           <string>Okta Device Management Attestation</string>
           <key>URL</key>
-          <string>https://sso.tryjamf.com/pki/9CD2C9B157304554ABE2693095021CE0E5F5BBC0/scep/racibq1008DVO5DuK1d7</string>
+          <string>https://your-org.okta.com/pki/9CD2C9B157304554ABE2693095021CE0E5F5BBC0/scep/racibq1008DVO5DuK1d7</string>
           <key>Challenge</key>
           <string>1b5w100qBp9bo4s5dHcbVUuzs_2xODwKLMqYfzHP9NM</string>
           <key>Key Type</key>
@@ -148,7 +148,7 @@
         <string>Credential</string>
         <key>Hosts</key>
         <array>
-          <string>sso.tryjamf.com</string>
+          <string>your-org.okta.com</string>
         </array>
         <key>URLs</key>
         <array/>
@@ -180,7 +180,7 @@
                   <key>OktaVerify.LaunchOptions</key>
                   <string>HideMainWindow</string>
                   <key>OktaVerify.OrgUrl</key>
-                  <string>sso.tryjamf.com</string>
+                  <string>your-org.okta.com</string>
                 </dict>
               </dict>
             </array>
@@ -214,7 +214,7 @@
                   <key>OktaVerify.LaunchOptions</key>
                   <string>HideMainWindow</string>
                   <key>OktaVerify.OrgUrl</key>
-                  <string>sso.tryjamf.com</string>
+                  <string>your-org.okta.com</string>
                 </dict>
               </dict>
             </array>

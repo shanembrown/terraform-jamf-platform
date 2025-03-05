@@ -14,23 +14,23 @@ resource "random_integer" "entropy" {
 }
 
 ## Create categories
-resource "jamfpro_category" "category_passwordless_sso" {
+resource "jamfpro_category" "category_ssoe" {
   name     = "IdP & SSO [${random_integer.entropy.result}]"
   priority = 9
 }
 
 ## Create scripts
-resource "jamfpro_script" "script_passwordless_sso" {
-  name            = "Passwordless SSO [${random_integer.entropy.result}]"
+resource "jamfpro_script" "script_ssoe-okta" {
+  name            = "SSOe-(Okta) [${random_integer.entropy.result}]"
   priority        = "AFTER"
-  script_contents = file("${var.support_files_path_prefix}modules/management-macOS-passwordless-sso/support_files/computer_scripts/passwordless_sso.zsh")
-  category_id     = jamfpro_category.category_passwordless_sso.id
+  script_contents = file("${var.support_files_path_prefix}modules/management-macOS-SSOe-Okta/support_files/computer_scripts/SSOe-(Okta).zsh")
+  category_id     = jamfpro_category.category_ssoe.id
   info            = "This script will check for the presence of the Okta Verify App. If not present, it will download and install the latest version. It will then launch the app with the the URL of the Experience Jamf Okta tenant."
 }
 
 ## Create Smart Computer Groups
-resource "jamfpro_smart_computer_group" "group_passwordless_sso" {
-  name = "Passwordless SSO [${random_integer.entropy.result}]"
+resource "jamfpro_smart_computer_group" "ssoe-okta" {
+  name = "SSOe-(Okta) [${random_integer.entropy.result}]"
   criteria {
     name        = "Operating System Version"
     search_type = "like"
@@ -49,19 +49,19 @@ resource "jamfpro_smart_computer_group" "group_passwordless_sso" {
 
 ## Define configuration profiles
 locals {
-  passwordless_sso_dict = {
-    "Passwordless SSO" = "${var.support_files_path_prefix}modules/management-macOS-passwordless-sso/support_files/computer_config_profiles/passwordless_sso.mobileconfig"
+  ssoe-okta_dict = {
+    "SSOe-Okta" = "${var.support_files_path_prefix}modules/management-macOS-SSOe-Okta/support_files/computer_config_profiles/SSOe-(Okta).mobileconfig"
   }
 }
 
 
-## Create configuration profiles for Passwordless SSO
-resource "jamfpro_macos_configuration_profile_plist" "passwordless_sso" {
-  for_each            = local.passwordless_sso_dict
-  name                = "Okta FastPass - ${each.key} [${random_integer.entropy.result}]"
+## Create configuration profiles for SSOe Okta (generic)
+resource "jamfpro_macos_configuration_profile_plist" "ssoe-okta" {
+  for_each            = local.ssoe-okta_dict
+  name                = "Single Sign On - ${each.key} [${random_integer.entropy.result}]"
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
-  category_id         = jamfpro_category.category_passwordless_sso.id
+  category_id         = jamfpro_category.category_ssoe.id
   level               = "System"
 
   payloads         = file("${each.value}")
@@ -69,22 +69,22 @@ resource "jamfpro_macos_configuration_profile_plist" "passwordless_sso" {
 
   scope {
     all_computers      = false
-    computer_group_ids = [jamfpro_smart_computer_group.group_passwordless_sso.id]
+    computer_group_ids = [jamfpro_smart_computer_group.ssoe-okta.id]
   }
 }
 
 
 ## Create policies
-resource "jamfpro_policy" "policy_passwordless_sso" {
-  name            = "Passwordless SSO (Okta Verify) [${random_integer.entropy.result}]"
+resource "jamfpro_policy" "policy_ssoe" {
+  name            = "Enable SSOe (Okta) [${random_integer.entropy.result}]"
   enabled         = true
   trigger_checkin = true
   frequency       = "Once per computer"
-  category_id     = jamfpro_category.category_passwordless_sso.id
+  category_id     = jamfpro_category.category_ssoe.id
 
   scope {
     all_computers      = false
-    computer_group_ids = [jamfpro_smart_computer_group.group_passwordless_sso.id]
+    computer_group_ids = [jamfpro_smart_computer_group.ssoe-okta.id]
   }
 
   self_service {
@@ -93,7 +93,7 @@ resource "jamfpro_policy" "policy_passwordless_sso" {
 
   payloads {
     scripts {
-      id       = jamfpro_script.script_passwordless_sso.id
+      id       = jamfpro_script.script_ssoe-okta.id
       priority = "Before"
     }
 
