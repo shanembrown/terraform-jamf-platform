@@ -467,7 +467,7 @@ variable "include_admin_tools" {
   default = false
 }
 
-variable "include_passwordless_ssoe" {
+variable "include_ssoe-okta" {
   type    = bool
   default = false
 }
@@ -487,7 +487,38 @@ variable "include_crowdstrike" {
   default = false
 }
 
-variable "include_onboarder" {
+variable "include_onboarder_all" {
   type    = bool
   default = false
+}
+
+variable "include_onboarder_management_macOS" {
+  type    = bool
+  default = false
+}
+
+variable "include_onboarder_management_mobile" {
+  type    = bool
+  default = false
+}
+
+variable "include_onboarder_security" {
+  type    = bool
+  default = false
+}
+
+variable "include_onboarder_app_installers" {
+  type    = bool
+  default = false
+}
+
+variable "app_installers" {
+  description = "Set of selected App Installers"
+  type        = list(string)
+  default     = []
+}
+
+variable "access_policies" {
+  type    = list(string)
+  default = []
 }

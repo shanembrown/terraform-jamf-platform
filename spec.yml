@@ -126,7 +126,6 @@ options:
     display_desc: Configures the API connection and integration between macOS management and security capabiltiies and their consoles. Streamlines deployment and enables advanced remediation workflows.
 
   - key: include_ssoe-okta
-    presence: optional
     module_name: module.management-macOS-SSOe-Okta
     category: Security
     display_name: Enable SSOe (Okta)
@@ -155,7 +154,6 @@ options:
     display_desc: For managed computers, prepares and uploads the necessary components for DISA STIG to macOS Sonoma and Sequoia (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-configured to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria.  **Benchmark from macOS Security Compliance Project**
 
   - key: include_mobile_stig_benchmark
-    presence: optional
     module_name: module.compliance-iOS-disa-stig
     category: Endpoint Compliance
     display_name: Configure and Apply DISA STIG for iOS

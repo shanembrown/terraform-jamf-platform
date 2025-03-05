@@ -51,13 +51,11 @@ block_page_logo       = ""
 tje_okta_clientid  = ""
 tje_okta_orgdomain = ""
 
-
-
 # File path prefix for Terraform directory
 support_files_path_prefix = "" ## Path to your directory - example: /Users/<youruser>/filename/
 
 ##################################
-##### MODULE KNOBS #####
+##### ONBOARDER MODULE KNOBS #####
 ##################################
 
 
@@ -75,24 +73,32 @@ include_mac_800_171_benchmark     = false
 include_mac_cmmc_lvl1_benchmark   = false
 
 ## (Jamf Pro) Computer Outcome Knobs
-include_microsoft_365          = false
-include_filevault              = false
-include_rosetta                = false
-include_passwordless_ssoe      = false
+include_microsoft_365 = false
+include_filevault     = false
+include_rosetta       = false
+include_ssoe-okta     = false
 
 ## (Jamf Pro) Mobile Outcome Knobs
-include_mobile_device_kickstart      = false
+include_mobile_device_kickstart = false
 
 ## (Jamf Pro) App Installer Knobs
-include_google_chrome   = false
-include_mozilla_firefox = false
-include_slack           = false
-include_dropbox         = false
-include_google_drive    = false
-include_jamf_composer   = false
-include_pppc_utility    = false
-include_jamfcheck       = false
-include_zoom            = false
+include_google_chrome        = false
+include_mozilla_firefox      = false
+include_slack                = false
+include_dropbox              = false
+include_google_drive         = false
+include_jamf_composer        = false
+include_pppc_utility         = false
+include_jamfcheck            = false
+include_zoom                 = false
+include_adobe_creative_cloud = false
+include_box_drive            = false
+include_microsoft_edge       = false
+include_text_expander        = false
+include_nudge                = false
+app_installers               = []
+
+
 
 ## Jamf Protect Knobs ##
 include_jamf_protect_trial_kickstart = false
@@ -127,24 +133,6 @@ include_jsc_ap_workday    = false
 include_jsc_ap_zendesk    = false
 include_jsc_ap_zoom       = false
 
-############################################
-
-##################################
-##### MISC MODULE KNOBS ##########
-##################################
-
-##### NOT INCLUDED IN SPEC.YAML ###
-
-## Jamf Security Cloud Knobs ##
-include_jsc_dp_only       = false
-include_jsc_mtd_only      = false
-include_jsc_ztna          = false
-include_jsc_network_relay = false
-include_jsc_mtd_dp_only   = false
-include_jsc_ztna_dp_only  = false
-include_jsc_ztna_mtd_only = false
-
-
 ```
 
 Save and exit.
@@ -165,20 +153,4 @@ terraform init -upgrade
 
 Terraform must be formatted correctly to run, which can be done manually after saving changes before each run with `terraform fmt`. If using Visual Studio Code, use [this guide](https://medium.com/nerd-for-tech/how-to-auto-format-hcl-terraform-code-in-visual-studio-code-6fa0e7afbb5e) to never have to run the format command again!
 
-Enter the following command to apply full Terraform config:
-
-```
-terraform apply
-```
-
-Enter this command to only apply specific modules:
-
-```
-terraform apply -target "module.[MODULE_NAME]"
-```
-
-By default all modules will be applied. You can unselect individual modules by modifing the module knobs in your tfvars file e.g.
-
-```
-mac_cis_lvl1_benchmark = false
-```
+< INSERT INSTRUCTIONS FOR RUNNING TERRAFORM MODULES>
