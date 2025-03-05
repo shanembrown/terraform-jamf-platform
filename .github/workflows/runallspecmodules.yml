@@ -37,7 +37,7 @@ jobs:
       # Store all spec.yml booleans in temp file
       - name: Get Spec.yml bools
         run: |
-          grep -B 1 "<boolean>" "spec.yml" | grep "key:" | sed 's/.*key: //;s/$/ = true/' | tr -d ' ' | grep -v -E "onboarder-all|onboarder-security" | sort | uniq | tee "/tmp/outputbool.txt"
+          grep -B 1 "<boolean>" "spec.yml" | grep "key:" | sed 's/.*key: //;s/$/ = true/' | tr -d ' ' | grep -v -E "onboarder_all|onboarder_security" | sort | uniq | tee "/tmp/outputbool.txt"
 
       # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
       - name: Terraform Init
