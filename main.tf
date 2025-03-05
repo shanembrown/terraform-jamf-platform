@@ -153,9 +153,9 @@ module "msft_defender" {
   source = "./modules/endpoint-security-macOS-microsoft-defender"
 }
 
-module "passwordless_sso" {
+module "management-macOS-SSOe-Okta" {
   count                     = var.include_ssoe_okta == true ? 1 : 0
-  source                    = "./modules/management-macOS-passwordless-sso"
+  source                    = "./modules/management-macOS-SSOe-Okta"
   support_files_path_prefix = var.support_files_path_prefix
 }
 
