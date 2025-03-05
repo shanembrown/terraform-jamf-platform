@@ -37,6 +37,11 @@ variable "jamfpro_password" {
   default     = ""
 }
 
+variable "app_installers" {
+  description = "Set of selected App Installers"
+  type        = list(string)
+  default     = ["Google Chrome", "Mozilla Firefox", "Slack", "Dropbox", "Google Drive", "JamfCheck", "Zoom Client for Meetings", "Microsoft Edge", "Box Drive", "Nudge", "Adobe Creative Cloud", "TextExpander"]
+}
 
 ## Define JSC provider variables (populated by .tfvars file)
 variable "jsc_username" {
