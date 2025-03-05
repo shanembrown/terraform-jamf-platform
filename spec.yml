@@ -130,7 +130,7 @@ options:
     module_name: module.management-macOS-SSOe-Okta
     category: Security
     display_name: Enable SSOe (Okta)
-    display_desc: This will configure the management capabilities required to configure and install the Okta Verify.app for SSOe on macOS. Please modify the following .mobileconfig payloads with your Organization's values: Okta Device Management Attestation, ExtensionIdentifier, & Custom Settings. Objects are scoped to the SSOe-(Okta) Smart Group. To scope configurations to computers edit the serial number criteria to match the serial number of a test computer or remove the serial number criteria to scope to all enrolled computers.
+    display_desc: This will configure the management capabilities required to configure and install the Okta Verify.app for SSOe on macOS. Please modify the following .mobileconfig payloads with your Organization's values. Okta Device Management Attestation, ExtensionIdentifier, & Custom Settings. Objects are scoped to the SSOe-(Okta) Smart Group. To scope configurations to computers edit the serial number criteria to match the serial number of a test computer or remove the serial number criteria to scope to all enrolled computers.
 
   ## macOS Security Compliance Project Benchmark Modules
   - key: compliance-macOS-cis-level-1
