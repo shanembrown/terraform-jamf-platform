@@ -12,11 +12,6 @@ terraform {
   }
 }
 
-module "onboarder-security" {
-  source                    = "../onboarder-security"
-  support_files_path_prefix = var.support_files_path_prefix
-}
-
 module "onboarder-management-macOS" {
   source                    = "../onboarder-management-macOS"
   support_files_path_prefix = var.support_files_path_prefix
