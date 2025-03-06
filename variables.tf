@@ -502,11 +502,6 @@ variable "include_onboarder_management_mobile" {
   default = false
 }
 
-variable "include_onboarder_security" {
-  type    = bool
-  default = false
-}
-
 variable "include_onboarder_app_installers" {
   type    = bool
   default = false

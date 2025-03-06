@@ -54,12 +54,6 @@ module "onboarder-management-mobile" {
   support_files_path_prefix = var.support_files_path_prefix
 }
 
-module "onboarder-security" {
-  count                     = var.include_onboarder_security == true ? 1 : 0
-  source                    = "./modules/onboarder-security"
-  support_files_path_prefix = var.support_files_path_prefix
-}
-
 module "onboarder-app-installers" {
   count                     = var.include_onboarder_app_installers == true ? 1 : 0
   source                    = "./modules/onboarder-app-installers"
