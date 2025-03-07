@@ -13,28 +13,23 @@ terraform {
 }
 
 module "onboarder-management-macOS" {
-  source                    = "../onboarder-management-macOS"
-  support_files_path_prefix = var.support_files_path_prefix
+  source = "../onboarder-management-macOS"
 }
 
 module "onboarder-management-mobile" {
-  source                    = "../onboarder-management-mobile"
-  support_files_path_prefix = var.support_files_path_prefix
+  source = "../onboarder-management-mobile"
 }
 
 module "onboarder-app-installers" {
-  source                    = "../onboarder-app-installers"
-  support_files_path_prefix = var.support_files_path_prefix
+  source = "../onboarder-app-installers"
 }
 
 module "compliance-macOS-cis-level-1" {
-  source                    = "../compliance-macOS-cis-level-1"
-  support_files_path_prefix = var.support_files_path_prefix
+  source = "../compliance-macOS-cis-level-1"
 }
 
 module "compliance-iOS-cis-level-1" {
-  source                    = "../compliance-iOS-cis-level-1"
-  support_files_path_prefix = var.support_files_path_prefix
+  source = "../compliance-iOS-cis-level-1"
 }
 
 module "configuration-jamf-security-cloud-all-services" {

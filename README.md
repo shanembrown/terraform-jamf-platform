@@ -38,7 +38,6 @@ jamfpro_auth_method   = "oauth2"
 jamfpro_client_id     = ""
 jamfpro_client_secret = ""
 
-
 ## Jamf Security Cloud (RADAR) Account Details
 jsc_username          = ""
 jsc_password          = ""
@@ -51,13 +50,9 @@ block_page_logo       = ""
 tje_okta_clientid  = ""
 tje_okta_orgdomain = ""
 
-# File path prefix for Terraform directory
-support_files_path_prefix = "" ## Path to your directory - example: /Users/<youruser>/filename/
-
 ##################################
 ##### ONBOARDER MODULE KNOBS #####
 ##################################
-
 
 ## (Jamf Pro) General Settings Knobs ##
 include_qol_smart_groups             = false
@@ -97,8 +92,6 @@ include_microsoft_edge       = false
 include_text_expander        = false
 include_nudge                = false
 app_installers               = []
-
-
 
 ## Jamf Protect Knobs ##
 include_jamf_protect_trial_kickstart = false

@@ -23,7 +23,7 @@ resource "jamfpro_category" "category_ssoe" {
 resource "jamfpro_script" "script_ssoe-okta" {
   name            = "SSOe-(Okta) [${random_integer.entropy.result}]"
   priority        = "AFTER"
-  script_contents = file("${var.support_files_path_prefix}modules/management-macOS-SSOe-Okta/support_files/computer_scripts/SSOe-(Okta).zsh")
+  script_contents = file("${path.module}/support_files/computer_scripts/SSOe-(Okta).zsh")
   category_id     = jamfpro_category.category_ssoe.id
   info            = "This script will check for the presence of the Okta Verify App. If not present, it will download and install the latest version. It will then launch the app with the the URL of the Experience Jamf Okta tenant."
 }
@@ -50,7 +50,7 @@ resource "jamfpro_smart_computer_group" "ssoe-okta" {
 ## Define configuration profiles
 locals {
   ssoe-okta_dict = {
-    "SSOe-Okta" = "${var.support_files_path_prefix}modules/management-macOS-SSOe-Okta/support_files/computer_config_profiles/SSOe-(Okta).mobileconfig"
+    "SSOe-Okta" = "${path.module}/support_files/computer_config_profiles/SSOe-(Okta).mobileconfig"
   }
 }
 
