@@ -4,7 +4,13 @@ variable "jamfpro_instance_url" {
   default   = ""
 }
 
-variable "radar_user" {
+variable "jsc_username" {
+  type      = string
+  sensitive = false
+  default   = ""
+}
+
+variable "jsc_password" {
   type      = string
   sensitive = true
   default   = ""
@@ -34,28 +40,10 @@ variable "clientsecret" {
   default   = ""
 }
 
-variable "jamfpro_instance_fqdn" {
-  type      = string
-  sensitive = true
-  default   = ""
-}
-
-variable "auth_method" {
-  type      = string
-  sensitive = true
-  default   = ""
-}
-
-variable "basic_auth_password" {
-  type      = string
-  sensitive = true
-  default   = ""
-}
-
-variable "basic_auth_username" {
-  type      = string
-  sensitive = true
-  default   = ""
+variable "jamfpro_auth_method" {
+  description = "Jamf Pro Auth Method."
+  type        = string
+  default     = "oauth2" #basic or oauth2
 }
 
 variable "jamfpro_client_id" {
@@ -74,11 +62,6 @@ variable "block_page_logo" {
   type      = string
   sensitive = false
   default   = ""
-}
-
-variable "support_files_path_prefix" {
-  type    = string
-  default = ""
 }
 
 variable "enable_jsc_uemc" {

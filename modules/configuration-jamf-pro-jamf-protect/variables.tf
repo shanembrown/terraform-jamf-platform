@@ -36,7 +36,8 @@ variable "jamfprotect_client_password" {
   default     = ""
 }
 
-variable "support_files_path_prefix" {
-  type    = string
-  default = ""
+variable "jamfpro_auth_method" {
+  description = "Jamf Pro Auth Method."
+  type        = string
+  default     = "oauth2" #basic or oauth2
 }
