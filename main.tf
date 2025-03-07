@@ -172,13 +172,11 @@ module "management-app-installers" {
 
 ## Create UEMC and Okta integrations
 module "configuration-jamf-security-cloud-jamf-pro" {
-  count                = var.include_jsc_uemc == true ? 1 : 0
-  source               = "./modules/configuration-jamf-security-cloud-jamf-pro"
-  tje_okta_clientid    = var.tje_okta_clientid
-  tje_okta_orgdomain   = var.tje_okta_orgdomain
-  jamfpro_instance_url = var.jamfpro_instance_url
-  clientid             = var.jamfpro_client_id
-  clientsecret         = var.jamfpro_client_secret
+  count                 = var.include_jsc_uemc == true ? 1 : 0
+  source                = "./modules/configuration-jamf-security-cloud-jamf-pro"
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ALL JSC Services
