@@ -23,3 +23,7 @@ module "configuration-jamf-pro-computer-management-settings" {
 module "management-macOS-rosetta" {
   source = "../management-macOS-rosetta"
 }
+
+module "microsoft_365" {
+  source = "../management-macOS-microsoft-365"
+}

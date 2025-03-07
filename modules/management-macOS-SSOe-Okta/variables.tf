@@ -1,19 +1,12 @@
+## Define miscellaneous variables
+variable "support_files_path_prefix" {
+  type    = string
+  default = ""
+}
 variable "jamfpro_instance_url" {
-  type      = string
-  sensitive = true
-  default   = ""
-}
-
-variable "jsc_username" {
-  type      = string
-  sensitive = true
-  default   = ""
-}
-
-variable "jsc_password" {
-  type      = string
-  sensitive = true
-  default   = ""
+  description = "Jamf Pro Instance name."
+  type        = string
+  default     = ""
 }
 
 variable "jamfpro_auth_method" {

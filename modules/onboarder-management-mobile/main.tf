@@ -9,6 +9,5 @@ terraform {
 }
 
 module "management-iOS-configuration-profiles" {
-  source                    = "../management-iOS-configuration-profiles"
-  support_files_path_prefix = var.support_files_path_prefix
+  source = "../management-iOS-configuration-profiles"
 }
