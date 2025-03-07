@@ -32,6 +32,10 @@ module "compliance-iOS-cis-level-1" {
   source = "../compliance-iOS-cis-level-1"
 }
 
+module "management-macOS-SSOe-Okta" {
+  source = "../management-macOS-SSOe-Okta"
+}
+
 module "configuration-jamf-security-cloud-all-services" {
   source             = "../configuration-jamf-security-cloud-all-services"
   tje_okta_clientid  = var.tje_okta_clientid
