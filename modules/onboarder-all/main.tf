@@ -38,10 +38,9 @@ module "compliance-iOS-cis-level-1" {
 }
 
 module "configuration-jamf-security-cloud-all-services" {
-  source                    = "../configuration-jamf-security-cloud-all-services"
-  support_files_path_prefix = var.support_files_path_prefix
-  tje_okta_clientid         = var.tje_okta_clientid
-  tje_okta_orgdomain        = var.tje_okta_orgdomain
+  source             = "../configuration-jamf-security-cloud-all-services"
+  tje_okta_clientid  = var.tje_okta_clientid
+  tje_okta_orgdomain = var.tje_okta_orgdomain
 }
 
 module "configuration-jamf-security-cloud-block-pages" {
@@ -50,6 +49,5 @@ module "configuration-jamf-security-cloud-block-pages" {
 }
 
 module "endpoint-security-macOS-filevault" {
-  source                    = "../endpoint-security-macOS-filevault"
-  support_files_path_prefix = var.support_files_path_prefix
+  source = "../endpoint-security-macOS-filevault"
 }
