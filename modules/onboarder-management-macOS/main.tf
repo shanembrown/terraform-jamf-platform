@@ -27,3 +27,7 @@ module "management-macOS-rosetta" {
 module "microsoft_365" {
   source = "../management-macOS-microsoft-365"
 }
+
+module "management-macOS-SSOe-Okta" {
+  source = "../management-macOS-SSOe-Okta"
+}
