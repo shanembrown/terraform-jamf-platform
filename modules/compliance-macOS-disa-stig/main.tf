@@ -28,7 +28,7 @@ resource "jamfpro_category" "category_sequoia_stig_benchmarks" {
 resource "jamfpro_script" "script_sonoma_stig_compliance" {
   name            = "Sonoma - DISA STIG Compliance [${random_integer.entropy.result}]"
   priority        = "AFTER"
-  script_contents = file("${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_scripts/sonoma_stig_compliance.sh")
+  script_contents = file("${path.module}/support_files/computer_scripts/sonoma_stig_compliance.sh")
   category_id     = jamfpro_category.category_sonoma_stig_benchmarks.id
   info            = "This script will apply a set of rules related to the DISA STIG benchmark for macOS Sonoma"
 }
@@ -36,7 +36,7 @@ resource "jamfpro_script" "script_sonoma_stig_compliance" {
 resource "jamfpro_script" "script_sequoia_stig_compliance" {
   name            = "Sequoia - DISA STIG Compliance [${random_integer.entropy.result}]"
   priority        = "AFTER"
-  script_contents = file("${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_scripts/sequoia_stig_compliance.sh")
+  script_contents = file("${path.module}/support_files/computer_scripts/sequoia_stig_compliance.sh")
   category_id     = jamfpro_category.category_sequoia_stig_benchmarks.id
   info            = "This script will apply a set of rules related to the DISA STIG benchmark for macOS Sequoia"
 }
@@ -48,7 +48,7 @@ resource "jamfpro_computer_extension_attribute" "ea_stig_failed_count" {
   enabled                = true
   data_type              = "INTEGER"
   inventory_display_type = "EXTENSION_ATTRIBUTES"
-  script_contents        = file("${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_extension_attributes/compliance-FailedResultsCount.sh")
+  script_contents        = file("${path.module}/support_files/computer_extension_attributes/compliance-FailedResultsCount.sh")
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_stig_failed_list" {
@@ -57,7 +57,7 @@ resource "jamfpro_computer_extension_attribute" "ea_stig_failed_list" {
   enabled                = true
   data_type              = "STRING"
   inventory_display_type = "EXTENSION_ATTRIBUTES"
-  script_contents        = file("${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_extension_attributes/compliance-FailedResultsList.sh")
+  script_contents        = file("${path.module}/support_files/computer_extension_attributes/compliance-FailedResultsList.sh")
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_stig_version" {
@@ -66,7 +66,7 @@ resource "jamfpro_computer_extension_attribute" "ea_stig_version" {
   enabled                = true
   data_type              = "STRING"
   inventory_display_type = "EXTENSION_ATTRIBUTES"
-  script_contents        = file("${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_extension_attributes/compliance-version.sh")
+  script_contents        = file("${path.module}/support_files/computer_extension_attributes/compliance-version.sh")
 }
 
 ## Create Smart Computer Groups
@@ -302,26 +302,26 @@ resource "jamfpro_policy" "policy_sequoia_stig_remediation" {
 ## Define configuration profile details for Sonoma
 locals {
   sonoma_stig_dict = {
-    "Application Access"            = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-applicationaccess.mobileconfig"
-    "Application Access Additional" = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-applicationaccess.new.mobileconfig"
-    "Assistant"                     = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-assistant.support.mobileconfig"
-    "Dock"                          = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-dock.mobileconfig"
-    "Global Preferences"            = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-GlobalPreferences.mobileconfig"
-    "iCloud"                        = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-icloud.managed.mobileconfig"
-    "Login Window"                  = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-loginwindow.mobileconfig"
-    "MCX"                           = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-MCX.mobileconfig"
-    "MCX Bluetooth"                 = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-MCXBluetooth.mobileconfig"
-    "mDNS Responder"                = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-mDNSResponder.mobileconfig"
-    "Password Policy"               = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-mobiledevice.passwordpolicy.mobileconfig"
-    "Sharing Preferences"           = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-preferences.sharing.SharingPrefsExtension.mobileconfig"
-    "Screen Saver"                  = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-screensaver.mobileconfig"
-    "Firewall"                      = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-security.firewall.mobileconfig"
-    "Setup Assistant"               = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-SetupAssistant.managed.mobileconfig"
-    "Software Update"               = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-SoftwareUpdate.mobileconfig"
-    "Submit Diag Info"              = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-SubmitDiagInfo.mobileconfig"
-    "System Policy Control"         = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-systempolicy.control.mobileconfig"
-    "System Preferences"            = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-systempreferences.mobileconfig"
-    "Managed Client"                = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-timed.mobileconfig"
+    "Application Access"            = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-applicationaccess.mobileconfig"
+    "Application Access Additional" = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-applicationaccess.new.mobileconfig"
+    "Assistant"                     = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-assistant.support.mobileconfig"
+    "Dock"                          = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-dock.mobileconfig"
+    "Global Preferences"            = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-GlobalPreferences.mobileconfig"
+    "iCloud"                        = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-icloud.managed.mobileconfig"
+    "Login Window"                  = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-loginwindow.mobileconfig"
+    "MCX"                           = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-MCX.mobileconfig"
+    "MCX Bluetooth"                 = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-MCXBluetooth.mobileconfig"
+    "mDNS Responder"                = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-mDNSResponder.mobileconfig"
+    "Password Policy"               = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-mobiledevice.passwordpolicy.mobileconfig"
+    "Sharing Preferences"           = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-preferences.sharing.SharingPrefsExtension.mobileconfig"
+    "Screen Saver"                  = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-screensaver.mobileconfig"
+    "Firewall"                      = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-security.firewall.mobileconfig"
+    "Setup Assistant"               = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-SetupAssistant.managed.mobileconfig"
+    "Software Update"               = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-SoftwareUpdate.mobileconfig"
+    "Submit Diag Info"              = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-SubmitDiagInfo.mobileconfig"
+    "System Policy Control"         = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-systempolicy.control.mobileconfig"
+    "System Preferences"            = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-systempreferences.mobileconfig"
+    "Managed Client"                = "${path.module}/support_files/computer_config_profiles/Sonoma_stig-timed.mobileconfig"
   }
 }
 
@@ -350,7 +350,7 @@ resource "jamfpro_macos_configuration_profile_plist" "sonoma_stig_smart_card" {
   category_id         = jamfpro_category.category_sonoma_stig_benchmarks.id
   level               = "System"
 
-  payloads         = file("${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sonoma_stig-security.smartcard.mobileconfig")
+  payloads         = file("${path.module}/support_files/computer_config_profiles/Sonoma_stig-security.smartcard.mobileconfig")
   payload_validate = false
 
   scope {
@@ -362,25 +362,25 @@ resource "jamfpro_macos_configuration_profile_plist" "sonoma_stig_smart_card" {
 ## Define configuration profile details for Sequoia part 1
 locals {
   sequoia_stig_dict = {
-    "Application Access"            = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-applicationaccess.mobileconfig"
-    "Application Access Additional" = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-applicationaccess.new.mobileconfig"
-    "Assistant"                     = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-assistant.support.mobileconfig"
-    "Dock"                          = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-dock.mobileconfig"
-    "Global Preferences"            = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-GlobalPreferences.mobileconfig"
-    "iCloud"                        = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-icloud.managed.mobileconfig"
-    "Login Window"                  = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-loginwindow.mobileconfig"
-    "MCX"                           = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-MCX.mobileconfig"
-    "MCX Bluetooth"                 = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-MCXBluetooth.mobileconfig"
-    "mDNS Responder"                = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-mDNSResponder.mobileconfig"
-    "Password Policy"               = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-mobiledevice.passwordpolicy.mobileconfig"
-    "Screen Saver"                  = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-screensaver.mobileconfig"
-    "Firewall"                      = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-security.firewall.mobileconfig"
-    "Setup Assistant"               = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-SetupAssistant.managed.mobileconfig"
-    "Software Update"               = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-SoftwareUpdate.mobileconfig"
-    "Submit Diag Info"              = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-SubmitDiagInfo.mobileconfig"
-    "System Policy Control"         = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-systempolicy.control.mobileconfig"
-    "System Preferences"            = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-systempreferences.mobileconfig"
-    "Managed Client"                = "${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-timed.mobileconfig"
+    "Application Access"            = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-applicationaccess.mobileconfig"
+    "Application Access Additional" = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-applicationaccess.new.mobileconfig"
+    "Assistant"                     = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-assistant.support.mobileconfig"
+    "Dock"                          = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-dock.mobileconfig"
+    "Global Preferences"            = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-GlobalPreferences.mobileconfig"
+    "iCloud"                        = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-icloud.managed.mobileconfig"
+    "Login Window"                  = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-loginwindow.mobileconfig"
+    "MCX"                           = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-MCX.mobileconfig"
+    "MCX Bluetooth"                 = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-MCXBluetooth.mobileconfig"
+    "mDNS Responder"                = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-mDNSResponder.mobileconfig"
+    "Password Policy"               = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-mobiledevice.passwordpolicy.mobileconfig"
+    "Screen Saver"                  = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-screensaver.mobileconfig"
+    "Firewall"                      = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-security.firewall.mobileconfig"
+    "Setup Assistant"               = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-SetupAssistant.managed.mobileconfig"
+    "Software Update"               = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-SoftwareUpdate.mobileconfig"
+    "Submit Diag Info"              = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-SubmitDiagInfo.mobileconfig"
+    "System Policy Control"         = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-systempolicy.control.mobileconfig"
+    "System Preferences"            = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-systempreferences.mobileconfig"
+    "Managed Client"                = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-timed.mobileconfig"
   }
 }
 
@@ -410,7 +410,7 @@ resource "jamfpro_macos_configuration_profile_plist" "sequoia_stig_smart_card" {
   category_id         = jamfpro_category.category_sequoia_stig_benchmarks.id
   level               = "System"
 
-  payloads         = file("${var.support_files_path_prefix}modules/compliance-macOS-disa-stig/support_files/computer_config_profiles/Sequoia_stig-security.smartcard.mobileconfig")
+  payloads         = file("${path.module}/support_files/computer_config_profiles/Sequoia_stig-security.smartcard.mobileconfig")
   payload_validate = false
 
   scope {

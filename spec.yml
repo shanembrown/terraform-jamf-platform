@@ -125,6 +125,14 @@ options:
     display_name: Enable Customizable Block Pages
     display_desc: Configures block pages for content filtering. Block pages can be further customized with company/organization branding.
 
+  - key: include_filevault
+    type: <boolean>
+    presence: optional
+    module_name: module.endpoint-security-macOS-filevault
+    category: Security
+    display_name: Enforce & Escrow FileVault 2
+    display_desc: For managed computers, configure the necessary capabilities including Configuration Profile, Script, and Policy to enable and enforce FileVault 2 and make certain that the recovery key is escrowed by Jamf.
+
   ## Jamf Protect Onboarder Modules
   - key: include_jamf_protect_trial_kickstart
     type: <boolean>

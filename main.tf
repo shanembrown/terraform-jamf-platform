@@ -37,27 +37,23 @@ provider "jsc" {
 
 # Onboarder Modules
 module "onboarder-all" {
-  count                     = var.include_onboarder_all == true ? 1 : 0
-  source                    = "./modules/onboarder-all"
-  support_files_path_prefix = var.support_files_path_prefix
+  count  = var.include_onboarder_all == true ? 1 : 0
+  source = "./modules/onboarder-all"
 }
 
 module "onboarder-management-macOS" {
-  count                     = var.include_onboarder_management_macOS == true ? 1 : 0
-  source                    = "./modules/onboarder-management-macOS"
-  support_files_path_prefix = var.support_files_path_prefix
+  count  = var.include_onboarder_management_macOS == true ? 1 : 0
+  source = "./modules/onboarder-management-macOS"
 }
 
 module "onboarder-management-mobile" {
-  count                     = var.include_onboarder_management_mobile == true ? 1 : 0
-  source                    = "./modules/onboarder-management-mobile"
-  support_files_path_prefix = var.support_files_path_prefix
+  count  = var.include_onboarder_management_mobile == true ? 1 : 0
+  source = "./modules/onboarder-management-mobile"
 }
 
 module "onboarder-app-installers" {
-  count                     = var.include_onboarder_app_installers == true ? 1 : 0
-  source                    = "./modules/onboarder-app-installers"
-  support_files_path_prefix = var.support_files_path_prefix
+  count  = var.include_onboarder_app_installers == true ? 1 : 0
+  source = "./modules/onboarder-app-installers"
 }
 
 ## Initialize common modules
@@ -76,39 +72,33 @@ module "configuration-jamf-pro-jamf-protect" {
 }
 
 module "compliance-macOS-cis-level-1" {
-  count                     = var.include_mac_cis_lvl1_benchmark == true ? 1 : 0
-  source                    = "./modules/compliance-macOS-cis-level-1"
-  support_files_path_prefix = var.support_files_path_prefix
+  count  = var.include_mac_cis_lvl1_benchmark == true ? 1 : 0
+  source = "./modules/compliance-macOS-cis-level-1"
 }
 
 module "compliance-iOS-cis-level-1" {
-  count                     = var.include_mobile_cis_lvl1_benchmark == true ? 1 : 0
-  source                    = "./modules/compliance-iOS-cis-level-1"
-  support_files_path_prefix = var.support_files_path_prefix
+  count  = var.include_mobile_cis_lvl1_benchmark == true ? 1 : 0
+  source = "./modules/compliance-iOS-cis-level-1"
 }
 
 module "compliance-macOS-disa-stig" {
-  count                     = var.include_mac_stig_benchmark == true ? 1 : 0
-  source                    = "./modules/compliance-macOS-disa-stig"
-  support_files_path_prefix = var.support_files_path_prefix
+  count  = var.include_mac_stig_benchmark == true ? 1 : 0
+  source = "./modules/compliance-macOS-disa-stig"
 }
 
 module "compliance-iOS-disa-stig" {
-  count                     = var.include_mobile_stig_benchmark == true ? 1 : 0
-  source                    = "./modules/compliance-iOS-disa-stig"
-  support_files_path_prefix = var.support_files_path_prefix
+  count  = var.include_mobile_stig_benchmark == true ? 1 : 0
+  source = "./modules/compliance-iOS-disa-stig"
 }
 
 module "compliance-macOS-nist-800-171" {
-  count                     = var.include_mac_800_171_benchmark == true ? 1 : 0
-  source                    = "./modules/compliance-macOS-nist-800-171"
-  support_files_path_prefix = var.support_files_path_prefix
+  count  = var.include_mac_800_171_benchmark == true ? 1 : 0
+  source = "./modules/compliance-macOS-nist-800-171"
 }
 
 module "compliance-macOS-cmmc-level-1" {
-  count                     = var.include_mac_cmmc_lvl1_benchmark == true ? 1 : 0
-  source                    = "./modules/compliance-macOS-cmmc-level-1"
-  support_files_path_prefix = var.support_files_path_prefix
+  count  = var.include_mac_cmmc_lvl1_benchmark == true ? 1 : 0
+  source = "./modules/compliance-macOS-cmmc-level-1"
 }
 
 module "configuration-jamf-pro-smart-groups" {
@@ -147,9 +137,8 @@ module "endpoint-security-macOS-microsoft-defender" {
 }
 
 module "management-macOS-SSOe-Okta" {
-  count                     = var.include_ssoe_okta == true ? 1 : 0
-  source                    = "./modules/management-macOS-SSOe-Okta"
-  support_files_path_prefix = var.support_files_path_prefix
+  count  = var.include_ssoe_okta == true ? 1 : 0
+  source = "./modules/management-macOS-SSOe-Okta"
 }
 
 module "endpoint-security-macOS-crowdstrike" {

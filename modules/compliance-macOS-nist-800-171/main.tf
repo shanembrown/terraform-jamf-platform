@@ -28,7 +28,7 @@ resource "jamfpro_category" "category_sequoia_800_171_benchmarks" {
 resource "jamfpro_script" "script_sonoma_800_171_compliance" {
   name            = "Sonoma - NIST 800-171 Compliance [${random_integer.entropy.result}]"
   priority        = "AFTER"
-  script_contents = file("${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_scripts/sonoma_800-171_compliance.sh")
+  script_contents = file("${path.module}/support_files/computer_scripts/sonoma_800-171_compliance.sh")
   category_id     = jamfpro_category.category_sonoma_800_171_benchmarks.id
   info            = "This script will apply a set of rules related to the NIST 800-171 benchmark for macOS Sonoma"
 }
@@ -36,7 +36,7 @@ resource "jamfpro_script" "script_sonoma_800_171_compliance" {
 resource "jamfpro_script" "script_sequoia_800_171_compliance" {
   name            = "Sequoia - NIST 800-171 Compliance [${random_integer.entropy.result}]"
   priority        = "AFTER"
-  script_contents = file("${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_scripts/sequoia_800-171_compliance.sh")
+  script_contents = file("${path.module}/support_files/computer_scripts/sequoia_800-171_compliance.sh")
   category_id     = jamfpro_category.category_sequoia_800_171_benchmarks.id
   info            = "This script will apply a set of rules related to the NIST 800-171 benchmark for macOS Sequoia"
 }
@@ -48,7 +48,7 @@ resource "jamfpro_computer_extension_attribute" "ea_800_171_failed_count" {
   enabled                = true
   data_type              = "INTEGER"
   inventory_display_type = "EXTENSION_ATTRIBUTES"
-  script_contents        = file("${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_extension_attributes/compliance-FailedResultsCount.sh")
+  script_contents        = file("${path.module}/support_files/computer_extension_attributes/compliance-FailedResultsCount.sh")
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_800_171_failed_list" {
@@ -57,7 +57,7 @@ resource "jamfpro_computer_extension_attribute" "ea_800_171_failed_list" {
   enabled                = true
   data_type              = "STRING"
   inventory_display_type = "EXTENSION_ATTRIBUTES"
-  script_contents        = file("${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_extension_attributes/compliance-FailedResultsList.sh")
+  script_contents        = file("${path.module}/support_files/computer_extension_attributes/compliance-FailedResultsList.sh")
 }
 
 resource "jamfpro_computer_extension_attribute" "ea_800_171_version" {
@@ -66,7 +66,7 @@ resource "jamfpro_computer_extension_attribute" "ea_800_171_version" {
   enabled                = true
   data_type              = "STRING"
   inventory_display_type = "EXTENSION_ATTRIBUTES"
-  script_contents        = file("${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_extension_attributes/compliance-version.sh")
+  script_contents        = file("${path.module}/support_files/computer_extension_attributes/compliance-version.sh")
 }
 
 ## Create Smart Computer Groups
@@ -302,29 +302,29 @@ resource "jamfpro_policy" "policy_sequoia_800_171_remediation" {
 ## Define configuration profile details for Sonoma
 locals {
   sonoma_800_171_dict = {
-    "Application Access"    = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-applicationaccess.mobileconfig"
-    "Assistant Support"     = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-assistant.support.mobileconfig"
-    "Disc Recording"        = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-DiscRecording.mobileconfig"
-    "Dock"                  = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-dock.mobileconfig"
-    "Apple IR Controller"   = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-driver.AppleIRController.mobileconfig"
-    "Finder"                = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-finder.mobileconfig"
-    "Global Preferences"    = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-GlobalPreferences.mobileconfig"
-    "iCloud"                = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-icloud.managed.mobileconfig"
-    "Login Window"          = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-loginwindow.mobileconfig"
-    "MCX"                   = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-MCX.mobileconfig"
-    "MCX Bluetooth"         = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-MCXBluetooth.mobileconfig"
-    "mDNS Responder"        = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-mDNSResponder.mobileconfig"
-    "Password Policy"       = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-mobiledevice.passwordpolicy.mobileconfig"
-    "Sharing Preferences"   = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-preferences.sharing.SharingPrefsExtension.mobileconfig"
-    "Screen Saver"          = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-screensaver.mobileconfig"
-    "Firewall"              = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-security.firewall.mobileconfig"
-    "Security"              = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-security.mobileconfig"
-    "Setup Assistant"       = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-SetupAssistant.managed.mobileconfig"
-    "Submit Diag Info"      = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-SubmitDiagInfo.mobileconfig"
-    "System Policy Control" = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-systempolicy.control.mobileconfig"
-    "Managed System Policy" = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-systempolicy.managed.mobileconfig"
-    "System Preferences"    = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-systempreferences.mobileconfig"
-    "Managed Client"        = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-timed.mobileconfig"
+    "Application Access"    = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-applicationaccess.mobileconfig"
+    "Assistant Support"     = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-assistant.support.mobileconfig"
+    "Disc Recording"        = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-DiscRecording.mobileconfig"
+    "Dock"                  = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-dock.mobileconfig"
+    "Apple IR Controller"   = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-driver.AppleIRController.mobileconfig"
+    "Finder"                = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-finder.mobileconfig"
+    "Global Preferences"    = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-GlobalPreferences.mobileconfig"
+    "iCloud"                = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-icloud.managed.mobileconfig"
+    "Login Window"          = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-loginwindow.mobileconfig"
+    "MCX"                   = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-MCX.mobileconfig"
+    "MCX Bluetooth"         = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-MCXBluetooth.mobileconfig"
+    "mDNS Responder"        = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-mDNSResponder.mobileconfig"
+    "Password Policy"       = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-mobiledevice.passwordpolicy.mobileconfig"
+    "Sharing Preferences"   = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-preferences.sharing.SharingPrefsExtension.mobileconfig"
+    "Screen Saver"          = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-screensaver.mobileconfig"
+    "Firewall"              = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-security.firewall.mobileconfig"
+    "Security"              = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-security.mobileconfig"
+    "Setup Assistant"       = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-SetupAssistant.managed.mobileconfig"
+    "Submit Diag Info"      = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-SubmitDiagInfo.mobileconfig"
+    "System Policy Control" = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-systempolicy.control.mobileconfig"
+    "Managed System Policy" = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-systempolicy.managed.mobileconfig"
+    "System Preferences"    = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-systempreferences.mobileconfig"
+    "Managed Client"        = "${path.module}/support_files/computer_config_profiles/Sonoma_800-171-timed.mobileconfig"
   }
 }
 
@@ -353,7 +353,7 @@ resource "jamfpro_macos_configuration_profile_plist" "sonoma_800_171_smart_card"
   category_id         = jamfpro_category.category_sonoma_800_171_benchmarks.id
   level               = "System"
 
-  payloads         = file("${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sonoma_800-171-security.smartcard.mobileconfig")
+  payloads         = file("${path.module}/support_files/computer_config_profiles/Sonoma_800-171-security.smartcard.mobileconfig")
   payload_validate = false
 
   scope {
@@ -365,28 +365,28 @@ resource "jamfpro_macos_configuration_profile_plist" "sonoma_800_171_smart_card"
 ## Define configuration profile details for Sequoia part 1
 locals {
   sequoia_800_171_dict = {
-    "Accessibility"         = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-Accessibility.mobileconfig"
-    "Application Access"    = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-applicationaccess.mobileconfig"
-    "Assistant Support"     = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-assistant.support.mobileconfig"
-    "Disc Recording"        = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-DiscRecording.mobileconfig"
-    "Dock"                  = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-dock.mobileconfig"
-    "Apple IR Controller"   = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-driver.AppleIRController.mobileconfig"
-    "Finder"                = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-finder.mobileconfig"
-    "Global Preferences"    = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-GlobalPreferences.mobileconfig"
-    "iCloud"                = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-icloud.managed.mobileconfig"
-    "Login Window"          = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-loginwindow.mobileconfig"
-    "MCX"                   = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-MCX.mobileconfig"
-    "MCX Bluetooth"         = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-MCXBluetooth.mobileconfig"
-    "mDNS Responder"        = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-mDNSResponder.mobileconfig"
-    "Password Policy"       = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-mobiledevice.passwordpolicy.mobileconfig"
-    "Screen Saver"          = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-screensaver.mobileconfig"
-    "Firewall"              = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-security.firewall.mobileconfig"
-    "Setup Assistant"       = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-SetupAssistant.managed.mobileconfig"
-    "Submit Diag Info"      = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-SubmitDiagInfo.mobileconfig"
-    "System Policy Control" = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-systempolicy.control.mobileconfig"
-    "Managed System Policy" = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-systempolicy.managed.mobileconfig"
-    "System Preferences"    = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-systempreferences.mobileconfig"
-    "Managed Client"        = "${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-timed.mobileconfig"
+    "Accessibility"         = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-Accessibility.mobileconfig"
+    "Application Access"    = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-applicationaccess.mobileconfig"
+    "Assistant Support"     = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-assistant.support.mobileconfig"
+    "Disc Recording"        = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-DiscRecording.mobileconfig"
+    "Dock"                  = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-dock.mobileconfig"
+    "Apple IR Controller"   = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-driver.AppleIRController.mobileconfig"
+    "Finder"                = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-finder.mobileconfig"
+    "Global Preferences"    = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-GlobalPreferences.mobileconfig"
+    "iCloud"                = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-icloud.managed.mobileconfig"
+    "Login Window"          = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-loginwindow.mobileconfig"
+    "MCX"                   = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-MCX.mobileconfig"
+    "MCX Bluetooth"         = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-MCXBluetooth.mobileconfig"
+    "mDNS Responder"        = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-mDNSResponder.mobileconfig"
+    "Password Policy"       = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-mobiledevice.passwordpolicy.mobileconfig"
+    "Screen Saver"          = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-screensaver.mobileconfig"
+    "Firewall"              = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-security.firewall.mobileconfig"
+    "Setup Assistant"       = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-SetupAssistant.managed.mobileconfig"
+    "Submit Diag Info"      = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-SubmitDiagInfo.mobileconfig"
+    "System Policy Control" = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-systempolicy.control.mobileconfig"
+    "Managed System Policy" = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-systempolicy.managed.mobileconfig"
+    "System Preferences"    = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-systempreferences.mobileconfig"
+    "Managed Client"        = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-timed.mobileconfig"
   }
 }
 
@@ -416,7 +416,7 @@ resource "jamfpro_macos_configuration_profile_plist" "sequoia_800_171_smart_card
   category_id         = jamfpro_category.category_sequoia_800_171_benchmarks.id
   level               = "System"
 
-  payloads         = file("${var.support_files_path_prefix}modules/compliance-macOS-nist-800-171/support_files/computer_config_profiles/Sequoia_800-171-security.smartcard.mobileconfig")
+  payloads         = file("${path.module}/support_files/computer_config_profiles/Sequoia_800-171-security.smartcard.mobileconfig")
   payload_validate = false
 
   scope {
