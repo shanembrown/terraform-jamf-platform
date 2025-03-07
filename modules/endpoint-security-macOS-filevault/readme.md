@@ -10,3 +10,9 @@ Running this will complete the following:
 - Create a Configuration Profile that enforces FileVault 2
 
 **Note: The Configuration Profile is not scoped by default since Jamf Pro will not generate the certificate needed until you have clicked save in the Jamf Pro tenant. To finalize this setup, please navigate to the Config Profile named "Enable FileVault 2", scope that appropriately and click "Save"**
+
+Before applying any terraform modules you must initialize the providers being called. It's a good idea to run this before the first apply of your session
+
+```
+terraform init -upgrade
+```

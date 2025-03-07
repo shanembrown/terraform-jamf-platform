@@ -16,3 +16,9 @@ Running this will:
 - Create a Smart Device Group that looks for the device to be a Shared Device
 - Create a Configuration Profile that sets Safari to Single App Mode for Kiosk Devices
 - Create a Configuration Profile that sets Shared Device Mode restrictions around AirDrop, Apple Account, Screenshots, Erasing, and Camera
+
+Before applying any terraform modules you must initialize the providers being called. It's a good idea to run this before the first apply of your session
+
+```
+terraform init -upgrade
+```

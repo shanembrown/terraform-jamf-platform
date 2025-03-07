@@ -7,3 +7,9 @@ Running this will complete the following steps:
 - Create the API Role in Jamf Pro that allows Jamf Security Cloud to upload its Activation Profiles directly to Jamf Pro with a chosen Smart Group as the scope
 - Create the API Client in Jamf Pro with the three previous API Roles attached
 - Establish the UEM Connect feature's synchronization with Jamf Pro
+
+Before applying any terraform modules you must initialize the providers being called. It's a good idea to run this before the first apply of your session
+
+```
+terraform init -upgrade
+```

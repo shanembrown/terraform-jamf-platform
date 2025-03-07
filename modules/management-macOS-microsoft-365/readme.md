@@ -13,3 +13,9 @@ Running this will:
 - Create App Installers for each Microsoft 365 app outlined above scoped to the Smart Groups created for each app
 
 **We scope it this way to use App Installers as an update mechanism rather than initial deployment**
+
+Before applying any terraform modules you must initialize the providers being called. It's a good idea to run this before the first apply of your session
+
+```
+terraform init -upgrade
+```
