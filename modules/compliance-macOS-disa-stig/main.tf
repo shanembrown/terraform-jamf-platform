@@ -364,6 +364,7 @@ resource "jamfpro_macos_configuration_profile_plist" "sonoma_stig_smart_card" {
 ## Define configuration profile details for Sequoia part 1
 locals {
   sequoia_stig_dict = {
+    "Accessibility"                 = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-Accessibility.mobileconfig"
     "Application Access"            = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-applicationaccess.mobileconfig"
     "Application Access Additional" = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-applicationaccess.new.mobileconfig"
     "Assistant"                     = "${path.module}/support_files/computer_config_profiles/Sequoia_stig-assistant.support.mobileconfig"

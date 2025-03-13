@@ -6680,7 +6680,7 @@ fi
 rule_arch=""
 if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset result_value
-    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= 3) {print "yes"} else {print "no"}}'
+    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= 3) {print "yes"} else {print "no"}}' | /usr/bin/uniq
 )
     # expected result {'string': 'yes'}
 
@@ -6737,7 +6737,7 @@ fi
 rule_arch=""
 if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset result_value
-    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= 15 ) {print "yes"} else {print "no"}}'
+    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= 15 ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
 )
     # expected result {'string': 'yes'}
 
@@ -6908,7 +6908,7 @@ fi
 rule_arch=""
 if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset result_value
-    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= 5 ) {print "yes"} else {print "no"}}'
+    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= 5 ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
 )
     # expected result {'string': 'yes'}
 
@@ -7136,7 +7136,7 @@ fi
 rule_arch=""
 if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset result_value
-    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''(.*[^a-zA-Z0-9].*){1,}'\''")])' -
+    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2>/dev/null | /usr/bin/tail -n +2 | /usr/bin/xmllint --xpath "//string[contains(text(), \"policyAttributePassword matches '(.*[^a-zA-Z0-9].*){\")]" - 2>/dev/null | /usr/bin/awk -F"{|}" '{if ($2 >= 1) {print "true"} else {print "false"}}'
 )
     # expected result {'string': 'true'}
 
@@ -7604,63 +7604,6 @@ EOS
 else
     logmessage "system_settings_bluetooth_sharing_disable does not apply to this architecture"
     /usr/bin/defaults write "$audit_plist" system_settings_bluetooth_sharing_disable -dict-add finding -bool NO
-fi
-
-#####----- Rule: system_settings_cd_dvd_sharing_disable -----#####
-## Addresses the following NIST 800-53 controls: 
-# * CM-7, CM-7(1)
-rule_arch=""
-if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
-    unset result_value
-    result_value=$(/usr/bin/pgrep -q ODSAgent; /bin/echo $?
-)
-    # expected result {'integer': 1}
-
-
-    # check to see if rule is exempt
-    unset exempt
-    unset exempt_reason
-
-    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.stig.audit').objectForKey('system_settings_cd_dvd_sharing_disable'))["exempt"]
-EOS
-)
-    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.stig.audit').objectForKey('system_settings_cd_dvd_sharing_disable'))["exempt_reason"]
-EOS
-)   
-    customref="$(echo "system_settings_cd_dvd_sharing_disable" | rev | cut -d ' ' -f 2- | rev)"
-    customref="$(echo "$customref" | tr " " ",")"
-    if [[ $result_value == "1" ]]; then
-        logmessage "system_settings_cd_dvd_sharing_disable passed (Result: $result_value, Expected: \"{'integer': 1}\")"
-        /usr/bin/defaults write "$audit_plist" system_settings_cd_dvd_sharing_disable -dict-add finding -bool NO
-        if [[ ! "$customref" == "system_settings_cd_dvd_sharing_disable" ]]; then
-            /usr/bin/defaults write "$audit_plist" system_settings_cd_dvd_sharing_disable -dict-add reference -string "$customref"
-        fi
-        /usr/bin/logger "mSCP: stig - system_settings_cd_dvd_sharing_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
-    else
-        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
-            logmessage "system_settings_cd_dvd_sharing_disable failed (Result: $result_value, Expected: \"{'integer': 1}\")"
-            /usr/bin/defaults write "$audit_plist" system_settings_cd_dvd_sharing_disable -dict-add finding -bool YES
-            if [[ ! "$customref" == "system_settings_cd_dvd_sharing_disable" ]]; then
-                /usr/bin/defaults write "$audit_plist" system_settings_cd_dvd_sharing_disable -dict-add reference -string "$customref"
-            fi
-            /usr/bin/logger "mSCP: stig - system_settings_cd_dvd_sharing_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
-        else
-            logmessage "system_settings_cd_dvd_sharing_disable failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
-            /usr/bin/defaults write "$audit_plist" system_settings_cd_dvd_sharing_disable -dict-add finding -bool YES
-            if [[ ! "$customref" == "system_settings_cd_dvd_sharing_disable" ]]; then
-              /usr/bin/defaults write "$audit_plist" system_settings_cd_dvd_sharing_disable -dict-add reference -string "$customref"
-            fi
-            /usr/bin/logger "mSCP: stig - system_settings_cd_dvd_sharing_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
-            /bin/sleep 1
-        fi
-    fi
-
-
-else
-    logmessage "system_settings_cd_dvd_sharing_disable does not apply to this architecture"
-    /usr/bin/defaults write "$audit_plist" system_settings_cd_dvd_sharing_disable -dict-add finding -bool NO
 fi
 
 #####----- Rule: system_settings_content_caching_disable -----#####
@@ -8190,6 +8133,68 @@ EOS
 else
     logmessage "system_settings_hot_corners_disable does not apply to this architecture"
     /usr/bin/defaults write "$audit_plist" system_settings_hot_corners_disable -dict-add finding -bool NO
+fi
+
+#####----- Rule: system_settings_improve_assistive_voice_disable -----#####
+## Addresses the following NIST 800-53 controls: 
+# * AC-20
+# * CM-7, CM-7(1)
+# * SC-7(10)
+rule_arch=""
+if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
+    unset result_value
+    result_value=$(/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.Accessibility')\
+.objectForKey('AXSAudioDonationSiriImprovementEnabled').js
+EOS
+)
+    # expected result {'string': 'false'}
+
+
+    # check to see if rule is exempt
+    unset exempt
+    unset exempt_reason
+
+    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.stig.audit').objectForKey('system_settings_improve_assistive_voice_disable'))["exempt"]
+EOS
+)
+    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.stig.audit').objectForKey('system_settings_improve_assistive_voice_disable'))["exempt_reason"]
+EOS
+)   
+    customref="$(echo "system_settings_improve_assistive_voice_disable" | rev | cut -d ' ' -f 2- | rev)"
+    customref="$(echo "$customref" | tr " " ",")"
+    if [[ $result_value == "false" ]]; then
+        logmessage "system_settings_improve_assistive_voice_disable passed (Result: $result_value, Expected: \"{'string': 'false'}\")"
+        /usr/bin/defaults write "$audit_plist" system_settings_improve_assistive_voice_disable -dict-add finding -bool NO
+        if [[ ! "$customref" == "system_settings_improve_assistive_voice_disable" ]]; then
+            /usr/bin/defaults write "$audit_plist" system_settings_improve_assistive_voice_disable -dict-add reference -string "$customref"
+        fi
+        /usr/bin/logger "mSCP: stig - system_settings_improve_assistive_voice_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
+    else
+        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
+            logmessage "system_settings_improve_assistive_voice_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\")"
+            /usr/bin/defaults write "$audit_plist" system_settings_improve_assistive_voice_disable -dict-add finding -bool YES
+            if [[ ! "$customref" == "system_settings_improve_assistive_voice_disable" ]]; then
+                /usr/bin/defaults write "$audit_plist" system_settings_improve_assistive_voice_disable -dict-add reference -string "$customref"
+            fi
+            /usr/bin/logger "mSCP: stig - system_settings_improve_assistive_voice_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
+        else
+            logmessage "system_settings_improve_assistive_voice_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
+            /usr/bin/defaults write "$audit_plist" system_settings_improve_assistive_voice_disable -dict-add finding -bool YES
+            if [[ ! "$customref" == "system_settings_improve_assistive_voice_disable" ]]; then
+              /usr/bin/defaults write "$audit_plist" system_settings_improve_assistive_voice_disable -dict-add reference -string "$customref"
+            fi
+            /usr/bin/logger "mSCP: stig - system_settings_improve_assistive_voice_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /bin/sleep 1
+        fi
+    fi
+
+
+else
+    logmessage "system_settings_improve_assistive_voice_disable does not apply to this architecture"
+    /usr/bin/defaults write "$audit_plist" system_settings_improve_assistive_voice_disable -dict-add finding -bool NO
 fi
 
 #####----- Rule: system_settings_improve_search_disable -----#####
@@ -12596,39 +12601,6 @@ if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
     fi
 elif [[ ! -z "$exempt_reason" ]];then
     logmessage "system_settings_bluetooth_sharing_disable has an exemption, remediation skipped (Reason: "$exempt_reason")"
-fi
-    
-#####----- Rule: system_settings_cd_dvd_sharing_disable -----#####
-## Addresses the following NIST 800-53 controls: 
-# * CM-7, CM-7(1)
-
-# check to see if rule is exempt
-unset exempt
-unset exempt_reason
-
-exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.stig.audit').objectForKey('system_settings_cd_dvd_sharing_disable'))["exempt"]
-EOS
-)
-
-exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.stig.audit').objectForKey('system_settings_cd_dvd_sharing_disable'))["exempt_reason"]
-EOS
-)
-
-system_settings_cd_dvd_sharing_disable_audit_score=$($plb -c "print system_settings_cd_dvd_sharing_disable:finding" $audit_plist)
-if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
-    if [[ $system_settings_cd_dvd_sharing_disable_audit_score == "true" ]]; then
-        ask 'system_settings_cd_dvd_sharing_disable - Run the command(s)-> /bin/launchctl unload /System/Library/LaunchDaemons/com.apple.ODSAgent.plist ' N
-        if [[ $? == 0 ]]; then
-            logmessage "Running the command to configure the settings for: system_settings_cd_dvd_sharing_disable ..."
-            /bin/launchctl unload /System/Library/LaunchDaemons/com.apple.ODSAgent.plist
-        fi
-    else
-        logmessage "Settings for: system_settings_cd_dvd_sharing_disable already configured, continuing..."
-    fi
-elif [[ ! -z "$exempt_reason" ]];then
-    logmessage "system_settings_cd_dvd_sharing_disable has an exemption, remediation skipped (Reason: "$exempt_reason")"
 fi
     
 #####----- Rule: system_settings_location_services_disable -----#####

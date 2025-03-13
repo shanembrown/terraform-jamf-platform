@@ -28,13 +28,13 @@
 			<key>PayloadDisplayName</key>
 			<string>Custom Settings</string>
 			<key>PayloadIdentifier</key>
-			<string>com.apple.ManagedClient.preferences.2FE27CA8-CF8B-4579-8F2C-03DA1A5B13C8</string>
+			<string>com.apple.ManagedClient.preferences.62694AB0-28BB-4BCF-98BB-619EBEDD7E32</string>
 			<key>PayloadOrganization</key>
 			<string>JAMF Software</string>
 			<key>PayloadType</key>
 			<string>com.apple.ManagedClient.preferences</string>
 			<key>PayloadUUID</key>
-			<string>2FE27CA8-CF8B-4579-8F2C-03DA1A5B13C8</string>
+			<string>62694AB0-28BB-4BCF-98BB-619EBEDD7E32</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 		</dict>
@@ -46,7 +46,7 @@
 	<key>PayloadEnabled</key>
 	<true/>
 	<key>PayloadIdentifier</key>
-	<string>f16feba2-b883-4129-b63c-5861c305026c</string>
+	<string>64f56f32-664b-4bef-b77f-11253244ab40</string>
 	<key>PayloadOrganization</key>
 	<string>Jamf Software</string>
 	<key>PayloadRemovalDisallowed</key>
@@ -56,7 +56,7 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>EBE5EB02-D5AC-43C5-9C68-DC59D62F5055</string>
+	<string>AE0D3E26-0D45-41E5-8B83-B658D301B4E2</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
 </dict>

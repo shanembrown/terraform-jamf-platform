@@ -17,13 +17,13 @@
 			<key>PayloadDisplayName</key>
 			<string>SystemPolicyControl</string>
 			<key>PayloadIdentifier</key>
-			<string>com.apple.systempolicy.control.57C550C9-6898-4499-B57C-91DAEC60D8DF</string>
+			<string>com.apple.systempolicy.control.427EBE32-9A85-424E-A450-4EF0B18D7F13</string>
 			<key>PayloadOrganization</key>
 			<string>JAMF Software</string>
 			<key>PayloadType</key>
 			<string>com.apple.systempolicy.control</string>
 			<key>PayloadUUID</key>
-			<string>57C550C9-6898-4499-B57C-91DAEC60D8DF</string>
+			<string>427EBE32-9A85-424E-A450-4EF0B18D7F13</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 		</dict>
@@ -35,7 +35,7 @@
 	<key>PayloadEnabled</key>
 	<true/>
 	<key>PayloadIdentifier</key>
-	<string>2bf2cf41-aa3c-478a-9102-05553c654a43</string>
+	<string>2245de73-2452-4c21-8504-2cbf3312bcbb</string>
 	<key>PayloadOrganization</key>
 	<string>macOS Security Compliance Project</string>
 	<key>PayloadRemovalDisallowed</key>
@@ -45,7 +45,7 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>73EE6373-626A-41A4-9B10-2351B8B389C1</string>
+	<string>ED51C8CE-DE0D-4DB8-B22D-D88873C00F3F</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
 </dict>

@@ -10,6 +10,18 @@ variable "radar_user" {
   default   = ""
 }
 
+variable "jsc_username" {
+  type      = string
+  sensitive = false
+  default   = ""
+}
+
+variable "jsc_password" {
+  type      = string
+  sensitive = true
+  default   = ""
+}
+
 variable "tje_okta_clientid" {
   type      = string
   sensitive = true

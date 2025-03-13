@@ -58,6 +58,10 @@
 								<false/>
 								<key>allowEraseContentAndSettings</key>
 								<false/>
+								<key>allowExternalIntelligenceIntegrations</key>
+								<false/>
+								<key>allowExternalIntelligenceIntegrationsSignIn</key>
+								<false/>
 								<key>allowFindMyDevice</key>
 								<false/>
 								<key>allowFindMyFriends</key>
@@ -69,6 +73,8 @@
 								<key>allowGenmoji</key>
 								<false/>
 								<key>allowImagePlayground</key>
+								<false/>
+								<key>allowMailSummary</key>
 								<false/>
 								<key>allowMediaSharing</key>
 								<false/>
@@ -86,6 +92,8 @@
 								<false/>
 								<key>allowWritingTools</key>
 								<false/>
+								<key>allowiPhoneMirroring</key>
+								<false/>
 								<key>forceOnDeviceOnlyDictation</key>
 								<true/>
 							</dict>
@@ -96,13 +104,13 @@
 			<key>PayloadDisplayName</key>
 			<string>Custom Settings</string>
 			<key>PayloadIdentifier</key>
-			<string>com.apple.ManagedClient.preferences.D7F5593C-C65A-45A5-86CA-7BB3A49946FF</string>
+			<string>com.apple.ManagedClient.preferences.E469E24A-DF67-4D3C-AA99-13FC50933578</string>
 			<key>PayloadOrganization</key>
 			<string>JAMF Software</string>
 			<key>PayloadType</key>
 			<string>com.apple.ManagedClient.preferences</string>
 			<key>PayloadUUID</key>
-			<string>D7F5593C-C65A-45A5-86CA-7BB3A49946FF</string>
+			<string>E469E24A-DF67-4D3C-AA99-13FC50933578</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 		</dict>
@@ -114,7 +122,7 @@
 	<key>PayloadEnabled</key>
 	<true/>
 	<key>PayloadIdentifier</key>
-	<string>813470d3-2ab7-4a53-baa1-a4beb5a86b31</string>
+	<string>58f36eb4-21dd-4ca8-8ce1-763979375613</string>
 	<key>PayloadOrganization</key>
 	<string>Jamf Software</string>
 	<key>PayloadRemovalDisallowed</key>
@@ -124,7 +132,7 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>641E9091-33B8-42B0-9D01-DC29FA027C7A</string>
+	<string>04D11410-E2C6-4B4D-A90B-D6CB1C9C2904</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
 </dict>

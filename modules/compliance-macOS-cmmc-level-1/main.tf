@@ -362,6 +362,7 @@ locals {
     "iCloud"                 = "${path.module}/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-icloud.managed.mobileconfig"
     "Login Window"           = "${path.module}/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-loginwindow.mobileconfig"
     "MCX"                    = "${path.module}/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-MCX.mobileconfig"
+    "Photos Shared Defauts"  = "${path.module}/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-photos.shareddefaults.mobileconfig"
     "Firewall"               = "${path.module}/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-security.firewall.mobileconfig"
     "Setup Assistant"        = "${path.module}/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-SetupAssistant.managed.mobileconfig"
     "Software Update"        = "${path.module}/support_files/computer_config_profiles/Sequoia_cmmc_lvl1-SoftwareUpdate.mobileconfig"

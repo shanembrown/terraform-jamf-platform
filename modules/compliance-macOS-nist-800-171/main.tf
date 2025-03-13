@@ -381,6 +381,7 @@ locals {
     "MCX Bluetooth"         = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-MCXBluetooth.mobileconfig"
     "mDNS Responder"        = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-mDNSResponder.mobileconfig"
     "Password Policy"       = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-mobiledevice.passwordpolicy.mobileconfig"
+    "Photos Shared Defauts" = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-photos.shareddefaults.mobileconfig"
     "Screen Saver"          = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-screensaver.mobileconfig"
     "Firewall"              = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-security.firewall.mobileconfig"
     "Setup Assistant"       = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-SetupAssistant.managed.mobileconfig"
