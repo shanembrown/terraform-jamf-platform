@@ -46,12 +46,6 @@ resource "jamfpro_smart_computer_group" "all_macs" {
     search_type = "member of"
     value       = "All Managed Clients"
   }
-  criteria {
-    name        = "Serial Number"
-    priority    = 1
-    search_type = "like"
-    value       = "111222333444"
-  }
 }
 
 resource "jamfpro_macos_configuration_profile_plist" "all_services_macos" {
