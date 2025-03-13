@@ -49,8 +49,8 @@ STD='\e[39m'
 GREEN='\e[32m'
 YELLOW='\e[33m'
 
-audit_plist="/Library/Preferences/org.sequoia_cis_lvl1.audit.plist"
-audit_log="/Library/Logs/sequoia_cis_lvl1_baseline.log"
+audit_plist="/Library/Preferences/org.cis_lvl1.audit.plist"
+audit_log="/Library/Logs/cis_lvl1_baseline.log"
 
 # pause function
 pause(){
@@ -111,7 +111,7 @@ ask() {
 
 # function to display menus
 show_menus() {
-    lastComplianceScan=$(defaults read /Library/Preferences/org.sequoia_cis_lvl1.audit.plist lastComplianceCheck)
+    lastComplianceScan=$(defaults read /Library/Preferences/org.cis_lvl1.audit.plist lastComplianceCheck)
 
     if [[ $lastComplianceScan == "" ]];then
         lastComplianceScan="No scans have been run"
@@ -150,9 +150,9 @@ reset_plist(){
         find /Library/Preferences -name "org.*.audit.plist" -exec rm -f '{}' \;
         find /Library/Logs -name "*_baseline.log" -exec rm -f '{}' \;
     else
-        echo "Clearing results from /Library/Preferences/org.sequoia_cis_lvl1.audit.plist"
-        rm -f /Library/Preferences/org.sequoia_cis_lvl1.audit.plist
-        rm -f /Library/Logs/sequoia_cis_lvl1_baseline.log
+        echo "Clearing results from /Library/Preferences/org.cis_lvl1.audit.plist"
+        rm -f /Library/Preferences/org.cis_lvl1.audit.plist
+        rm -f /Library/Logs/cis_lvl1_baseline.log
     fi
 }
 
@@ -170,7 +170,7 @@ compliance_count(){
             compliant=$((compliant+1))
         elif [[ $finding == "true" ]];then
             is_exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey("$rule"))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey("$rule"))["exempt"]
 EOS
 )
             if [[ $is_exempt == "1" ]]; then
@@ -235,9 +235,9 @@ generate_stats(){
 run_scan(){
 # append to existing logfile
 if [[ $(/usr/bin/tail -n 1 "$audit_log" 2>/dev/null) = *"Remediation complete" ]]; then
- 	echo "$(date -u) Beginning sequoia_cis_lvl1 baseline scan" >> "$audit_log"
+ 	echo "$(date -u) Beginning cis_lvl1 baseline scan" >> "$audit_log"
 else
- 	echo "$(date -u) Beginning sequoia_cis_lvl1 baseline scan" > "$audit_log"
+ 	echo "$(date -u) Beginning cis_lvl1 baseline scan" > "$audit_log"
 fi
 
 # run mcxrefresh
@@ -262,11 +262,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_acls_files_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_acls_files_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_acls_files_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_acls_files_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "audit_acls_files_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -277,7 +277,7 @@ EOS
         if [[ ! "$customref" == "audit_acls_files_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" audit_acls_files_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_acls_files_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - audit_acls_files_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "audit_acls_files_configure failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -285,14 +285,14 @@ EOS
             if [[ ! "$customref" == "audit_acls_files_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" audit_acls_files_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_acls_files_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_acls_files_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "audit_acls_files_configure failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" audit_acls_files_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "audit_acls_files_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" audit_acls_files_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_acls_files_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_acls_files_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -319,11 +319,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_acls_folders_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_acls_folders_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_acls_folders_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_acls_folders_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "audit_acls_folders_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -334,7 +334,7 @@ EOS
         if [[ ! "$customref" == "audit_acls_folders_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" audit_acls_folders_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_acls_folders_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - audit_acls_folders_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "audit_acls_folders_configure failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -342,14 +342,14 @@ EOS
             if [[ ! "$customref" == "audit_acls_folders_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" audit_acls_folders_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_acls_folders_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_acls_folders_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "audit_acls_folders_configure failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" audit_acls_folders_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "audit_acls_folders_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" audit_acls_folders_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_acls_folders_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_acls_folders_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -387,11 +387,11 @@ fi
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_auditd_enabled'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_auditd_enabled'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_auditd_enabled'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_auditd_enabled'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "audit_auditd_enabled" | rev | cut -d ' ' -f 2- | rev)"
@@ -402,7 +402,7 @@ EOS
         if [[ ! "$customref" == "audit_auditd_enabled" ]]; then
             /usr/bin/defaults write "$audit_plist" audit_auditd_enabled -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_auditd_enabled passed (Result: $result_value, Expected: "{'string': 'pass'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - audit_auditd_enabled passed (Result: $result_value, Expected: "{'string': 'pass'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "audit_auditd_enabled failed (Result: $result_value, Expected: \"{'string': 'pass'}\")"
@@ -410,14 +410,14 @@ EOS
             if [[ ! "$customref" == "audit_auditd_enabled" ]]; then
                 /usr/bin/defaults write "$audit_plist" audit_auditd_enabled -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_auditd_enabled failed (Result: $result_value, Expected: "{'string': 'pass'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_auditd_enabled failed (Result: $result_value, Expected: "{'string': 'pass'}")"
         else
             logmessage "audit_auditd_enabled failed (Result: $result_value, Expected: \"{'string': 'pass'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" audit_auditd_enabled -dict-add finding -bool YES
             if [[ ! "$customref" == "audit_auditd_enabled" ]]; then
               /usr/bin/defaults write "$audit_plist" audit_auditd_enabled -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_auditd_enabled failed (Result: $result_value, Expected: "{'string': 'pass'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_auditd_enabled failed (Result: $result_value, Expected: "{'string': 'pass'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -444,11 +444,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_control_acls_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_control_acls_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_control_acls_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_control_acls_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "audit_control_acls_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -459,7 +459,7 @@ EOS
         if [[ ! "$customref" == "audit_control_acls_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" audit_control_acls_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_control_acls_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - audit_control_acls_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "audit_control_acls_configure failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -467,14 +467,14 @@ EOS
             if [[ ! "$customref" == "audit_control_acls_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" audit_control_acls_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_control_acls_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_control_acls_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "audit_control_acls_configure failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" audit_control_acls_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "audit_control_acls_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" audit_control_acls_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_control_acls_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_control_acls_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -501,11 +501,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_control_group_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_control_group_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_control_group_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_control_group_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "audit_control_group_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -516,7 +516,7 @@ EOS
         if [[ ! "$customref" == "audit_control_group_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" audit_control_group_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_control_group_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - audit_control_group_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "audit_control_group_configure failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -524,14 +524,14 @@ EOS
             if [[ ! "$customref" == "audit_control_group_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" audit_control_group_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_control_group_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_control_group_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "audit_control_group_configure failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" audit_control_group_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "audit_control_group_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" audit_control_group_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_control_group_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_control_group_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -558,11 +558,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_control_mode_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_control_mode_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_control_mode_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_control_mode_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "audit_control_mode_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -573,7 +573,7 @@ EOS
         if [[ ! "$customref" == "audit_control_mode_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" audit_control_mode_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_control_mode_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - audit_control_mode_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "audit_control_mode_configure failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -581,14 +581,14 @@ EOS
             if [[ ! "$customref" == "audit_control_mode_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" audit_control_mode_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_control_mode_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_control_mode_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "audit_control_mode_configure failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" audit_control_mode_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "audit_control_mode_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" audit_control_mode_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_control_mode_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_control_mode_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -615,11 +615,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_control_owner_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_control_owner_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_control_owner_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_control_owner_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "audit_control_owner_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -630,7 +630,7 @@ EOS
         if [[ ! "$customref" == "audit_control_owner_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" audit_control_owner_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_control_owner_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - audit_control_owner_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "audit_control_owner_configure failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -638,14 +638,14 @@ EOS
             if [[ ! "$customref" == "audit_control_owner_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" audit_control_owner_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_control_owner_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_control_owner_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "audit_control_owner_configure failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" audit_control_owner_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "audit_control_owner_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" audit_control_owner_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_control_owner_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_control_owner_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -672,11 +672,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_files_group_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_files_group_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_files_group_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_files_group_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "audit_files_group_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -687,7 +687,7 @@ EOS
         if [[ ! "$customref" == "audit_files_group_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" audit_files_group_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_files_group_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - audit_files_group_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "audit_files_group_configure failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -695,14 +695,14 @@ EOS
             if [[ ! "$customref" == "audit_files_group_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" audit_files_group_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_files_group_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_files_group_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "audit_files_group_configure failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" audit_files_group_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "audit_files_group_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" audit_files_group_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_files_group_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_files_group_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -729,11 +729,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_files_mode_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_files_mode_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_files_mode_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_files_mode_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "audit_files_mode_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -744,7 +744,7 @@ EOS
         if [[ ! "$customref" == "audit_files_mode_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" audit_files_mode_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_files_mode_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - audit_files_mode_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "audit_files_mode_configure failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -752,14 +752,14 @@ EOS
             if [[ ! "$customref" == "audit_files_mode_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" audit_files_mode_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_files_mode_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_files_mode_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "audit_files_mode_configure failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" audit_files_mode_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "audit_files_mode_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" audit_files_mode_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_files_mode_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_files_mode_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -786,11 +786,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_files_owner_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_files_owner_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_files_owner_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_files_owner_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "audit_files_owner_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -801,7 +801,7 @@ EOS
         if [[ ! "$customref" == "audit_files_owner_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" audit_files_owner_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_files_owner_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - audit_files_owner_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "audit_files_owner_configure failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -809,14 +809,14 @@ EOS
             if [[ ! "$customref" == "audit_files_owner_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" audit_files_owner_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_files_owner_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_files_owner_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "audit_files_owner_configure failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" audit_files_owner_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "audit_files_owner_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" audit_files_owner_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_files_owner_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_files_owner_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -843,11 +843,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_folder_group_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_folder_group_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_folder_group_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_folder_group_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "audit_folder_group_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -858,7 +858,7 @@ EOS
         if [[ ! "$customref" == "audit_folder_group_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" audit_folder_group_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_folder_group_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - audit_folder_group_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "audit_folder_group_configure failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -866,14 +866,14 @@ EOS
             if [[ ! "$customref" == "audit_folder_group_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" audit_folder_group_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_folder_group_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_folder_group_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "audit_folder_group_configure failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" audit_folder_group_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "audit_folder_group_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" audit_folder_group_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_folder_group_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_folder_group_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -900,11 +900,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_folder_owner_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_folder_owner_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_folder_owner_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_folder_owner_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "audit_folder_owner_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -915,7 +915,7 @@ EOS
         if [[ ! "$customref" == "audit_folder_owner_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" audit_folder_owner_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_folder_owner_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - audit_folder_owner_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "audit_folder_owner_configure failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -923,14 +923,14 @@ EOS
             if [[ ! "$customref" == "audit_folder_owner_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" audit_folder_owner_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_folder_owner_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_folder_owner_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "audit_folder_owner_configure failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" audit_folder_owner_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "audit_folder_owner_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" audit_folder_owner_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_folder_owner_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_folder_owner_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -957,11 +957,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_folders_mode_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_folders_mode_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_folders_mode_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_folders_mode_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "audit_folders_mode_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -972,7 +972,7 @@ EOS
         if [[ ! "$customref" == "audit_folders_mode_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" audit_folders_mode_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_folders_mode_configure passed (Result: $result_value, Expected: "{'integer': 700}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - audit_folders_mode_configure passed (Result: $result_value, Expected: "{'integer': 700}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "audit_folders_mode_configure failed (Result: $result_value, Expected: \"{'integer': 700}\")"
@@ -980,14 +980,14 @@ EOS
             if [[ ! "$customref" == "audit_folders_mode_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" audit_folders_mode_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_folders_mode_configure failed (Result: $result_value, Expected: "{'integer': 700}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_folders_mode_configure failed (Result: $result_value, Expected: "{'integer': 700}")"
         else
             logmessage "audit_folders_mode_configure failed (Result: $result_value, Expected: \"{'integer': 700}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" audit_folders_mode_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "audit_folders_mode_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" audit_folders_mode_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_folders_mode_configure failed (Result: $result_value, Expected: "{'integer': 700}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_folders_mode_configure failed (Result: $result_value, Expected: "{'integer': 700}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -1015,11 +1015,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_retention_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_retention_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_retention_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_retention_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "audit_retention_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -1030,7 +1030,7 @@ EOS
         if [[ ! "$customref" == "audit_retention_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" audit_retention_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_retention_configure passed (Result: $result_value, Expected: "{'string': '60d OR 5G'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - audit_retention_configure passed (Result: $result_value, Expected: "{'string': '60d OR 5G'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "audit_retention_configure failed (Result: $result_value, Expected: \"{'string': '60d OR 5G'}\")"
@@ -1038,14 +1038,14 @@ EOS
             if [[ ! "$customref" == "audit_retention_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" audit_retention_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_retention_configure failed (Result: $result_value, Expected: "{'string': '60d OR 5G'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_retention_configure failed (Result: $result_value, Expected: "{'string': '60d OR 5G'}")"
         else
             logmessage "audit_retention_configure failed (Result: $result_value, Expected: \"{'string': '60d OR 5G'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" audit_retention_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "audit_retention_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" audit_retention_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - audit_retention_configure failed (Result: $result_value, Expected: "{'string': '60d OR 5G'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - audit_retention_configure failed (Result: $result_value, Expected: "{'string': '60d OR 5G'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -1077,11 +1077,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_airdrop_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_airdrop_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_airdrop_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_airdrop_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_airdrop_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -1092,7 +1092,7 @@ EOS
         if [[ ! "$customref" == "os_airdrop_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" os_airdrop_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_airdrop_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_airdrop_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_airdrop_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\")"
@@ -1100,14 +1100,14 @@ EOS
             if [[ ! "$customref" == "os_airdrop_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_airdrop_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_airdrop_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_airdrop_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
         else
             logmessage "os_airdrop_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_airdrop_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "os_airdrop_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" os_airdrop_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_airdrop_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_airdrop_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -1134,11 +1134,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_anti_virus_installed'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_anti_virus_installed'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_anti_virus_installed'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_anti_virus_installed'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_anti_virus_installed" | rev | cut -d ' ' -f 2- | rev)"
@@ -1149,7 +1149,7 @@ EOS
         if [[ ! "$customref" == "os_anti_virus_installed" ]]; then
             /usr/bin/defaults write "$audit_plist" os_anti_virus_installed -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_anti_virus_installed passed (Result: $result_value, Expected: "{'integer': 2}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_anti_virus_installed passed (Result: $result_value, Expected: "{'integer': 2}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_anti_virus_installed failed (Result: $result_value, Expected: \"{'integer': 2}\")"
@@ -1157,14 +1157,14 @@ EOS
             if [[ ! "$customref" == "os_anti_virus_installed" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_anti_virus_installed -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_anti_virus_installed failed (Result: $result_value, Expected: "{'integer': 2}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_anti_virus_installed failed (Result: $result_value, Expected: "{'integer': 2}")"
         else
             logmessage "os_anti_virus_installed failed (Result: $result_value, Expected: \"{'integer': 2}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_anti_virus_installed -dict-add finding -bool YES
             if [[ ! "$customref" == "os_anti_virus_installed" ]]; then
               /usr/bin/defaults write "$audit_plist" os_anti_virus_installed -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_anti_virus_installed failed (Result: $result_value, Expected: "{'integer': 2}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_anti_virus_installed failed (Result: $result_value, Expected: "{'integer': 2}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -1195,11 +1195,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_authenticated_root_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_authenticated_root_enable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_authenticated_root_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_authenticated_root_enable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_authenticated_root_enable" | rev | cut -d ' ' -f 2- | rev)"
@@ -1210,7 +1210,7 @@ EOS
         if [[ ! "$customref" == "os_authenticated_root_enable" ]]; then
             /usr/bin/defaults write "$audit_plist" os_authenticated_root_enable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_authenticated_root_enable passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_authenticated_root_enable passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_authenticated_root_enable failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -1218,14 +1218,14 @@ EOS
             if [[ ! "$customref" == "os_authenticated_root_enable" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_authenticated_root_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_authenticated_root_enable failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_authenticated_root_enable failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "os_authenticated_root_enable failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_authenticated_root_enable -dict-add finding -bool YES
             if [[ ! "$customref" == "os_authenticated_root_enable" ]]; then
               /usr/bin/defaults write "$audit_plist" os_authenticated_root_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_authenticated_root_enable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_authenticated_root_enable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -1256,11 +1256,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_config_data_install_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_config_data_install_enforce'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_config_data_install_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_config_data_install_enforce'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_config_data_install_enforce" | rev | cut -d ' ' -f 2- | rev)"
@@ -1271,7 +1271,7 @@ EOS
         if [[ ! "$customref" == "os_config_data_install_enforce" ]]; then
             /usr/bin/defaults write "$audit_plist" os_config_data_install_enforce -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_config_data_install_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_config_data_install_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_config_data_install_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -1279,14 +1279,14 @@ EOS
             if [[ ! "$customref" == "os_config_data_install_enforce" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_config_data_install_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_config_data_install_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_config_data_install_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "os_config_data_install_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_config_data_install_enforce -dict-add finding -bool YES
             if [[ ! "$customref" == "os_config_data_install_enforce" ]]; then
               /usr/bin/defaults write "$audit_plist" os_config_data_install_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_config_data_install_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_config_data_install_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -1319,11 +1319,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_gatekeeper_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_gatekeeper_enable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_gatekeeper_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_gatekeeper_enable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_gatekeeper_enable" | rev | cut -d ' ' -f 2- | rev)"
@@ -1334,7 +1334,7 @@ EOS
         if [[ ! "$customref" == "os_gatekeeper_enable" ]]; then
             /usr/bin/defaults write "$audit_plist" os_gatekeeper_enable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_gatekeeper_enable passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_gatekeeper_enable passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_gatekeeper_enable failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -1342,14 +1342,14 @@ EOS
             if [[ ! "$customref" == "os_gatekeeper_enable" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_gatekeeper_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_gatekeeper_enable failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_gatekeeper_enable failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "os_gatekeeper_enable failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_gatekeeper_enable -dict-add finding -bool YES
             if [[ ! "$customref" == "os_gatekeeper_enable" ]]; then
               /usr/bin/defaults write "$audit_plist" os_gatekeeper_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_gatekeeper_enable failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_gatekeeper_enable failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -1376,11 +1376,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_guest_folder_removed'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_guest_folder_removed'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_guest_folder_removed'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_guest_folder_removed'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_guest_folder_removed" | rev | cut -d ' ' -f 2- | rev)"
@@ -1391,7 +1391,7 @@ EOS
         if [[ ! "$customref" == "os_guest_folder_removed" ]]; then
             /usr/bin/defaults write "$audit_plist" os_guest_folder_removed -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_guest_folder_removed passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_guest_folder_removed passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_guest_folder_removed failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -1399,14 +1399,14 @@ EOS
             if [[ ! "$customref" == "os_guest_folder_removed" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_guest_folder_removed -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_guest_folder_removed failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_guest_folder_removed failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "os_guest_folder_removed failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_guest_folder_removed -dict-add finding -bool YES
             if [[ ! "$customref" == "os_guest_folder_removed" ]]; then
               /usr/bin/defaults write "$audit_plist" os_guest_folder_removed -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_guest_folder_removed failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_guest_folder_removed failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -1433,11 +1433,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_home_folders_secure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_home_folders_secure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_home_folders_secure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_home_folders_secure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_home_folders_secure" | rev | cut -d ' ' -f 2- | rev)"
@@ -1448,7 +1448,7 @@ EOS
         if [[ ! "$customref" == "os_home_folders_secure" ]]; then
             /usr/bin/defaults write "$audit_plist" os_home_folders_secure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_home_folders_secure passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_home_folders_secure passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_home_folders_secure failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -1456,14 +1456,14 @@ EOS
             if [[ ! "$customref" == "os_home_folders_secure" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_home_folders_secure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_home_folders_secure failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_home_folders_secure failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "os_home_folders_secure failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_home_folders_secure -dict-add finding -bool YES
             if [[ ! "$customref" == "os_home_folders_secure" ]]; then
               /usr/bin/defaults write "$audit_plist" os_home_folders_secure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_home_folders_secure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_home_folders_secure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -1491,11 +1491,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_httpd_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_httpd_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_httpd_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_httpd_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_httpd_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -1506,7 +1506,7 @@ EOS
         if [[ ! "$customref" == "os_httpd_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" os_httpd_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_httpd_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_httpd_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_httpd_disable failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -1514,14 +1514,14 @@ EOS
             if [[ ! "$customref" == "os_httpd_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_httpd_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_httpd_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_httpd_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "os_httpd_disable failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_httpd_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "os_httpd_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" os_httpd_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_httpd_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_httpd_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -1549,11 +1549,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_install_log_retention_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_install_log_retention_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_install_log_retention_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_install_log_retention_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_install_log_retention_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -1564,7 +1564,7 @@ EOS
         if [[ ! "$customref" == "os_install_log_retention_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" os_install_log_retention_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_install_log_retention_configure passed (Result: $result_value, Expected: "{'string': 'Yes'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_install_log_retention_configure passed (Result: $result_value, Expected: "{'string': 'Yes'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_install_log_retention_configure failed (Result: $result_value, Expected: \"{'string': 'Yes'}\")"
@@ -1572,14 +1572,14 @@ EOS
             if [[ ! "$customref" == "os_install_log_retention_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_install_log_retention_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_install_log_retention_configure failed (Result: $result_value, Expected: "{'string': 'Yes'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_install_log_retention_configure failed (Result: $result_value, Expected: "{'string': 'Yes'}")"
         else
             logmessage "os_install_log_retention_configure failed (Result: $result_value, Expected: \"{'string': 'Yes'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_install_log_retention_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "os_install_log_retention_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" os_install_log_retention_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_install_log_retention_configure failed (Result: $result_value, Expected: "{'string': 'Yes'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_install_log_retention_configure failed (Result: $result_value, Expected: "{'string': 'Yes'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -1607,11 +1607,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_mdm_require'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_mdm_require'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_mdm_require'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_mdm_require'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_mdm_require" | rev | cut -d ' ' -f 2- | rev)"
@@ -1622,7 +1622,7 @@ EOS
         if [[ ! "$customref" == "os_mdm_require" ]]; then
             /usr/bin/defaults write "$audit_plist" os_mdm_require -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_mdm_require passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_mdm_require passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_mdm_require failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -1630,14 +1630,14 @@ EOS
             if [[ ! "$customref" == "os_mdm_require" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_mdm_require -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_mdm_require failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_mdm_require failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "os_mdm_require failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_mdm_require -dict-add finding -bool YES
             if [[ ! "$customref" == "os_mdm_require" ]]; then
               /usr/bin/defaults write "$audit_plist" os_mdm_require -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_mdm_require failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_mdm_require failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -1664,11 +1664,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_mobile_file_integrity_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_mobile_file_integrity_enable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_mobile_file_integrity_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_mobile_file_integrity_enable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_mobile_file_integrity_enable" | rev | cut -d ' ' -f 2- | rev)"
@@ -1679,7 +1679,7 @@ EOS
         if [[ ! "$customref" == "os_mobile_file_integrity_enable" ]]; then
             /usr/bin/defaults write "$audit_plist" os_mobile_file_integrity_enable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_mobile_file_integrity_enable passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_mobile_file_integrity_enable passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_mobile_file_integrity_enable failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -1687,14 +1687,14 @@ EOS
             if [[ ! "$customref" == "os_mobile_file_integrity_enable" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_mobile_file_integrity_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_mobile_file_integrity_enable failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_mobile_file_integrity_enable failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "os_mobile_file_integrity_enable failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_mobile_file_integrity_enable -dict-add finding -bool YES
             if [[ ! "$customref" == "os_mobile_file_integrity_enable" ]]; then
               /usr/bin/defaults write "$audit_plist" os_mobile_file_integrity_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_mobile_file_integrity_enable failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_mobile_file_integrity_enable failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -1722,11 +1722,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_nfsd_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_nfsd_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_nfsd_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_nfsd_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_nfsd_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -1737,7 +1737,7 @@ EOS
         if [[ ! "$customref" == "os_nfsd_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" os_nfsd_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_nfsd_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_nfsd_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_nfsd_disable failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -1745,14 +1745,14 @@ EOS
             if [[ ! "$customref" == "os_nfsd_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_nfsd_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_nfsd_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_nfsd_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "os_nfsd_disable failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_nfsd_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "os_nfsd_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" os_nfsd_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_nfsd_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_nfsd_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -1784,11 +1784,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_on_device_dictation_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_on_device_dictation_enforce'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_on_device_dictation_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_on_device_dictation_enforce'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_on_device_dictation_enforce" | rev | cut -d ' ' -f 2- | rev)"
@@ -1799,7 +1799,7 @@ EOS
         if [[ ! "$customref" == "os_on_device_dictation_enforce" ]]; then
             /usr/bin/defaults write "$audit_plist" os_on_device_dictation_enforce -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_on_device_dictation_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_on_device_dictation_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_on_device_dictation_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -1807,14 +1807,14 @@ EOS
             if [[ ! "$customref" == "os_on_device_dictation_enforce" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_on_device_dictation_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_on_device_dictation_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_on_device_dictation_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "os_on_device_dictation_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_on_device_dictation_enforce -dict-add finding -bool YES
             if [[ ! "$customref" == "os_on_device_dictation_enforce" ]]; then
               /usr/bin/defaults write "$audit_plist" os_on_device_dictation_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_on_device_dictation_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_on_device_dictation_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -1847,11 +1847,11 @@ fi
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_password_hint_remove'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_password_hint_remove'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_password_hint_remove'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_password_hint_remove'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_password_hint_remove" | rev | cut -d ' ' -f 2- | rev)"
@@ -1862,7 +1862,7 @@ EOS
         if [[ ! "$customref" == "os_password_hint_remove" ]]; then
             /usr/bin/defaults write "$audit_plist" os_password_hint_remove -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_password_hint_remove passed (Result: $result_value, Expected: "{'string': 'PASS'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_password_hint_remove passed (Result: $result_value, Expected: "{'string': 'PASS'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_password_hint_remove failed (Result: $result_value, Expected: \"{'string': 'PASS'}\")"
@@ -1870,14 +1870,14 @@ EOS
             if [[ ! "$customref" == "os_password_hint_remove" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_password_hint_remove -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_password_hint_remove failed (Result: $result_value, Expected: "{'string': 'PASS'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_password_hint_remove failed (Result: $result_value, Expected: "{'string': 'PASS'}")"
         else
             logmessage "os_password_hint_remove failed (Result: $result_value, Expected: \"{'string': 'PASS'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_password_hint_remove -dict-add finding -bool YES
             if [[ ! "$customref" == "os_password_hint_remove" ]]; then
               /usr/bin/defaults write "$audit_plist" os_password_hint_remove -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_password_hint_remove failed (Result: $result_value, Expected: "{'string': 'PASS'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_password_hint_remove failed (Result: $result_value, Expected: "{'string': 'PASS'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -1904,11 +1904,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_power_nap_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_power_nap_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_power_nap_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_power_nap_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_power_nap_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -1919,7 +1919,7 @@ EOS
         if [[ ! "$customref" == "os_power_nap_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" os_power_nap_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_power_nap_disable passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_power_nap_disable passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_power_nap_disable failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -1927,14 +1927,14 @@ EOS
             if [[ ! "$customref" == "os_power_nap_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_power_nap_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_power_nap_disable failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_power_nap_disable failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "os_power_nap_disable failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_power_nap_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "os_power_nap_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" os_power_nap_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_power_nap_disable failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_power_nap_disable failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -1961,11 +1961,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_root_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_root_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_root_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_root_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_root_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -1976,7 +1976,7 @@ EOS
         if [[ ! "$customref" == "os_root_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" os_root_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_root_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_root_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_root_disable failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -1984,14 +1984,14 @@ EOS
             if [[ ! "$customref" == "os_root_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_root_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_root_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_root_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "os_root_disable failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_root_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "os_root_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" os_root_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_root_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_root_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -2018,11 +2018,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_safari_advertising_privacy_protection_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_safari_advertising_privacy_protection_enable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_safari_advertising_privacy_protection_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_safari_advertising_privacy_protection_enable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_safari_advertising_privacy_protection_enable" | rev | cut -d ' ' -f 2- | rev)"
@@ -2033,7 +2033,7 @@ EOS
         if [[ ! "$customref" == "os_safari_advertising_privacy_protection_enable" ]]; then
             /usr/bin/defaults write "$audit_plist" os_safari_advertising_privacy_protection_enable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_safari_advertising_privacy_protection_enable passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_safari_advertising_privacy_protection_enable passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_safari_advertising_privacy_protection_enable failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -2041,14 +2041,14 @@ EOS
             if [[ ! "$customref" == "os_safari_advertising_privacy_protection_enable" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_safari_advertising_privacy_protection_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_safari_advertising_privacy_protection_enable failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_safari_advertising_privacy_protection_enable failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "os_safari_advertising_privacy_protection_enable failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_safari_advertising_privacy_protection_enable -dict-add finding -bool YES
             if [[ ! "$customref" == "os_safari_advertising_privacy_protection_enable" ]]; then
               /usr/bin/defaults write "$audit_plist" os_safari_advertising_privacy_protection_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_safari_advertising_privacy_protection_enable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_safari_advertising_privacy_protection_enable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -2075,11 +2075,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_safari_open_safe_downloads_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_safari_open_safe_downloads_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_safari_open_safe_downloads_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_safari_open_safe_downloads_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_safari_open_safe_downloads_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -2090,7 +2090,7 @@ EOS
         if [[ ! "$customref" == "os_safari_open_safe_downloads_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" os_safari_open_safe_downloads_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_safari_open_safe_downloads_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_safari_open_safe_downloads_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_safari_open_safe_downloads_disable failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -2098,14 +2098,14 @@ EOS
             if [[ ! "$customref" == "os_safari_open_safe_downloads_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_safari_open_safe_downloads_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_safari_open_safe_downloads_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_safari_open_safe_downloads_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "os_safari_open_safe_downloads_disable failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_safari_open_safe_downloads_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "os_safari_open_safe_downloads_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" os_safari_open_safe_downloads_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_safari_open_safe_downloads_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_safari_open_safe_downloads_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -2132,11 +2132,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_safari_prevent_cross-site_tracking_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_safari_prevent_cross-site_tracking_enable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_safari_prevent_cross-site_tracking_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_safari_prevent_cross-site_tracking_enable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_safari_prevent_cross-site_tracking_enable" | rev | cut -d ' ' -f 2- | rev)"
@@ -2147,7 +2147,7 @@ EOS
         if [[ ! "$customref" == "os_safari_prevent_cross-site_tracking_enable" ]]; then
             /usr/bin/defaults write "$audit_plist" os_safari_prevent_cross-site_tracking_enable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_safari_prevent_cross-site_tracking_enable passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_safari_prevent_cross-site_tracking_enable passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_safari_prevent_cross-site_tracking_enable failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -2155,14 +2155,14 @@ EOS
             if [[ ! "$customref" == "os_safari_prevent_cross-site_tracking_enable" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_safari_prevent_cross-site_tracking_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_safari_prevent_cross-site_tracking_enable failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_safari_prevent_cross-site_tracking_enable failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "os_safari_prevent_cross-site_tracking_enable failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_safari_prevent_cross-site_tracking_enable -dict-add finding -bool YES
             if [[ ! "$customref" == "os_safari_prevent_cross-site_tracking_enable" ]]; then
               /usr/bin/defaults write "$audit_plist" os_safari_prevent_cross-site_tracking_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_safari_prevent_cross-site_tracking_enable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_safari_prevent_cross-site_tracking_enable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -2189,11 +2189,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_safari_show_full_website_address_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_safari_show_full_website_address_enable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_safari_show_full_website_address_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_safari_show_full_website_address_enable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_safari_show_full_website_address_enable" | rev | cut -d ' ' -f 2- | rev)"
@@ -2204,7 +2204,7 @@ EOS
         if [[ ! "$customref" == "os_safari_show_full_website_address_enable" ]]; then
             /usr/bin/defaults write "$audit_plist" os_safari_show_full_website_address_enable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_safari_show_full_website_address_enable passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_safari_show_full_website_address_enable passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_safari_show_full_website_address_enable failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -2212,14 +2212,14 @@ EOS
             if [[ ! "$customref" == "os_safari_show_full_website_address_enable" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_safari_show_full_website_address_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_safari_show_full_website_address_enable failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_safari_show_full_website_address_enable failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "os_safari_show_full_website_address_enable failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_safari_show_full_website_address_enable -dict-add finding -bool YES
             if [[ ! "$customref" == "os_safari_show_full_website_address_enable" ]]; then
               /usr/bin/defaults write "$audit_plist" os_safari_show_full_website_address_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_safari_show_full_website_address_enable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_safari_show_full_website_address_enable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -2246,11 +2246,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_safari_show_status_bar_enabled'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_safari_show_status_bar_enabled'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_safari_show_status_bar_enabled'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_safari_show_status_bar_enabled'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_safari_show_status_bar_enabled" | rev | cut -d ' ' -f 2- | rev)"
@@ -2261,7 +2261,7 @@ EOS
         if [[ ! "$customref" == "os_safari_show_status_bar_enabled" ]]; then
             /usr/bin/defaults write "$audit_plist" os_safari_show_status_bar_enabled -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_safari_show_status_bar_enabled passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_safari_show_status_bar_enabled passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_safari_show_status_bar_enabled failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -2269,14 +2269,14 @@ EOS
             if [[ ! "$customref" == "os_safari_show_status_bar_enabled" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_safari_show_status_bar_enabled -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_safari_show_status_bar_enabled failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_safari_show_status_bar_enabled failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "os_safari_show_status_bar_enabled failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_safari_show_status_bar_enabled -dict-add finding -bool YES
             if [[ ! "$customref" == "os_safari_show_status_bar_enabled" ]]; then
               /usr/bin/defaults write "$audit_plist" os_safari_show_status_bar_enabled -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_safari_show_status_bar_enabled failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_safari_show_status_bar_enabled failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -2303,11 +2303,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_safari_warn_fraudulent_website_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_safari_warn_fraudulent_website_enable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_safari_warn_fraudulent_website_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_safari_warn_fraudulent_website_enable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_safari_warn_fraudulent_website_enable" | rev | cut -d ' ' -f 2- | rev)"
@@ -2318,7 +2318,7 @@ EOS
         if [[ ! "$customref" == "os_safari_warn_fraudulent_website_enable" ]]; then
             /usr/bin/defaults write "$audit_plist" os_safari_warn_fraudulent_website_enable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_safari_warn_fraudulent_website_enable passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_safari_warn_fraudulent_website_enable passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_safari_warn_fraudulent_website_enable failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -2326,14 +2326,14 @@ EOS
             if [[ ! "$customref" == "os_safari_warn_fraudulent_website_enable" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_safari_warn_fraudulent_website_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_safari_warn_fraudulent_website_enable failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_safari_warn_fraudulent_website_enable failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "os_safari_warn_fraudulent_website_enable failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_safari_warn_fraudulent_website_enable -dict-add finding -bool YES
             if [[ ! "$customref" == "os_safari_warn_fraudulent_website_enable" ]]; then
               /usr/bin/defaults write "$audit_plist" os_safari_warn_fraudulent_website_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_safari_warn_fraudulent_website_enable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_safari_warn_fraudulent_website_enable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -2360,11 +2360,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_show_filename_extensions_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_show_filename_extensions_enable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_show_filename_extensions_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_show_filename_extensions_enable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_show_filename_extensions_enable" | rev | cut -d ' ' -f 2- | rev)"
@@ -2375,7 +2375,7 @@ EOS
         if [[ ! "$customref" == "os_show_filename_extensions_enable" ]]; then
             /usr/bin/defaults write "$audit_plist" os_show_filename_extensions_enable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_show_filename_extensions_enable passed (Result: $result_value, Expected: "{'boolean': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_show_filename_extensions_enable passed (Result: $result_value, Expected: "{'boolean': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_show_filename_extensions_enable failed (Result: $result_value, Expected: \"{'boolean': 1}\")"
@@ -2383,14 +2383,14 @@ EOS
             if [[ ! "$customref" == "os_show_filename_extensions_enable" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_show_filename_extensions_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_show_filename_extensions_enable failed (Result: $result_value, Expected: "{'boolean': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_show_filename_extensions_enable failed (Result: $result_value, Expected: "{'boolean': 1}")"
         else
             logmessage "os_show_filename_extensions_enable failed (Result: $result_value, Expected: \"{'boolean': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_show_filename_extensions_enable -dict-add finding -bool YES
             if [[ ! "$customref" == "os_show_filename_extensions_enable" ]]; then
               /usr/bin/defaults write "$audit_plist" os_show_filename_extensions_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_show_filename_extensions_enable failed (Result: $result_value, Expected: "{'boolean': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_show_filename_extensions_enable failed (Result: $result_value, Expected: "{'boolean': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -2422,11 +2422,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_sip_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_sip_enable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_sip_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_sip_enable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_sip_enable" | rev | cut -d ' ' -f 2- | rev)"
@@ -2437,7 +2437,7 @@ EOS
         if [[ ! "$customref" == "os_sip_enable" ]]; then
             /usr/bin/defaults write "$audit_plist" os_sip_enable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_sip_enable passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_sip_enable passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_sip_enable failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -2445,14 +2445,14 @@ EOS
             if [[ ! "$customref" == "os_sip_enable" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_sip_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_sip_enable failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_sip_enable failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "os_sip_enable failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_sip_enable -dict-add finding -bool YES
             if [[ ! "$customref" == "os_sip_enable" ]]; then
               /usr/bin/defaults write "$audit_plist" os_sip_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_sip_enable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_sip_enable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -2489,11 +2489,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_software_update_deferral'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_software_update_deferral'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_software_update_deferral'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_software_update_deferral'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_software_update_deferral" | rev | cut -d ' ' -f 2- | rev)"
@@ -2504,7 +2504,7 @@ EOS
         if [[ ! "$customref" == "os_software_update_deferral" ]]; then
             /usr/bin/defaults write "$audit_plist" os_software_update_deferral -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_software_update_deferral passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_software_update_deferral passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_software_update_deferral failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -2512,14 +2512,14 @@ EOS
             if [[ ! "$customref" == "os_software_update_deferral" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_software_update_deferral -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_software_update_deferral failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_software_update_deferral failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "os_software_update_deferral failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_software_update_deferral -dict-add finding -bool YES
             if [[ ! "$customref" == "os_software_update_deferral" ]]; then
               /usr/bin/defaults write "$audit_plist" os_software_update_deferral -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_software_update_deferral failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_software_update_deferral failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -2546,11 +2546,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_sudo_log_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_sudo_log_enforce'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_sudo_log_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_sudo_log_enforce'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_sudo_log_enforce" | rev | cut -d ' ' -f 2- | rev)"
@@ -2561,7 +2561,7 @@ EOS
         if [[ ! "$customref" == "os_sudo_log_enforce" ]]; then
             /usr/bin/defaults write "$audit_plist" os_sudo_log_enforce -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_sudo_log_enforce passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_sudo_log_enforce passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_sudo_log_enforce failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -2569,14 +2569,14 @@ EOS
             if [[ ! "$customref" == "os_sudo_log_enforce" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_sudo_log_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_sudo_log_enforce failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_sudo_log_enforce failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "os_sudo_log_enforce failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_sudo_log_enforce -dict-add finding -bool YES
             if [[ ! "$customref" == "os_sudo_log_enforce" ]]; then
               /usr/bin/defaults write "$audit_plist" os_sudo_log_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_sudo_log_enforce failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_sudo_log_enforce failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -2603,11 +2603,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_sudo_timeout_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_sudo_timeout_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_sudo_timeout_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_sudo_timeout_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_sudo_timeout_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -2618,7 +2618,7 @@ EOS
         if [[ ! "$customref" == "os_sudo_timeout_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" os_sudo_timeout_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_sudo_timeout_configure passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_sudo_timeout_configure passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_sudo_timeout_configure failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -2626,14 +2626,14 @@ EOS
             if [[ ! "$customref" == "os_sudo_timeout_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_sudo_timeout_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_sudo_timeout_configure failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_sudo_timeout_configure failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "os_sudo_timeout_configure failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_sudo_timeout_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "os_sudo_timeout_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" os_sudo_timeout_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_sudo_timeout_configure failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_sudo_timeout_configure failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -2661,11 +2661,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_sudoers_timestamp_type_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_sudoers_timestamp_type_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_sudoers_timestamp_type_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_sudoers_timestamp_type_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_sudoers_timestamp_type_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -2676,7 +2676,7 @@ EOS
         if [[ ! "$customref" == "os_sudoers_timestamp_type_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" os_sudoers_timestamp_type_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_sudoers_timestamp_type_configure passed (Result: $result_value, Expected: "{'string': 'tty'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_sudoers_timestamp_type_configure passed (Result: $result_value, Expected: "{'string': 'tty'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_sudoers_timestamp_type_configure failed (Result: $result_value, Expected: \"{'string': 'tty'}\")"
@@ -2684,14 +2684,14 @@ EOS
             if [[ ! "$customref" == "os_sudoers_timestamp_type_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_sudoers_timestamp_type_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_sudoers_timestamp_type_configure failed (Result: $result_value, Expected: "{'string': 'tty'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_sudoers_timestamp_type_configure failed (Result: $result_value, Expected: "{'string': 'tty'}")"
         else
             logmessage "os_sudoers_timestamp_type_configure failed (Result: $result_value, Expected: \"{'string': 'tty'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_sudoers_timestamp_type_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "os_sudoers_timestamp_type_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" os_sudoers_timestamp_type_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_sudoers_timestamp_type_configure failed (Result: $result_value, Expected: "{'string': 'tty'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_sudoers_timestamp_type_configure failed (Result: $result_value, Expected: "{'string': 'tty'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -2718,11 +2718,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_system_wide_applications_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_system_wide_applications_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_system_wide_applications_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_system_wide_applications_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_system_wide_applications_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -2733,7 +2733,7 @@ EOS
         if [[ ! "$customref" == "os_system_wide_applications_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" os_system_wide_applications_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_system_wide_applications_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_system_wide_applications_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_system_wide_applications_configure failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -2741,14 +2741,14 @@ EOS
             if [[ ! "$customref" == "os_system_wide_applications_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_system_wide_applications_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_system_wide_applications_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_system_wide_applications_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "os_system_wide_applications_configure failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_system_wide_applications_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "os_system_wide_applications_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" os_system_wide_applications_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_system_wide_applications_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_system_wide_applications_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -2778,11 +2778,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_terminal_secure_keyboard_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_terminal_secure_keyboard_enable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_terminal_secure_keyboard_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_terminal_secure_keyboard_enable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_terminal_secure_keyboard_enable" | rev | cut -d ' ' -f 2- | rev)"
@@ -2793,7 +2793,7 @@ EOS
         if [[ ! "$customref" == "os_terminal_secure_keyboard_enable" ]]; then
             /usr/bin/defaults write "$audit_plist" os_terminal_secure_keyboard_enable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_terminal_secure_keyboard_enable passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_terminal_secure_keyboard_enable passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_terminal_secure_keyboard_enable failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -2801,14 +2801,14 @@ EOS
             if [[ ! "$customref" == "os_terminal_secure_keyboard_enable" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_terminal_secure_keyboard_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_terminal_secure_keyboard_enable failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_terminal_secure_keyboard_enable failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "os_terminal_secure_keyboard_enable failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_terminal_secure_keyboard_enable -dict-add finding -bool YES
             if [[ ! "$customref" == "os_terminal_secure_keyboard_enable" ]]; then
               /usr/bin/defaults write "$audit_plist" os_terminal_secure_keyboard_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_terminal_secure_keyboard_enable failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_terminal_secure_keyboard_enable failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -2836,11 +2836,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_time_server_enabled'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_time_server_enabled'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_time_server_enabled'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_time_server_enabled'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_time_server_enabled" | rev | cut -d ' ' -f 2- | rev)"
@@ -2851,7 +2851,7 @@ EOS
         if [[ ! "$customref" == "os_time_server_enabled" ]]; then
             /usr/bin/defaults write "$audit_plist" os_time_server_enabled -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_time_server_enabled passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_time_server_enabled passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_time_server_enabled failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -2859,14 +2859,14 @@ EOS
             if [[ ! "$customref" == "os_time_server_enabled" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_time_server_enabled -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_time_server_enabled failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_time_server_enabled failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "os_time_server_enabled failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_time_server_enabled -dict-add finding -bool YES
             if [[ ! "$customref" == "os_time_server_enabled" ]]; then
               /usr/bin/defaults write "$audit_plist" os_time_server_enabled -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_time_server_enabled failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_time_server_enabled failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -2893,11 +2893,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_unlock_active_user_session_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_unlock_active_user_session_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_unlock_active_user_session_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_unlock_active_user_session_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_unlock_active_user_session_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -2908,7 +2908,7 @@ EOS
         if [[ ! "$customref" == "os_unlock_active_user_session_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" os_unlock_active_user_session_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_unlock_active_user_session_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_unlock_active_user_session_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_unlock_active_user_session_disable failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -2916,14 +2916,14 @@ EOS
             if [[ ! "$customref" == "os_unlock_active_user_session_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_unlock_active_user_session_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_unlock_active_user_session_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_unlock_active_user_session_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "os_unlock_active_user_session_disable failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_unlock_active_user_session_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "os_unlock_active_user_session_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" os_unlock_active_user_session_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_unlock_active_user_session_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_unlock_active_user_session_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -2950,11 +2950,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_world_writable_system_folder_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_world_writable_system_folder_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_world_writable_system_folder_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_world_writable_system_folder_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "os_world_writable_system_folder_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -2965,7 +2965,7 @@ EOS
         if [[ ! "$customref" == "os_world_writable_system_folder_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" os_world_writable_system_folder_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_world_writable_system_folder_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - os_world_writable_system_folder_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "os_world_writable_system_folder_configure failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -2973,14 +2973,14 @@ EOS
             if [[ ! "$customref" == "os_world_writable_system_folder_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" os_world_writable_system_folder_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_world_writable_system_folder_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_world_writable_system_folder_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "os_world_writable_system_folder_configure failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" os_world_writable_system_folder_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "os_world_writable_system_folder_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" os_world_writable_system_folder_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - os_world_writable_system_folder_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - os_world_writable_system_folder_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -2997,7 +2997,7 @@ fi
 rule_arch=""
 if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset result_value
-    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= 5) {print "yes"} else {print "no"}}'
+    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= 5) {print "yes"} else {print "no"}}' | /usr/bin/uniq
 )
     # expected result {'string': 'yes'}
 
@@ -3007,11 +3007,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('pwpolicy_account_lockout_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('pwpolicy_account_lockout_enforce'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('pwpolicy_account_lockout_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('pwpolicy_account_lockout_enforce'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "pwpolicy_account_lockout_enforce" | rev | cut -d ' ' -f 2- | rev)"
@@ -3022,7 +3022,7 @@ EOS
         if [[ ! "$customref" == "pwpolicy_account_lockout_enforce" ]]; then
             /usr/bin/defaults write "$audit_plist" pwpolicy_account_lockout_enforce -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - pwpolicy_account_lockout_enforce passed (Result: $result_value, Expected: "{'string': 'yes'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - pwpolicy_account_lockout_enforce passed (Result: $result_value, Expected: "{'string': 'yes'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "pwpolicy_account_lockout_enforce failed (Result: $result_value, Expected: \"{'string': 'yes'}\")"
@@ -3030,14 +3030,14 @@ EOS
             if [[ ! "$customref" == "pwpolicy_account_lockout_enforce" ]]; then
                 /usr/bin/defaults write "$audit_plist" pwpolicy_account_lockout_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - pwpolicy_account_lockout_enforce failed (Result: $result_value, Expected: "{'string': 'yes'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - pwpolicy_account_lockout_enforce failed (Result: $result_value, Expected: "{'string': 'yes'}")"
         else
             logmessage "pwpolicy_account_lockout_enforce failed (Result: $result_value, Expected: \"{'string': 'yes'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" pwpolicy_account_lockout_enforce -dict-add finding -bool YES
             if [[ ! "$customref" == "pwpolicy_account_lockout_enforce" ]]; then
               /usr/bin/defaults write "$audit_plist" pwpolicy_account_lockout_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - pwpolicy_account_lockout_enforce failed (Result: $result_value, Expected: "{'string': 'yes'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - pwpolicy_account_lockout_enforce failed (Result: $result_value, Expected: "{'string': 'yes'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -3054,7 +3054,7 @@ fi
 rule_arch=""
 if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset result_value
-    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= 15 ) {print "yes"} else {print "no"}}'
+    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= 15 ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
 )
     # expected result {'string': 'yes'}
 
@@ -3064,11 +3064,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('pwpolicy_account_lockout_timeout_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('pwpolicy_account_lockout_timeout_enforce'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('pwpolicy_account_lockout_timeout_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('pwpolicy_account_lockout_timeout_enforce'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "pwpolicy_account_lockout_timeout_enforce" | rev | cut -d ' ' -f 2- | rev)"
@@ -3079,7 +3079,7 @@ EOS
         if [[ ! "$customref" == "pwpolicy_account_lockout_timeout_enforce" ]]; then
             /usr/bin/defaults write "$audit_plist" pwpolicy_account_lockout_timeout_enforce -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - pwpolicy_account_lockout_timeout_enforce passed (Result: $result_value, Expected: "{'string': 'yes'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - pwpolicy_account_lockout_timeout_enforce passed (Result: $result_value, Expected: "{'string': 'yes'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "pwpolicy_account_lockout_timeout_enforce failed (Result: $result_value, Expected: \"{'string': 'yes'}\")"
@@ -3087,14 +3087,14 @@ EOS
             if [[ ! "$customref" == "pwpolicy_account_lockout_timeout_enforce" ]]; then
                 /usr/bin/defaults write "$audit_plist" pwpolicy_account_lockout_timeout_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - pwpolicy_account_lockout_timeout_enforce failed (Result: $result_value, Expected: "{'string': 'yes'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - pwpolicy_account_lockout_timeout_enforce failed (Result: $result_value, Expected: "{'string': 'yes'}")"
         else
             logmessage "pwpolicy_account_lockout_timeout_enforce failed (Result: $result_value, Expected: \"{'string': 'yes'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" pwpolicy_account_lockout_timeout_enforce -dict-add finding -bool YES
             if [[ ! "$customref" == "pwpolicy_account_lockout_timeout_enforce" ]]; then
               /usr/bin/defaults write "$audit_plist" pwpolicy_account_lockout_timeout_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - pwpolicy_account_lockout_timeout_enforce failed (Result: $result_value, Expected: "{'string': 'yes'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - pwpolicy_account_lockout_timeout_enforce failed (Result: $result_value, Expected: "{'string': 'yes'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -3111,7 +3111,7 @@ fi
 rule_arch=""
 if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset result_value
-    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= 15 ) {print "yes"} else {print "no"}}'
+    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= 15 ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
 )
     # expected result {'string': 'yes'}
 
@@ -3121,11 +3121,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('pwpolicy_history_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('pwpolicy_history_enforce'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('pwpolicy_history_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('pwpolicy_history_enforce'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "pwpolicy_history_enforce" | rev | cut -d ' ' -f 2- | rev)"
@@ -3136,7 +3136,7 @@ EOS
         if [[ ! "$customref" == "pwpolicy_history_enforce" ]]; then
             /usr/bin/defaults write "$audit_plist" pwpolicy_history_enforce -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - pwpolicy_history_enforce passed (Result: $result_value, Expected: "{'string': 'yes'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - pwpolicy_history_enforce passed (Result: $result_value, Expected: "{'string': 'yes'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "pwpolicy_history_enforce failed (Result: $result_value, Expected: \"{'string': 'yes'}\")"
@@ -3144,14 +3144,14 @@ EOS
             if [[ ! "$customref" == "pwpolicy_history_enforce" ]]; then
                 /usr/bin/defaults write "$audit_plist" pwpolicy_history_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - pwpolicy_history_enforce failed (Result: $result_value, Expected: "{'string': 'yes'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - pwpolicy_history_enforce failed (Result: $result_value, Expected: "{'string': 'yes'}")"
         else
             logmessage "pwpolicy_history_enforce failed (Result: $result_value, Expected: \"{'string': 'yes'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" pwpolicy_history_enforce -dict-add finding -bool YES
             if [[ ! "$customref" == "pwpolicy_history_enforce" ]]; then
               /usr/bin/defaults write "$audit_plist" pwpolicy_history_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - pwpolicy_history_enforce failed (Result: $result_value, Expected: "{'string': 'yes'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - pwpolicy_history_enforce failed (Result: $result_value, Expected: "{'string': 'yes'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -3178,11 +3178,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('pwpolicy_max_lifetime_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('pwpolicy_max_lifetime_enforce'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('pwpolicy_max_lifetime_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('pwpolicy_max_lifetime_enforce'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "pwpolicy_max_lifetime_enforce" | rev | cut -d ' ' -f 2- | rev)"
@@ -3193,7 +3193,7 @@ EOS
         if [[ ! "$customref" == "pwpolicy_max_lifetime_enforce" ]]; then
             /usr/bin/defaults write "$audit_plist" pwpolicy_max_lifetime_enforce -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - pwpolicy_max_lifetime_enforce passed (Result: $result_value, Expected: "{'integer': 365}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - pwpolicy_max_lifetime_enforce passed (Result: $result_value, Expected: "{'integer': 365}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "pwpolicy_max_lifetime_enforce failed (Result: $result_value, Expected: \"{'integer': 365}\")"
@@ -3201,14 +3201,14 @@ EOS
             if [[ ! "$customref" == "pwpolicy_max_lifetime_enforce" ]]; then
                 /usr/bin/defaults write "$audit_plist" pwpolicy_max_lifetime_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - pwpolicy_max_lifetime_enforce failed (Result: $result_value, Expected: "{'integer': 365}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - pwpolicy_max_lifetime_enforce failed (Result: $result_value, Expected: "{'integer': 365}")"
         else
             logmessage "pwpolicy_max_lifetime_enforce failed (Result: $result_value, Expected: \"{'integer': 365}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" pwpolicy_max_lifetime_enforce -dict-add finding -bool YES
             if [[ ! "$customref" == "pwpolicy_max_lifetime_enforce" ]]; then
               /usr/bin/defaults write "$audit_plist" pwpolicy_max_lifetime_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - pwpolicy_max_lifetime_enforce failed (Result: $result_value, Expected: "{'integer': 365}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - pwpolicy_max_lifetime_enforce failed (Result: $result_value, Expected: "{'integer': 365}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -3235,11 +3235,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('pwpolicy_minimum_length_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('pwpolicy_minimum_length_enforce'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('pwpolicy_minimum_length_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('pwpolicy_minimum_length_enforce'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "pwpolicy_minimum_length_enforce" | rev | cut -d ' ' -f 2- | rev)"
@@ -3250,7 +3250,7 @@ EOS
         if [[ ! "$customref" == "pwpolicy_minimum_length_enforce" ]]; then
             /usr/bin/defaults write "$audit_plist" pwpolicy_minimum_length_enforce -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - pwpolicy_minimum_length_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - pwpolicy_minimum_length_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "pwpolicy_minimum_length_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -3258,14 +3258,14 @@ EOS
             if [[ ! "$customref" == "pwpolicy_minimum_length_enforce" ]]; then
                 /usr/bin/defaults write "$audit_plist" pwpolicy_minimum_length_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - pwpolicy_minimum_length_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - pwpolicy_minimum_length_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "pwpolicy_minimum_length_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" pwpolicy_minimum_length_enforce -dict-add finding -bool YES
             if [[ ! "$customref" == "pwpolicy_minimum_length_enforce" ]]; then
               /usr/bin/defaults write "$audit_plist" pwpolicy_minimum_length_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - pwpolicy_minimum_length_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - pwpolicy_minimum_length_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -3295,11 +3295,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_airplay_receiver_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_airplay_receiver_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_airplay_receiver_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_airplay_receiver_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_airplay_receiver_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -3310,7 +3310,7 @@ EOS
         if [[ ! "$customref" == "system_settings_airplay_receiver_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_airplay_receiver_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_airplay_receiver_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_airplay_receiver_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_airplay_receiver_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\")"
@@ -3318,14 +3318,14 @@ EOS
             if [[ ! "$customref" == "system_settings_airplay_receiver_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_airplay_receiver_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_airplay_receiver_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_airplay_receiver_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
         else
             logmessage "system_settings_airplay_receiver_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_airplay_receiver_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_airplay_receiver_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_airplay_receiver_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_airplay_receiver_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_airplay_receiver_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -3356,11 +3356,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_automatic_login_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_automatic_login_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_automatic_login_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_automatic_login_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_automatic_login_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -3371,7 +3371,7 @@ EOS
         if [[ ! "$customref" == "system_settings_automatic_login_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_automatic_login_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_automatic_login_disable passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_automatic_login_disable passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_automatic_login_disable failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -3379,14 +3379,14 @@ EOS
             if [[ ! "$customref" == "system_settings_automatic_login_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_automatic_login_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_automatic_login_disable failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_automatic_login_disable failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "system_settings_automatic_login_disable failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_automatic_login_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_automatic_login_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_automatic_login_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_automatic_login_disable failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_automatic_login_disable failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -3416,11 +3416,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_bluetooth_menu_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_bluetooth_menu_enable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_bluetooth_menu_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_bluetooth_menu_enable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_bluetooth_menu_enable" | rev | cut -d ' ' -f 2- | rev)"
@@ -3431,7 +3431,7 @@ EOS
         if [[ ! "$customref" == "system_settings_bluetooth_menu_enable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_bluetooth_menu_enable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_bluetooth_menu_enable passed (Result: $result_value, Expected: "{'integer': 18}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_bluetooth_menu_enable passed (Result: $result_value, Expected: "{'integer': 18}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_bluetooth_menu_enable failed (Result: $result_value, Expected: \"{'integer': 18}\")"
@@ -3439,14 +3439,14 @@ EOS
             if [[ ! "$customref" == "system_settings_bluetooth_menu_enable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_bluetooth_menu_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_bluetooth_menu_enable failed (Result: $result_value, Expected: "{'integer': 18}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_bluetooth_menu_enable failed (Result: $result_value, Expected: "{'integer': 18}")"
         else
             logmessage "system_settings_bluetooth_menu_enable failed (Result: $result_value, Expected: \"{'integer': 18}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_bluetooth_menu_enable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_bluetooth_menu_enable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_bluetooth_menu_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_bluetooth_menu_enable failed (Result: $result_value, Expected: "{'integer': 18}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_bluetooth_menu_enable failed (Result: $result_value, Expected: "{'integer': 18}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -3475,11 +3475,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_bluetooth_sharing_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_bluetooth_sharing_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_bluetooth_sharing_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_bluetooth_sharing_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_bluetooth_sharing_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -3490,7 +3490,7 @@ EOS
         if [[ ! "$customref" == "system_settings_bluetooth_sharing_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_bluetooth_sharing_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_bluetooth_sharing_disable passed (Result: $result_value, Expected: "{'boolean': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_bluetooth_sharing_disable passed (Result: $result_value, Expected: "{'boolean': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_bluetooth_sharing_disable failed (Result: $result_value, Expected: \"{'boolean': 0}\")"
@@ -3498,14 +3498,14 @@ EOS
             if [[ ! "$customref" == "system_settings_bluetooth_sharing_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_bluetooth_sharing_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_bluetooth_sharing_disable failed (Result: $result_value, Expected: "{'boolean': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_bluetooth_sharing_disable failed (Result: $result_value, Expected: "{'boolean': 0}")"
         else
             logmessage "system_settings_bluetooth_sharing_disable failed (Result: $result_value, Expected: \"{'boolean': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_bluetooth_sharing_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_bluetooth_sharing_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_bluetooth_sharing_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_bluetooth_sharing_disable failed (Result: $result_value, Expected: "{'boolean': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_bluetooth_sharing_disable failed (Result: $result_value, Expected: "{'boolean': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -3514,63 +3514,6 @@ EOS
 else
     logmessage "system_settings_bluetooth_sharing_disable does not apply to this architecture"
     /usr/bin/defaults write "$audit_plist" system_settings_bluetooth_sharing_disable -dict-add finding -bool NO
-fi
-
-#####----- Rule: system_settings_cd_dvd_sharing_disable -----#####
-## Addresses the following NIST 800-53 controls: 
-# * CM-7, CM-7(1)
-rule_arch=""
-if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
-    unset result_value
-    result_value=$(/usr/bin/pgrep -q ODSAgent; /bin/echo $?
-)
-    # expected result {'integer': 1}
-
-
-    # check to see if rule is exempt
-    unset exempt
-    unset exempt_reason
-
-    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_cd_dvd_sharing_disable'))["exempt"]
-EOS
-)
-    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_cd_dvd_sharing_disable'))["exempt_reason"]
-EOS
-)   
-    customref="$(echo "system_settings_cd_dvd_sharing_disable" | rev | cut -d ' ' -f 2- | rev)"
-    customref="$(echo "$customref" | tr " " ",")"
-    if [[ $result_value == "1" ]]; then
-        logmessage "system_settings_cd_dvd_sharing_disable passed (Result: $result_value, Expected: \"{'integer': 1}\")"
-        /usr/bin/defaults write "$audit_plist" system_settings_cd_dvd_sharing_disable -dict-add finding -bool NO
-        if [[ ! "$customref" == "system_settings_cd_dvd_sharing_disable" ]]; then
-            /usr/bin/defaults write "$audit_plist" system_settings_cd_dvd_sharing_disable -dict-add reference -string "$customref"
-        fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_cd_dvd_sharing_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
-    else
-        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
-            logmessage "system_settings_cd_dvd_sharing_disable failed (Result: $result_value, Expected: \"{'integer': 1}\")"
-            /usr/bin/defaults write "$audit_plist" system_settings_cd_dvd_sharing_disable -dict-add finding -bool YES
-            if [[ ! "$customref" == "system_settings_cd_dvd_sharing_disable" ]]; then
-                /usr/bin/defaults write "$audit_plist" system_settings_cd_dvd_sharing_disable -dict-add reference -string "$customref"
-            fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_cd_dvd_sharing_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
-        else
-            logmessage "system_settings_cd_dvd_sharing_disable failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
-            /usr/bin/defaults write "$audit_plist" system_settings_cd_dvd_sharing_disable -dict-add finding -bool YES
-            if [[ ! "$customref" == "system_settings_cd_dvd_sharing_disable" ]]; then
-              /usr/bin/defaults write "$audit_plist" system_settings_cd_dvd_sharing_disable -dict-add reference -string "$customref"
-            fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_cd_dvd_sharing_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
-            /bin/sleep 1
-        fi
-    fi
-
-
-else
-    logmessage "system_settings_cd_dvd_sharing_disable does not apply to this architecture"
-    /usr/bin/defaults write "$audit_plist" system_settings_cd_dvd_sharing_disable -dict-add finding -bool NO
 fi
 
 #####----- Rule: system_settings_critical_update_install_enforce -----#####
@@ -3592,11 +3535,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_critical_update_install_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_critical_update_install_enforce'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_critical_update_install_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_critical_update_install_enforce'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_critical_update_install_enforce" | rev | cut -d ' ' -f 2- | rev)"
@@ -3607,7 +3550,7 @@ EOS
         if [[ ! "$customref" == "system_settings_critical_update_install_enforce" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_critical_update_install_enforce -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_critical_update_install_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_critical_update_install_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_critical_update_install_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -3615,14 +3558,14 @@ EOS
             if [[ ! "$customref" == "system_settings_critical_update_install_enforce" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_critical_update_install_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_critical_update_install_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_critical_update_install_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "system_settings_critical_update_install_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_critical_update_install_enforce -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_critical_update_install_enforce" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_critical_update_install_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_critical_update_install_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_critical_update_install_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -3663,11 +3606,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_diagnostics_reports_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_diagnostics_reports_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_diagnostics_reports_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_diagnostics_reports_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_diagnostics_reports_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -3678,7 +3621,7 @@ EOS
         if [[ ! "$customref" == "system_settings_diagnostics_reports_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_diagnostics_reports_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_diagnostics_reports_disable passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_diagnostics_reports_disable passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_diagnostics_reports_disable failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -3686,14 +3629,14 @@ EOS
             if [[ ! "$customref" == "system_settings_diagnostics_reports_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_diagnostics_reports_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_diagnostics_reports_disable failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_diagnostics_reports_disable failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "system_settings_diagnostics_reports_disable failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_diagnostics_reports_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_diagnostics_reports_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_diagnostics_reports_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_diagnostics_reports_disable failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_diagnostics_reports_disable failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -3730,11 +3673,11 @@ fi
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_filevault_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_filevault_enforce'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_filevault_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_filevault_enforce'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_filevault_enforce" | rev | cut -d ' ' -f 2- | rev)"
@@ -3745,7 +3688,7 @@ EOS
         if [[ ! "$customref" == "system_settings_filevault_enforce" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_filevault_enforce -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_filevault_enforce passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_filevault_enforce passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_filevault_enforce failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -3753,14 +3696,14 @@ EOS
             if [[ ! "$customref" == "system_settings_filevault_enforce" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_filevault_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_filevault_enforce failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_filevault_enforce failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "system_settings_filevault_enforce failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_filevault_enforce -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_filevault_enforce" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_filevault_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_filevault_enforce failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_filevault_enforce failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -3792,11 +3735,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_firewall_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_firewall_enable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_firewall_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_firewall_enable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_firewall_enable" | rev | cut -d ' ' -f 2- | rev)"
@@ -3807,7 +3750,7 @@ EOS
         if [[ ! "$customref" == "system_settings_firewall_enable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_firewall_enable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_firewall_enable passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_firewall_enable passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_firewall_enable failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -3815,14 +3758,14 @@ EOS
             if [[ ! "$customref" == "system_settings_firewall_enable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_firewall_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_firewall_enable failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_firewall_enable failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "system_settings_firewall_enable failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_firewall_enable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_firewall_enable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_firewall_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_firewall_enable failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_firewall_enable failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -3853,11 +3796,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_firewall_stealth_mode_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_firewall_stealth_mode_enable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_firewall_stealth_mode_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_firewall_stealth_mode_enable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_firewall_stealth_mode_enable" | rev | cut -d ' ' -f 2- | rev)"
@@ -3868,7 +3811,7 @@ EOS
         if [[ ! "$customref" == "system_settings_firewall_stealth_mode_enable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_firewall_stealth_mode_enable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_firewall_stealth_mode_enable passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_firewall_stealth_mode_enable passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_firewall_stealth_mode_enable failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -3876,14 +3819,14 @@ EOS
             if [[ ! "$customref" == "system_settings_firewall_stealth_mode_enable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_firewall_stealth_mode_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_firewall_stealth_mode_enable failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_firewall_stealth_mode_enable failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "system_settings_firewall_stealth_mode_enable failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_firewall_stealth_mode_enable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_firewall_stealth_mode_enable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_firewall_stealth_mode_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_firewall_stealth_mode_enable failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_firewall_stealth_mode_enable failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -3909,11 +3852,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_guest_access_smb_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_guest_access_smb_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_guest_access_smb_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_guest_access_smb_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_guest_access_smb_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -3924,7 +3867,7 @@ EOS
         if [[ ! "$customref" == "system_settings_guest_access_smb_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_guest_access_smb_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_guest_access_smb_disable passed (Result: $result_value, Expected: "{'boolean': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_guest_access_smb_disable passed (Result: $result_value, Expected: "{'boolean': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_guest_access_smb_disable failed (Result: $result_value, Expected: \"{'boolean': 0}\")"
@@ -3932,14 +3875,14 @@ EOS
             if [[ ! "$customref" == "system_settings_guest_access_smb_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_guest_access_smb_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_guest_access_smb_disable failed (Result: $result_value, Expected: "{'boolean': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_guest_access_smb_disable failed (Result: $result_value, Expected: "{'boolean': 0}")"
         else
             logmessage "system_settings_guest_access_smb_disable failed (Result: $result_value, Expected: \"{'boolean': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_guest_access_smb_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_guest_access_smb_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_guest_access_smb_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_guest_access_smb_disable failed (Result: $result_value, Expected: "{'boolean': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_guest_access_smb_disable failed (Result: $result_value, Expected: "{'boolean': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -3978,11 +3921,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_guest_account_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_guest_account_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_guest_account_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_guest_account_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_guest_account_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -3993,7 +3936,7 @@ EOS
         if [[ ! "$customref" == "system_settings_guest_account_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_guest_account_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_guest_account_disable passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_guest_account_disable passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_guest_account_disable failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -4001,14 +3944,14 @@ EOS
             if [[ ! "$customref" == "system_settings_guest_account_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_guest_account_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_guest_account_disable failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_guest_account_disable failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "system_settings_guest_account_disable failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_guest_account_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_guest_account_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_guest_account_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_guest_account_disable failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_guest_account_disable failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -4040,11 +3983,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_improve_assistive_voice_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_improve_assistive_voice_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_improve_assistive_voice_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_improve_assistive_voice_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_improve_assistive_voice_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -4055,7 +3998,7 @@ EOS
         if [[ ! "$customref" == "system_settings_improve_assistive_voice_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_improve_assistive_voice_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_improve_assistive_voice_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_improve_assistive_voice_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_improve_assistive_voice_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\")"
@@ -4063,14 +4006,14 @@ EOS
             if [[ ! "$customref" == "system_settings_improve_assistive_voice_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_improve_assistive_voice_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_improve_assistive_voice_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_improve_assistive_voice_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
         else
             logmessage "system_settings_improve_assistive_voice_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_improve_assistive_voice_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_improve_assistive_voice_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_improve_assistive_voice_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_improve_assistive_voice_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_improve_assistive_voice_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -4079,68 +4022,6 @@ EOS
 else
     logmessage "system_settings_improve_assistive_voice_disable does not apply to this architecture"
     /usr/bin/defaults write "$audit_plist" system_settings_improve_assistive_voice_disable -dict-add finding -bool NO
-fi
-
-#####----- Rule: system_settings_improve_search_disable -----#####
-## Addresses the following NIST 800-53 controls: 
-# * AC-20
-# * CM-7, CM-7(1)
-# * SC-7(10)
-rule_arch=""
-if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
-    unset result_value
-    result_value=$(/usr/bin/osascript -l JavaScript << EOS
-$.NSUserDefaults.alloc.initWithSuiteName('com.apple.assistant.support')\
-.objectForKey('Search Queries Data Sharing Status').js
-EOS
-)
-    # expected result {'integer': 2}
-
-
-    # check to see if rule is exempt
-    unset exempt
-    unset exempt_reason
-
-    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_improve_search_disable'))["exempt"]
-EOS
-)
-    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_improve_search_disable'))["exempt_reason"]
-EOS
-)   
-    customref="$(echo "system_settings_improve_search_disable" | rev | cut -d ' ' -f 2- | rev)"
-    customref="$(echo "$customref" | tr " " ",")"
-    if [[ $result_value == "2" ]]; then
-        logmessage "system_settings_improve_search_disable passed (Result: $result_value, Expected: \"{'integer': 2}\")"
-        /usr/bin/defaults write "$audit_plist" system_settings_improve_search_disable -dict-add finding -bool NO
-        if [[ ! "$customref" == "system_settings_improve_search_disable" ]]; then
-            /usr/bin/defaults write "$audit_plist" system_settings_improve_search_disable -dict-add reference -string "$customref"
-        fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_improve_search_disable passed (Result: $result_value, Expected: "{'integer': 2}")"
-    else
-        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
-            logmessage "system_settings_improve_search_disable failed (Result: $result_value, Expected: \"{'integer': 2}\")"
-            /usr/bin/defaults write "$audit_plist" system_settings_improve_search_disable -dict-add finding -bool YES
-            if [[ ! "$customref" == "system_settings_improve_search_disable" ]]; then
-                /usr/bin/defaults write "$audit_plist" system_settings_improve_search_disable -dict-add reference -string "$customref"
-            fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_improve_search_disable failed (Result: $result_value, Expected: "{'integer': 2}")"
-        else
-            logmessage "system_settings_improve_search_disable failed (Result: $result_value, Expected: \"{'integer': 2}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
-            /usr/bin/defaults write "$audit_plist" system_settings_improve_search_disable -dict-add finding -bool YES
-            if [[ ! "$customref" == "system_settings_improve_search_disable" ]]; then
-              /usr/bin/defaults write "$audit_plist" system_settings_improve_search_disable -dict-add reference -string "$customref"
-            fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_improve_search_disable failed (Result: $result_value, Expected: "{'integer': 2}") - Exemption Allowed (Reason: "$exempt_reason")"
-            /bin/sleep 1
-        fi
-    fi
-
-
-else
-    logmessage "system_settings_improve_search_disable does not apply to this architecture"
-    /usr/bin/defaults write "$audit_plist" system_settings_improve_search_disable -dict-add finding -bool NO
 fi
 
 #####----- Rule: system_settings_improve_siri_dictation_disable -----#####
@@ -4164,11 +4045,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_improve_siri_dictation_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_improve_siri_dictation_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_improve_siri_dictation_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_improve_siri_dictation_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_improve_siri_dictation_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -4179,7 +4060,7 @@ EOS
         if [[ ! "$customref" == "system_settings_improve_siri_dictation_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_improve_siri_dictation_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_improve_siri_dictation_disable passed (Result: $result_value, Expected: "{'integer': 2}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_improve_siri_dictation_disable passed (Result: $result_value, Expected: "{'integer': 2}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_improve_siri_dictation_disable failed (Result: $result_value, Expected: \"{'integer': 2}\")"
@@ -4187,14 +4068,14 @@ EOS
             if [[ ! "$customref" == "system_settings_improve_siri_dictation_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_improve_siri_dictation_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_improve_siri_dictation_disable failed (Result: $result_value, Expected: "{'integer': 2}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_improve_siri_dictation_disable failed (Result: $result_value, Expected: "{'integer': 2}")"
         else
             logmessage "system_settings_improve_siri_dictation_disable failed (Result: $result_value, Expected: \"{'integer': 2}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_improve_siri_dictation_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_improve_siri_dictation_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_improve_siri_dictation_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_improve_siri_dictation_disable failed (Result: $result_value, Expected: "{'integer': 2}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_improve_siri_dictation_disable failed (Result: $result_value, Expected: "{'integer': 2}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -4224,11 +4105,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_install_macos_updates_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_install_macos_updates_enforce'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_install_macos_updates_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_install_macos_updates_enforce'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_install_macos_updates_enforce" | rev | cut -d ' ' -f 2- | rev)"
@@ -4239,7 +4120,7 @@ EOS
         if [[ ! "$customref" == "system_settings_install_macos_updates_enforce" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_install_macos_updates_enforce -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_install_macos_updates_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_install_macos_updates_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_install_macos_updates_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -4247,14 +4128,14 @@ EOS
             if [[ ! "$customref" == "system_settings_install_macos_updates_enforce" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_install_macos_updates_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_install_macos_updates_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_install_macos_updates_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "system_settings_install_macos_updates_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_install_macos_updates_enforce -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_install_macos_updates_enforce" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_install_macos_updates_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_install_macos_updates_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_install_macos_updates_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -4285,11 +4166,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_internet_sharing_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_internet_sharing_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_internet_sharing_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_internet_sharing_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_internet_sharing_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -4300,7 +4181,7 @@ EOS
         if [[ ! "$customref" == "system_settings_internet_sharing_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_internet_sharing_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_internet_sharing_disable passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_internet_sharing_disable passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_internet_sharing_disable failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -4308,14 +4189,14 @@ EOS
             if [[ ! "$customref" == "system_settings_internet_sharing_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_internet_sharing_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_internet_sharing_disable failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_internet_sharing_disable failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "system_settings_internet_sharing_disable failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_internet_sharing_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_internet_sharing_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_internet_sharing_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_internet_sharing_disable failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_internet_sharing_disable failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -4345,11 +4226,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_loginwindow_loginwindowtext_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_loginwindow_loginwindowtext_enable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_loginwindow_loginwindowtext_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_loginwindow_loginwindowtext_enable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_loginwindow_loginwindowtext_enable" | rev | cut -d ' ' -f 2- | rev)"
@@ -4360,7 +4241,7 @@ EOS
         if [[ ! "$customref" == "system_settings_loginwindow_loginwindowtext_enable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_loginwindow_loginwindowtext_enable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_loginwindow_loginwindowtext_enable passed (Result: $result_value, Expected: "{'base64': 'VGhpcyBjb21wdXRlciBpcyBjb21wbGlhbnQgd2l0aCBDSVMgTGV2ZWwgMQo='}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_loginwindow_loginwindowtext_enable passed (Result: $result_value, Expected: "{'base64': 'VGhpcyBjb21wdXRlciBpcyBjb21wbGlhbnQgd2l0aCBDSVMgTGV2ZWwgMQo='}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_loginwindow_loginwindowtext_enable failed (Result: $result_value, Expected: \"{'base64': 'VGhpcyBjb21wdXRlciBpcyBjb21wbGlhbnQgd2l0aCBDSVMgTGV2ZWwgMQo='}\")"
@@ -4368,14 +4249,14 @@ EOS
             if [[ ! "$customref" == "system_settings_loginwindow_loginwindowtext_enable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_loginwindow_loginwindowtext_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_loginwindow_loginwindowtext_enable failed (Result: $result_value, Expected: "{'base64': 'VGhpcyBjb21wdXRlciBpcyBjb21wbGlhbnQgd2l0aCBDSVMgTGV2ZWwgMQo='}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_loginwindow_loginwindowtext_enable failed (Result: $result_value, Expected: "{'base64': 'VGhpcyBjb21wdXRlciBpcyBjb21wbGlhbnQgd2l0aCBDSVMgTGV2ZWwgMQo='}")"
         else
             logmessage "system_settings_loginwindow_loginwindowtext_enable failed (Result: $result_value, Expected: \"{'base64': 'VGhpcyBjb21wdXRlciBpcyBjb21wbGlhbnQgd2l0aCBDSVMgTGV2ZWwgMQo='}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_loginwindow_loginwindowtext_enable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_loginwindow_loginwindowtext_enable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_loginwindow_loginwindowtext_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_loginwindow_loginwindowtext_enable failed (Result: $result_value, Expected: "{'base64': 'VGhpcyBjb21wdXRlciBpcyBjb21wbGlhbnQgd2l0aCBDSVMgTGV2ZWwgMQo='}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_loginwindow_loginwindowtext_enable failed (Result: $result_value, Expected: "{'base64': 'VGhpcyBjb21wdXRlciBpcyBjb21wbGlhbnQgd2l0aCBDSVMgTGV2ZWwgMQo='}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -4405,11 +4286,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_loginwindow_prompt_username_password_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_loginwindow_prompt_username_password_enforce'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_loginwindow_prompt_username_password_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_loginwindow_prompt_username_password_enforce'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_loginwindow_prompt_username_password_enforce" | rev | cut -d ' ' -f 2- | rev)"
@@ -4420,7 +4301,7 @@ EOS
         if [[ ! "$customref" == "system_settings_loginwindow_prompt_username_password_enforce" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_loginwindow_prompt_username_password_enforce -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_loginwindow_prompt_username_password_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_loginwindow_prompt_username_password_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_loginwindow_prompt_username_password_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -4428,14 +4309,14 @@ EOS
             if [[ ! "$customref" == "system_settings_loginwindow_prompt_username_password_enforce" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_loginwindow_prompt_username_password_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_loginwindow_prompt_username_password_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_loginwindow_prompt_username_password_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "system_settings_loginwindow_prompt_username_password_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_loginwindow_prompt_username_password_enforce -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_loginwindow_prompt_username_password_enforce" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_loginwindow_prompt_username_password_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_loginwindow_prompt_username_password_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_loginwindow_prompt_username_password_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -4465,11 +4346,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_password_hints_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_password_hints_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_password_hints_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_password_hints_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_password_hints_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -4480,7 +4361,7 @@ EOS
         if [[ ! "$customref" == "system_settings_password_hints_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_password_hints_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_password_hints_disable passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_password_hints_disable passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_password_hints_disable failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -4488,14 +4369,14 @@ EOS
             if [[ ! "$customref" == "system_settings_password_hints_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_password_hints_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_password_hints_disable failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_password_hints_disable failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "system_settings_password_hints_disable failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_password_hints_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_password_hints_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_password_hints_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_password_hints_disable failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_password_hints_disable failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -4527,11 +4408,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_personalized_advertising_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_personalized_advertising_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_personalized_advertising_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_personalized_advertising_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_personalized_advertising_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -4542,7 +4423,7 @@ EOS
         if [[ ! "$customref" == "system_settings_personalized_advertising_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_personalized_advertising_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_personalized_advertising_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_personalized_advertising_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_personalized_advertising_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\")"
@@ -4550,14 +4431,14 @@ EOS
             if [[ ! "$customref" == "system_settings_personalized_advertising_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_personalized_advertising_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_personalized_advertising_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_personalized_advertising_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
         else
             logmessage "system_settings_personalized_advertising_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_personalized_advertising_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_personalized_advertising_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_personalized_advertising_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_personalized_advertising_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_personalized_advertising_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -4584,11 +4465,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_printer_sharing_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_printer_sharing_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_printer_sharing_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_printer_sharing_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_printer_sharing_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -4599,7 +4480,7 @@ EOS
         if [[ ! "$customref" == "system_settings_printer_sharing_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_printer_sharing_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_printer_sharing_disable passed (Result: $result_value, Expected: "{'boolean': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_printer_sharing_disable passed (Result: $result_value, Expected: "{'boolean': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_printer_sharing_disable failed (Result: $result_value, Expected: \"{'boolean': 1}\")"
@@ -4607,14 +4488,14 @@ EOS
             if [[ ! "$customref" == "system_settings_printer_sharing_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_printer_sharing_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_printer_sharing_disable failed (Result: $result_value, Expected: "{'boolean': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_printer_sharing_disable failed (Result: $result_value, Expected: "{'boolean': 1}")"
         else
             logmessage "system_settings_printer_sharing_disable failed (Result: $result_value, Expected: \"{'boolean': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_printer_sharing_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_printer_sharing_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_printer_sharing_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_printer_sharing_disable failed (Result: $result_value, Expected: "{'boolean': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_printer_sharing_disable failed (Result: $result_value, Expected: "{'boolean': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -4642,11 +4523,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_rae_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_rae_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_rae_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_rae_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_rae_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -4657,7 +4538,7 @@ EOS
         if [[ ! "$customref" == "system_settings_rae_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_rae_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_rae_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_rae_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_rae_disable failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -4665,14 +4546,14 @@ EOS
             if [[ ! "$customref" == "system_settings_rae_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_rae_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_rae_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_rae_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "system_settings_rae_disable failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_rae_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_rae_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_rae_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_rae_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_rae_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -4699,11 +4580,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_remote_management_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_remote_management_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_remote_management_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_remote_management_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_remote_management_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -4714,7 +4595,7 @@ EOS
         if [[ ! "$customref" == "system_settings_remote_management_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_remote_management_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_remote_management_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_remote_management_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_remote_management_disable failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -4722,14 +4603,14 @@ EOS
             if [[ ! "$customref" == "system_settings_remote_management_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_remote_management_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_remote_management_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_remote_management_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "system_settings_remote_management_disable failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_remote_management_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_remote_management_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_remote_management_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_remote_management_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_remote_management_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -4757,11 +4638,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_screen_sharing_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_screen_sharing_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_screen_sharing_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_screen_sharing_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_screen_sharing_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -4772,7 +4653,7 @@ EOS
         if [[ ! "$customref" == "system_settings_screen_sharing_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_screen_sharing_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_screen_sharing_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_screen_sharing_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_screen_sharing_disable failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -4780,14 +4661,14 @@ EOS
             if [[ ! "$customref" == "system_settings_screen_sharing_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_screen_sharing_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_screen_sharing_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_screen_sharing_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "system_settings_screen_sharing_disable failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_screen_sharing_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_screen_sharing_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_screen_sharing_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_screen_sharing_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_screen_sharing_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -4824,11 +4705,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_screensaver_ask_for_password_delay_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_screensaver_ask_for_password_delay_enforce'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_screensaver_ask_for_password_delay_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_screensaver_ask_for_password_delay_enforce'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_screensaver_ask_for_password_delay_enforce" | rev | cut -d ' ' -f 2- | rev)"
@@ -4839,7 +4720,7 @@ EOS
         if [[ ! "$customref" == "system_settings_screensaver_ask_for_password_delay_enforce" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_screensaver_ask_for_password_delay_enforce -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_screensaver_ask_for_password_delay_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_screensaver_ask_for_password_delay_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_screensaver_ask_for_password_delay_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -4847,14 +4728,14 @@ EOS
             if [[ ! "$customref" == "system_settings_screensaver_ask_for_password_delay_enforce" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_screensaver_ask_for_password_delay_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_screensaver_ask_for_password_delay_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_screensaver_ask_for_password_delay_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "system_settings_screensaver_ask_for_password_delay_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_screensaver_ask_for_password_delay_enforce -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_screensaver_ask_for_password_delay_enforce" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_screensaver_ask_for_password_delay_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_screensaver_ask_for_password_delay_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_screensaver_ask_for_password_delay_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -4892,11 +4773,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_screensaver_timeout_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_screensaver_timeout_enforce'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_screensaver_timeout_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_screensaver_timeout_enforce'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_screensaver_timeout_enforce" | rev | cut -d ' ' -f 2- | rev)"
@@ -4907,7 +4788,7 @@ EOS
         if [[ ! "$customref" == "system_settings_screensaver_timeout_enforce" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_screensaver_timeout_enforce -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_screensaver_timeout_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_screensaver_timeout_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_screensaver_timeout_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -4915,14 +4796,14 @@ EOS
             if [[ ! "$customref" == "system_settings_screensaver_timeout_enforce" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_screensaver_timeout_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_screensaver_timeout_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_screensaver_timeout_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "system_settings_screensaver_timeout_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_screensaver_timeout_enforce -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_screensaver_timeout_enforce" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_screensaver_timeout_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_screensaver_timeout_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_screensaver_timeout_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -4952,11 +4833,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_siri_listen_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_siri_listen_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_siri_listen_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_siri_listen_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_siri_listen_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -4967,7 +4848,7 @@ EOS
         if [[ ! "$customref" == "system_settings_siri_listen_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_siri_listen_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_siri_listen_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_siri_listen_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_siri_listen_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\")"
@@ -4975,14 +4856,14 @@ EOS
             if [[ ! "$customref" == "system_settings_siri_listen_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_siri_listen_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_siri_listen_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_siri_listen_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
         else
             logmessage "system_settings_siri_listen_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_siri_listen_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_siri_listen_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_siri_listen_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_siri_listen_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_siri_listen_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -5010,11 +4891,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_smbd_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_smbd_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_smbd_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_smbd_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_smbd_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -5025,7 +4906,7 @@ EOS
         if [[ ! "$customref" == "system_settings_smbd_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_smbd_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_smbd_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_smbd_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_smbd_disable failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -5033,14 +4914,14 @@ EOS
             if [[ ! "$customref" == "system_settings_smbd_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_smbd_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_smbd_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_smbd_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "system_settings_smbd_disable failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_smbd_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_smbd_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_smbd_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_smbd_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_smbd_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -5070,11 +4951,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_software_update_app_update_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_software_update_app_update_enforce'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_software_update_app_update_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_software_update_app_update_enforce'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_software_update_app_update_enforce" | rev | cut -d ' ' -f 2- | rev)"
@@ -5085,7 +4966,7 @@ EOS
         if [[ ! "$customref" == "system_settings_software_update_app_update_enforce" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_software_update_app_update_enforce -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_software_update_app_update_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_software_update_app_update_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_software_update_app_update_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -5093,14 +4974,14 @@ EOS
             if [[ ! "$customref" == "system_settings_software_update_app_update_enforce" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_software_update_app_update_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_software_update_app_update_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_software_update_app_update_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "system_settings_software_update_app_update_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_software_update_app_update_enforce -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_software_update_app_update_enforce" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_software_update_app_update_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_software_update_app_update_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_software_update_app_update_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -5130,11 +5011,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_software_update_download_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_software_update_download_enforce'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_software_update_download_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_software_update_download_enforce'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_software_update_download_enforce" | rev | cut -d ' ' -f 2- | rev)"
@@ -5145,7 +5026,7 @@ EOS
         if [[ ! "$customref" == "system_settings_software_update_download_enforce" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_software_update_download_enforce -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_software_update_download_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_software_update_download_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_software_update_download_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -5153,14 +5034,14 @@ EOS
             if [[ ! "$customref" == "system_settings_software_update_download_enforce" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_software_update_download_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_software_update_download_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_software_update_download_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "system_settings_software_update_download_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_software_update_download_enforce -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_software_update_download_enforce" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_software_update_download_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_software_update_download_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_software_update_download_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -5190,11 +5071,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_software_update_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_software_update_enforce'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_software_update_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_software_update_enforce'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_software_update_enforce" | rev | cut -d ' ' -f 2- | rev)"
@@ -5205,7 +5086,7 @@ EOS
         if [[ ! "$customref" == "system_settings_software_update_enforce" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_software_update_enforce -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_software_update_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_software_update_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_software_update_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -5213,14 +5094,14 @@ EOS
             if [[ ! "$customref" == "system_settings_software_update_enforce" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_software_update_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_software_update_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_software_update_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "system_settings_software_update_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_software_update_enforce -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_software_update_enforce" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_software_update_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_software_update_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_software_update_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -5253,11 +5134,11 @@ fi
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_softwareupdate_current'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_softwareupdate_current'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_softwareupdate_current'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_softwareupdate_current'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_softwareupdate_current" | rev | cut -d ' ' -f 2- | rev)"
@@ -5268,7 +5149,7 @@ EOS
         if [[ ! "$customref" == "system_settings_softwareupdate_current" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_softwareupdate_current -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_softwareupdate_current passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_softwareupdate_current passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_softwareupdate_current failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -5276,14 +5157,14 @@ EOS
             if [[ ! "$customref" == "system_settings_softwareupdate_current" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_softwareupdate_current -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_softwareupdate_current failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_softwareupdate_current failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "system_settings_softwareupdate_current failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_softwareupdate_current -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_softwareupdate_current" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_softwareupdate_current -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_softwareupdate_current failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_softwareupdate_current failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -5311,11 +5192,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_ssh_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_ssh_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_ssh_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_ssh_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_ssh_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -5326,7 +5207,7 @@ EOS
         if [[ ! "$customref" == "system_settings_ssh_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_ssh_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_ssh_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_ssh_disable passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_ssh_disable failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -5334,14 +5215,14 @@ EOS
             if [[ ! "$customref" == "system_settings_ssh_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_ssh_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_ssh_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_ssh_disable failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "system_settings_ssh_disable failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_ssh_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_ssh_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_ssh_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_ssh_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_ssh_disable failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -5384,11 +5265,11 @@ echo $result
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_system_wide_preferences_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_system_wide_preferences_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_system_wide_preferences_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_system_wide_preferences_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_system_wide_preferences_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -5399,7 +5280,7 @@ EOS
         if [[ ! "$customref" == "system_settings_system_wide_preferences_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_system_wide_preferences_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_system_wide_preferences_configure passed (Result: $result_value, Expected: "{'integer': 1}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_system_wide_preferences_configure passed (Result: $result_value, Expected: "{'integer': 1}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_system_wide_preferences_configure failed (Result: $result_value, Expected: \"{'integer': 1}\")"
@@ -5407,14 +5288,14 @@ EOS
             if [[ ! "$customref" == "system_settings_system_wide_preferences_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_system_wide_preferences_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_system_wide_preferences_configure failed (Result: $result_value, Expected: "{'integer': 1}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_system_wide_preferences_configure failed (Result: $result_value, Expected: "{'integer': 1}")"
         else
             logmessage "system_settings_system_wide_preferences_configure failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_system_wide_preferences_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_system_wide_preferences_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_system_wide_preferences_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_system_wide_preferences_configure failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_system_wide_preferences_configure failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -5449,11 +5330,11 @@ echo "$error_count"
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_time_machine_encrypted_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_time_machine_encrypted_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_time_machine_encrypted_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_time_machine_encrypted_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_time_machine_encrypted_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -5464,7 +5345,7 @@ EOS
         if [[ ! "$customref" == "system_settings_time_machine_encrypted_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_time_machine_encrypted_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_time_machine_encrypted_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_time_machine_encrypted_configure passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_time_machine_encrypted_configure failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -5472,14 +5353,14 @@ EOS
             if [[ ! "$customref" == "system_settings_time_machine_encrypted_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_time_machine_encrypted_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_time_machine_encrypted_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_time_machine_encrypted_configure failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "system_settings_time_machine_encrypted_configure failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_time_machine_encrypted_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_time_machine_encrypted_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_time_machine_encrypted_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_time_machine_encrypted_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_time_machine_encrypted_configure failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -5510,11 +5391,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_time_server_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_time_server_configure'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_time_server_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_time_server_configure'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_time_server_configure" | rev | cut -d ' ' -f 2- | rev)"
@@ -5525,7 +5406,7 @@ EOS
         if [[ ! "$customref" == "system_settings_time_server_configure" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_time_server_configure -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_time_server_configure passed (Result: $result_value, Expected: "{'string': 'time.apple.com'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_time_server_configure passed (Result: $result_value, Expected: "{'string': 'time.apple.com'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_time_server_configure failed (Result: $result_value, Expected: \"{'string': 'time.apple.com'}\")"
@@ -5533,14 +5414,14 @@ EOS
             if [[ ! "$customref" == "system_settings_time_server_configure" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_time_server_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_time_server_configure failed (Result: $result_value, Expected: "{'string': 'time.apple.com'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_time_server_configure failed (Result: $result_value, Expected: "{'string': 'time.apple.com'}")"
         else
             logmessage "system_settings_time_server_configure failed (Result: $result_value, Expected: \"{'string': 'time.apple.com'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_time_server_configure -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_time_server_configure" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_time_server_configure -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_time_server_configure failed (Result: $result_value, Expected: "{'string': 'time.apple.com'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_time_server_configure failed (Result: $result_value, Expected: "{'string': 'time.apple.com'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -5571,11 +5452,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_time_server_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_time_server_enforce'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_time_server_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_time_server_enforce'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_time_server_enforce" | rev | cut -d ' ' -f 2- | rev)"
@@ -5586,7 +5467,7 @@ EOS
         if [[ ! "$customref" == "system_settings_time_server_enforce" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_time_server_enforce -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_time_server_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_time_server_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_time_server_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
@@ -5594,14 +5475,14 @@ EOS
             if [[ ! "$customref" == "system_settings_time_server_enforce" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_time_server_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_time_server_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_time_server_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
         else
             logmessage "system_settings_time_server_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_time_server_enforce -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_time_server_enforce" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_time_server_enforce -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_time_server_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_time_server_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -5628,11 +5509,11 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_wake_network_access_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_wake_network_access_disable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_wake_network_access_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_wake_network_access_disable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_wake_network_access_disable" | rev | cut -d ' ' -f 2- | rev)"
@@ -5643,7 +5524,7 @@ EOS
         if [[ ! "$customref" == "system_settings_wake_network_access_disable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_wake_network_access_disable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_wake_network_access_disable passed (Result: $result_value, Expected: "{'integer': 0}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_wake_network_access_disable passed (Result: $result_value, Expected: "{'integer': 0}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_wake_network_access_disable failed (Result: $result_value, Expected: \"{'integer': 0}\")"
@@ -5651,14 +5532,14 @@ EOS
             if [[ ! "$customref" == "system_settings_wake_network_access_disable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_wake_network_access_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_wake_network_access_disable failed (Result: $result_value, Expected: "{'integer': 0}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_wake_network_access_disable failed (Result: $result_value, Expected: "{'integer': 0}")"
         else
             logmessage "system_settings_wake_network_access_disable failed (Result: $result_value, Expected: \"{'integer': 0}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_wake_network_access_disable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_wake_network_access_disable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_wake_network_access_disable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_wake_network_access_disable failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_wake_network_access_disable failed (Result: $result_value, Expected: "{'integer': 0}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -5688,11 +5569,11 @@ EOS
     unset exempt_reason
 
     exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_wifi_menu_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_wifi_menu_enable'))["exempt"]
 EOS
 )
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_wifi_menu_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_wifi_menu_enable'))["exempt_reason"]
 EOS
 )   
     customref="$(echo "system_settings_wifi_menu_enable" | rev | cut -d ' ' -f 2- | rev)"
@@ -5703,7 +5584,7 @@ EOS
         if [[ ! "$customref" == "system_settings_wifi_menu_enable" ]]; then
             /usr/bin/defaults write "$audit_plist" system_settings_wifi_menu_enable -dict-add reference -string "$customref"
         fi
-        /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_wifi_menu_enable passed (Result: $result_value, Expected: "{'integer': 18}")"
+        /usr/bin/logger "mSCP: cis_lvl1 - system_settings_wifi_menu_enable passed (Result: $result_value, Expected: "{'integer': 18}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "system_settings_wifi_menu_enable failed (Result: $result_value, Expected: \"{'integer': 18}\")"
@@ -5711,14 +5592,14 @@ EOS
             if [[ ! "$customref" == "system_settings_wifi_menu_enable" ]]; then
                 /usr/bin/defaults write "$audit_plist" system_settings_wifi_menu_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_wifi_menu_enable failed (Result: $result_value, Expected: "{'integer': 18}")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_wifi_menu_enable failed (Result: $result_value, Expected: "{'integer': 18}")"
         else
             logmessage "system_settings_wifi_menu_enable failed (Result: $result_value, Expected: \"{'integer': 18}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
             /usr/bin/defaults write "$audit_plist" system_settings_wifi_menu_enable -dict-add finding -bool YES
             if [[ ! "$customref" == "system_settings_wifi_menu_enable" ]]; then
               /usr/bin/defaults write "$audit_plist" system_settings_wifi_menu_enable -dict-add reference -string "$customref"
             fi
-            /usr/bin/logger "mSCP: sequoia_cis_lvl1 - system_settings_wifi_menu_enable failed (Result: $result_value, Expected: "{'integer': 18}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /usr/bin/logger "mSCP: cis_lvl1 - system_settings_wifi_menu_enable failed (Result: $result_value, Expected: "{'integer': 18}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
     fi
@@ -5781,12 +5662,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_acls_files_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_acls_files_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_acls_files_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_acls_files_configure'))["exempt_reason"]
 EOS
 )
 
@@ -5814,12 +5695,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_acls_folders_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_acls_folders_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_acls_folders_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_acls_folders_configure'))["exempt_reason"]
 EOS
 )
 
@@ -5852,12 +5733,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_auditd_enabled'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_auditd_enabled'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_auditd_enabled'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_auditd_enabled'))["exempt_reason"]
 EOS
 )
 
@@ -5897,12 +5778,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_control_acls_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_control_acls_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_control_acls_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_control_acls_configure'))["exempt_reason"]
 EOS
 )
 
@@ -5930,12 +5811,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_control_group_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_control_group_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_control_group_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_control_group_configure'))["exempt_reason"]
 EOS
 )
 
@@ -5963,12 +5844,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_control_mode_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_control_mode_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_control_mode_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_control_mode_configure'))["exempt_reason"]
 EOS
 )
 
@@ -5996,12 +5877,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_control_owner_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_control_owner_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_control_owner_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_control_owner_configure'))["exempt_reason"]
 EOS
 )
 
@@ -6029,12 +5910,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_files_group_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_files_group_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_files_group_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_files_group_configure'))["exempt_reason"]
 EOS
 )
 
@@ -6062,12 +5943,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_files_mode_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_files_mode_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_files_mode_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_files_mode_configure'))["exempt_reason"]
 EOS
 )
 
@@ -6095,12 +5976,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_files_owner_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_files_owner_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_files_owner_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_files_owner_configure'))["exempt_reason"]
 EOS
 )
 
@@ -6128,12 +6009,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_folder_group_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_folder_group_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_folder_group_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_folder_group_configure'))["exempt_reason"]
 EOS
 )
 
@@ -6161,12 +6042,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_folder_owner_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_folder_owner_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_folder_owner_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_folder_owner_configure'))["exempt_reason"]
 EOS
 )
 
@@ -6194,12 +6075,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_folders_mode_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_folders_mode_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_folders_mode_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_folders_mode_configure'))["exempt_reason"]
 EOS
 )
 
@@ -6228,12 +6109,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_retention_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_retention_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('audit_retention_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('audit_retention_configure'))["exempt_reason"]
 EOS
 )
 
@@ -6261,12 +6142,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_anti_virus_installed'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_anti_virus_installed'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_anti_virus_installed'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_anti_virus_installed'))["exempt_reason"]
 EOS
 )
 
@@ -6300,12 +6181,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_authenticated_root_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_authenticated_root_enable'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_authenticated_root_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_authenticated_root_enable'))["exempt_reason"]
 EOS
 )
 
@@ -6333,12 +6214,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_guest_folder_removed'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_guest_folder_removed'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_guest_folder_removed'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_guest_folder_removed'))["exempt_reason"]
 EOS
 )
 
@@ -6366,12 +6247,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_home_folders_secure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_home_folders_secure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_home_folders_secure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_home_folders_secure'))["exempt_reason"]
 EOS
 )
 
@@ -6408,12 +6289,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_httpd_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_httpd_disable'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_httpd_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_httpd_disable'))["exempt_reason"]
 EOS
 )
 
@@ -6442,12 +6323,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_install_log_retention_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_install_log_retention_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_install_log_retention_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_install_log_retention_configure'))["exempt_reason"]
 EOS
 )
 
@@ -6475,12 +6356,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_mobile_file_integrity_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_mobile_file_integrity_enable'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_mobile_file_integrity_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_mobile_file_integrity_enable'))["exempt_reason"]
 EOS
 )
 
@@ -6509,12 +6390,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_nfsd_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_nfsd_disable'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_nfsd_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_nfsd_disable'))["exempt_reason"]
 EOS
 )
 
@@ -6542,12 +6423,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_password_hint_remove'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_password_hint_remove'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_password_hint_remove'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_password_hint_remove'))["exempt_reason"]
 EOS
 )
 
@@ -6579,12 +6460,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_power_nap_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_power_nap_disable'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_power_nap_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_power_nap_disable'))["exempt_reason"]
 EOS
 )
 
@@ -6612,12 +6493,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_root_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_root_disable'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_root_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_root_disable'))["exempt_reason"]
 EOS
 )
 
@@ -6645,12 +6526,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_show_filename_extensions_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_show_filename_extensions_enable'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_show_filename_extensions_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_show_filename_extensions_enable'))["exempt_reason"]
 EOS
 )
 
@@ -6683,12 +6564,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_sip_enable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_sip_enable'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_sip_enable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_sip_enable'))["exempt_reason"]
 EOS
 )
 
@@ -6716,12 +6597,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_sudo_log_enforce'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_sudo_log_enforce'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_sudo_log_enforce'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_sudo_log_enforce'))["exempt_reason"]
 EOS
 )
 
@@ -6751,12 +6632,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_sudo_timeout_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_sudo_timeout_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_sudo_timeout_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_sudo_timeout_configure'))["exempt_reason"]
 EOS
 )
 
@@ -6787,12 +6668,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_sudoers_timestamp_type_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_sudoers_timestamp_type_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_sudoers_timestamp_type_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_sudoers_timestamp_type_configure'))["exempt_reason"]
 EOS
 )
 
@@ -6820,12 +6701,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_system_wide_applications_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_system_wide_applications_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_system_wide_applications_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_system_wide_applications_configure'))["exempt_reason"]
 EOS
 )
 
@@ -6860,12 +6741,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_time_server_enabled'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_time_server_enabled'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_time_server_enabled'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_time_server_enabled'))["exempt_reason"]
 EOS
 )
 
@@ -6893,12 +6774,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_unlock_active_user_session_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_unlock_active_user_session_disable'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_unlock_active_user_session_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_unlock_active_user_session_disable'))["exempt_reason"]
 EOS
 )
 
@@ -6926,12 +6807,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_world_writable_system_folder_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_world_writable_system_folder_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('os_world_writable_system_folder_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('os_world_writable_system_folder_configure'))["exempt_reason"]
 EOS
 )
 
@@ -6967,12 +6848,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_bluetooth_sharing_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_bluetooth_sharing_disable'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_bluetooth_sharing_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_bluetooth_sharing_disable'))["exempt_reason"]
 EOS
 )
 
@@ -6991,39 +6872,6 @@ elif [[ ! -z "$exempt_reason" ]];then
     logmessage "system_settings_bluetooth_sharing_disable has an exemption, remediation skipped (Reason: "$exempt_reason")"
 fi
     
-#####----- Rule: system_settings_cd_dvd_sharing_disable -----#####
-## Addresses the following NIST 800-53 controls: 
-# * CM-7, CM-7(1)
-
-# check to see if rule is exempt
-unset exempt
-unset exempt_reason
-
-exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_cd_dvd_sharing_disable'))["exempt"]
-EOS
-)
-
-exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_cd_dvd_sharing_disable'))["exempt_reason"]
-EOS
-)
-
-system_settings_cd_dvd_sharing_disable_audit_score=$($plb -c "print system_settings_cd_dvd_sharing_disable:finding" $audit_plist)
-if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
-    if [[ $system_settings_cd_dvd_sharing_disable_audit_score == "true" ]]; then
-        ask 'system_settings_cd_dvd_sharing_disable - Run the command(s)-> /bin/launchctl unload /System/Library/LaunchDaemons/com.apple.ODSAgent.plist ' N
-        if [[ $? == 0 ]]; then
-            logmessage "Running the command to configure the settings for: system_settings_cd_dvd_sharing_disable ..."
-            /bin/launchctl unload /System/Library/LaunchDaemons/com.apple.ODSAgent.plist
-        fi
-    else
-        logmessage "Settings for: system_settings_cd_dvd_sharing_disable already configured, continuing..."
-    fi
-elif [[ ! -z "$exempt_reason" ]];then
-    logmessage "system_settings_cd_dvd_sharing_disable has an exemption, remediation skipped (Reason: "$exempt_reason")"
-fi
-    
 #####----- Rule: system_settings_guest_access_smb_disable -----#####
 ## Addresses the following NIST 800-53 controls: N/A
 
@@ -7032,12 +6880,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_guest_access_smb_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_guest_access_smb_disable'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_guest_access_smb_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_guest_access_smb_disable'))["exempt_reason"]
 EOS
 )
 
@@ -7065,12 +6913,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_printer_sharing_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_printer_sharing_disable'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_printer_sharing_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_printer_sharing_disable'))["exempt_reason"]
 EOS
 )
 
@@ -7101,12 +6949,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_rae_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_rae_disable'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_rae_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_rae_disable'))["exempt_reason"]
 EOS
 )
 
@@ -7136,12 +6984,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_remote_management_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_remote_management_disable'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_remote_management_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_remote_management_disable'))["exempt_reason"]
 EOS
 )
 
@@ -7170,12 +7018,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_screen_sharing_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_screen_sharing_disable'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_screen_sharing_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_screen_sharing_disable'))["exempt_reason"]
 EOS
 )
 
@@ -7204,12 +7052,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_smbd_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_smbd_disable'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_smbd_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_smbd_disable'))["exempt_reason"]
 EOS
 )
 
@@ -7237,12 +7085,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_softwareupdate_current'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_softwareupdate_current'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_softwareupdate_current'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_softwareupdate_current'))["exempt_reason"]
 EOS
 )
 
@@ -7271,12 +7119,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_ssh_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_ssh_disable'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_ssh_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_ssh_disable'))["exempt_reason"]
 EOS
 )
 
@@ -7306,12 +7154,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_system_wide_preferences_configure'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_system_wide_preferences_configure'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_system_wide_preferences_configure'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_system_wide_preferences_configure'))["exempt_reason"]
 EOS
 )
 
@@ -7421,12 +7269,12 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_wake_network_access_disable'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_wake_network_access_disable'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.sequoia_cis_lvl1.audit').objectForKey('system_settings_wake_network_access_disable'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cis_lvl1.audit').objectForKey('system_settings_wake_network_access_disable'))["exempt_reason"]
 EOS
 )
 

@@ -332,6 +332,7 @@ locals {
 resource "jamfpro_macos_configuration_profile_plist" "sonoma_800_171" {
   for_each            = local.sonoma_800_171_dict
   name                = "Sonoma NIST 800-171 - ${each.key} [${random_integer.entropy.result}]"
+  description         = "To scope this configuration profile, navigate to Smart Computer Groups, select the 'NIST 800-171 - Sonoma Computers' Smart Group and remove the placeholder serial number criteria."
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   category_id         = jamfpro_category.category_sonoma_800_171_benchmarks.id
@@ -348,6 +349,7 @@ resource "jamfpro_macos_configuration_profile_plist" "sonoma_800_171" {
 
 resource "jamfpro_macos_configuration_profile_plist" "sonoma_800_171_smart_card" {
   name                = "Sonoma NIST 800-171 - Smart Card [${random_integer.entropy.result}]"
+  description         = "To scope this configuration profile, navigate to the Scope tab above and add the 'NIST 800-171 - Sonoma Computers' smart group. Then, be sure to navigate to Smart Computer Groups, select that group and remove the placeholder serial number. This configuration profile is not scoped intentionally due to potential issues that Smart Cards may cause on an endpoint."
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   category_id         = jamfpro_category.category_sonoma_800_171_benchmarks.id
@@ -379,6 +381,7 @@ locals {
     "MCX Bluetooth"         = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-MCXBluetooth.mobileconfig"
     "mDNS Responder"        = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-mDNSResponder.mobileconfig"
     "Password Policy"       = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-mobiledevice.passwordpolicy.mobileconfig"
+    "Photos Shared Defauts" = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-photos.shareddefaults.mobileconfig"
     "Screen Saver"          = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-screensaver.mobileconfig"
     "Firewall"              = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-security.firewall.mobileconfig"
     "Setup Assistant"       = "${path.module}/support_files/computer_config_profiles/Sequoia_800-171-SetupAssistant.managed.mobileconfig"
@@ -394,6 +397,7 @@ locals {
 resource "jamfpro_macos_configuration_profile_plist" "sequoia_800_171" {
   for_each            = local.sequoia_800_171_dict
   name                = "Sequoia NIST 800-171 - ${each.key} [${random_integer.entropy.result}]"
+  description         = "To scope this configuration profile, navigate to Smart Computer Groups, select the 'NIST 800-171 - Sequoia Computers' Smart Group and remove the placeholder serial number criteria."
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   category_id         = jamfpro_category.category_sequoia_800_171_benchmarks.id
@@ -411,6 +415,7 @@ resource "jamfpro_macos_configuration_profile_plist" "sequoia_800_171" {
 
 resource "jamfpro_macos_configuration_profile_plist" "sequoia_800_171_smart_card" {
   name                = "Sequoia NIST 800-171 - Smart Card [${random_integer.entropy.result}]"
+  description         = "To scope this configuration profile, navigate to the Scope tab above and add the 'NIST 800-171 - Sequoia Computers' smart group. Then, be sure to navigate to Smart Computer Groups, select that group and remove the placeholder serial number. This configuration profile is not scoped intentionally due to potential issues that Smart Cards may cause on an endpoint."
   distribution_method = "Install Automatically"
   redeploy_on_update  = "Newly Assigned"
   category_id         = jamfpro_category.category_sequoia_800_171_benchmarks.id

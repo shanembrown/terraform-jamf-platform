@@ -17,13 +17,13 @@
 			<key>PayloadDisplayName</key>
 			<string>Firewall</string>
 			<key>PayloadIdentifier</key>
-			<string>com.apple.security.firewall.6C35A9AB-2B37-46C8-97F7-AB0AC762754D</string>
+			<string>com.apple.security.firewall.0704E63E-036F-4155-A03B-F9620AE2A3CB</string>
 			<key>PayloadOrganization</key>
 			<string>JAMF Software</string>
 			<key>PayloadType</key>
 			<string>com.apple.security.firewall</string>
 			<key>PayloadUUID</key>
-			<string>6C35A9AB-2B37-46C8-97F7-AB0AC762754D</string>
+			<string>0704E63E-036F-4155-A03B-F9620AE2A3CB</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 		</dict>
@@ -35,7 +35,7 @@
 	<key>PayloadEnabled</key>
 	<true/>
 	<key>PayloadIdentifier</key>
-	<string>a9b1dcea-6700-401d-a5e7-de1ff10d2ab5</string>
+	<string>34d0e34a-0fc7-4880-817a-0b29cabe3ed3</string>
 	<key>PayloadOrganization</key>
 	<string>macOS Security Compliance Project</string>
 	<key>PayloadRemovalDisallowed</key>
@@ -45,7 +45,7 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>5D6542B5-8E1D-48FB-881E-78D426CBA7D4</string>
+	<string>6C62DA1C-704C-4C22-9688-86AA8C9E91C2</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
 </dict>
