@@ -223,12 +223,15 @@ module "configuration-jamf-security-cloud-jamf-pro" {
 
 ## Create Jamf Security Cloud Activation Profile containing ALL JSC Services
 module "configuration-jamf-security-cloud-all-services" {
-  count              = var.include_jsc_all_services == true ? 1 : 0
-  source             = "./modules/configuration-jamf-security-cloud-all-services"
-  tje_okta_clientid  = var.tje_okta_clientid
-  tje_okta_orgdomain = var.tje_okta_orgdomain
-  jsc_username       = var.jsc_username
-  jsc_password       = var.jsc_password
+  count                 = var.include_jsc_all_services == true ? 1 : 0
+  source                = "./modules/configuration-jamf-security-cloud-all-services"
+  tje_okta_clientid     = var.tje_okta_clientid
+  tje_okta_orgdomain    = var.tje_okta_orgdomain
+  jsc_username          = var.jsc_username
+  jsc_password          = var.jsc_password
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 module "network-security-access-policy" {
@@ -249,60 +252,78 @@ module "configuration-jamf-security-cloud-block-pages" {
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Category Based Content Filtering
 module "network-security-jamf-pro-content-filtering" {
-  count              = var.include_jsc_dp_only == true ? 1 : 0
-  source             = "./modules/network-security-jamf-pro-content-filtering"
-  tje_okta_clientid  = var.tje_okta_clientid
-  tje_okta_orgdomain = var.tje_okta_orgdomain
-  jsc_username       = var.jsc_username
-  jsc_password       = var.jsc_password
+  count                 = var.include_jsc_dp_only == true ? 1 : 0
+  source                = "./modules/network-security-jamf-pro-content-filtering"
+  tje_okta_clientid     = var.tje_okta_clientid
+  tje_okta_orgdomain    = var.tje_okta_orgdomain
+  jsc_username          = var.jsc_username
+  jsc_password          = var.jsc_password
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Threat Response (MTD)
 module "network-security-jamf-pro-network-threat-defense" {
-  count              = var.include_jsc_mtd_only == true ? 1 : 0
-  source             = "./modules/network-security-jamf-pro-network-threat-defense"
-  tje_okta_clientid  = var.tje_okta_clientid
-  tje_okta_orgdomain = var.tje_okta_orgdomain
-  jsc_username       = var.jsc_username
-  jsc_password       = var.jsc_password
+  count                 = var.include_jsc_mtd_only == true ? 1 : 0
+  source                = "./modules/network-security-jamf-pro-network-threat-defense"
+  tje_okta_clientid     = var.tje_okta_clientid
+  tje_okta_orgdomain    = var.tje_okta_orgdomain
+  jsc_username          = var.jsc_username
+  jsc_password          = var.jsc_password
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Threat Response (MTD)
 module "network-security-jamf-pro-content-filtering-and-network-threat-defense" {
-  count              = var.include_jsc_mtd_dp_only == true ? 1 : 0
-  source             = "./modules/network-security-jamf-pro-content-filtering-and-network-threat-defense"
-  tje_okta_clientid  = var.tje_okta_clientid
-  tje_okta_orgdomain = var.tje_okta_orgdomain
-  jsc_username       = var.jsc_username
-  jsc_password       = var.jsc_password
+  count                 = var.include_jsc_mtd_dp_only == true ? 1 : 0
+  source                = "./modules/network-security-jamf-pro-content-filtering-and-network-threat-defense"
+  tje_okta_clientid     = var.tje_okta_clientid
+  tje_okta_orgdomain    = var.tje_okta_orgdomain
+  jsc_username          = var.jsc_username
+  jsc_password          = var.jsc_password
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Connect ZTNA
 module "network-security-jamf-pro-zero-trust-network-access" {
-  count              = var.include_jsc_ztna == true ? 1 : 0
-  source             = "./modules/network-security-jamf-pro-zero-trust-network-access"
-  tje_okta_clientid  = var.tje_okta_clientid
-  tje_okta_orgdomain = var.tje_okta_orgdomain
-  jsc_username       = var.jsc_username
-  jsc_password       = var.jsc_password
+  count                 = var.include_jsc_ztna == true ? 1 : 0
+  source                = "./modules/network-security-jamf-pro-zero-trust-network-access"
+  tje_okta_clientid     = var.tje_okta_clientid
+  tje_okta_orgdomain    = var.tje_okta_orgdomain
+  jsc_username          = var.jsc_username
+  jsc_password          = var.jsc_password
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Connect ZTNA
 module "network-security-jamf-pro-zero-trust-network-access-and-content-filtering" {
-  count              = var.include_jsc_ztna_dp_only == true ? 1 : 0
-  source             = "./modules/network-security-jamf-pro-zero-trust-network-access-and-content-filtering"
-  tje_okta_clientid  = var.tje_okta_clientid
-  tje_okta_orgdomain = var.tje_okta_orgdomain
-  jsc_username       = var.jsc_username
-  jsc_password       = var.jsc_password
+  count                 = var.include_jsc_ztna_dp_only == true ? 1 : 0
+  source                = "./modules/network-security-jamf-pro-zero-trust-network-access-and-content-filtering"
+  tje_okta_clientid     = var.tje_okta_clientid
+  tje_okta_orgdomain    = var.tje_okta_orgdomain
+  jsc_username          = var.jsc_username
+  jsc_password          = var.jsc_password
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 ## Create Jamf Security Cloud Activation Profile containing ONLY Connect ZTNA
 module "network-security-jamf-pro-zero-trust-network-access-and-network-threat-prevention" {
-  count              = var.include_jsc_ztna_mtd_only == true ? 1 : 0
-  source             = "./modules/network-security-jamf-pro-zero-trust-network-access-and-network-threat-prevention"
-  tje_okta_clientid  = var.tje_okta_clientid
-  tje_okta_orgdomain = var.tje_okta_orgdomain
-  jsc_username       = var.jsc_username
-  jsc_password       = var.jsc_password
+  count                 = var.include_jsc_ztna_mtd_only == true ? 1 : 0
+  source                = "./modules/network-security-jamf-pro-zero-trust-network-access-and-network-threat-prevention"
+  tje_okta_clientid     = var.tje_okta_clientid
+  tje_okta_orgdomain    = var.tje_okta_orgdomain
+  jsc_username          = var.jsc_username
+  jsc_password          = var.jsc_password
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
