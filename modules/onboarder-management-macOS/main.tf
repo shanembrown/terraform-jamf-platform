@@ -35,10 +35,3 @@ module "management-macOS-rosetta" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
 }
-
-module "microsoft_365" {
-  source                = "../management-macOS-microsoft-365"
-  jamfpro_instance_url  = var.jamfpro_instance_url
-  jamfpro_client_id     = var.jamfpro_client_id
-  jamfpro_client_secret = var.jamfpro_client_secret
-}
