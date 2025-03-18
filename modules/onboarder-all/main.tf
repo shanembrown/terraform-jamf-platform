@@ -26,13 +26,6 @@ module "onboarder-management-mobile" {
   jamfpro_client_secret = var.jamfpro_client_secret
 }
 
-module "onboarder-app-installers" {
-  source                = "../onboarder-app-installers"
-  jamfpro_instance_url  = var.jamfpro_instance_url
-  jamfpro_client_id     = var.jamfpro_client_id
-  jamfpro_client_secret = var.jamfpro_client_secret
-}
-
 module "compliance-macOS-cis-level-1" {
   source                = "../compliance-macOS-cis-level-1"
   jamfpro_instance_url  = var.jamfpro_instance_url
