@@ -31,3 +31,38 @@ module "management-app-installers" {
   for_each           = toset(var.app_installers)
   app_installer_name = each.value
 }
+
+
+variable "installomator_labels" {
+  type = list(string)
+  default = [
+    "boxdrive",
+    "dropbox",
+    "googlechrome",
+    "googledrive",
+    "jamfcheck",
+    "microsoftedge",
+    "firefox",
+    "nudge",
+    "slack",
+    "textexpander",
+    "zoomclient"
+  ]
+}
+
+variable "installomator_policy_titles" {
+  type = list(string)
+  default = [
+    "Box Drive",
+    "Dropbox",
+    "Google Chrome",
+    "Google Drive",
+    "JamfCheck",
+    "Microsoft Edge",
+    "Firefox",
+    "Nudge",
+    "Slack",
+    "TextExpander",
+    "Zoom Client"
+  ]
+}

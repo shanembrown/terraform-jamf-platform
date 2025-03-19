@@ -56,6 +56,14 @@ module "onboarder-app-installers" {
   source = "./modules/onboarder-app-installers"
 }
 
+module "installomator-app-installers" {
+  source                     = "./modules/installomator-app-installers"
+  for_each                   = toset(var.installomator_labels)
+  installomator_label        = each.value.label
+  installomator_display_name = each.value.display_name
+}
+
+
 ## Initialize common modules
 
 ## Initialize Protect (for macOS) module

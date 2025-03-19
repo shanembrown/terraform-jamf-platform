@@ -513,6 +513,33 @@ variable "app_installers" {
   default     = []
 }
 
+variable "installomator_labels" {
+  description = "Set of selected Installomator Labels"
+  type        = list(string)
+  default     = []
+}
+
+variable "installomator_policy_titles" {
+  description = "Human readable Jamf Pro Policy titles"
+  type        = list(string)
+  default     = []
+}
+
+variable "installomator_label" {
+  type    = string
+  default = ""
+}
+
+variable "installomator_display_name" {
+  type    = string
+  default = ""
+}
+
+variable "include_installomator_app_installers" {
+  type    = bool
+  default = false
+}
+
 variable "access_policies" {
   type    = list(string)
   default = []
