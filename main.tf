@@ -119,6 +119,14 @@ module "compliance-macOS-cmmc-level-1" {
   jamfpro_client_secret = var.jamfpro_client_secret
 }
 
+module "configuration-jamf-pro-admin-sso" {
+  count                 = var.include_jamf_pro_admin_sso == true ? 1 : 0
+  source                = "./modules/configuration-jamf-pro-admin-sso"
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
+}
+
 module "configuration-jamf-pro-smart-groups" {
   count                 = var.include_qol_smart_groups == true ? 1 : 0
   source                = "./modules/configuration-jamf-pro-smart-groups"
