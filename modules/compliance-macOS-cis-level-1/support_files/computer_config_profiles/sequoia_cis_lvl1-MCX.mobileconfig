@@ -32,13 +32,13 @@
 			<key>PayloadDisplayName</key>
 			<string>Custom Settings</string>
 			<key>PayloadIdentifier</key>
-			<string>com.apple.ManagedClient.preferences.9E1D0458-58E0-4596-9849-5D59E6AABF1D</string>
+			<string>com.apple.ManagedClient.preferences.8FFF2DE8-7F0A-4B13-BE7C-B121F31C4B09</string>
 			<key>PayloadOrganization</key>
 			<string>JAMF Software</string>
 			<key>PayloadType</key>
 			<string>com.apple.ManagedClient.preferences</string>
 			<key>PayloadUUID</key>
-			<string>9E1D0458-58E0-4596-9849-5D59E6AABF1D</string>
+			<string>8FFF2DE8-7F0A-4B13-BE7C-B121F31C4B09</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 		</dict>
@@ -46,11 +46,11 @@
 	<key>PayloadDescription</key>
 	<string></string>
 	<key>PayloadDisplayName</key>
-	<string>Sequoia_sequoia_cis_lvl1-MCX</string>
+	<string>Sequoia_cis_lvl1-MCX</string>
 	<key>PayloadEnabled</key>
 	<true/>
 	<key>PayloadIdentifier</key>
-	<string>1c95d0cf-4b9b-485c-bb89-b2d41732d50b</string>
+	<string>916aa9ad-0b30-4338-be7f-9e613fa35358</string>
 	<key>PayloadOrganization</key>
 	<string>Jamf Software</string>
 	<key>PayloadRemovalDisallowed</key>
@@ -60,7 +60,7 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>CEB8EEAD-6237-421E-98AF-86A9F1ABCB79</string>
+	<string>02B753F0-432C-4843-992A-DEF90D6A00C5</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
 </dict>

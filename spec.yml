@@ -199,7 +199,7 @@ options:
     display_name: Configure and Apply US CMMC 2.0 Level 1 for macOS
     display_desc: For managed computers, prepares and uploads the necessary components for US CMMC 2.0 Level 1 profile for macOS Sonoma and Sequoia (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-set to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
 
-  ### App Installer Modules
+   ### App Installer Modules
   - key: management-app-installers-microsoft-edge
     presence: optional
     module_name: module.management-app-installers-microsoft-edge
