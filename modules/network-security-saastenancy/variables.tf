@@ -77,17 +77,14 @@ variable "InstanceType" {
 variable "jamfpro_client_id" {
   type      = string
   sensitive = true
-  default   = ""
 }
 
 variable "jamfpro_client_secret" {
   type      = string
   sensitive = true
-  default   = ""
 }
 
 variable "jamfpro_instance_url" {
   type      = string
   sensitive = true
-  default   = ""
 }
