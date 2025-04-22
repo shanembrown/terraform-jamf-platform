@@ -72,63 +72,99 @@ module "configuration-jamf-pro-jamf-protect" {
 }
 
 module "compliance-macOS-cis-level-1" {
-  count  = var.include_mac_cis_lvl1_benchmark == true ? 1 : 0
-  source = "./modules/compliance-macOS-cis-level-1"
+  count                 = var.include_mac_cis_lvl1_benchmark == true ? 1 : 0
+  source                = "./modules/compliance-macOS-cis-level-1"
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 module "compliance-iOS-cis-level-1" {
-  count  = var.include_mobile_cis_lvl1_benchmark == true ? 1 : 0
-  source = "./modules/compliance-iOS-cis-level-1"
+  count                 = var.include_mobile_cis_lvl1_benchmark == true ? 1 : 0
+  source                = "./modules/compliance-iOS-cis-level-1"
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 module "compliance-macOS-disa-stig" {
-  count  = var.include_mac_stig_benchmark == true ? 1 : 0
-  source = "./modules/compliance-macOS-disa-stig"
+  count                 = var.include_mac_stig_benchmark == true ? 1 : 0
+  source                = "./modules/compliance-macOS-disa-stig"
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 module "compliance-iOS-disa-stig" {
-  count  = var.include_mobile_stig_benchmark == true ? 1 : 0
-  source = "./modules/compliance-iOS-disa-stig"
+  count                 = var.include_mobile_stig_benchmark == true ? 1 : 0
+  source                = "./modules/compliance-iOS-disa-stig"
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 module "compliance-macOS-nist-800-171" {
-  count  = var.include_mac_800_171_benchmark == true ? 1 : 0
-  source = "./modules/compliance-macOS-nist-800-171"
+  count                 = var.include_mac_800_171_benchmark == true ? 1 : 0
+  source                = "./modules/compliance-macOS-nist-800-171"
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 module "compliance-macOS-cmmc-level-1" {
-  count  = var.include_mac_cmmc_lvl1_benchmark == true ? 1 : 0
-  source = "./modules/compliance-macOS-cmmc-level-1"
+  count                 = var.include_mac_cmmc_lvl1_benchmark == true ? 1 : 0
+  source                = "./modules/compliance-macOS-cmmc-level-1"
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 module "configuration-jamf-pro-smart-groups" {
-  count  = var.include_qol_smart_groups == true ? 1 : 0
-  source = "./modules/configuration-jamf-pro-smart-groups"
+  count                 = var.include_qol_smart_groups == true ? 1 : 0
+  source                = "./modules/configuration-jamf-pro-smart-groups"
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 module "management-macOS-microsoft-365" {
-  count  = var.include_microsoft_365 == true ? 1 : 0
-  source = "./modules/management-macOS-microsoft-365"
+  count                 = var.include_microsoft_365 == true ? 1 : 0
+  source                = "./modules/management-macOS-microsoft-365"
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 module "configuration-jamf-pro-categories" {
-  count  = var.include_categories == true ? 1 : 0
-  source = "./modules/configuration-jamf-pro-categories"
+  count                 = var.include_categories == true ? 1 : 0
+  source                = "./modules/configuration-jamf-pro-categories"
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 module "management-iOS-configuration-profiles" {
-  count  = var.include_mobile_device_kickstart == true ? 1 : 0
-  source = "./modules/management-iOS-configuration-profiles"
+  count                 = var.include_mobile_device_kickstart == true ? 1 : 0
+  source                = "./modules/management-iOS-configuration-profiles"
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 module "configuration-jamf-pro-computer-management-settings" {
-  count  = var.include_computer_management_settings == true ? 1 : 0
-  source = "./modules/configuration-jamf-pro-computer-management-settings"
+  count                 = var.include_computer_management_settings == true ? 1 : 0
+  source                = "./modules/configuration-jamf-pro-computer-management-settings"
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 module "endpoint-security-macOS-filevault" {
-  count  = var.include_filevault == true ? 1 : 0
-  source = "./modules/endpoint-security-macOS-filevault"
+  count                 = var.include_filevault == true ? 1 : 0
+  source                = "./modules/endpoint-security-macOS-filevault"
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 module "endpoint-security-macOS-microsoft-defender" {
@@ -147,14 +183,20 @@ module "endpoint-security-macOS-crowdstrike" {
 }
 
 module "management-macOS-rosetta" {
-  count  = var.include_rosetta == true ? 1 : 0
-  source = "./modules/management-macOS-rosetta"
+  count                 = var.include_rosetta == true ? 1 : 0
+  source                = "./modules/management-macOS-rosetta"
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 module "management-app-installers" {
-  source             = "./modules/management-app-installers"
-  for_each           = toset(var.app_installers)
-  app_installer_name = each.value
+  source                = "./modules/management-app-installers"
+  for_each              = toset(var.app_installers)
+  app_installer_name    = each.value
+  jamfpro_instance_url  = var.jamfpro_instance_url
+  jamfpro_client_id     = var.jamfpro_client_id
+  jamfpro_client_secret = var.jamfpro_client_secret
 }
 
 ## Begin Jamf Security Cloud Configuration
