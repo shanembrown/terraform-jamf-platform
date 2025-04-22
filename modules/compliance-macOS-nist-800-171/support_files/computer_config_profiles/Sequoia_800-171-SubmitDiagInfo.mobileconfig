@@ -15,13 +15,13 @@
 			<key>PayloadDisplayName</key>
 			<string>SubmitDiagInfo</string>
 			<key>PayloadIdentifier</key>
-			<string>com.apple.SubmitDiagInfo.5F62B55E-B570-49C8-AD5A-550029C6BDA2</string>
+			<string>com.apple.SubmitDiagInfo.C29F08F9-02D9-48B1-875B-62700152B3FF</string>
 			<key>PayloadOrganization</key>
 			<string>JAMF Software</string>
 			<key>PayloadType</key>
 			<string>com.apple.SubmitDiagInfo</string>
 			<key>PayloadUUID</key>
-			<string>5F62B55E-B570-49C8-AD5A-550029C6BDA2</string>
+			<string>C29F08F9-02D9-48B1-875B-62700152B3FF</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 		</dict>
@@ -33,7 +33,7 @@
 	<key>PayloadEnabled</key>
 	<true/>
 	<key>PayloadIdentifier</key>
-	<string>f5637b3c-4b18-49ec-bf45-5db79afb62ea</string>
+	<string>a1d630ea-5667-4205-8b09-f047ac64fb6c</string>
 	<key>PayloadOrganization</key>
 	<string>macOS Security Compliance Project</string>
 	<key>PayloadRemovalDisallowed</key>
@@ -43,7 +43,7 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>87D7B34A-0B3B-42CC-A04F-F9FE650CACB5</string>
+	<string>49A3594E-F451-46BF-B0AA-65645598B952</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
 </dict>

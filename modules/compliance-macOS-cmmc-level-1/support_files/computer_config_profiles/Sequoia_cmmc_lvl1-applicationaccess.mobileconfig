@@ -62,6 +62,8 @@
 								<false/>
 								<key>allowImagePlayground</key>
 								<false/>
+								<key>allowMailSummary</key>
+								<false/>
 								<key>allowMediaSharing</key>
 								<false/>
 								<key>allowMediaSharingModification</key>
@@ -71,6 +73,8 @@
 								<key>allowRapidSecurityResponseRemoval</key>
 								<false/>
 								<key>allowWritingTools</key>
+								<false/>
+								<key>allowiPhoneMirroring</key>
 								<false/>
 								<key>forceOnDeviceOnlyDictation</key>
 								<true/>
@@ -82,13 +86,13 @@
 			<key>PayloadDisplayName</key>
 			<string>Custom Settings</string>
 			<key>PayloadIdentifier</key>
-			<string>com.apple.ManagedClient.preferences.CC53D09B-219D-46BC-B9EF-AB97FA1F2CA9</string>
+			<string>com.apple.ManagedClient.preferences.74A852F8-4021-4DC4-BFC3-A0318F318D2A</string>
 			<key>PayloadOrganization</key>
 			<string>JAMF Software</string>
 			<key>PayloadType</key>
 			<string>com.apple.ManagedClient.preferences</string>
 			<key>PayloadUUID</key>
-			<string>CC53D09B-219D-46BC-B9EF-AB97FA1F2CA9</string>
+			<string>74A852F8-4021-4DC4-BFC3-A0318F318D2A</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 		</dict>
@@ -100,7 +104,7 @@
 	<key>PayloadEnabled</key>
 	<true/>
 	<key>PayloadIdentifier</key>
-	<string>146f2b7b-7bd4-4498-9075-b26ef3058b71</string>
+	<string>425cb375-1578-4375-9093-7e35c53ff399</string>
 	<key>PayloadOrganization</key>
 	<string>Jamf Software</string>
 	<key>PayloadRemovalDisallowed</key>
@@ -110,7 +114,7 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>44951702-26B6-44DA-A4AB-0B0F26C0E167</string>
+	<string>B570869B-72C6-4E7A-B41C-2B8F0508E011</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
 </dict>

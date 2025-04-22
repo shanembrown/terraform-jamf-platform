@@ -22,6 +22,18 @@ variable "tje_okta_orgdomain" {
   default   = ""
 }
 
+variable "jsc_username" {
+  type      = string
+  sensitive = false
+  default   = ""
+}
+
+variable "jsc_password" {
+  type      = string
+  sensitive = true
+  default   = ""
+}
+
 variable "clientid" {
   type      = string
   sensitive = true

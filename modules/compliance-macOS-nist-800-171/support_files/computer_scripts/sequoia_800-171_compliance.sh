@@ -3731,6 +3731,68 @@ else
     /usr/bin/defaults write "$audit_plist" os_image_generation_disable -dict-add finding -bool NO
 fi
 
+#####----- Rule: os_iphone_mirroring_disable -----#####
+## Addresses the following NIST 800-53 controls: 
+# * AC-20
+# * AC-3
+# * CM-7, CM-7(1)
+rule_arch=""
+if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
+    unset result_value
+    result_value=$(/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+.objectForKey('allowiPhoneMirroring').js
+EOS
+)
+    # expected result {'string': 'false'}
+
+
+    # check to see if rule is exempt
+    unset exempt
+    unset exempt_reason
+
+    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('os_iphone_mirroring_disable'))["exempt"]
+EOS
+)
+    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('os_iphone_mirroring_disable'))["exempt_reason"]
+EOS
+)   
+    customref="$(echo "os_iphone_mirroring_disable" | rev | cut -d ' ' -f 2- | rev)"
+    customref="$(echo "$customref" | tr " " ",")"
+    if [[ $result_value == "false" ]]; then
+        logmessage "os_iphone_mirroring_disable passed (Result: $result_value, Expected: \"{'string': 'false'}\")"
+        /usr/bin/defaults write "$audit_plist" os_iphone_mirroring_disable -dict-add finding -bool NO
+        if [[ ! "$customref" == "os_iphone_mirroring_disable" ]]; then
+            /usr/bin/defaults write "$audit_plist" os_iphone_mirroring_disable -dict-add reference -string "$customref"
+        fi
+        /usr/bin/logger "mSCP: 800-171 - os_iphone_mirroring_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
+    else
+        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
+            logmessage "os_iphone_mirroring_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\")"
+            /usr/bin/defaults write "$audit_plist" os_iphone_mirroring_disable -dict-add finding -bool YES
+            if [[ ! "$customref" == "os_iphone_mirroring_disable" ]]; then
+                /usr/bin/defaults write "$audit_plist" os_iphone_mirroring_disable -dict-add reference -string "$customref"
+            fi
+            /usr/bin/logger "mSCP: 800-171 - os_iphone_mirroring_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
+        else
+            logmessage "os_iphone_mirroring_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
+            /usr/bin/defaults write "$audit_plist" os_iphone_mirroring_disable -dict-add finding -bool YES
+            if [[ ! "$customref" == "os_iphone_mirroring_disable" ]]; then
+              /usr/bin/defaults write "$audit_plist" os_iphone_mirroring_disable -dict-add reference -string "$customref"
+            fi
+            /usr/bin/logger "mSCP: 800-171 - os_iphone_mirroring_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /bin/sleep 1
+        fi
+    fi
+
+
+else
+    logmessage "os_iphone_mirroring_disable does not apply to this architecture"
+    /usr/bin/defaults write "$audit_plist" os_iphone_mirroring_disable -dict-add finding -bool NO
+fi
+
 #####----- Rule: os_ir_support_disable -----#####
 ## Addresses the following NIST 800-53 controls: 
 # * AC-18
@@ -3850,6 +3912,68 @@ EOS
 else
     logmessage "os_loginwindow_adminhostinfo_undefined does not apply to this architecture"
     /usr/bin/defaults write "$audit_plist" os_loginwindow_adminhostinfo_undefined -dict-add finding -bool NO
+fi
+
+#####----- Rule: os_mail_summary_disable -----#####
+## Addresses the following NIST 800-53 controls: 
+# * AC-20, AC-20(1)
+# * CM-7, CM-7(1)
+# * SC-7(10)
+rule_arch=""
+if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
+    unset result_value
+    result_value=$(/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+.objectForKey('allowMailSummary').js
+EOS
+)
+    # expected result {'string': 'false'}
+
+
+    # check to see if rule is exempt
+    unset exempt
+    unset exempt_reason
+
+    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('os_mail_summary_disable'))["exempt"]
+EOS
+)
+    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('os_mail_summary_disable'))["exempt_reason"]
+EOS
+)   
+    customref="$(echo "os_mail_summary_disable" | rev | cut -d ' ' -f 2- | rev)"
+    customref="$(echo "$customref" | tr " " ",")"
+    if [[ $result_value == "false" ]]; then
+        logmessage "os_mail_summary_disable passed (Result: $result_value, Expected: \"{'string': 'false'}\")"
+        /usr/bin/defaults write "$audit_plist" os_mail_summary_disable -dict-add finding -bool NO
+        if [[ ! "$customref" == "os_mail_summary_disable" ]]; then
+            /usr/bin/defaults write "$audit_plist" os_mail_summary_disable -dict-add reference -string "$customref"
+        fi
+        /usr/bin/logger "mSCP: 800-171 - os_mail_summary_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
+    else
+        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
+            logmessage "os_mail_summary_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\")"
+            /usr/bin/defaults write "$audit_plist" os_mail_summary_disable -dict-add finding -bool YES
+            if [[ ! "$customref" == "os_mail_summary_disable" ]]; then
+                /usr/bin/defaults write "$audit_plist" os_mail_summary_disable -dict-add reference -string "$customref"
+            fi
+            /usr/bin/logger "mSCP: 800-171 - os_mail_summary_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
+        else
+            logmessage "os_mail_summary_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
+            /usr/bin/defaults write "$audit_plist" os_mail_summary_disable -dict-add finding -bool YES
+            if [[ ! "$customref" == "os_mail_summary_disable" ]]; then
+              /usr/bin/defaults write "$audit_plist" os_mail_summary_disable -dict-add reference -string "$customref"
+            fi
+            /usr/bin/logger "mSCP: 800-171 - os_mail_summary_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /bin/sleep 1
+        fi
+    fi
+
+
+else
+    logmessage "os_mail_summary_disable does not apply to this architecture"
+    /usr/bin/defaults write "$audit_plist" os_mail_summary_disable -dict-add finding -bool NO
 fi
 
 #####----- Rule: os_mdm_require -----#####
@@ -4148,6 +4272,68 @@ EOS
 else
     logmessage "os_password_sharing_disable does not apply to this architecture"
     /usr/bin/defaults write "$audit_plist" os_password_sharing_disable -dict-add finding -bool NO
+fi
+
+#####----- Rule: os_photos_enhanced_search_disable -----#####
+## Addresses the following NIST 800-53 controls: 
+# * AC-20, AC-20(1)
+# * CM-7, CM-7(1)
+# * SC-7(10)
+rule_arch=""
+if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
+    unset result_value
+    result_value=$(/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.photos.shareddefaults')\
+.objectForKey('IPXDefaultEnhancedVisualSearchEnabled').js
+EOS
+)
+    # expected result {'string': 'false'}
+
+
+    # check to see if rule is exempt
+    unset exempt
+    unset exempt_reason
+
+    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('os_photos_enhanced_search_disable'))["exempt"]
+EOS
+)
+    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('os_photos_enhanced_search_disable'))["exempt_reason"]
+EOS
+)   
+    customref="$(echo "os_photos_enhanced_search_disable" | rev | cut -d ' ' -f 2- | rev)"
+    customref="$(echo "$customref" | tr " " ",")"
+    if [[ $result_value == "false" ]]; then
+        logmessage "os_photos_enhanced_search_disable passed (Result: $result_value, Expected: \"{'string': 'false'}\")"
+        /usr/bin/defaults write "$audit_plist" os_photos_enhanced_search_disable -dict-add finding -bool NO
+        if [[ ! "$customref" == "os_photos_enhanced_search_disable" ]]; then
+            /usr/bin/defaults write "$audit_plist" os_photos_enhanced_search_disable -dict-add reference -string "$customref"
+        fi
+        /usr/bin/logger "mSCP: 800-171 - os_photos_enhanced_search_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
+    else
+        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
+            logmessage "os_photos_enhanced_search_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\")"
+            /usr/bin/defaults write "$audit_plist" os_photos_enhanced_search_disable -dict-add finding -bool YES
+            if [[ ! "$customref" == "os_photos_enhanced_search_disable" ]]; then
+                /usr/bin/defaults write "$audit_plist" os_photos_enhanced_search_disable -dict-add reference -string "$customref"
+            fi
+            /usr/bin/logger "mSCP: 800-171 - os_photos_enhanced_search_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
+        else
+            logmessage "os_photos_enhanced_search_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
+            /usr/bin/defaults write "$audit_plist" os_photos_enhanced_search_disable -dict-add finding -bool YES
+            if [[ ! "$customref" == "os_photos_enhanced_search_disable" ]]; then
+              /usr/bin/defaults write "$audit_plist" os_photos_enhanced_search_disable -dict-add reference -string "$customref"
+            fi
+            /usr/bin/logger "mSCP: 800-171 - os_photos_enhanced_search_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /bin/sleep 1
+        fi
+    fi
+
+
+else
+    logmessage "os_photos_enhanced_search_disable does not apply to this architecture"
+    /usr/bin/defaults write "$audit_plist" os_photos_enhanced_search_disable -dict-add finding -bool NO
 fi
 
 #####----- Rule: os_policy_banner_loginwindow_enforce -----#####
@@ -5961,7 +6147,7 @@ fi
 rule_arch=""
 if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset result_value
-    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= 3) {print "yes"} else {print "no"}}'
+    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= 3) {print "yes"} else {print "no"}}' | /usr/bin/uniq
 )
     # expected result {'string': 'yes'}
 
@@ -6018,7 +6204,7 @@ fi
 rule_arch=""
 if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset result_value
-    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= 15 ) {print "yes"} else {print "no"}}'
+    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= 15 ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
 )
     # expected result {'string': 'yes'}
 
@@ -6069,127 +6255,13 @@ else
     /usr/bin/defaults write "$audit_plist" pwpolicy_account_lockout_timeout_enforce -dict-add finding -bool NO
 fi
 
-#####----- Rule: pwpolicy_alpha_numeric_enforce -----#####
-## Addresses the following NIST 800-53 controls: 
-# * IA-5(1)
-rule_arch=""
-if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
-    unset result_value
-    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyIdentifier"]/following-sibling::*[1]/text()' - | /usr/bin/grep "requireAlphanumeric" -c
-)
-    # expected result {'integer': 1}
-
-
-    # check to see if rule is exempt
-    unset exempt
-    unset exempt_reason
-
-    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('pwpolicy_alpha_numeric_enforce'))["exempt"]
-EOS
-)
-    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('pwpolicy_alpha_numeric_enforce'))["exempt_reason"]
-EOS
-)   
-    customref="$(echo "pwpolicy_alpha_numeric_enforce" | rev | cut -d ' ' -f 2- | rev)"
-    customref="$(echo "$customref" | tr " " ",")"
-    if [[ $result_value == "1" ]]; then
-        logmessage "pwpolicy_alpha_numeric_enforce passed (Result: $result_value, Expected: \"{'integer': 1}\")"
-        /usr/bin/defaults write "$audit_plist" pwpolicy_alpha_numeric_enforce -dict-add finding -bool NO
-        if [[ ! "$customref" == "pwpolicy_alpha_numeric_enforce" ]]; then
-            /usr/bin/defaults write "$audit_plist" pwpolicy_alpha_numeric_enforce -dict-add reference -string "$customref"
-        fi
-        /usr/bin/logger "mSCP: 800-171 - pwpolicy_alpha_numeric_enforce passed (Result: $result_value, Expected: "{'integer': 1}")"
-    else
-        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
-            logmessage "pwpolicy_alpha_numeric_enforce failed (Result: $result_value, Expected: \"{'integer': 1}\")"
-            /usr/bin/defaults write "$audit_plist" pwpolicy_alpha_numeric_enforce -dict-add finding -bool YES
-            if [[ ! "$customref" == "pwpolicy_alpha_numeric_enforce" ]]; then
-                /usr/bin/defaults write "$audit_plist" pwpolicy_alpha_numeric_enforce -dict-add reference -string "$customref"
-            fi
-            /usr/bin/logger "mSCP: 800-171 - pwpolicy_alpha_numeric_enforce failed (Result: $result_value, Expected: "{'integer': 1}")"
-        else
-            logmessage "pwpolicy_alpha_numeric_enforce failed (Result: $result_value, Expected: \"{'integer': 1}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
-            /usr/bin/defaults write "$audit_plist" pwpolicy_alpha_numeric_enforce -dict-add finding -bool YES
-            if [[ ! "$customref" == "pwpolicy_alpha_numeric_enforce" ]]; then
-              /usr/bin/defaults write "$audit_plist" pwpolicy_alpha_numeric_enforce -dict-add reference -string "$customref"
-            fi
-            /usr/bin/logger "mSCP: 800-171 - pwpolicy_alpha_numeric_enforce failed (Result: $result_value, Expected: "{'integer': 1}") - Exemption Allowed (Reason: "$exempt_reason")"
-            /bin/sleep 1
-        fi
-    fi
-
-
-else
-    logmessage "pwpolicy_alpha_numeric_enforce does not apply to this architecture"
-    /usr/bin/defaults write "$audit_plist" pwpolicy_alpha_numeric_enforce -dict-add finding -bool NO
-fi
-
-#####----- Rule: pwpolicy_custom_regex_enforce -----#####
-## Addresses the following NIST 800-53 controls: 
-# * IA-5(1)
-rule_arch=""
-if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
-    unset result_value
-    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$'\''")])' -
-)
-    # expected result {'string': 'true'}
-
-
-    # check to see if rule is exempt
-    unset exempt
-    unset exempt_reason
-
-    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('pwpolicy_custom_regex_enforce'))["exempt"]
-EOS
-)
-    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('pwpolicy_custom_regex_enforce'))["exempt_reason"]
-EOS
-)   
-    customref="$(echo "pwpolicy_custom_regex_enforce" | rev | cut -d ' ' -f 2- | rev)"
-    customref="$(echo "$customref" | tr " " ",")"
-    if [[ $result_value == "true" ]]; then
-        logmessage "pwpolicy_custom_regex_enforce passed (Result: $result_value, Expected: \"{'string': 'true'}\")"
-        /usr/bin/defaults write "$audit_plist" pwpolicy_custom_regex_enforce -dict-add finding -bool NO
-        if [[ ! "$customref" == "pwpolicy_custom_regex_enforce" ]]; then
-            /usr/bin/defaults write "$audit_plist" pwpolicy_custom_regex_enforce -dict-add reference -string "$customref"
-        fi
-        /usr/bin/logger "mSCP: 800-171 - pwpolicy_custom_regex_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
-    else
-        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
-            logmessage "pwpolicy_custom_regex_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
-            /usr/bin/defaults write "$audit_plist" pwpolicy_custom_regex_enforce -dict-add finding -bool YES
-            if [[ ! "$customref" == "pwpolicy_custom_regex_enforce" ]]; then
-                /usr/bin/defaults write "$audit_plist" pwpolicy_custom_regex_enforce -dict-add reference -string "$customref"
-            fi
-            /usr/bin/logger "mSCP: 800-171 - pwpolicy_custom_regex_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
-        else
-            logmessage "pwpolicy_custom_regex_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
-            /usr/bin/defaults write "$audit_plist" pwpolicy_custom_regex_enforce -dict-add finding -bool YES
-            if [[ ! "$customref" == "pwpolicy_custom_regex_enforce" ]]; then
-              /usr/bin/defaults write "$audit_plist" pwpolicy_custom_regex_enforce -dict-add reference -string "$customref"
-            fi
-            /usr/bin/logger "mSCP: 800-171 - pwpolicy_custom_regex_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
-            /bin/sleep 1
-        fi
-    fi
-
-
-else
-    logmessage "pwpolicy_custom_regex_enforce does not apply to this architecture"
-    /usr/bin/defaults write "$audit_plist" pwpolicy_custom_regex_enforce -dict-add finding -bool NO
-fi
-
 #####----- Rule: pwpolicy_history_enforce -----#####
 ## Addresses the following NIST 800-53 controls: 
 # * IA-5(1)
 rule_arch=""
 if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     unset result_value
-    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= 5 ) {print "yes"} else {print "no"}}'
+    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= 5 ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
 )
     # expected result {'string': 'yes'}
 
@@ -6238,63 +6310,6 @@ EOS
 else
     logmessage "pwpolicy_history_enforce does not apply to this architecture"
     /usr/bin/defaults write "$audit_plist" pwpolicy_history_enforce -dict-add finding -bool NO
-fi
-
-#####----- Rule: pwpolicy_max_lifetime_enforce -----#####
-## Addresses the following NIST 800-53 controls: 
-# * IA-5
-rule_arch=""
-if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
-    unset result_value
-    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeExpiresEveryNDays"]/following-sibling::*[1]/text()' -
-)
-    # expected result {'integer': 60}
-
-
-    # check to see if rule is exempt
-    unset exempt
-    unset exempt_reason
-
-    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('pwpolicy_max_lifetime_enforce'))["exempt"]
-EOS
-)
-    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('pwpolicy_max_lifetime_enforce'))["exempt_reason"]
-EOS
-)   
-    customref="$(echo "pwpolicy_max_lifetime_enforce" | rev | cut -d ' ' -f 2- | rev)"
-    customref="$(echo "$customref" | tr " " ",")"
-    if [[ $result_value == "60" ]]; then
-        logmessage "pwpolicy_max_lifetime_enforce passed (Result: $result_value, Expected: \"{'integer': 60}\")"
-        /usr/bin/defaults write "$audit_plist" pwpolicy_max_lifetime_enforce -dict-add finding -bool NO
-        if [[ ! "$customref" == "pwpolicy_max_lifetime_enforce" ]]; then
-            /usr/bin/defaults write "$audit_plist" pwpolicy_max_lifetime_enforce -dict-add reference -string "$customref"
-        fi
-        /usr/bin/logger "mSCP: 800-171 - pwpolicy_max_lifetime_enforce passed (Result: $result_value, Expected: "{'integer': 60}")"
-    else
-        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
-            logmessage "pwpolicy_max_lifetime_enforce failed (Result: $result_value, Expected: \"{'integer': 60}\")"
-            /usr/bin/defaults write "$audit_plist" pwpolicy_max_lifetime_enforce -dict-add finding -bool YES
-            if [[ ! "$customref" == "pwpolicy_max_lifetime_enforce" ]]; then
-                /usr/bin/defaults write "$audit_plist" pwpolicy_max_lifetime_enforce -dict-add reference -string "$customref"
-            fi
-            /usr/bin/logger "mSCP: 800-171 - pwpolicy_max_lifetime_enforce failed (Result: $result_value, Expected: "{'integer': 60}")"
-        else
-            logmessage "pwpolicy_max_lifetime_enforce failed (Result: $result_value, Expected: \"{'integer': 60}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
-            /usr/bin/defaults write "$audit_plist" pwpolicy_max_lifetime_enforce -dict-add finding -bool YES
-            if [[ ! "$customref" == "pwpolicy_max_lifetime_enforce" ]]; then
-              /usr/bin/defaults write "$audit_plist" pwpolicy_max_lifetime_enforce -dict-add reference -string "$customref"
-            fi
-            /usr/bin/logger "mSCP: 800-171 - pwpolicy_max_lifetime_enforce failed (Result: $result_value, Expected: "{'integer': 60}") - Exemption Allowed (Reason: "$exempt_reason")"
-            /bin/sleep 1
-        fi
-    fi
-
-
-else
-    logmessage "pwpolicy_max_lifetime_enforce does not apply to this architecture"
-    /usr/bin/defaults write "$audit_plist" pwpolicy_max_lifetime_enforce -dict-add finding -bool NO
 fi
 
 #####----- Rule: pwpolicy_minimum_length_enforce -----#####
@@ -6354,63 +6369,6 @@ else
     /usr/bin/defaults write "$audit_plist" pwpolicy_minimum_length_enforce -dict-add finding -bool NO
 fi
 
-#####----- Rule: pwpolicy_minimum_lifetime_enforce -----#####
-## Addresses the following NIST 800-53 controls: 
-# * IA-5
-rule_arch=""
-if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
-    unset result_value
-    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMinimumLifetimeHours"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 >= 24 ) {print "yes"} else {print "no"}}'
-)
-    # expected result {'string': 'yes'}
-
-
-    # check to see if rule is exempt
-    unset exempt
-    unset exempt_reason
-
-    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('pwpolicy_minimum_lifetime_enforce'))["exempt"]
-EOS
-)
-    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('pwpolicy_minimum_lifetime_enforce'))["exempt_reason"]
-EOS
-)   
-    customref="$(echo "pwpolicy_minimum_lifetime_enforce" | rev | cut -d ' ' -f 2- | rev)"
-    customref="$(echo "$customref" | tr " " ",")"
-    if [[ $result_value == "yes" ]]; then
-        logmessage "pwpolicy_minimum_lifetime_enforce passed (Result: $result_value, Expected: \"{'string': 'yes'}\")"
-        /usr/bin/defaults write "$audit_plist" pwpolicy_minimum_lifetime_enforce -dict-add finding -bool NO
-        if [[ ! "$customref" == "pwpolicy_minimum_lifetime_enforce" ]]; then
-            /usr/bin/defaults write "$audit_plist" pwpolicy_minimum_lifetime_enforce -dict-add reference -string "$customref"
-        fi
-        /usr/bin/logger "mSCP: 800-171 - pwpolicy_minimum_lifetime_enforce passed (Result: $result_value, Expected: "{'string': 'yes'}")"
-    else
-        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
-            logmessage "pwpolicy_minimum_lifetime_enforce failed (Result: $result_value, Expected: \"{'string': 'yes'}\")"
-            /usr/bin/defaults write "$audit_plist" pwpolicy_minimum_lifetime_enforce -dict-add finding -bool YES
-            if [[ ! "$customref" == "pwpolicy_minimum_lifetime_enforce" ]]; then
-                /usr/bin/defaults write "$audit_plist" pwpolicy_minimum_lifetime_enforce -dict-add reference -string "$customref"
-            fi
-            /usr/bin/logger "mSCP: 800-171 - pwpolicy_minimum_lifetime_enforce failed (Result: $result_value, Expected: "{'string': 'yes'}")"
-        else
-            logmessage "pwpolicy_minimum_lifetime_enforce failed (Result: $result_value, Expected: \"{'string': 'yes'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
-            /usr/bin/defaults write "$audit_plist" pwpolicy_minimum_lifetime_enforce -dict-add finding -bool YES
-            if [[ ! "$customref" == "pwpolicy_minimum_lifetime_enforce" ]]; then
-              /usr/bin/defaults write "$audit_plist" pwpolicy_minimum_lifetime_enforce -dict-add reference -string "$customref"
-            fi
-            /usr/bin/logger "mSCP: 800-171 - pwpolicy_minimum_lifetime_enforce failed (Result: $result_value, Expected: "{'string': 'yes'}") - Exemption Allowed (Reason: "$exempt_reason")"
-            /bin/sleep 1
-        fi
-    fi
-
-
-else
-    logmessage "pwpolicy_minimum_lifetime_enforce does not apply to this architecture"
-    /usr/bin/defaults write "$audit_plist" pwpolicy_minimum_lifetime_enforce -dict-add finding -bool NO
-fi
-
 #####----- Rule: pwpolicy_simple_sequence_disable -----#####
 ## Addresses the following NIST 800-53 controls: 
 # * IA-5(1)
@@ -6466,63 +6424,6 @@ EOS
 else
     logmessage "pwpolicy_simple_sequence_disable does not apply to this architecture"
     /usr/bin/defaults write "$audit_plist" pwpolicy_simple_sequence_disable -dict-add finding -bool NO
-fi
-
-#####----- Rule: pwpolicy_special_character_enforce -----#####
-## Addresses the following NIST 800-53 controls: 
-# * IA-5(1)
-rule_arch=""
-if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
-    unset result_value
-    result_value=$(/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''(.*[^a-zA-Z0-9].*){1,}'\''")])' -
-)
-    # expected result {'string': 'true'}
-
-
-    # check to see if rule is exempt
-    unset exempt
-    unset exempt_reason
-
-    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('pwpolicy_special_character_enforce'))["exempt"]
-EOS
-)
-    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('pwpolicy_special_character_enforce'))["exempt_reason"]
-EOS
-)   
-    customref="$(echo "pwpolicy_special_character_enforce" | rev | cut -d ' ' -f 2- | rev)"
-    customref="$(echo "$customref" | tr " " ",")"
-    if [[ $result_value == "true" ]]; then
-        logmessage "pwpolicy_special_character_enforce passed (Result: $result_value, Expected: \"{'string': 'true'}\")"
-        /usr/bin/defaults write "$audit_plist" pwpolicy_special_character_enforce -dict-add finding -bool NO
-        if [[ ! "$customref" == "pwpolicy_special_character_enforce" ]]; then
-            /usr/bin/defaults write "$audit_plist" pwpolicy_special_character_enforce -dict-add reference -string "$customref"
-        fi
-        /usr/bin/logger "mSCP: 800-171 - pwpolicy_special_character_enforce passed (Result: $result_value, Expected: "{'string': 'true'}")"
-    else
-        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
-            logmessage "pwpolicy_special_character_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\")"
-            /usr/bin/defaults write "$audit_plist" pwpolicy_special_character_enforce -dict-add finding -bool YES
-            if [[ ! "$customref" == "pwpolicy_special_character_enforce" ]]; then
-                /usr/bin/defaults write "$audit_plist" pwpolicy_special_character_enforce -dict-add reference -string "$customref"
-            fi
-            /usr/bin/logger "mSCP: 800-171 - pwpolicy_special_character_enforce failed (Result: $result_value, Expected: "{'string': 'true'}")"
-        else
-            logmessage "pwpolicy_special_character_enforce failed (Result: $result_value, Expected: \"{'string': 'true'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
-            /usr/bin/defaults write "$audit_plist" pwpolicy_special_character_enforce -dict-add finding -bool YES
-            if [[ ! "$customref" == "pwpolicy_special_character_enforce" ]]; then
-              /usr/bin/defaults write "$audit_plist" pwpolicy_special_character_enforce -dict-add reference -string "$customref"
-            fi
-            /usr/bin/logger "mSCP: 800-171 - pwpolicy_special_character_enforce failed (Result: $result_value, Expected: "{'string': 'true'}") - Exemption Allowed (Reason: "$exempt_reason")"
-            /bin/sleep 1
-        fi
-    fi
-
-
-else
-    logmessage "pwpolicy_special_character_enforce does not apply to this architecture"
-    /usr/bin/defaults write "$audit_plist" pwpolicy_special_character_enforce -dict-add finding -bool NO
 fi
 
 #####----- Rule: system_settings_apple_watch_unlock_disable -----#####
@@ -6956,6 +6857,128 @@ EOS
 else
     logmessage "system_settings_diagnostics_reports_disable does not apply to this architecture"
     /usr/bin/defaults write "$audit_plist" system_settings_diagnostics_reports_disable -dict-add finding -bool NO
+fi
+
+#####----- Rule: system_settings_external_intelligence_disable -----#####
+## Addresses the following NIST 800-53 controls: 
+# * AC-20
+# * CM-7, CM-7(1)
+rule_arch=""
+if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
+    unset result_value
+    result_value=$(/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+.objectForKey('allowExternalIntelligenceIntegrations').js
+EOS
+)
+    # expected result {'string': 'false'}
+
+
+    # check to see if rule is exempt
+    unset exempt
+    unset exempt_reason
+
+    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('system_settings_external_intelligence_disable'))["exempt"]
+EOS
+)
+    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('system_settings_external_intelligence_disable'))["exempt_reason"]
+EOS
+)   
+    customref="$(echo "system_settings_external_intelligence_disable" | rev | cut -d ' ' -f 2- | rev)"
+    customref="$(echo "$customref" | tr " " ",")"
+    if [[ $result_value == "false" ]]; then
+        logmessage "system_settings_external_intelligence_disable passed (Result: $result_value, Expected: \"{'string': 'false'}\")"
+        /usr/bin/defaults write "$audit_plist" system_settings_external_intelligence_disable -dict-add finding -bool NO
+        if [[ ! "$customref" == "system_settings_external_intelligence_disable" ]]; then
+            /usr/bin/defaults write "$audit_plist" system_settings_external_intelligence_disable -dict-add reference -string "$customref"
+        fi
+        /usr/bin/logger "mSCP: 800-171 - system_settings_external_intelligence_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
+    else
+        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
+            logmessage "system_settings_external_intelligence_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\")"
+            /usr/bin/defaults write "$audit_plist" system_settings_external_intelligence_disable -dict-add finding -bool YES
+            if [[ ! "$customref" == "system_settings_external_intelligence_disable" ]]; then
+                /usr/bin/defaults write "$audit_plist" system_settings_external_intelligence_disable -dict-add reference -string "$customref"
+            fi
+            /usr/bin/logger "mSCP: 800-171 - system_settings_external_intelligence_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
+        else
+            logmessage "system_settings_external_intelligence_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
+            /usr/bin/defaults write "$audit_plist" system_settings_external_intelligence_disable -dict-add finding -bool YES
+            if [[ ! "$customref" == "system_settings_external_intelligence_disable" ]]; then
+              /usr/bin/defaults write "$audit_plist" system_settings_external_intelligence_disable -dict-add reference -string "$customref"
+            fi
+            /usr/bin/logger "mSCP: 800-171 - system_settings_external_intelligence_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /bin/sleep 1
+        fi
+    fi
+
+
+else
+    logmessage "system_settings_external_intelligence_disable does not apply to this architecture"
+    /usr/bin/defaults write "$audit_plist" system_settings_external_intelligence_disable -dict-add finding -bool NO
+fi
+
+#####----- Rule: system_settings_external_intelligence_sign_in_disable -----#####
+## Addresses the following NIST 800-53 controls: 
+# * AC-20
+# * CM-7, CM-7(1)
+rule_arch=""
+if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
+    unset result_value
+    result_value=$(/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+.objectForKey('allowExternalIntelligenceIntegrationsSignIn').js
+EOS
+)
+    # expected result {'string': 'false'}
+
+
+    # check to see if rule is exempt
+    unset exempt
+    unset exempt_reason
+
+    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('system_settings_external_intelligence_sign_in_disable'))["exempt"]
+EOS
+)
+    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('system_settings_external_intelligence_sign_in_disable'))["exempt_reason"]
+EOS
+)   
+    customref="$(echo "system_settings_external_intelligence_sign_in_disable" | rev | cut -d ' ' -f 2- | rev)"
+    customref="$(echo "$customref" | tr " " ",")"
+    if [[ $result_value == "false" ]]; then
+        logmessage "system_settings_external_intelligence_sign_in_disable passed (Result: $result_value, Expected: \"{'string': 'false'}\")"
+        /usr/bin/defaults write "$audit_plist" system_settings_external_intelligence_sign_in_disable -dict-add finding -bool NO
+        if [[ ! "$customref" == "system_settings_external_intelligence_sign_in_disable" ]]; then
+            /usr/bin/defaults write "$audit_plist" system_settings_external_intelligence_sign_in_disable -dict-add reference -string "$customref"
+        fi
+        /usr/bin/logger "mSCP: 800-171 - system_settings_external_intelligence_sign_in_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
+    else
+        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
+            logmessage "system_settings_external_intelligence_sign_in_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\")"
+            /usr/bin/defaults write "$audit_plist" system_settings_external_intelligence_sign_in_disable -dict-add finding -bool YES
+            if [[ ! "$customref" == "system_settings_external_intelligence_sign_in_disable" ]]; then
+                /usr/bin/defaults write "$audit_plist" system_settings_external_intelligence_sign_in_disable -dict-add reference -string "$customref"
+            fi
+            /usr/bin/logger "mSCP: 800-171 - system_settings_external_intelligence_sign_in_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
+        else
+            logmessage "system_settings_external_intelligence_sign_in_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
+            /usr/bin/defaults write "$audit_plist" system_settings_external_intelligence_sign_in_disable -dict-add finding -bool YES
+            if [[ ! "$customref" == "system_settings_external_intelligence_sign_in_disable" ]]; then
+              /usr/bin/defaults write "$audit_plist" system_settings_external_intelligence_sign_in_disable -dict-add reference -string "$customref"
+            fi
+            /usr/bin/logger "mSCP: 800-171 - system_settings_external_intelligence_sign_in_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /bin/sleep 1
+        fi
+    fi
+
+
+else
+    logmessage "system_settings_external_intelligence_sign_in_disable does not apply to this architecture"
+    /usr/bin/defaults write "$audit_plist" system_settings_external_intelligence_sign_in_disable -dict-add finding -bool NO
 fi
 
 #####----- Rule: system_settings_filevault_enforce -----#####
@@ -11149,39 +11172,6 @@ if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
     fi
 elif [[ ! -z "$exempt_reason" ]];then
     logmessage "pwpolicy_account_inactivity_enforce has an exemption, remediation skipped (Reason: "$exempt_reason")"
-fi
-    
-#####----- Rule: pwpolicy_minimum_lifetime_enforce -----#####
-## Addresses the following NIST 800-53 controls: 
-# * IA-5
-
-# check to see if rule is exempt
-unset exempt
-unset exempt_reason
-
-exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('pwpolicy_minimum_lifetime_enforce'))["exempt"]
-EOS
-)
-
-exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.800-171.audit').objectForKey('pwpolicy_minimum_lifetime_enforce'))["exempt_reason"]
-EOS
-)
-
-pwpolicy_minimum_lifetime_enforce_audit_score=$($plb -c "print pwpolicy_minimum_lifetime_enforce:finding" $audit_plist)
-if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
-    if [[ $pwpolicy_minimum_lifetime_enforce_audit_score == "true" ]]; then
-        ask 'pwpolicy_minimum_lifetime_enforce - Run the command(s)-> /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file ' N
-        if [[ $? == 0 ]]; then
-            logmessage "Running the command to configure the settings for: pwpolicy_minimum_lifetime_enforce ..."
-            /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
-        fi
-    else
-        logmessage "Settings for: pwpolicy_minimum_lifetime_enforce already configured, continuing..."
-    fi
-elif [[ ! -z "$exempt_reason" ]];then
-    logmessage "pwpolicy_minimum_lifetime_enforce has an exemption, remediation skipped (Reason: "$exempt_reason")"
 fi
     
 #####----- Rule: system_settings_bluetooth_sharing_disable -----#####

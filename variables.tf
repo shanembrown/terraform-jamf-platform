@@ -435,6 +435,10 @@ variable "include_computer_management_settings" {
   default = false
 }
 
+variable "include_jamf_pro_admin_sso" {
+  type    = bool
+  default = false
+}
 
 variable "include_mobile_device_kickstart" {
   type    = bool

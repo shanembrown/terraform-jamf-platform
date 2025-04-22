@@ -17,13 +17,13 @@
 			<key>PayloadEnabled</key>
 			<true/>
 			<key>PayloadIdentifier</key>
-			<string>com.apple.security.smartcard.edecc3b4-945f-4fb5-84fc-342eb30336da</string>
+			<string>com.apple.security.smartcard.2e717b22-bec7-4f6b-9e8e-1ec33b380b17</string>
 			<key>PayloadOrganization</key>
 			<string>Project Mercury</string>
 			<key>PayloadType</key>
 			<string>com.apple.security.smartcard</string>
 			<key>PayloadUUID</key>
-			<string>edecc3b4-945f-4fb5-84fc-342eb30336da</string>
+			<string>2e717b22-bec7-4f6b-9e8e-1ec33b380b17</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 			<key>UserPairing</key>
@@ -47,7 +47,7 @@
 	<key>PayloadEnabled</key>
 	<true/>
 	<key>PayloadIdentifier</key>
-	<string>8fd3c1de-a437-42b9-88b0-56e221315e59</string>
+	<string>e05e85aa-4257-48e3-991f-407f430f4940</string>
 	<key>PayloadOrganization</key>
 	<string>macOS Security Compliance Project</string>
 	<key>PayloadRemovalDisallowed</key>
@@ -57,7 +57,7 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>50FA3874-4ACC-4E50-8CA7-DA5C2BA26EB7</string>
+	<string>FB03BD44-27D1-4C0B-BB68-A34A33D39C4B</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
 </dict>

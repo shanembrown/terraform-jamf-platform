@@ -2200,6 +2200,130 @@ else
     /usr/bin/defaults write "$audit_plist" os_image_generation_disable -dict-add finding -bool NO
 fi
 
+#####----- Rule: os_iphone_mirroring_disable -----#####
+## Addresses the following NIST 800-53 controls: 
+# * AC-20
+# * AC-3
+# * CM-7, CM-7(1)
+rule_arch=""
+if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
+    unset result_value
+    result_value=$(/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+.objectForKey('allowiPhoneMirroring').js
+EOS
+)
+    # expected result {'string': 'false'}
+
+
+    # check to see if rule is exempt
+    unset exempt
+    unset exempt_reason
+
+    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cmmc_lvl1.audit').objectForKey('os_iphone_mirroring_disable'))["exempt"]
+EOS
+)
+    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cmmc_lvl1.audit').objectForKey('os_iphone_mirroring_disable'))["exempt_reason"]
+EOS
+)   
+    customref="$(echo "os_iphone_mirroring_disable" | rev | cut -d ' ' -f 2- | rev)"
+    customref="$(echo "$customref" | tr " " ",")"
+    if [[ $result_value == "false" ]]; then
+        logmessage "os_iphone_mirroring_disable passed (Result: $result_value, Expected: \"{'string': 'false'}\")"
+        /usr/bin/defaults write "$audit_plist" os_iphone_mirroring_disable -dict-add finding -bool NO
+        if [[ ! "$customref" == "os_iphone_mirroring_disable" ]]; then
+            /usr/bin/defaults write "$audit_plist" os_iphone_mirroring_disable -dict-add reference -string "$customref"
+        fi
+        /usr/bin/logger "mSCP: cmmc_lvl1 - os_iphone_mirroring_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
+    else
+        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
+            logmessage "os_iphone_mirroring_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\")"
+            /usr/bin/defaults write "$audit_plist" os_iphone_mirroring_disable -dict-add finding -bool YES
+            if [[ ! "$customref" == "os_iphone_mirroring_disable" ]]; then
+                /usr/bin/defaults write "$audit_plist" os_iphone_mirroring_disable -dict-add reference -string "$customref"
+            fi
+            /usr/bin/logger "mSCP: cmmc_lvl1 - os_iphone_mirroring_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
+        else
+            logmessage "os_iphone_mirroring_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
+            /usr/bin/defaults write "$audit_plist" os_iphone_mirroring_disable -dict-add finding -bool YES
+            if [[ ! "$customref" == "os_iphone_mirroring_disable" ]]; then
+              /usr/bin/defaults write "$audit_plist" os_iphone_mirroring_disable -dict-add reference -string "$customref"
+            fi
+            /usr/bin/logger "mSCP: cmmc_lvl1 - os_iphone_mirroring_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /bin/sleep 1
+        fi
+    fi
+
+
+else
+    logmessage "os_iphone_mirroring_disable does not apply to this architecture"
+    /usr/bin/defaults write "$audit_plist" os_iphone_mirroring_disable -dict-add finding -bool NO
+fi
+
+#####----- Rule: os_mail_summary_disable -----#####
+## Addresses the following NIST 800-53 controls: 
+# * AC-20, AC-20(1)
+# * CM-7, CM-7(1)
+# * SC-7(10)
+rule_arch=""
+if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
+    unset result_value
+    result_value=$(/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+.objectForKey('allowMailSummary').js
+EOS
+)
+    # expected result {'string': 'false'}
+
+
+    # check to see if rule is exempt
+    unset exempt
+    unset exempt_reason
+
+    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cmmc_lvl1.audit').objectForKey('os_mail_summary_disable'))["exempt"]
+EOS
+)
+    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cmmc_lvl1.audit').objectForKey('os_mail_summary_disable'))["exempt_reason"]
+EOS
+)   
+    customref="$(echo "os_mail_summary_disable" | rev | cut -d ' ' -f 2- | rev)"
+    customref="$(echo "$customref" | tr " " ",")"
+    if [[ $result_value == "false" ]]; then
+        logmessage "os_mail_summary_disable passed (Result: $result_value, Expected: \"{'string': 'false'}\")"
+        /usr/bin/defaults write "$audit_plist" os_mail_summary_disable -dict-add finding -bool NO
+        if [[ ! "$customref" == "os_mail_summary_disable" ]]; then
+            /usr/bin/defaults write "$audit_plist" os_mail_summary_disable -dict-add reference -string "$customref"
+        fi
+        /usr/bin/logger "mSCP: cmmc_lvl1 - os_mail_summary_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
+    else
+        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
+            logmessage "os_mail_summary_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\")"
+            /usr/bin/defaults write "$audit_plist" os_mail_summary_disable -dict-add finding -bool YES
+            if [[ ! "$customref" == "os_mail_summary_disable" ]]; then
+                /usr/bin/defaults write "$audit_plist" os_mail_summary_disable -dict-add reference -string "$customref"
+            fi
+            /usr/bin/logger "mSCP: cmmc_lvl1 - os_mail_summary_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
+        else
+            logmessage "os_mail_summary_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
+            /usr/bin/defaults write "$audit_plist" os_mail_summary_disable -dict-add finding -bool YES
+            if [[ ! "$customref" == "os_mail_summary_disable" ]]; then
+              /usr/bin/defaults write "$audit_plist" os_mail_summary_disable -dict-add reference -string "$customref"
+            fi
+            /usr/bin/logger "mSCP: cmmc_lvl1 - os_mail_summary_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /bin/sleep 1
+        fi
+    fi
+
+
+else
+    logmessage "os_mail_summary_disable does not apply to this architecture"
+    /usr/bin/defaults write "$audit_plist" os_mail_summary_disable -dict-add finding -bool NO
+fi
+
 #####----- Rule: os_nfsd_disable -----#####
 ## Addresses the following NIST 800-53 controls: 
 # * AC-17
@@ -2318,6 +2442,68 @@ EOS
 else
     logmessage "os_on_device_dictation_enforce does not apply to this architecture"
     /usr/bin/defaults write "$audit_plist" os_on_device_dictation_enforce -dict-add finding -bool NO
+fi
+
+#####----- Rule: os_photos_enhanced_search_disable -----#####
+## Addresses the following NIST 800-53 controls: 
+# * AC-20, AC-20(1)
+# * CM-7, CM-7(1)
+# * SC-7(10)
+rule_arch=""
+if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
+    unset result_value
+    result_value=$(/usr/bin/osascript -l JavaScript << EOS
+$.NSUserDefaults.alloc.initWithSuiteName('com.apple.photos.shareddefaults')\
+.objectForKey('IPXDefaultEnhancedVisualSearchEnabled').js
+EOS
+)
+    # expected result {'string': 'false'}
+
+
+    # check to see if rule is exempt
+    unset exempt
+    unset exempt_reason
+
+    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cmmc_lvl1.audit').objectForKey('os_photos_enhanced_search_disable'))["exempt"]
+EOS
+)
+    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.cmmc_lvl1.audit').objectForKey('os_photos_enhanced_search_disable'))["exempt_reason"]
+EOS
+)   
+    customref="$(echo "os_photos_enhanced_search_disable" | rev | cut -d ' ' -f 2- | rev)"
+    customref="$(echo "$customref" | tr " " ",")"
+    if [[ $result_value == "false" ]]; then
+        logmessage "os_photos_enhanced_search_disable passed (Result: $result_value, Expected: \"{'string': 'false'}\")"
+        /usr/bin/defaults write "$audit_plist" os_photos_enhanced_search_disable -dict-add finding -bool NO
+        if [[ ! "$customref" == "os_photos_enhanced_search_disable" ]]; then
+            /usr/bin/defaults write "$audit_plist" os_photos_enhanced_search_disable -dict-add reference -string "$customref"
+        fi
+        /usr/bin/logger "mSCP: cmmc_lvl1 - os_photos_enhanced_search_disable passed (Result: $result_value, Expected: "{'string': 'false'}")"
+    else
+        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
+            logmessage "os_photos_enhanced_search_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\")"
+            /usr/bin/defaults write "$audit_plist" os_photos_enhanced_search_disable -dict-add finding -bool YES
+            if [[ ! "$customref" == "os_photos_enhanced_search_disable" ]]; then
+                /usr/bin/defaults write "$audit_plist" os_photos_enhanced_search_disable -dict-add reference -string "$customref"
+            fi
+            /usr/bin/logger "mSCP: cmmc_lvl1 - os_photos_enhanced_search_disable failed (Result: $result_value, Expected: "{'string': 'false'}")"
+        else
+            logmessage "os_photos_enhanced_search_disable failed (Result: $result_value, Expected: \"{'string': 'false'}\") - Exemption Allowed (Reason: \"$exempt_reason\")"
+            /usr/bin/defaults write "$audit_plist" os_photos_enhanced_search_disable -dict-add finding -bool YES
+            if [[ ! "$customref" == "os_photos_enhanced_search_disable" ]]; then
+              /usr/bin/defaults write "$audit_plist" os_photos_enhanced_search_disable -dict-add reference -string "$customref"
+            fi
+            /usr/bin/logger "mSCP: cmmc_lvl1 - os_photos_enhanced_search_disable failed (Result: $result_value, Expected: "{'string': 'false'}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /bin/sleep 1
+        fi
+    fi
+
+
+else
+    logmessage "os_photos_enhanced_search_disable does not apply to this architecture"
+    /usr/bin/defaults write "$audit_plist" os_photos_enhanced_search_disable -dict-add finding -bool NO
 fi
 
 #####----- Rule: os_rapid_security_response_allow -----#####
