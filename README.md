@@ -4,11 +4,11 @@ Terraform configuration for the Jamf Platform.
 
 Provider versions used in this release:
 
-- deploymenttheory/jamfpro > = v0.11.0
+- deploymenttheory/jamfpro = v0.19.1
 - danjamf/jsctfprovider >= v0.0.23
 - hasicorp/aws v55.62.0 (optional with SaaS tenancy control)
 
-This project utlizes the unoffical Terraform providers for [Jamf Pro](https://registry.terraform.io/providers/deploymenttheory/jamfpro/latest) and [Jamf Security Cloud](https://registry.terraform.io/providers/danjamf/jsctfprovider/latest)
+This project utlizes the community Terraform providers for [Jamf Pro](https://registry.terraform.io/providers/deploymenttheory/jamfpro/latest) and [Jamf Security Cloud](https://registry.terraform.io/providers/danjamf/jsctfprovider/latest)
 
 ## Parallelism and API delay
 
