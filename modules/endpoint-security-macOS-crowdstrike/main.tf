@@ -3,16 +3,10 @@ terraform {
   required_providers {
     jamfpro = {
       source  = "deploymenttheory/jamfpro"
-      version = ">= 0.1.5"
+      version = "0.19.1"
     }
   }
 }
-
-## Data Source for script
-data "http" "crowdstrike_install" {
-  url = "https://raw.githubusercontent.com/franton/Crowdstrike-API-Scripts/refs/heads/main/install-csf.sh"
-}
-
 
 ## Create Categories
 resource "jamfpro_category" "category_crowdstrike" {
@@ -29,8 +23,8 @@ resource "jamfpro_script" "scripts_falconpkg" {
   priority        = "AFTER"
   info            = "Source: https://github.com/franton/Crowdstrike-API-Scripts/blob/main/install-csf.sh"
   notes           = ""
-  parameter4      = "Falcon API Client ID"
-  parameter5      = "Falcon API Client Secret"
+  parameter4      = var.falcon_api_client_id
+  parameter5      = var.falcon_api_secret
   parameter6      = ""
   parameter7      = ""
 }
@@ -43,7 +37,7 @@ resource "jamfpro_script" "scripts_falconcid" {
   priority        = "AFTER"
   info            = ""
   notes           = ""
-  parameter4      = "Customer ID"
+  parameter4      = var.falcon_customer_id
   parameter5      = ""
   parameter6      = ""
   parameter7      = ""

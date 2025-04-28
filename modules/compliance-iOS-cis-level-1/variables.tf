@@ -1,9 +1,4 @@
 ## Define miscellaneous variables
-variable "prefix" {
-  type    = string
-  default = "EJ - "
-}
-
 variable "support_files_path_prefix" {
   type    = string
   default = ""
@@ -11,7 +6,6 @@ variable "support_files_path_prefix" {
 variable "jamfpro_instance_url" {
   description = "Jamf Pro Instance name."
   type        = string
-  default     = ""
 }
 
 variable "jamfpro_auth_method" {
@@ -23,12 +17,10 @@ variable "jamfpro_auth_method" {
 variable "jamfpro_client_id" {
   description = "Jamf Pro Client ID for authentication."
   type        = string
-  default     = ""
 }
 
 variable "jamfpro_client_secret" {
   description = "Jamf Pro Client Secret for authentication."
   type        = string
   sensitive   = true
-  default     = ""
 }
