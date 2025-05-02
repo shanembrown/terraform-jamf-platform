@@ -3,7 +3,7 @@ terraform {
   required_providers {
     jsc = {
       source                = "danjamf/jsctfprovider"
-      configuration_aliases = ["jsc"]
+      configuration_aliases = [jsc.jsc]
     }
   }
 }

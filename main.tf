@@ -3,8 +3,8 @@ module "onboarder-all" {
   count  = var.include_onboarder_all == true ? 1 : 0
   source = "./modules/onboarder-all"
   providers = {
-    jamfpro = jamfpro.jpro
-    jsc     = jsc.jsc
+    jamfpro.jpro = jamfpro.jpro
+    jsc.jsc      = jsc.jsc
   }
 }
 
@@ -12,7 +12,7 @@ module "onboarder-management-macOS" {
   count  = var.include_onboarder_management_macOS == true ? 1 : 0
   source = "./modules/onboarder-management-macOS"
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -20,7 +20,7 @@ module "onboarder-management-mobile" {
   count  = var.include_onboarder_management_mobile == true ? 1 : 0
   source = "./modules/onboarder-management-mobile"
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -28,7 +28,7 @@ module "onboarder-app-installers" {
   count  = var.include_onboarder_app_installers == true ? 1 : 0
   source = "./modules/onboarder-app-installers"
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -46,7 +46,7 @@ module "configuration-jamf-pro-jamf-protect" {
   jamfprotect_clientID        = var.jamfprotect_clientID
   jamfprotect_client_password = var.jamfprotect_client_password
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -57,7 +57,7 @@ module "compliance-macOS-cis-level-1" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -68,7 +68,7 @@ module "compliance-iOS-cis-level-1" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -79,7 +79,7 @@ module "compliance-macOS-disa-stig" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -90,7 +90,7 @@ module "compliance-iOS-disa-stig" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -101,7 +101,7 @@ module "compliance-macOS-nist-800-171" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -112,7 +112,7 @@ module "compliance-macOS-cmmc-level-1" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -123,7 +123,7 @@ module "configuration-jamf-pro-admin-sso" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -134,7 +134,7 @@ module "configuration-jamf-pro-smart-groups" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -145,7 +145,7 @@ module "management-macOS-microsoft-365" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -156,7 +156,7 @@ module "configuration-jamf-pro-categories" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -167,7 +167,7 @@ module "management-iOS-configuration-profiles" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -178,7 +178,7 @@ module "configuration-jamf-pro-computer-management-settings" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -189,7 +189,7 @@ module "endpoint-security-macOS-filevault" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -200,7 +200,7 @@ module "endpoint-security-macOS-microsoft-defender" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -211,7 +211,7 @@ module "management-macOS-SSOe-Okta" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -225,7 +225,7 @@ module "endpoint-security-macOS-crowdstrike" {
   falcon_api_secret     = "placeholderclientsecret"
   falcon_customer_id    = "placeholdercustomerID"
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -236,7 +236,7 @@ module "management-macOS-rosetta" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -248,7 +248,7 @@ module "management-app-installers" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
+    jamfpro.jpro = jamfpro.jpro
   }
 }
 
@@ -264,8 +264,8 @@ module "configuration-jamf-security-cloud-jamf-pro" {
   jsc_username          = var.jsc_username
   jsc_password          = var.jsc_password
   providers = {
-    jamfpro = jamfpro.jpro
-    jsc     = jsc.jsc
+    jamfpro.jpro = jamfpro.jpro
+    jsc.jsc      = jsc.jsc
   }
 }
 
@@ -281,8 +281,8 @@ module "configuration-jamf-security-cloud-all-services" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
-    jsc     = jsc.jsc
+    jamfpro.jpro = jamfpro.jpro
+    jsc.jsc      = jsc.jsc
   }
 }
 
@@ -293,7 +293,7 @@ module "network-security-access-policy" {
   jsc_username       = var.jsc_username
   jsc_password       = var.jsc_password
   providers = {
-    jsc = jsc.jsc
+    jsc.jsc = jsc.jsc
   }
 }
 
@@ -304,7 +304,7 @@ module "configuration-jamf-security-cloud-block-pages" {
   jsc_username    = var.jsc_username
   jsc_password    = var.jsc_password
   providers = {
-    jsc = jsc.jsc
+    jsc.jsc = jsc.jsc
   }
 }
 
@@ -320,8 +320,8 @@ module "network-security-jamf-pro-content-filtering" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
-    jsc     = jsc.jsc
+    jamfpro.jpro = jamfpro.jpro
+    jsc.jsc      = jsc.jsc
   }
 }
 
@@ -337,8 +337,8 @@ module "network-security-jamf-pro-network-threat-defense" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
-    jsc     = jsc.jsc
+    jamfpro.jpro = jamfpro.jpro
+    jsc.jsc      = jsc.jsc
   }
 }
 
@@ -354,8 +354,8 @@ module "network-security-jamf-pro-content-filtering-and-network-threat-defense" 
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
-    jsc     = jsc.jsc
+    jamfpro.jpro = jamfpro.jpro
+    jsc.jsc      = jsc.jsc
   }
 }
 
@@ -371,8 +371,8 @@ module "network-security-jamf-pro-zero-trust-network-access" {
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
-    jsc     = jsc.jsc
+    jamfpro.jpro = jamfpro.jpro
+    jsc.jsc      = jsc.jsc
   }
 }
 
@@ -388,8 +388,8 @@ module "network-security-jamf-pro-zero-trust-network-access-and-content-filterin
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
-    jsc     = jsc.jsc
+    jamfpro.jpro = jamfpro.jpro
+    jsc.jsc      = jsc.jsc
   }
 }
 
@@ -405,7 +405,7 @@ module "network-security-jamf-pro-zero-trust-network-access-and-network-threat-p
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
   providers = {
-    jamfpro = jamfpro.jpro
-    jsc     = jsc.jsc
+    jamfpro.jpro = jamfpro.jpro
+    jsc.jsc      = jsc.jsc
   }
 }

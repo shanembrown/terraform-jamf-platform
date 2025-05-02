@@ -3,7 +3,7 @@ terraform {
   required_providers {
     jamfpro = {
       source                = "deploymenttheory/jamfpro"
-      configuration_aliases = ["jpro"]
+      configuration_aliases = [jamfpro.jpro]
     }
   }
 }
