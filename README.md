@@ -20,7 +20,7 @@ export TF_CLI_ARGS_apply="-parallelism=1"
 
 We also recommend setting the `mandatory_request_delay_milliseconds`provider key to 100.
 
-## Running Included Modules
+# Running Included Modules
 
 The modules included here are using aliased calls to the Jamf Pro and Jamf Security Cloud providers that are used. This is done to ensure that you only need credentials for the module you are running. 
 
