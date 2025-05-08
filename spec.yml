@@ -61,6 +61,7 @@ options:
     type: <boolean>
     presence: optional
     module_name: module.onboarder-all
+    required_provider: jpro, jsc
     category: Standard
     display_name: Apply All
     display_desc: Create all API intergrations between management and security capabilties. Create all management configurations and security configurations available in Onboarder + CIS Level 1 for macOS, iOS, and iPadOS.
@@ -69,6 +70,7 @@ options:
     type: <boolean>
     presence: optional
     module_name: module.onboarder-app-installers
+    required_provider: jpro
     category: All App Installers
     display_name: Configure App Installers
     display_desc: Configure all available App Installers in Onboarder
@@ -77,6 +79,7 @@ options:
     type: <boolean>
     presence: optional
     module_name: module.onboarder-management-macOS
+    required_provider: jpro
     category: Management
     display_name: macOS Foundation
     display_desc: Configure all available management settings in Onboarder for macOS. Includes common configurations, settings, Smart Computer groups, and quality of life settings for macOS management.
@@ -85,23 +88,17 @@ options:
     type: <boolean>
     presence: optional
     module_name: module.onboarder-management-mobile
+    required_provider: jpro
     category: Management
     display_name: iOS/iPadOS Foundation
     display_desc: Configure all available management settings in Onboarder for iOS and iPadOS. Includes common configurations, settings, Smart Device groups, and quality of life settings for iOS and iPadOS management.
-
-  - key: include_onboarder_security
-    type: <boolean>
-    presence: optional
-    module_name: module.onboarder-security
-    category: All Security
-    display_name: Configure Security Capabilities
-    display_desc: Configre all available seurity configurations and settings in Onbarder
 
   ## Security Onboarder Modules
   - key: include_jsc_uemc
     type: <boolean>
     presence: optional
     module_name: module.configuration-jamf-security-cloud-jamf-pro
+    required_provider: jpro, jsc
     content: This will create all the necessary API Roles and an API Client in your Jamf Pro instance and then set up UEM Connect for Group synchronization, automated risk signaling, and easier deployment
     category: Security
     display_name: Integrate Web & Network Security Capabilities with Management Capabilities
@@ -111,6 +108,7 @@ options:
     type: <boolean>
     presence: optional
     module_name: module.configuration-jamf-security-cloud-all-services
+    required_provider: jpro, jsc
     content: Creates an Activation Profile for all Jamf Security Cloud services and uploads it to Jamf Pro
     category: Security
     display_name: Configure Web and Network Security Capabilities
@@ -120,6 +118,7 @@ options:
     type: <boolean>
     presence: optional
     module_name: module.configuration-jamf-security-cloud-block-pages
+    required_provider: jsc
     content: Provides customizable block pages for organizational policies
     category: Security
     display_name: Enable Customizable Block Pages
@@ -129,6 +128,7 @@ options:
     type: <boolean>
     presence: optional
     module_name: module.endpoint-security-macOS-filevault
+    required_provider: jpro
     category: Security
     display_name: Enforce & Escrow FileVault 2
     display_desc: For managed computers, configure the necessary capabilities including Configuration Profile, Script, and Policy to enable and enforce FileVault 2 and make certain that the recovery key is escrowed by Jamf.
@@ -138,6 +138,7 @@ options:
     type: <boolean>
     presence: optional
     module_name: module.configuration-jamf-pro-jamf-protect
+    required_provider: jpro, jprt
     category: Security
     display_name: Integrate macOS Endpoint Security with Management Capabilities
     display_desc: Configures the API connection and integration between macOS management and security capabiltiies and their consoles. Streamlines deployment and enables advanced remediation workflows.
@@ -146,6 +147,7 @@ options:
     type: <boolean>
     presence: optional
     module_name: module.management-macOS-SSOe-Okta
+    required_provider: jpro
     category: Security
     display_name: Enable SSOe (Okta)
     display_desc: This will configure the management capabilities required to configure and install the Okta Verify.app for SSOe on macOS. Please modify the following .mobileconfig payloads with your Organization's values. Okta Device Management Attestation, ExtensionIdentifier, & Custom Settings. Objects are scoped to the SSOe-(Okta) Smart Group. To scope configurations to computers edit the serial number criteria to match the serial number of a test computer or remove the serial number criteria to scope to all enrolled computers.
@@ -155,6 +157,7 @@ options:
     type: <boolean>
     presence: optional
     module_name: module.compliance-macOS-cis-level-1
+    required_provider: jpro
     category: Endpoint Compliance
     display_name: Configure and Apply CIS Level 1 for macOS
     display_desc: For managed computers, prepares and uploads all necessary components for applying CIS Level 1 to macOS Sonoma and Sequoia. Smart Groups are pre-configured to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
@@ -163,6 +166,7 @@ options:
     type: <boolean>
     presence: optional
     module_name: module.compliance-iOS-cis-level-1
+    required_provider: jpro
     category: Endpoint Compliance
     display_name: Configure and Apply CIS Level 1 for iOS
     display_desc: For managed devices, prepares and uploads all necessary components for applying CIS Level 1 to iOS/iPadOS 17 & 18. Smart Groups are pre-configured to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
@@ -171,6 +175,7 @@ options:
     type: <boolean>
     presence: optional
     module_name: module.compliance-macOS-disa-stig
+    required_provider: jpro
     category: Endpoint Compliance
     display_name: Configure and Apply DISA STIG for macOS
     display_desc: For managed computers, prepares and uploads the necessary components for DISA STIG to macOS Sonoma and Sequoia (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-configured to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria.  **Benchmark from macOS Security Compliance Project**
@@ -179,6 +184,7 @@ options:
     type: <boolean>
     presence: optional
     module_name: module.compliance-iOS-disa-stig
+    required_provider: jpro
     category: Endpoint Compliance
     display_name: Configure and Apply DISA STIG for iOS
     display_desc: For managed devices, prepares and uploads the necessary components for DISA STIG on iOS 17 (not yet mapped for iOS 18). Smart Groups are pre-set to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria.  **Benchmark from macOS Security Compliance Project**
@@ -187,6 +193,7 @@ options:
     type: <boolean>
     presence: optional
     module_name: module.compliance-macOS-nist-800-171
+    required_provider: jpro
     category: Endpoint Compliance
     display_name: Configure and Apply NIST 800-171 for macOS
     display_desc: For managed computers, prepares and uploads the necessary components for NIST 800-171 for macOS Sonoma and Sequoia  (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-configured to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
@@ -195,6 +202,7 @@ options:
     type: <boolean>
     presence: optional
     module_name: module.compliance-macOS-cmmc-level-1
+    required_provider: jpro
     category: Endpoint Compliance
     display_name: Configure and Apply US CMMC 2.0 Level 1 for macOS
     display_desc: For managed computers, prepares and uploads the necessary components for US CMMC 2.0 Level 1 profile for macOS Sonoma and Sequoia (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-set to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
@@ -203,6 +211,7 @@ options:
   - key: management-app-installers-microsoft-edge
     presence: optional
     module_name: module.management-app-installers-microsoft-edge
+    required_provider: jpro
     content: Indicates whether to include the Microsoft Edge App Installer
     category: Browsers
     display_name: Microsoft Edge
@@ -211,6 +220,7 @@ options:
   - key: management-app-installers-google-chrome
     presence: optional
     module_name: module.management-app-installers-google-chrome
+    required_provider: jpro
     content: Indicates whether to include the Google Chrome App Installer
     category: Browsers
     display_name: Google Chrome
@@ -219,6 +229,7 @@ options:
   - key: management-app-installers-mozilla-firefox
     presence: optional
     module_name: module.management-app-installers-mozilla-firefox
+    required_provider: jpro
     content: Indicates whether to include the Mozilla Firefox App Installer
     category: Browsers
     display_name: Mozilla Firefox
@@ -227,6 +238,7 @@ options:
   - key: management-app-installers-slack
     presence: optional
     module_name: module.management-app-installers-slack
+    required_provider: jpro
     content: Indicates whether to include the Slack App Installer
     category: Productivity
     display_name: Slack
@@ -235,6 +247,7 @@ options:
   - key: management-app-installers-dropbox
     presence: optional
     module_name: module.management-app-installers-dropbox
+    required_provider: jpro
     content: Indicates whether to include the Dropbox App Installer
     category: Productivity
     display_name: Dropbox
@@ -243,6 +256,7 @@ options:
   - key: management-app-installers-google-drive
     presence: optional
     module_name: module.management-app-installers-google-drive
+    required_provider: jpro
     content: Indicates whether to include the Google Drive App Installer
     category: Productivity
     display_name: Google Drive
@@ -251,6 +265,7 @@ options:
   - key: management-app-installers-jamfcheck
     presence: optional
     module_name: module.management-app-installers-jamfcheck
+    required_provider: jpro
     content: Indicates whether to include the JamfCheck App Installer
     category: Utilities
     display_name: JamfCheck
@@ -259,6 +274,7 @@ options:
   - key: management-app-installers-zoom
     presence: optional
     module_name: module.management-app-installers-zoom
+    required_provider: jpro
     content: Indicates whether to include the Zoom App Installer
     category: Productivity
     display_name: Zoom Client for Meetings
@@ -267,6 +283,7 @@ options:
   - key: management-app-installers-adobe-creative-cloud
     presence: optional
     module_name: module.management-app-installers-adobe-creative-cloud
+    required_provider: jpro
     content: Indicates whether to include the Adobe Creative Cloud App Installer
     category: Productivity
     display_name: Adobe Creative Cloud
@@ -275,6 +292,7 @@ options:
   - key: management-app-installers-box-drive
     presence: optional
     module_name: module.management-app-installers-box-drive
+    required_provider: jpro
     content: Indicates whether to include the Box Drive App Installer
     category: Productivity
     display_name: Box Drive
@@ -283,6 +301,7 @@ options:
   - key: management-app-installers-nudge
     presence: optional
     module_name: module.management-app-installers-nudge
+    required_provider: jpro
     content: Indicates whether to include the Nudge App Installer
     category: Utilities
     display_name: Nudge
@@ -291,6 +310,7 @@ options:
   - key: management-app-installers-text-expander
     presence: optional
     module_name: module.management-app-installers-text-expander
+    required_provider: jpro
     content: Indicates whether to include the Text Expander App Installer
     category: Productivity
     display_name: TextExpander

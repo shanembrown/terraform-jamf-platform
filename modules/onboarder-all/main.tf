@@ -2,12 +2,12 @@
 terraform {
   required_providers {
     jamfpro = {
-      source  = "deploymenttheory/jamfpro"
-      version = "0.19.1"
+      source                = "deploymenttheory/jamfpro"
+      configuration_aliases = [jamfpro.jpro]
     }
     jsc = {
-      source  = "danjamf/jsctfprovider"
-      version = ">= 0.0.15"
+      source                = "danjamf/jsctfprovider"
+      configuration_aliases = [jsc.jsc]
     }
   }
 }
@@ -17,6 +17,9 @@ module "onboarder-management-macOS" {
   jamfpro_instance_url  = var.jamfpro_instance_url
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
+  providers = {
+    jamfpro.jpro = jamfpro.jpro
+  }
 }
 
 module "onboarder-management-mobile" {
@@ -24,6 +27,9 @@ module "onboarder-management-mobile" {
   jamfpro_instance_url  = var.jamfpro_instance_url
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
+  providers = {
+    jamfpro.jpro = jamfpro.jpro
+  }
 }
 
 module "compliance-macOS-cis-level-1" {
@@ -31,6 +37,9 @@ module "compliance-macOS-cis-level-1" {
   jamfpro_instance_url  = var.jamfpro_instance_url
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
+  providers = {
+    jamfpro.jpro = jamfpro.jpro
+  }
 }
 
 module "compliance-iOS-cis-level-1" {
@@ -38,6 +47,9 @@ module "compliance-iOS-cis-level-1" {
   jamfpro_instance_url  = var.jamfpro_instance_url
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
+  providers = {
+    jamfpro.jpro = jamfpro.jpro
+  }
 }
 
 module "management-macOS-SSOe-Okta" {
@@ -45,6 +57,9 @@ module "management-macOS-SSOe-Okta" {
   jamfpro_instance_url  = var.jamfpro_instance_url
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
+  providers = {
+    jamfpro.jpro = jamfpro.jpro
+  }
 }
 
 module "configuration-jamf-security-cloud-all-services" {
@@ -56,6 +71,10 @@ module "configuration-jamf-security-cloud-all-services" {
   jamfpro_client_secret = var.jamfpro_client_secret
   jsc_username          = var.jsc_username
   jsc_password          = var.jsc_password
+  providers = {
+    jamfpro.jpro = jamfpro.jpro
+    jsc.jsc      = jsc.jsc
+  }
 }
 
 module "configuration-jamf-security-cloud-block-pages" {
@@ -63,6 +82,9 @@ module "configuration-jamf-security-cloud-block-pages" {
   block_page_logo = var.block_page_logo
   jsc_username    = var.jsc_username
   jsc_password    = var.jsc_password
+  providers = {
+    jsc.jsc = jsc.jsc
+  }
 }
 
 module "endpoint-security-macOS-filevault" {
@@ -70,6 +92,9 @@ module "endpoint-security-macOS-filevault" {
   jamfpro_instance_url  = var.jamfpro_instance_url
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
+  providers = {
+    jamfpro.jpro = jamfpro.jpro
+  }
 }
 
 module "onboarder-app-installers" {
@@ -77,4 +102,7 @@ module "onboarder-app-installers" {
   jamfpro_instance_url  = var.jamfpro_instance_url
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
+  providers = {
+    jamfpro.jpro = jamfpro.jpro
+  }
 }
