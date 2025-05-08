@@ -208,18 +208,8 @@ options:
     display_desc: For managed computers, prepares and uploads the necessary components for US CMMC 2.0 Level 1 profile for macOS Sonoma and Sequoia (Smart Card profile is not scoped due to potential login impact). Smart Groups are pre-set to not deploy automatically. Edit the group to enforce compliance, auditing, and remediation by modifying or removing the Serial Number criteria. **Benchmark from macOS Security Compliance Project**
 
    ### App Installer Modules
-  - key: management-app-installers-microsoft-edge
-    presence: optional
-    module_name: module.management-app-installers-microsoft-edge
-    required_provider: jpro
-    content: Indicates whether to include the Microsoft Edge App Installer
-    category: Browsers
-    display_name: Microsoft Edge
-    display_desc: Configures Microsoft Edge in Jamf Pro to be deployable to managed computers.
-
   - key: management-app-installers-google-chrome
     presence: optional
-    module_name: module.management-app-installers-google-chrome
     required_provider: jpro
     content: Indicates whether to include the Google Chrome App Installer
     category: Browsers
@@ -228,7 +218,6 @@ options:
 
   - key: management-app-installers-mozilla-firefox
     presence: optional
-    module_name: module.management-app-installers-mozilla-firefox
     required_provider: jpro
     content: Indicates whether to include the Mozilla Firefox App Installer
     category: Browsers
@@ -237,7 +226,6 @@ options:
 
   - key: management-app-installers-slack
     presence: optional
-    module_name: module.management-app-installers-slack
     required_provider: jpro
     content: Indicates whether to include the Slack App Installer
     category: Productivity
@@ -246,7 +234,6 @@ options:
 
   - key: management-app-installers-dropbox
     presence: optional
-    module_name: module.management-app-installers-dropbox
     required_provider: jpro
     content: Indicates whether to include the Dropbox App Installer
     category: Productivity
@@ -255,7 +242,6 @@ options:
 
   - key: management-app-installers-google-drive
     presence: optional
-    module_name: module.management-app-installers-google-drive
     required_provider: jpro
     content: Indicates whether to include the Google Drive App Installer
     category: Productivity
@@ -264,7 +250,6 @@ options:
 
   - key: management-app-installers-jamfcheck
     presence: optional
-    module_name: module.management-app-installers-jamfcheck
     required_provider: jpro
     content: Indicates whether to include the JamfCheck App Installer
     category: Utilities
@@ -273,7 +258,6 @@ options:
 
   - key: management-app-installers-zoom
     presence: optional
-    module_name: module.management-app-installers-zoom
     required_provider: jpro
     content: Indicates whether to include the Zoom App Installer
     category: Productivity
@@ -282,7 +266,6 @@ options:
 
   - key: management-app-installers-adobe-creative-cloud
     presence: optional
-    module_name: module.management-app-installers-adobe-creative-cloud
     required_provider: jpro
     content: Indicates whether to include the Adobe Creative Cloud App Installer
     category: Productivity
@@ -291,7 +274,6 @@ options:
 
   - key: management-app-installers-box-drive
     presence: optional
-    module_name: module.management-app-installers-box-drive
     required_provider: jpro
     content: Indicates whether to include the Box Drive App Installer
     category: Productivity
@@ -300,7 +282,6 @@ options:
 
   - key: management-app-installers-nudge
     presence: optional
-    module_name: module.management-app-installers-nudge
     required_provider: jpro
     content: Indicates whether to include the Nudge App Installer
     category: Utilities
@@ -309,9 +290,64 @@ options:
 
   - key: management-app-installers-text-expander
     presence: optional
-    module_name: module.management-app-installers-text-expander
     required_provider: jpro
     content: Indicates whether to include the Text Expander App Installer
     category: Productivity
     display_name: TextExpander
     display_desc: Configures Text Expander in Jamf Pro to be deployable to managed computers.
+
+  - key: management-app-installers-microsoft-excel
+    presence: optional
+    required_provider: jpro
+    content: Indicates whether to include the Microsoft Excel App Installer
+    category: Productivity
+    display_name: Microsoft Excel 365
+    display_desc: Configures Microsoft Excel in Jamf Pro to be deployable to managed computers.
+
+  - key: management-app-installers-microsoft-powerpoint
+    presence: optional
+    required_provider: jpro
+    content: Indicates whether to include the Microsoft PowerPoint App Installer
+    category: Productivity
+    display_name: Microsoft PowerPoint 365
+    display_desc: Configures Microsoft Powerpoint in Jamf Pro to be deployable to managed computers.
+
+  - key: management-app-installers-microsoft-outlook
+    presence: optional
+    required_provider: jpro
+    content: Indicates whether to include the Microsoft Outlook App Installer
+    category: Productivity
+    display_name: Microsoft Outlook 365
+    display_desc: Configures Microsoft Outlook in Jamf Pro to be deployable to managed computers.
+
+  - key: management-app-installers-microsoft-onedrive
+    presence: optional
+    required_provider: jpro
+    content: Indicates whether to include the Microsoft OneDrive App Installer
+    category: Productivity
+    display_name: Microsoft OneDrive
+    display_desc: Configures Microsoft OneDrive in Jamf Pro to be deployable to managed computers.
+
+  - key: management-app-installers-microsoft-word
+    presence: optional
+    required_provider: jpro
+    content: Indicates whether to include the Microsoft Word App Installer
+    category: Productivity
+    display_name: Microsoft Word 365
+    display_desc: Configures Microsoft Word in Jamf Pro to be deployable to managed computers.
+
+  - key: management-app-installers-microsoft-teams
+    presence: optional
+    required_provider: jpro
+    content: Indicates whether to include the Microsoft Teams App Installer
+    category: Productivity
+    display_name: Microsoft Teams
+    display_desc: Configures Microsoft Teams in Jamf Pro to be deployable to managed computers.
+
+  - key: management-app-installers-microsoft-edge
+    presence: optional
+    required_provider: jpro
+    content: Indicates whether to include the Microsoft Edge App Installer
+    category: Browsers
+    display_name: Microsoft Edge
+    display_desc: Configures Microsoft Edge in Jamf Pro to be deployable to managed computers.
