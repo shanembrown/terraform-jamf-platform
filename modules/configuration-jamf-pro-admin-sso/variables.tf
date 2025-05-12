@@ -46,3 +46,8 @@ variable "random_string" {
   type    = string
   default = ""
 }
+
+variable "entropy_string" {
+  type    = string
+  default = ""
+}
