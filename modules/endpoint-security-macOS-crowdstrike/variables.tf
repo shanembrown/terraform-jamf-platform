@@ -36,3 +36,8 @@ variable "falcon_customer_id" {
   description = "Falcon Customer ID"
   type        = string
 }
+
+variable "random_string" {
+  type    = string
+  default = ""
+}

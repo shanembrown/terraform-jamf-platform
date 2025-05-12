@@ -168,3 +168,8 @@ variable "enable_jsc_uemc_output" {
   type    = string
   default = ""
 }
+
+variable "random_string" {
+  type    = string
+  default = ""
+}

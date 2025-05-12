@@ -21,10 +21,22 @@ provider "jsc" {
   applicationsecret = var.jsc_applicationsecret
 }
 
+resource "random_string" "entropy" {
+  count  = var.random_string_boolean == true ? 1 : 0
+  length = 12
+  upper  = true
+  lower  = true
+}
+
+locals {
+  random_string = var.random_string.entropy.result
+}
+
 # Onboarder Modules
 module "onboarder-all" {
-  count  = var.include_onboarder_all == true ? 1 : 0
-  source = "./modules/onboarder-all"
+  count         = var.include_onboarder_all == true ? 1 : 0
+  source        = "./modules/onboarder-all"
+  random_string = local.random_string
   providers = {
     jamfpro.jpro = jamfpro.jpro
     jsc.jsc      = jsc.jsc
@@ -32,16 +44,18 @@ module "onboarder-all" {
 }
 
 module "onboarder-management-macOS" {
-  count  = var.include_onboarder_management_macOS == true ? 1 : 0
-  source = "./modules/onboarder-management-macOS"
+  count         = var.include_onboarder_management_macOS == true ? 1 : 0
+  source        = "./modules/onboarder-management-macOS"
+  random_string = local.random_string
   providers = {
     jamfpro.jpro = jamfpro.jpro
   }
 }
 
 module "onboarder-management-mobile" {
-  count  = var.include_onboarder_management_mobile == true ? 1 : 0
-  source = "./modules/onboarder-management-mobile"
+  count         = var.include_onboarder_management_mobile == true ? 1 : 0
+  source        = "./modules/onboarder-management-mobile"
+  random_string = local.random_string
   providers = {
     jamfpro.jpro = jamfpro.jpro
   }

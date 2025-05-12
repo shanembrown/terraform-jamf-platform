@@ -486,3 +486,8 @@ variable "include_crowdstrike" {
   type    = bool
   default = false
 }
+
+variable "random_string" {
+  type    = string
+  default = ""
+}

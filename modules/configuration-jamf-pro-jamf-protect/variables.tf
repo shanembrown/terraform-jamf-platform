@@ -35,3 +35,8 @@ variable "jamfpro_auth_method" {
   type        = string
   default     = "oauth2" #basic or oauth2
 }
+
+variable "random_string" {
+  type    = string
+  default = ""
+}

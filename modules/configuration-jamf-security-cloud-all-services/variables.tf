@@ -88,3 +88,8 @@ variable "supervisedplist_output" {
   type    = string
   default = ""
 }
+
+variable "random_string" {
+  type    = string
+  default = ""
+}

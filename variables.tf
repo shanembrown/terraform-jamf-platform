@@ -518,3 +518,13 @@ variable "access_policies" {
   type    = list(string)
   default = []
 }
+
+variable "random_string_boolean" {
+  type    = bool
+  default = false
+}
+
+variable "random_string" {
+  type    = string
+  default = ""
+}
