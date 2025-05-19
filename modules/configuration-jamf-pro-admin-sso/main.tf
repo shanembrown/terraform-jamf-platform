@@ -8,21 +8,16 @@ terraform {
   }
 }
 
-# Define a resource to use the local-exec provisioner
-resource "null_resource" "run_script" {
+## This is expressly intended to enable Admin SSO for Jamf Account within Jamf Pro. You could modify this to also setup SAML settings for enrollment as well.
+resource "jamfpro_sso_settings" "adminsso" {
+  sso_enabled        = true
+  configuration_type = "OIDC"
 
-  triggers = {
-    jamfpro_instance_url  = var.jamfpro_instance_url
-    jamfpro_client_id     = var.jamfpro_client_id
-    jamfpro_client_secret = var.jamfpro_client_secret
-  }
-  provisioner "local-exec" {
-    command = "${path.module}/adminssoconfigure.sh ${var.jamfpro_instance_url} ${var.jamfpro_client_id} ${var.jamfpro_client_secret}"
-    when    = create
+  oidc_settings {
+    user_mapping = "EMAIL"
   }
 
-  provisioner "local-exec" {
-    command = "${path.module}/adminssodelete.sh ${self.triggers.jamfpro_instance_url} ${self.triggers.jamfpro_client_id} ${self.triggers.jamfpro_client_secret}"
-    when    = destroy
+  enrollment_sso_config {
+    hosts = []
   }
 }
