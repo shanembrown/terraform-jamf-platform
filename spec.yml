@@ -114,16 +114,6 @@ options:
     display_name: Configure Web and Network Security Capabilities
     display_desc: Enables Wireguard ZTNA. Configures Content Filtering, Data and Threat Defense Policies. Creates an Activation Profile for deployment to managed devices. Access Policies will need to be configured in console to fully implement ZTNA capabilities.
 
-  - key: include_jsc_block_pages
-    type: <boolean>
-    presence: optional
-    module_name: module.configuration-jamf-security-cloud-block-pages
-    required_provider: jsc
-    content: Provides customizable block pages for organizational policies
-    category: Security
-    display_name: Enable Customizable Block Pages
-    display_desc: Configures block pages for content filtering. Block pages can be further customized with company/organization branding.
-
   - key: include_filevault
     type: <boolean>
     presence: optional

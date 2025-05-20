@@ -83,17 +83,6 @@ module "configuration-jamf-security-cloud-all-services" {
   }
 }
 
-module "configuration-jamf-security-cloud-block-pages" {
-  source          = "../configuration-jamf-security-cloud-block-pages"
-  block_page_logo = var.block_page_logo
-  jsc_username    = var.jsc_username
-  jsc_password    = var.jsc_password
-  entropy_string  = var.entropy_string
-  providers = {
-    jsc.jsc = jsc.jsc
-  }
-}
-
 module "endpoint-security-macOS-filevault" {
   source                = "../endpoint-security-macOS-filevault"
   jamfpro_instance_url  = var.jamfpro_instance_url
