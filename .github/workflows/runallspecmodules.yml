@@ -69,6 +69,9 @@ jobs:
                           -var "jsc_password=${{ secrets.jsc_password }}" \
                           -var "jsc_applicationid=${{ secrets.jsc_applicationid }}" \
                           -var "jsc_applicationsecret=${{ secrets.jsc_applicationsecret }}" \
+                          -var "jamfprotect_url=${{ secrets.jamfprotect_url }}" \
+                          -var "jamfprotect_clientid=${{ secrets.jamfprotect_clientid }}" \
+                          -var "jamfprotect_client_password=${{ secrets.jamfprotect_client_password }}" \
                           -parallelism=1 \
             || exit_code=$?  # Capture the exit code
             # Check if the exit code is present
@@ -85,6 +88,9 @@ jobs:
                           -var "jsc_password=${{ secrets.jsc_password }}" \
                           -var "jsc_applicationid=${{ secrets.jsc_applicationid }}" \
                           -var "jsc_applicationsecret=${{ secrets.jsc_applicationsecret }}" \
+                          -var "jamfprotect_url=${{ secrets.jamfprotect_url }}" \
+                          -var "jamfprotect_clientid=${{ secrets.jamfprotect_clientid }}" \
+                          -var "jamfprotect_client_password=${{ secrets.jamfprotect_client_password }}" \
                           -parallelism=1 \
                           -refresh=false \
             || exit_code_destroy=$?  # Capture the exit code
@@ -99,6 +105,9 @@ jobs:
                           -var "jsc_password=${{ secrets.jsc_password }}" \
                           -var "jsc_applicationid=${{ secrets.jsc_applicationid }}" \
                           -var "jsc_applicationsecret=${{ secrets.jsc_applicationsecret }}" \
+                          -var "jamfprotect_url=${{ secrets.jamfprotect_url }}" \
+                          -var "jamfprotect_clientid=${{ secrets.jamfprotect_clientid }}" \
+                          -var "jamfprotect_client_password=${{ secrets.jamfprotect_client_password }}" \
                           -parallelism=1 \
                           -refresh=false
             fi
