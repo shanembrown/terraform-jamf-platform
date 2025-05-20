@@ -19,7 +19,7 @@ variable "jamfprotect_url" {
   type        = string
 }
 
-variable "jamfprotect_clientID" {
+variable "jamfprotect_clientid" {
   description = "Jamf Protect Client ID for authentication."
   type        = string
 }

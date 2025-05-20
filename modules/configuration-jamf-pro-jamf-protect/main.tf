@@ -10,7 +10,7 @@ terraform {
 
 resource "jamfpro_jamf_protect" "settings" {
   protect_url  = var.jamfprotect_url
-  client_id    = var.jamfprotect_clientID
+  client_id    = var.jamfprotect_clientid
   password     = var.jamfprotect_client_password
   auto_install = true
 

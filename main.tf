@@ -84,7 +84,7 @@ module "configuration-jamf-pro-jamf-protect" {
   jamfpro_client_id           = var.jamfpro_client_id
   jamfpro_client_secret       = var.jamfpro_client_secret
   jamfprotect_url             = var.jamfprotect_url
-  jamfprotect_clientID        = var.jamfprotect_clientID
+  jamfprotect_clientid        = var.jamfprotect_clientid
   jamfprotect_client_password = var.jamfprotect_client_password
   providers = {
     jamfpro.jpro = jamfpro.jpro

@@ -114,18 +114,23 @@ Copy and paste the following data then customize it with your own credentials an
 
 ```
 ## Jamf Pro Account Details
+jamfpro_auth_method   = "" ## oauth2 or basic
 jamfpro_instance_url  = ""
-jamfpro_auth_method   = "oauth2"
 jamfpro_client_id     = ""
 jamfpro_client_secret = ""
+jamfpro_username      = ""
+jamfpro_password      = ""
+
+## Jamf Protect Account Details
+jamfprotect_url             = ""
+jamfprotect_clientid        = ""
+jamfprotect_client_password = ""
 
 ## Jamf Security Cloud (RADAR) Account Details
 jsc_username          = ""
 jsc_password          = ""
 jsc_applicationid     = ""
 jsc_applicationsecret = ""
-block_page_logo       = ""
-## block_page_logo takes a Base 64 encoded string conversion of the image only
 
 ## tryjamf Okta Account Details
 tje_okta_clientid  = ""
@@ -136,6 +141,7 @@ tje_okta_orgdomain = ""
 ##################################
 
 ## (Jamf Pro) General Settings Knobs ##
+include_jamf_pro_admin_sso           = false
 include_qol_smart_groups             = false
 include_categories                   = false
 include_computer_management_settings = false
@@ -152,7 +158,7 @@ include_mac_cmmc_lvl1_benchmark   = false
 include_microsoft_365 = false
 include_filevault     = false
 include_rosetta       = false
-include_ssoe-okta     = false
+include_ssoe_okta     = false
 
 ## (Jamf Pro) Mobile Outcome Knobs
 include_mobile_device_kickstart = false
@@ -180,6 +186,7 @@ include_jamf_protect_trial_kickstart = false
 ## Jamf Security Cloud Knobs ##
 include_jsc_block_pages   = false
 include_jsc_all_services  = false
+include_jsc_network_relay = false
 include_jsc_uemc          = false
 include_jsc_ap_adobe      = false
 include_jsc_ap_atlassian  = false
