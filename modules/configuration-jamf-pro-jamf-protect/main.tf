@@ -8,11 +8,6 @@ terraform {
   }
 }
 
-resource "random_integer" "entropy" {
-  min = 10
-  max = 999
-}
-
 # Define a resource to use the local-exec provisioner
 resource "null_resource" "run_script" {
 
@@ -22,7 +17,7 @@ resource "null_resource" "run_script" {
     jamfpro_client_secret = var.jamfpro_client_secret
   }
   provisioner "local-exec" {
-    command = "${path.module}/protectintegrationcreate.sh ${var.jamfpro_instance_url} ${var.jamfpro_client_id} ${var.jamfpro_client_secret} ${var.jamfprotect_url} ${var.jamfprotect_clientID} ${var.jamfprotect_client_password}"
+    command = "${path.module}/protectintegrationcreate.sh ${var.jamfpro_instance_url} ${var.jamfpro_client_id} ${var.jamfpro_client_secret} ${var.jamfprotect_url} ${var.jamfprotect_clientid} ${var.jamfprotect_client_password}"
     when    = create
   }
 
@@ -40,7 +35,7 @@ resource "jamfpro_category" "category_jamfprotect_security" {
 # Create Smart Group and Congfiguration Profile to identify Sequoia Macs and make Jamf Protect a non removable system extension
 
 resource "jamfpro_smart_computer_group" "group_sequoia_computers_jamf_protect" {
-  name = "Macs on MacOS Sequoia (Jamf Protect System Extension Enforcement) [${random_integer.entropy.result}]"
+  name = "Macs on MacOS Sequoia (Jamf Protect System Extension Enforcement) ${var.entropy_string}"
   criteria {
     name        = "Operating System Version"
     search_type = "like"
@@ -51,7 +46,7 @@ resource "jamfpro_smart_computer_group" "group_sequoia_computers_jamf_protect" {
 }
 
 resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuration_profile_jamf_protect_system_extension" {
-  name                = "Jamf Protect System Extension Enforcement [${random_integer.entropy.result}]"
+  name                = "Jamf Protect System Extension Enforcement ${var.entropy_string}"
   description         = "This configuration profile prevents users from disabling the Jamf Protect System Extension"
   level               = "System"
   redeploy_on_update  = "Newly Assigned"

@@ -18,6 +18,12 @@ variable "app_installers" {
     "Google Drive",
     "JamfCheck",
     "Microsoft Edge",
+    "Microsoft Teams",
+    "Microsoft Word 365",
+    "Microsoft Excel 365",
+    "Microsoft PowerPoint 365",
+    "Microsoft Outlook 365",
+    "Microsoft OneDrive",
     "Mozilla Firefox",
     "Nudge",
     "Slack",
@@ -33,6 +39,7 @@ module "management-app-installers" {
   jamfpro_instance_url  = var.jamfpro_instance_url
   jamfpro_client_id     = var.jamfpro_client_id
   jamfpro_client_secret = var.jamfpro_client_secret
+  entropy_string        = var.entropy_string
   providers = {
     jamfpro.jpro = jamfpro.jpro
   }

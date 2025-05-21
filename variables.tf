@@ -34,6 +34,24 @@ variable "jamfpro_password" {
   default     = ""
 }
 
+variable "jamfprotect_url" {
+  description = "Jamf Protect URL name."
+  type        = string
+  default     = ""
+}
+
+variable "jamfprotect_clientid" {
+  description = "Jamf Protect Client ID for authentication."
+  type        = string
+  default     = ""
+}
+
+variable "jamfprotect_client_password" {
+  description = "Jamf Protect Client passwrd for authentication."
+  type        = string
+  sensitive   = true
+  default     = ""
+}
 
 ## Define JSC provider variables (populated by .tfvars file)
 variable "jsc_username" {
@@ -517,4 +535,19 @@ variable "app_installers" {
 variable "access_policies" {
   type    = list(string)
   default = []
+}
+
+variable "random_string_boolean" {
+  type    = bool
+  default = false
+}
+
+variable "random_string" {
+  type    = string
+  default = ""
+}
+
+variable "entropy_string" {
+  type    = string
+  default = ""
 }

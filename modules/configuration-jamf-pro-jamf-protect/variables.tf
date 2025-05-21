@@ -12,16 +12,19 @@ variable "jamfpro_client_secret" {
   description = "Jamf Pro Client Secret for authentication."
   type        = string
   sensitive   = true
+  default     = ""
 }
 
 variable "jamfprotect_url" {
   description = "Jamf Protect URL name."
   type        = string
+  default     = ""
 }
 
-variable "jamfprotect_clientID" {
+variable "jamfprotect_clientid" {
   description = "Jamf Protect Client ID for authentication."
   type        = string
+  default     = ""
 }
 
 variable "jamfprotect_client_password" {
@@ -34,4 +37,9 @@ variable "jamfpro_auth_method" {
   description = "Jamf Pro Auth Method."
   type        = string
   default     = "oauth2" #basic or oauth2
+}
+
+variable "entropy_string" {
+  type    = string
+  default = ""
 }
