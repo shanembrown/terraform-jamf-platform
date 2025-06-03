@@ -14,17 +14,50 @@ terraform {
 
 resource "jamfpro_api_role" "jamfpro_api_role_sync" {
   display_name = "JSC API Role Device Sync"
-  privileges   = ["Read Mac Applications", "Read Mobile Devices", "Read Mobile Device Applications", "Read Smart Mobile Device Groups", "Read Static Mobile Device Groups", "Read Computers", "Read Smart Computer Groups", "Read Static Computer Groups"]
+  privileges = [
+    "Read Mac Applications",
+    "Read Mobile Devices",
+    "Read Mobile Device Applications",
+    "Read Smart Mobile Device Groups",
+    "Read Static Mobile Device Groups",
+    "Read Computers",
+    "Read Smart Computer Groups",
+    "Create Static Computer Groups",
+    "Read Static Computer Groups"
+  ]
 }
 
 resource "jamfpro_api_role" "jamfpro_api_role_signalling" {
   display_name = "JSC API Role Signalling"
-  privileges   = ["Update Computer Extension Attributes", "Read Computer Extension Attributes", "Delete Computer Extension Attributes", "Create Computer Extension Attributes", "Read Mobile Device Extension Attributes", "Delete Mobile Device Extension Attributes", "Create Mobile Device Extension Attributes", "Update Mobile Devices", "Update Mobile Device Extension Attributes", "Update Computers", "Update User"]
+  privileges = [
+    "Create Computer Extension Attributes",
+    "Read Computer Extension Attributes",
+    "Update Computer Extension Attributes",
+    "Delete Computer Extension Attributes",
+    "Create Mobile Device Extension Attributes",
+    "Read Mobile Device Extension Attributes",
+    "Update Mobile Device Extension Attributes",
+    "Delete Mobile Device Extension Attributes",
+    "Update Mobile Devices",
+    "Update Computers",
+    "Update User"
+  ]
 }
 
 resource "jamfpro_api_role" "jamfpro_api_role_deploy" {
   display_name = "JSC API Role Deploy"
-  privileges   = ["Create iOS Configuration Profiles", "Create macOS Configuration Profiles"]
+  privileges = [
+    "Create iOS Configuration Profiles",
+    "Read iOS Configuration Profiles",
+    "Update iOS Configuration Profiles",
+    "Create macOS Configuration Profiles",
+    "Read macOS Configuration Profiles",
+    "Update macOS Configuration Profiles",
+    "Update Smart Mobile Device Groups",
+    "Update Static Mobile Device Groups",
+    "Update Smart Computer Groups",
+    "Update Static Computer Groups"
+  ]
 }
 
 resource "jamfpro_api_integration" "jamfpro_api_integration_jsc" {
