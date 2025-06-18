@@ -25,7 +25,7 @@
 			<key>PayloadType</key>
 			<string>com.apple.security.firewall</string>
 			<key>PayloadUUID</key>
-			<string>F90D5BC5-0C16-4F03-84AE-047C5AF21355</string>
+			<string>com.apple.security.firewall.F90D5BC5-0C16-4F03-84AE-047C5AF21355</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 		</dict>
@@ -47,7 +47,7 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>AD60DF97-7A31-4881-83C0-1B66077A03D6</string>
+	<string>51b14c9c-f4bd-42da-bcb2-09bd090b9f5b</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
 </dict>
