@@ -30,7 +30,7 @@
 			<key>PayloadType</key>
 			<string>com.apple.ManagedClient.preferences</string>
 			<key>PayloadUUID</key>
-			<string>77395C3C-4201-427A-84C2-94385B5A7022</string>
+			<string>com.apple.ManagedClient.preferences.77395C3C-4201-427A-84C2-94385B5A7022</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 		</dict>
@@ -52,7 +52,7 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>73BC2A92-D021-4932-9940-45F30B7259BD</string>
+	<string>b97f59e4-f39b-4244-a851-bd75d5bf4486</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
 </dict>

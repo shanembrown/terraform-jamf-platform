@@ -21,7 +21,7 @@
 			<key>PayloadType</key>
 			<string>com.apple.SubmitDiagInfo</string>
 			<key>PayloadUUID</key>
-			<string>75747C4F-2972-47AC-B025-CFFBF531DB80</string>
+			<string>com.apple.SubmitDiagInfo.75747C4F-2972-47AC-B025-CFFBF531DB80</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 		</dict>
@@ -43,7 +43,7 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>3462A606-FB56-41EF-8F14-4AC743800256</string>
+	<string>812572e2-22be-41ff-b8a6-27730dd83a89</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
 </dict>

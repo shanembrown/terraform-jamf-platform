@@ -23,7 +23,7 @@
 			<key>PayloadType</key>
 			<string>com.apple.security.smartcard</string>
 			<key>PayloadUUID</key>
-			<string>2e717b22-bec7-4f6b-9e8e-1ec33b380b17</string>
+			<string>com.apple.security.smartcard.2e717b22-bec7-4f6b-9e8e-1ec33b380b17</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 			<key>UserPairing</key>
@@ -57,7 +57,7 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>FB03BD44-27D1-4C0B-BB68-A34A33D39C4B</string>
+	<string>e05e85aa-4257-48e3-991f-407f430f4940</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
 </dict>
