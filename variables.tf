@@ -455,11 +455,15 @@ variable "include_jamf_pro_admin_sso" {
   default = false
 }
 
-variable "include_mobile_device_kickstart" {
+variable "include_jamf_pro_activation_code" {
   type    = bool
   default = false
 }
 
+variable "include_mobile_device_kickstart" {
+  type    = bool
+  default = false
+}
 
 variable "include_filevault" {
   type    = bool
@@ -548,6 +552,16 @@ variable "random_string" {
 }
 
 variable "entropy_string" {
+  type    = string
+  default = ""
+}
+
+variable "organization_name" {
+  type    = string
+  default = ""
+}
+
+variable "jamf_pro_activation_code" {
   type    = string
   default = ""
 }
