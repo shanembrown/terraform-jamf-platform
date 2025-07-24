@@ -19,7 +19,7 @@
 			<key>PayloadType</key>
 			<string>com.apple.applicationaccess</string>
 			<key>PayloadUUID</key>
-			<string>0E950DDF-60C0-4D84-AE48-7423DAA1DE77</string>
+			<string>com.apple.applicationaccess.0E950DDF-60C0-4D84-AE48-7423DAA1DE77</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 			<key>allowApplePersonalizedAdvertising</key>
@@ -93,7 +93,7 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>DF727C19-60CB-488D-92EE-8D3B37CB749E</string>
+	<string>6A7EF5C7-14FC-4A81-B57E-4F43EE8C7512</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
 </dict>

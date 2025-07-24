@@ -27,7 +27,7 @@
 			<key>PayloadType</key>
 			<string>com.apple.eas.account</string>
 			<key>PayloadUUID</key>
-			<string>de29c307-e1d3-4417-966f-435a7bb14bbe</string>
+			<string>com.apple.eas.account.de29c307-e1d3-4417-966f-435a7bb14bbe</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 			<key>PreventAppSheet</key>
@@ -61,7 +61,7 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>CF1FCA0D-8357-4611-B379-93B228B268D2</string>
+	<string>BCF1085E-E0AF-4754-AA77-18EEDC04D82B</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
 </dict>

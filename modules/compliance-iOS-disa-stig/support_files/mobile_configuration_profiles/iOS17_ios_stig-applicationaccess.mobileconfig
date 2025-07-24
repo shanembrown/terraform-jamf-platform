@@ -19,7 +19,7 @@
 			<key>PayloadType</key>
 			<string>com.apple.applicationaccess</string>
 			<key>PayloadUUID</key>
-			<string>AA53574C-69B0-4019-A06B-86AC56155964</string>
+			<string>com.apple.applicationaccess.AA53574C-69B0-4019-A06B-86AC56155964</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 			<key>allowActivityContinuation</key>
@@ -117,7 +117,7 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>4976D775-734B-473F-9F27-E30E951A3345</string>
+	<string>1F087AF1-D919-4E5F-94CD-45F54F187469</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
 </dict>

@@ -66,6 +66,10 @@ resource "jamfpro_macos_configuration_profile_plist" "ssoe-okta" {
     all_computers      = false
     computer_group_ids = [jamfpro_smart_computer_group.ssoe-okta.id]
   }
+  lifecycle {
+    prevent_destroy = false
+    ignore_changes  = all
+  }
 }
 
 

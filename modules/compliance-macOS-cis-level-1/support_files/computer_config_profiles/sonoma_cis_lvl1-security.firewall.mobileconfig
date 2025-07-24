@@ -29,7 +29,7 @@
 			<key>PayloadType</key>
 			<string>com.apple.security.firewall</string>
 			<key>PayloadUUID</key>
-			<string>78A38E6C-DFDC-4C2E-A411-8302510AB418</string>
+			<string>com.apple.security.firewall.78A38E6C-DFDC-4C2E-A411-8302510AB418</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 		</dict>

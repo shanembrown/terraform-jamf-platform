@@ -23,7 +23,7 @@
 			<key>PayloadType</key>
 			<string>com.apple.systempolicy.control</string>
 			<key>PayloadUUID</key>
-			<string>E1F5D7FF-8173-47C8-9D51-6D4DF82D5720</string>
+			<string>com.apple.systempolicy.control.E1F5D7FF-8173-47C8-9D51-6D4DF82D5720</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 		</dict>
@@ -45,7 +45,7 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>1E6D5E71-DD7D-4570-ACC7-F21C16E96587</string>
+	<string>87281331-8704-4aac-ae7a-664588560b3e</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
 </dict>

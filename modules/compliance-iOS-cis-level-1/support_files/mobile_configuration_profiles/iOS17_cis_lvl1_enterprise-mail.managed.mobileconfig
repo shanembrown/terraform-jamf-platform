@@ -33,7 +33,7 @@
 			<key>PayloadType</key>
 			<string>com.apple.mail.managed</string>
 			<key>PayloadUUID</key>
-			<string>1bf67f0d-7e95-4dc7-ab6f-bf9d958de099</string>
+			<string>com.apple.mail.managed.1bf67f0d-7e95-4dc7-ab6f-bf9d958de099</string>
 			<key>PayloadVersion</key>
 			<integer>1</integer>
 			<key>PreventAppSheet</key>
@@ -63,7 +63,7 @@
 	<key>PayloadType</key>
 	<string>Configuration</string>
 	<key>PayloadUUID</key>
-	<string>6968D098-D5F6-47A5-A7A9-0AA96DE00871</string>
+	<string>2DDEAA96-1D9C-4040-912C-AA842828BBFB</string>
 	<key>PayloadVersion</key>
 	<integer>1</integer>
 </dict>

@@ -64,6 +64,10 @@ resource "jamfpro_macos_configuration_profile_plist" "all_services_macos" {
     all_computers      = false
     computer_group_ids = [jamfpro_smart_computer_group.all_macs.id]
   }
+  lifecycle {
+    prevent_destroy = false
+    ignore_changes  = all
+  }
 }
 
 resource "jamfpro_smart_mobile_device_group" "supervised_devices" {
@@ -133,6 +137,10 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "all_services_mobil
     all_jss_users           = false
     mobile_device_group_ids = [jamfpro_smart_mobile_device_group.supervised_devices.id]
   }
+  lifecycle {
+    prevent_destroy = false
+    ignore_changes  = all
+  }
 }
 
 # resource "jamfpro_mobile_device_configuration_profile_plist" "all_services_mobile_unsupervised" {
@@ -150,6 +158,10 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "all_services_mobil
 #     all_mobile_devices = false
 #     all_jss_users      = false
 #   }
+#   lifecycle {
+#     prevent_destroy = false
+#     ignore_changes  = all
+#   }
 # }
 
 # resource "jamfpro_mobile_device_configuration_profile_plist" "all_services_mobile_byod" {
@@ -166,5 +178,9 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "all_services_mobil
 #   scope {
 #     all_mobile_devices = false
 #     all_jss_users      = false
+#   }
+#   lifecycle {
+#     prevent_destroy = false
+#     ignore_changes  = all
 #   }
 # }
