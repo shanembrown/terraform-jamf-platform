@@ -175,6 +175,20 @@ module "configuration-jamf-pro-admin-sso" {
   }
 }
 
+module "configuration-jamf-pro-activation-code" {
+  count                    = var.include_jamf_pro_activation_code == true ? 1 : 0
+  source                   = "./modules/configuration-jamf-pro-activation-code"
+  entropy_string           = var.entropy_string
+  jamfpro_instance_url     = var.jamfpro_instance_url
+  jamfpro_client_id        = var.jamfpro_client_id
+  jamfpro_client_secret    = var.jamfpro_client_secret
+  organization_name        = var.organization_name
+  jamf_pro_activation_code = var.jamf_pro_activation_code
+  providers = {
+    jamfpro.jpro = jamfpro.jpro
+  }
+}
+
 module "configuration-jamf-pro-smart-groups" {
   count                 = var.include_qol_smart_groups == true ? 1 : 0
   source                = "./modules/configuration-jamf-pro-smart-groups"
