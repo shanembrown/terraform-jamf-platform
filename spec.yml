@@ -101,7 +101,7 @@ options:
     required_provider: jpro, jsc
     content: This will create all the necessary API Roles and an API Client in your Jamf Pro instance and then set up UEM Connect for Group synchronization, automated risk signaling, and easier deployment
     category: Security
-    display_name: Integrate Web & Network Security Capabilities with Management Capabilities
+    display_name: Integrate Jamf Pro and Jamf Security Cloud Consoles
     display_desc: Configures the API connection and integration between management and security capabilities in the Jamf Pro and Jamf Security Cloud consoles. Enables group sync, automated risk signaling, and easier deployment of Jamf's web & network security capabilities.
 
   - key: include_jsc_all_services
@@ -130,7 +130,7 @@ options:
     module_name: module.configuration-jamf-pro-jamf-protect
     required_provider: jpro, jprt
     category: Security
-    display_name: Integrate macOS Endpoint Security with Management Capabilities
+    display_name: Integrate Jamf Pro and Jamf Protect for MacOS Consoles
     display_desc: Configures the API connection and integration between macOS management and security capabiltiies and their consoles. Streamlines deployment and enables advanced remediation workflows.
 
   - key: include_ssoe_okta
@@ -139,7 +139,7 @@ options:
     module_name: module.management-macOS-SSOe-Okta
     required_provider: jpro
     category: Security
-    display_name: Enable SSOe (Okta)
+    display_name: Enable SSOe (Okta Template)
     display_desc: This will configure the management capabilities required to configure and install the Okta Verify.app for SSOe on macOS. Please modify the following .mobileconfig payloads with your Organization's values. Okta Device Management Attestation, ExtensionIdentifier, & Custom Settings. Objects are scoped to the SSOe-(Okta) Smart Group. To scope configurations to computers edit the serial number criteria to match the serial number of a test computer or remove the serial number criteria to scope to all enrolled computers.
 
   ## macOS Security Compliance Project Benchmark Modules
