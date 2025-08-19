@@ -109,10 +109,10 @@ options:
     presence: optional
     module_name: module.configuration-jamf-security-cloud-all-services
     required_provider: jpro, jsc
-    content: Creates an Activation Profile for all Jamf Security Cloud services and uploads it to Jamf Pro
+    content: Creates an Activation Profile for Jamf Protect Network Threat and Content Controls and uploads it to Jamf Pro
     category: Security
     display_name: Configure Web and Network Security Capabilities
-    display_desc: Enables Wireguard ZTNA. Configures Content Filtering, Data and Threat Defense Policies. Creates an Activation Profile for deployment to managed devices. Access Policies will need to be configured in console to fully implement ZTNA capabilities.
+    display_desc: Configures Content Filtering, Data and Threat Defense Policies. Creates an Activation Profile for deployment to managed devices.
 
   - key: include_filevault
     type: <boolean>
