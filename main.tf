@@ -309,8 +309,6 @@ module "configuration-jamf-security-cloud-jamf-pro" {
 module "configuration-jamf-security-cloud-all-services" {
   count                 = var.include_jsc_all_services == true ? 1 : 0
   source                = "./modules/configuration-jamf-security-cloud-all-services"
-  tje_okta_clientid     = var.tje_okta_clientid
-  tje_okta_orgdomain    = var.tje_okta_orgdomain
   jsc_username          = var.jsc_username
   jsc_password          = var.jsc_password
   jamfpro_instance_url  = var.jamfpro_instance_url
