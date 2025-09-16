@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>PayloadContent</key>
+			<dict>
+				<key>com.apple.loginwindow</key>
+				<dict>
+					<key>Forced</key>
+					<array>
+						<dict>
+							<key>mcx_preference_settings</key>
+							<dict>
+								<key>AdminHostInfo</key>
+								<integer>-1</integer>
+								<key>DisableFDEAutoLogin</key>
+								<true/>
+								<key>RetriesUntilHint</key>
+								<integer>0</integer>
+								<key>SHOWFULLNAME</key>
+								<true/>
+								<key>com.apple.login.mcx.DisableAutoLoginClient</key>
+								<true/>
+								<key>screenUnlockMode</key>
+								<integer>1</integer>
+							</dict>
+						</dict>
+					</array>
+				</dict>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>Custom Settings</string>
+			<key>PayloadIdentifier</key>
+			<string>579BB98A-41EA-43B6-8D80-BF3026B2B3E2</string>
+			<key>PayloadOrganization</key>
+			<string>JAMF Software</string>
+			<key>PayloadType</key>
+			<string>com.apple.ManagedClient.preferences</string>
+			<key>PayloadUUID</key>
+			<string>579BB98A-41EA-43B6-8D80-BF3026B2B3E2</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string></string>
+	<key>PayloadDisplayName</key>
+	<string>Tahoe_800-171-loginwindow</string>
+	<key>PayloadEnabled</key>
+	<true/>
+	<key>PayloadIdentifier</key>
+	<string>19848fc6-2f3b-4c9e-be1d-2dcec88110af</string>
+	<key>PayloadOrganization</key>
+	<string>Jamf Software</string>
+	<key>PayloadRemovalDisallowed</key>
+	<true/>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>19848fc6-2f3b-4c9e-be1d-2dcec88110af</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>
