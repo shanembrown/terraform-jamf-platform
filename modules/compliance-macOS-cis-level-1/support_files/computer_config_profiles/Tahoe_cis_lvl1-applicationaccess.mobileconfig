@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>PayloadContent</key>
+			<dict>
+				<key>com.apple.applicationaccess</key>
+				<dict>
+					<key>Forced</key>
+					<array>
+						<dict>
+							<key>mcx_preference_settings</key>
+							<dict>
+								<key>allowAirDrop</key>
+								<false/>
+								<key>allowAirPlayIncomingRequests</key>
+								<false/>
+								<key>allowApplePersonalizedAdvertising</key>
+								<false/>
+								<key>allowAssistant</key>
+								<false/>
+								<key>allowDiagnosticSubmission</key>
+								<false/>
+								<key>allowExternalIntelligenceIntegrations</key>
+								<false/>
+								<key>allowExternalIntelligenceIntegrationsSignIn</key>
+								<false/>
+								<key>allowMailSummary</key>
+								<false/>
+								<key>allowNotesTranscription</key>
+								<false/>
+								<key>allowNotesTranscriptionSummary</key>
+								<false/>
+								<key>allowWritingTools</key>
+								<false/>
+								<key>enforcedSoftwareUpdateDelay</key>
+								<integer>30</integer>
+								<key>forceOnDeviceOnlyDictation</key>
+								<true/>
+							</dict>
+						</dict>
+					</array>
+				</dict>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>Custom Settings</string>
+			<key>PayloadIdentifier</key>
+			<string>49760BF9-6324-48A2-97C6-1691FEFB7D6A</string>
+			<key>PayloadOrganization</key>
+			<string>JAMF Software</string>
+			<key>PayloadType</key>
+			<string>com.apple.ManagedClient.preferences</string>
+			<key>PayloadUUID</key>
+			<string>49760BF9-6324-48A2-97C6-1691FEFB7D6A</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string></string>
+	<key>PayloadDisplayName</key>
+	<string>Tahoe_cis_lvl1-applicationaccess</string>
+	<key>PayloadEnabled</key>
+	<true/>
+	<key>PayloadIdentifier</key>
+	<string>f58857cc-9833-4a34-a685-29b7c0a4ca8c</string>
+	<key>PayloadOrganization</key>
+	<string>Jamf Software</string>
+	<key>PayloadRemovalDisallowed</key>
+	<true/>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>f58857cc-9833-4a34-a685-29b7c0a4ca8c</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

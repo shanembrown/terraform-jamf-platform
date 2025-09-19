@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>PayloadContent</key>
+			<dict>
+				<key>com.apple.SetupAssistant.managed</key>
+				<dict>
+					<key>Forced</key>
+					<array>
+						<dict>
+							<key>mcx_preference_settings</key>
+							<dict>
+								<key>SkipSetupItems</key>
+								<array>
+									<string>AppleID</string>
+									<string>iCloudStorage</string>
+									<string>Privacy</string>
+									<string>Siri</string>
+									<string>Intelligence</string>
+									<string>ScreenTime</string>
+									<string>WatchMigration</string>
+									<string>Biometric</string>
+								</array>
+							</dict>
+						</dict>
+					</array>
+				</dict>
+			</dict>
+			<key>PayloadDisplayName</key>
+			<string>Custom Settings</string>
+			<key>PayloadIdentifier</key>
+			<string>2935A928-B4BA-46CE-A373-C1804E47F740</string>
+			<key>PayloadOrganization</key>
+			<string>JAMF Software</string>
+			<key>PayloadType</key>
+			<string>com.apple.ManagedClient.preferences</string>
+			<key>PayloadUUID</key>
+			<string>2935A928-B4BA-46CE-A373-C1804E47F740</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string></string>
+	<key>PayloadDisplayName</key>
+	<string>Tahoe_800-171-SetupAssistant.managed</string>
+	<key>PayloadEnabled</key>
+	<true/>
+	<key>PayloadIdentifier</key>
+	<string>efee56f0-a655-43b0-886c-23f029d26ace</string>
+	<key>PayloadOrganization</key>
+	<string>Jamf Software</string>
+	<key>PayloadRemovalDisallowed</key>
+	<true/>
+	<key>PayloadScope</key>
+	<string>System</string>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>efee56f0-a655-43b0-886c-23f029d26ace</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>
