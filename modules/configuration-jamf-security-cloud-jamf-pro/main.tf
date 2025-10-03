@@ -6,7 +6,7 @@ terraform {
       configuration_aliases = [jamfpro.jpro]
     }
     jsc = {
-      source                = "danjamf/jsctfprovider"
+      source                = "Jamf-Concepts/jsctfprovider"
       configuration_aliases = [jsc.jsc]
     }
   }
