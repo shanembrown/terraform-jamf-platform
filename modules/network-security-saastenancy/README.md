@@ -5,7 +5,7 @@ This vignette deploys a complete SaaS Tenancy Control module in Jamf Pro and Jam
 Provider versions used in this release:
 
 - hashicorp/aws v5.61.0
-- danjamf/jsctfprovider v>= 0.0.15
+- Jamf-Concepts/jsctfprovider v>= 0.0.15
 
 ## Prerequisites
 
