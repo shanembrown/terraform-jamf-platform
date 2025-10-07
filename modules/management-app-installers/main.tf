@@ -11,6 +11,7 @@ terraform {
 ## Iterate over selected App Installers
 resource "jamfpro_app_installer" "app_installers" {
   name            = var.app_installer_name
+  app_title_name  = var.app_installer_name
   enabled         = var.enabled
   deployment_type = var.deployment_type
   update_behavior = var.update_behavior
