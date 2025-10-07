@@ -92,6 +92,7 @@ resource "jamfpro_macos_configuration_profile_plist" "jamfpro_macos_configuratio
 ## Create Microsoft Defender Appinstaller
 resource "jamfpro_app_installer" "jamfpro_app_installer_microsoft_defender" {
   name            = "Microsoft Defender"
+  app_title_name  = "Microsoft Defender"
   enabled         = true
   deployment_type = "INSTALL_AUTOMATICALLY"
   update_behavior = "MANUAL"
