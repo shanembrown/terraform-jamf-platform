@@ -12,7 +12,6 @@ terraform {
 resource "jamfpro_computer_inventory_collection_settings" "example" {
   computer_inventory_collection_preferences {
     monitor_application_usage                          = true
-    include_fonts                                      = true
     include_plugins                                    = true
     include_packages                                   = true
     include_software_updates                           = true
