@@ -12,7 +12,6 @@ terraform {
 resource "jamfpro_computer_inventory_collection_settings" "example" {
   computer_inventory_collection_preferences {
     monitor_application_usage                          = true
-    include_plugins                                    = true
     include_packages                                   = true
     include_software_updates                           = true
     include_software_id                                = true
@@ -27,18 +26,6 @@ resource "jamfpro_computer_inventory_collection_settings" "example" {
     allow_changing_user_and_location                   = true
     use_unix_user_paths                                = true
     collect_unmanaged_certificates                     = true
-  }
-
-  application_paths {
-    path = "/Applications/ExampleApp.app"
-  }
-
-  font_paths {
-    path = "/Library/Fonts/ExampleFont.ttf"
-  }
-
-  plugin_paths {
-    path = "/Library/Internet Plug-Ins/ExamplePlugin.plugin"
   }
 }
 

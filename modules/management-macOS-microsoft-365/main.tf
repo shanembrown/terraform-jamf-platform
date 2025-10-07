@@ -95,6 +95,7 @@ resource "jamfpro_smart_computer_group" "group_msft_teams" {
 
 ## Create Microsoft 365 App Installers
 resource "jamfpro_app_installer" "jamfpro_app_installer_microsoft_excel" {
+  app_title_name  = "Microsoft Excel 365"
   name            = "Microsoft Excel 365"
   enabled         = true
   deployment_type = "SELF_SERVICE"
@@ -167,6 +168,7 @@ resource "jamfpro_app_installer" "jamfpro_app_installer_microsoft_excel" {
 # }
 
 resource "jamfpro_app_installer" "jamfpro_app_installer_microsoft_powerpoint_365" {
+  app_title_name  = "Microsoft PowerPoint 365"
   name            = "Microsoft PowerPoint 365"
   enabled         = true
   deployment_type = "SELF_SERVICE"
@@ -203,6 +205,7 @@ resource "jamfpro_app_installer" "jamfpro_app_installer_microsoft_powerpoint_365
 }
 
 resource "jamfpro_app_installer" "jamfpro_app_installer_microsoft_outlook_365" {
+  app_title_name  = "Microsoft Outlook 365"
   name            = "Microsoft Outlook 365"
   enabled         = true
   deployment_type = "SELF_SERVICE"
@@ -239,6 +242,7 @@ resource "jamfpro_app_installer" "jamfpro_app_installer_microsoft_outlook_365" {
 }
 
 resource "jamfpro_app_installer" "jamfpro_app_installer_microsoft_onedrive_365" {
+  app_title_name  = "Microsoft OneDrive"
   name            = "Microsoft OneDrive"
   enabled         = true
   deployment_type = "SELF_SERVICE"
@@ -275,6 +279,7 @@ resource "jamfpro_app_installer" "jamfpro_app_installer_microsoft_onedrive_365" 
 }
 
 resource "jamfpro_app_installer" "jamfpro_app_installer_microsoft_word_365" {
+  app_title_name  = "Microsoft Word 365"
   name            = "Microsoft Word 365"
   enabled         = true
   deployment_type = "SELF_SERVICE"
@@ -311,6 +316,7 @@ resource "jamfpro_app_installer" "jamfpro_app_installer_microsoft_word_365" {
 }
 
 resource "jamfpro_app_installer" "jamfpro_app_installer_microsoft_teams_365" {
+  app_title_name  = "Microsoft Teams"
   name            = "Microsoft Teams"
   enabled         = true
   deployment_type = "SELF_SERVICE"

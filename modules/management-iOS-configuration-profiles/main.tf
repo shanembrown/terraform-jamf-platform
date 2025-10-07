@@ -131,18 +131,16 @@ resource "jamfpro_mobile_device_configuration_profile_plist" "mobile_device_conf
 ## Extension Attribute for Shared Device and Kiosk Mode examples
 
 resource "jamfpro_mobile_device_extension_attribute" "device_type" {
-  name              = "Device Type"
-  description       = "Select between kiosk, shared, or none for device types"
-  data_type         = "String"
-  inventory_display = "User and Location"
+  name                   = "Device Type"
+  description            = "Select between kiosk, shared, or none for device types"
+  data_type              = "STRING"
+  inventory_display_type = "USER_AND_LOCATION"
 
-  input_type {
-    type = "Pop-up Menu"
-    popup_choices = [
-      "Kiosk Device",
-      "Shared Device",
-    ]
-  }
+  input_type = "POPUP"
+  popup_menu_choices = [
+    "Kiosk Device",
+    "Shared Device",
+  ]
 }
 
 ## Smart Groups for Shared Device and Kiosk Mode
